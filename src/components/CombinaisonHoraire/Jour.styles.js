@@ -4,7 +4,6 @@ const JourWrapper = styled.div`
     height:100%;
     display:flex;
     flex-direction:column;
-
     .nom-jour {
         text-align: center;
         border-bottom: ${({ theme }) => theme.sizes.size_1} solid ${({ theme }) => theme.palette.grey[700]};
@@ -15,6 +14,8 @@ const JourWrapper = styled.div`
     }
 
     .classes-wrapper {
+        border: ${({ theme }) => theme.sizes.size_1} solid ${({ theme }) => theme.palette.grey[700]};
+        border-top:none;
         height: 100%;
         display:flex;
         flex-direction:column;
@@ -23,9 +24,8 @@ const JourWrapper = styled.div`
         }
 
         background-image:
-        linear-gradient(to bottom, white ${({ theme }) => theme.sizes.size_1}, transparent ${({ theme }) => theme.sizes.size_1}),
-        linear-gradient(to right, white ${({ theme }) => theme.sizes.size_2}, transparent ${({ theme }) => theme.sizes.size_1});
-        background-size: 99% 3.33333%;
+        linear-gradient(to bottom, ${({ theme }) => theme.palette.grey[900]} ${({ theme }) => theme.sizes.size_1}, transparent ${({ theme }) => theme.sizes.size_1});
+        background-size: 99.5% 3.333333333%;
     }
 
 `;

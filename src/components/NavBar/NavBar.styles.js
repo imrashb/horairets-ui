@@ -6,6 +6,7 @@ const NavBarWrapper = styled.div`
     .MuiToolbar-root {
         justify-content: space-between;
 
+
         & > div {
 
             display:flex;

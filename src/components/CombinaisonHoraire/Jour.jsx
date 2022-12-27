@@ -1,13 +1,23 @@
+/* eslint-disable react/forbid-prop-types */
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import Activite from './Activite/Activite';
 import ActiviteSpacer from './Activite/ActiviteSpacer';
+import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
 
-function Jour({ jour, combinaison }) {
+function Jour({
+  jour,
+  combinaison,
+  disableNomJours,
+  disableNomCours,
+  disableNomActivite,
+  disableLocaux,
+}) {
   const { t } = useTranslation('common');
 
-  const min = 8;
-  const max = 23;
+  const min = HEURE_DEBUT_COURS;
+  const max = HEURE_FIN_COURS;
 
   const activites = combinaison?.groupes?.reduce((prev, curr) => {
     const valid = curr?.activites?.filter((act) => act?.horaire?.jour === jour);
@@ -46,6 +56,9 @@ function Jour({ jour, combinaison }) {
         flex={currentFlex}
         color={color}
         borderColor={borderColor}
+        disableNomActivite={disableNomActivite}
+        disableNomCours={disableNomCours}
+        disableLocaux={disableLocaux}
       />
     );
   };
@@ -84,12 +97,28 @@ function Jour({ jour, combinaison }) {
 
   return (
     <JourWrapper>
-      <div className="nom-jour">{t(jour)}</div>
+      {!disableNomJours && <div className="nom-jour">{t(jour)}</div>}
       <div className="classes-wrapper">
         {components}
       </div>
     </JourWrapper>
   );
 }
+
+Jour.propTypes = {
+  combinaison: PropTypes.object.isRequired,
+  jour: PropTypes.string.isRequired,
+  disableNomJours: PropTypes.bool,
+  disableNomCours: PropTypes.bool,
+  disableNomActivite: PropTypes.bool,
+  disableLocaux: PropTypes.bool,
+};
+
+Jour.defaultProps = {
+  disableNomJours: false,
+  disableNomCours: false,
+  disableNomActivite: false,
+  disableLocaux: false,
+};
 
 export default Jour;

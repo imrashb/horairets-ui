@@ -2,10 +2,9 @@ import { CalendarToday, Dashboard, Info } from '@mui/icons-material';
 import {
   AppBar, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { GENERATEUR_HORAIRE_URL } from '../../routes/Routes.constants';
 import NavBarWrapper from './NavBar.styles';
 
@@ -40,7 +39,7 @@ export default function NavBar() {
 
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (location.pathname) {
       const tab = tabs.find((ta) => ta.path === location.pathname);
 
@@ -75,9 +74,7 @@ export default function NavBar() {
               tabs.map((tab) => <Tab value={tab.id} icon={<tab.icon />} label={t(tab.label)} />)
             }
           </Tabs>
-          <div className="navbar-right">
-            Right
-          </div>
+          <div className="navbar-right" />
         </Toolbar>
       </AppBar>
     </NavBarWrapper>

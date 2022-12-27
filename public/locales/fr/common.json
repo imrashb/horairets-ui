@@ -15,5 +15,13 @@
   "JEUDI": "Jeudi",
   "VENDREDI": "Vendredi",
   "SAMEDI": "Samedi",
-  "DIMANCHE": "Dimanche"
+  "DIMANCHE": "Dimanche",
+  "trierPar": "Trier par:",
+  "session": "Session",
+  "programme": "Programme",
+  "sessionProgramme": "Session et programme",
+  "cours": "Cours",
+  "recupererCours": "Récupérer les cours",
+  "synchroniserCours": "Synchroniser les cours",
+  "genererHoraires": "Générer les horaires"
 }

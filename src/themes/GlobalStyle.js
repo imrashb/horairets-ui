@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .horairets-animated-text {
-        background: linear-gradient(to right, ${({ theme }) => theme.palette.primary.brighterMain},${({ theme }) => theme.palette.primary.darkerMain}, ${({ theme }) => theme.palette.primary.brighterMain});
+        background: linear-gradient(to right, ${({ theme }) => theme.palette.primary.light},${({ theme }) => theme.palette.primary.main}, ${({ theme }) => theme.palette.primary.light});
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
 
@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
             background: ${({ theme }) => theme.palette.primary.main} };
 
 
-        background: linear-gradient(to right, ${({ theme }) => theme.palette.primary.brighterMain},${({ theme }) => theme.palette.primary.darkerMain}, ${({ theme }) => theme.palette.primary.brighterMain});
+        background: linear-gradient(to right, ${({ theme }) => theme.palette.primary.light},${({ theme }) => theme.palette.primary.main}, ${({ theme }) => theme.palette.primary.light});
         background-size: 200% auto;
         animation: shine 10s linear infinite;
     }

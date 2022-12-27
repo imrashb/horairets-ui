@@ -10,20 +10,20 @@ export default function AppThemeProvider({ children }) {
       palette: {
         mode,
         primary: {
-          dark: mode === 'dark' ? '#9D4EDD' : '#240046',
-          darkerMain: mode === 'dark' ? '#7B2CBF' : '#3C096C',
-          main: mode === 'dark' ? '#5A189A' : '#5A189A',
-          brighterMain: mode === 'dark' ? '#3C096C' : '#7B2CBF',
-          light: mode === 'dark' ? '#240046' : '#9D4EDD',
+          dark: mode === 'dark' ? '#b57ae5' : '#240046',
+          darkerMain: mode === 'dark' ? '#9c57d8' : '#3C096C',
+          main: mode === 'dark' ? '#8327dd' : '#5A189A',
+          brighterMain: mode === 'dark' ? '#6e10c6' : '#7B2CBF',
+          light: mode === 'dark' ? '#5c00b4' : '#9D4EDD',
           ets: '#EF3E45',
+        },
+        button: {
+          main: mode === 'dark' ? '#7B2CBF' : '#3C096C',
         },
         discord: {
           main: '#7289da',
         },
         background: {
-          default: mode === 'dark' ? '#1F1F1F' : '#FCFBFA',
-          paper: mode === 'dark' ? '#131313' : '#fcfcfc',
-          opposite: mode === 'dark' ? '#FCFBFA' : '#1F1F1F',
           light: '#FCFBFA',
         },
         grey: {
@@ -73,6 +73,9 @@ export default function AppThemeProvider({ children }) {
         size_224: '14rem',
         size_240: '15rem',
         size_256: '16rem',
+      },
+      shadows: {
+        main: 'black 0.25vw 0.25vw 0.5vw',
       },
       text: {
         primary: mode === 'dark' ? '#FCFBFA' : '#5C5C5C',

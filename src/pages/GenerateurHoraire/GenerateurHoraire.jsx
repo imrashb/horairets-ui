@@ -1,22 +1,32 @@
-import { Grid } from '@mui/material';
+import {
+  Card, CardActions, CardContent, CardHeader, Divider,
+} from '@mui/material';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
-import Jour from './Jour';
-import { combinaison } from './temp';
+import GenerateurHoraireFilters from './GenerateurHoraireFilters/GenerateurHoraireFilters';
+import SelectionCours from './SelectionCours/SelectionCours';
+import SelectionSessionProgramme from './SelectionSessionProgramme/SelectionSessionProgramme';
 
 function GenerateurHoraire() {
-  const jours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
-
-  const comb = combinaison;
+  const { t } = useTranslation('common');
 
   return (
     <GenerateurHoraireWrapper>
-      <Grid sx={{ height: '100%' }} container columns={{ xs: jours.length }}>
-        {jours.map((jour) => (
-          <Grid xs={1}>
-            <Jour jour={jour} combinaison={comb} />
-          </Grid>
-        ))}
-      </Grid>
+      <div className="title-wrapper">
+        <span className="text-shadow">{t('generateurHoraire').toUpperCase()}</span>
+        <span className="horairets-animated-text">{t('generateurHoraire').toUpperCase()}</span>
+      </div>
+      <GenerateurHoraireFilters />
+      <div className="main-content-wrapper">
+        <div className="left">
+
+          <SelectionSessionProgramme />
+          <SelectionCours />
+
+        </div>
+        <div className="right">right</div>
+      </div>
     </GenerateurHoraireWrapper>
   );
 }

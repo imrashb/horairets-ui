@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import HomeWrapper from './Home.styles';
 import { DISCORD_URL, GENERATEUR_HORAIRE_URL } from '../../routes/Routes.constants';
+import HomeBackground from './HomeBackground';
 
 function Home() {
   const { t } = useTranslation('common');
@@ -33,18 +34,20 @@ function Home() {
 
   return (
     <HomeWrapper>
+      <HomeBackground />
       <div className="left">
         <Typography variant="h2" component="div" className="body-bienvenue">
-          {t('bienvenueSur')}
+          <strong>{t('bienvenueSur')}</strong>
         </Typography>
-        <Container disableGutters="true" sx={{ width: `${width}px` }}>
-          <Typography className="body-horairets">
+        <Container maxWidth disableGutters="true" sx={{ width: `${width}px` }}>
+          <div className="body-horairets">
             <span ref={horairetsRef} className="horairets-wrapper">
+              <span className="text-shadow">{t('horairets')}</span>
               <span className="horairets-animated-text">{t('horair')}</span>
               <span className="ets">{t('ets')}</span>
             </span>
             <span className="description">{t('descriptionHorairets')}</span>
-          </Typography>
+          </div>
           <div className="btn-wrapper">
             <Button
               className="horairets-animated-background hover-animated"
