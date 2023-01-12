@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
 
 function SelectionCours() {
@@ -15,7 +16,9 @@ function SelectionCours() {
       <Card>
         <CardHeader title={t('cours')} />
         <Divider />
-        <CardContent />
+        <CardContent>
+          <CoursTransferList />
+        </CardContent>
         <Divider />
         <CardActions>
           <Button variant="text">

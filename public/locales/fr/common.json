@@ -23,5 +23,10 @@
   "cours": "Cours",
   "recupererCours": "Récupérer les cours",
   "synchroniserCours": "Synchroniser les cours",
-  "genererHoraires": "Générer les horaires"
+  "genererHoraires": "Générer les horaires",
+  "affichageListe": "Affichage liste",
+  "affichageGrille": "Affichage grille",
+  "coursDisponibles": "Cours disponibles",
+  "coursSelectionnes": "Cours sélectionnés",
+  "filtrerSigle": "Filtrer par sigle"
 }

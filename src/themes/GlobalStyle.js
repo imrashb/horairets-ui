@@ -46,6 +46,21 @@ const GlobalStyle = createGlobalStyle`
         animation: shine 10s linear infinite;
     }
 
+    ::-webkit-scrollbar {
+        width: ${({ theme }) => theme.sizes.size_10};
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 ${({ theme }) => theme.sizes.size_6} ${({ theme }) => theme.palette.grey[50]}; 
+        border-radius: ${({ theme }) => theme.sizes.size_8};
+        margin: ${({ theme }) => theme.sizes.size_8} ${({ theme }) => theme.sizes.size_0};
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: ${({ theme }) => theme.sizes.size_8};
+        background: ${({ theme }) => theme.palette.primary.main};
+        box-shadow: inset 0 0 ${({ theme }) => theme.sizes.size_4} ${({ theme }) => theme.palette.grey[50]}; 
+    }
 
 `;
 

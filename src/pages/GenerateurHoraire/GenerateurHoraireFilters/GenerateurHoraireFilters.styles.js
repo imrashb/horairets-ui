@@ -21,8 +21,6 @@ const GenerateurHoraireFiltersWrapper = styled.div`
         padding-right: ${({ theme }) => theme.sizes.size_16};
 
         & > button {
-            width: ${({ theme }) => theme.sizes.size_48};
-            height: ${({ theme }) => theme.sizes.size_48};
 
             background:  ${({ theme }) => theme.palette.background.light};
                 path {
