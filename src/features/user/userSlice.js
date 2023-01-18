@@ -8,11 +8,7 @@ const initialState = {
     FirstName: '',
     LastName: '',
   },
-  mode: localStorage.getItem('mode')
-    ? localStorage.getItem('mode')
-    : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light',
+  mode: 'dark',
 };
 
 export const userSlice = createSlice({
