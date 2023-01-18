@@ -11,6 +11,8 @@ const CoursTransferListWrapper = styled.div`
 
     .selection-list {
         
+        padding: ${({ theme }) => theme.sizes.size_8};
+
         width: 40%;
         
         & > * {

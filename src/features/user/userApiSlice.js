@@ -3,11 +3,9 @@ import { apiSlice } from '../../app/api/apiSlice';
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (body) => ({
-        url: '/login',
-        method: 'POST',
-        body,
-        credentials: 'include',
+      query: () => ({
+        url: '/api/combinaisons/sort',
+        method: 'GET',
       }),
     }),
     register: builder.mutation({

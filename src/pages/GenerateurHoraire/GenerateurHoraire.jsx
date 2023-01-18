@@ -1,8 +1,7 @@
-import {
-  Card, CardActions, CardContent, CardHeader, Divider,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
 import GenerateurHoraireFilters from './GenerateurHoraireFilters/GenerateurHoraireFilters';
 import SelectionCours from './SelectionCours/SelectionCours';
@@ -13,10 +12,7 @@ function GenerateurHoraire() {
 
   return (
     <GenerateurHoraireWrapper>
-      <div className="title-wrapper">
-        <span className="text-shadow">{t('generateurHoraire').toUpperCase()}</span>
-        <span className="horairets-animated-text">{t('generateurHoraire').toUpperCase()}</span>
-      </div>
+      <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
       <GenerateurHoraireFilters />
       <div className="main-content-wrapper">
         <div className="left">
@@ -25,7 +21,11 @@ function GenerateurHoraire() {
           <SelectionCours />
 
         </div>
-        <div className="right">right</div>
+        <div className="right">
+
+          <Combinaisons />
+
+        </div>
       </div>
     </GenerateurHoraireWrapper>
   );

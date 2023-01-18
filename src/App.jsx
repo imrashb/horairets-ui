@@ -15,6 +15,7 @@ function App() {
         maxWidth
         disableGutters
         sx={{
+          overflow: 'auto',
           height: '100%',
         }}
       >

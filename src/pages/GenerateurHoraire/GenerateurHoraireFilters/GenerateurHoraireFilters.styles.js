@@ -10,7 +10,6 @@ const GenerateurHoraireFiltersWrapper = styled.div`
 
     min-height: ${({ theme }) => theme.sizes.size_64};
     height: ${({ theme }) => theme.sizes.size_64};
-    margin-top: ${({ theme }) => theme.sizes.size_16};
 
     .views-wrapper {
 

@@ -6,7 +6,7 @@ import {
 import CombinaisonHoraireWrapper from './CombinaisonHoraire.styles';
 import Jour from './Jour';
 
-function GenerateurHoraire({
+function CombinaisonHoraire({
   disableHeures,
   disableNomJours,
   disableNomCours,
@@ -47,7 +47,7 @@ function GenerateurHoraire({
   );
 }
 
-GenerateurHoraire.propTypes = {
+CombinaisonHoraire.propTypes = {
   disableHeures: PropTypes.bool,
   disableNomJours: PropTypes.bool,
   disableNomCours: PropTypes.bool,
@@ -55,7 +55,7 @@ GenerateurHoraire.propTypes = {
   disableLocaux: PropTypes.bool,
 };
 
-GenerateurHoraire.defaultProps = {
+CombinaisonHoraire.defaultProps = {
   disableHeures: false,
   disableNomJours: false,
   disableNomCours: false,
@@ -63,4 +63,4 @@ GenerateurHoraire.defaultProps = {
   disableLocaux: false,
 };
 
-export default GenerateurHoraire;
+export default CombinaisonHoraire;

@@ -10,18 +10,10 @@ const GenerateurHoraireWrapper = styled.div`
 
     padding: ${({ theme }) => theme.sizes.size_8} ${({ theme }) => theme.sizes.size_24};
 
-    .title-wrapper {
-        font-size: ${({ theme }) => theme.sizes.size_64};
-        font-weight: 600;
+    .title {
 
-        .text-shadow {
-            position: absolute;
-            z-index: -1;
-            background: transparent;
-            color: transparent;
-            text-shadow: ${({ theme }) => theme.shadows.main};
-        }
-        border-bottom: ${({ theme }) => theme.sizes.size_2} solid ${({ theme }) => theme.palette.grey[300]};
+        text-shadow: ${({ theme }) => theme.textShadow.main};
+
     }
  
     .main-content-wrapper {
@@ -46,6 +38,7 @@ const GenerateurHoraireWrapper = styled.div`
 
         .right {
             flex: 2;
+            height: 100%;
         }
 
     }

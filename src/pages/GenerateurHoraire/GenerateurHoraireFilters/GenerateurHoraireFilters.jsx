@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -7,18 +7,18 @@ import {
   FormControl, MenuItem, Select, Tooltip, Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import GenerateurHoraireFiltersWrapper from './GenerateurHoraireFilters.styles';
-
-const GRID_VIEW = 'grid';
-const LIST_VIEW = 'list';
+import { selectView, setView } from '../../../features/generateur/generateur.slice';
+import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
 
 function GenerateurHoraireFilters() {
   const { t } = useTranslation('common');
-
-  const [view, setView] = useState(LIST_VIEW);
+  const view = useSelector(selectView);
+  const dispatch = useDispatch();
 
   const handleAlignment = (event, value) => {
-    setView(value);
+    dispatch(setView(value));
   };
 
   return (
@@ -29,12 +29,12 @@ function GenerateurHoraireFilters() {
         exclusive
         onChange={handleAlignment}
       >
-        <ToggleButton value={LIST_VIEW} size="small">
+        <ToggleButton value={GENERATEUR_LIST_VIEW} size="small">
           <Tooltip title={t('affichageListe')}>
             <ViewList />
           </Tooltip>
         </ToggleButton>
-        <ToggleButton value={GRID_VIEW} size="small">
+        <ToggleButton value={GENERATEUR_GRID_VIEW} size="small">
           <Tooltip title={t('affichageGrille')}>
             <GridView />
           </Tooltip>

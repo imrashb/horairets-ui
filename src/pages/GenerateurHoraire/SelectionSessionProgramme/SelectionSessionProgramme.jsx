@@ -6,20 +6,47 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  FormControl, InputLabel, MenuItem, Select,
+  FormControl, FormHelperText, InputLabel, MenuItem, Select, Skeleton,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  useGetProgrammesQuery, useGetSessionsQuery, useLazyGetCoursSessionQuery,
+} from '../../../features/generateur/generateur.api';
+import {
+  selectProgramme, selectSession, setProgramme, setSession,
+} from '../../../features/generateur/generateur.slice';
 import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles';
 
 function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
 
-  const sessions = ['A2022', 'H2023', 'E2023'];
-  const programmes = ['Génie Logiciel', 'Génie Électrique'];
+  const programme = useSelector(selectProgramme);
+  const session = useSelector(selectSession);
 
-  const [session, setSession] = useState(sessions[0]);
-  const [programme, setProgramme] = useState(programmes[0]);
+  const [controlledSession, setControlledSession] = useState('');
+  const sessionsQuery = useGetSessionsQuery();
+
+  useEffect(() => {
+    if (sessionsQuery?.data) {
+      setControlledSession(sessionsQuery?.data?.at(-1));
+    }
+  }, [sessionsQuery?.data]);
+
+  const [controlledProgramme, setControlledProgramme] = useState('');
+  const programmesQuery = useGetProgrammesQuery();
+
+  const [coursSessionTrigger] = useLazyGetCoursSessionQuery();
+
+  const handleSelection = () => {
+    dispatch(setSession(controlledSession));
+    dispatch(setProgramme(controlledProgramme));
+    coursSessionTrigger({ session: controlledSession, programme: controlledProgramme });
+  };
+
+  const isSelectionSame = (programme === controlledProgramme && session === controlledSession);
 
   return (
     <SelectionSessionProgrammeWrapper>
@@ -27,30 +54,56 @@ function SelectionSessionProgramme() {
         <CardHeader title={t('sessionProgramme')} />
         <Divider />
         <CardContent className="selection-wrapper">
-          <FormControl variant="standard">
-            <InputLabel>{t('session')}</InputLabel>
-            <Select
-              value={session}
-              onChange={(e) => setSession(e?.target?.value)}
-              label={t('session')}
-            >
-              {sessions.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
-            </Select>
-          </FormControl>
-          <FormControl variant="standard">
-            <InputLabel>{t('programme')}</InputLabel>
-            <Select
-              value={programme}
-              onChange={(e) => setProgramme(e?.target?.value)}
-              label={t('programme')}
-            >
-              {programmes.map((p) => <MenuItem key={p} value={p}>{p}</MenuItem>)}
-            </Select>
-          </FormControl>
+
+          {sessionsQuery.isLoading
+            ? <Skeleton variant="rectangular" width="100%" height="3rem" />
+            : (
+              <FormControl variant="standard">
+                <InputLabel>{t('session')}</InputLabel>
+                <Select
+                  value={controlledSession}
+                  onChange={(e) => setControlledSession(e?.target?.value)}
+                  label={t('session')}
+                >
+                  {sessionsQuery?.data?.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
+                </Select>
+                {session && (
+                <FormHelperText>
+                  {t('selectionActuelle')}
+                  {session}
+                </FormHelperText>
+                )}
+              </FormControl>
+            )}
+          {programmesQuery.isLoading
+            ? <Skeleton variant="rectangular" width="100%" height="3rem" />
+            : (
+              <FormControl variant="standard">
+                <InputLabel>{t('programme')}</InputLabel>
+                <Select
+                  value={controlledProgramme}
+                  onChange={(e) => setControlledProgramme(e?.target?.value)}
+                  label={t('programme')}
+                >
+                  {programmesQuery?.data?.map((p) => <MenuItem key={p} value={p}>{t(p)}</MenuItem>)}
+                </Select>
+                {programme && (
+                <FormHelperText>
+                  {t('selectionActuelle')}
+                  {t(programme)}
+                </FormHelperText>
+                )}
+              </FormControl>
+            )}
         </CardContent>
         <Divider />
         <CardActions>
-          <Button variant="text">
+          <Button
+            variant="text"
+            onClick={handleSelection}
+            disabled={!controlledProgramme || !controlledSession
+            || isSelectionSame}
+          >
             {t('synchroniserCours')}
             <Sync />
           </Button>

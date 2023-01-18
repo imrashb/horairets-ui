@@ -16,7 +16,7 @@ const HomeWrapper = styled.div`
         
         .body-bienvenue {
             color: ${({ theme }) => theme.palette.primary.main};
-            text-shadow: ${({ theme }) => theme.shadows.main};
+            text-shadow: ${({ theme }) => theme.textShadow.main};
         }
 
         .body-horairets {

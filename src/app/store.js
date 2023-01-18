@@ -1,14 +1,15 @@
-import counterReducer from '../features/counter/counterSlice';
-import userReducer from '../features/user/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import { generateurApi } from '../features/generateur/generateur.api';
+import { generateurReducer } from '../features/generateur/generateur.slice';
+import userReducer from '../features/user/userSlice';
 import { apiSlice } from './api/apiSlice';
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    counter: counterReducer,
+    [generateurApi.reducerPath]: generateurApi.reducer,
+    generateur: generateurReducer,
     user: userReducer,
   },
   middleware: (getdefaultMiddleware) => getdefaultMiddleware().concat(apiSlice.middleware),
-  devTools: false,
+  devTools: true,
 });

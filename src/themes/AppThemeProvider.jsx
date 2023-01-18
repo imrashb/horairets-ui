@@ -74,7 +74,7 @@ export default function AppThemeProvider({ children }) {
         size_240: '15rem',
         size_256: '16rem',
       },
-      shadows: {
+      textShadow: {
         main: 'black 0.25vw 0.25vw 0.5vw',
       },
       text: {

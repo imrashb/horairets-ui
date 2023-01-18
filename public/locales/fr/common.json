@@ -28,5 +28,16 @@
   "affichageGrille": "Affichage grille",
   "coursDisponibles": "Cours disponibles",
   "coursSelectionnes": "Cours sélectionnés",
-  "filtrerSigle": "Filtrer par sigle"
+  "filtrerSigle": "Filtrer par sigle",
+  "SEG": "Enseignements généraux",
+  "CUT": "Cheminement universitaire en technologie",
+  "CTN": "Génie de la construction",
+  "ELE": "Génie électrique",
+  "LOG": "Génie logiciel",
+  "MEC": "Génie mécanique",
+  "GOL": "Génie des opérations et de la logistique",
+  "GPA": "Génie de la production automatisée",
+  "TI": "Génie des technologies de l'information",
+  "selectionActuelle": "Sélection actuelle: ",
+  "inclureMaitrise": "Inclure les cours de maîtrise"
 }
