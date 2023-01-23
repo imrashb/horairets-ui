@@ -1,9 +1,13 @@
-import { Sync } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Button,
-  Card, CardActions, CardContent, CardHeader, Divider, FormControlLabel, Switch,
+  Divider, FormControlLabel, Switch, Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCoursSession, useLazyGetCombinaisonsQuery } from '../../../features/generateur/generateur.api';
@@ -22,9 +26,10 @@ function SelectionCours() {
   const session = useSelector(selectSession);
   const programme = useSelector(selectProgramme);
   const selectedCours = useSelector(selectSelectedCours);
-  const { isUninitialized } = useSelector(selectCoursSession(session, programme));
+  const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [cours, setCours] = useState([]);
+  const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
 
   const onSelectedCoursChange = (value) => {
     setCours(value?.map((c) => c?.sigle));
@@ -35,12 +40,26 @@ function SelectionCours() {
     getCombinaisonsTrigger({ session, cours });
   };
 
+  useEffect(() => {
+    if (selectCoursSessionQuery?.data) {
+      setExpanded(!!selectCoursSessionQuery?.data);
+    }
+  }, [selectCoursSessionQuery?.data]);
+
   return (
     <SelectionCoursWrapper>
-      <Card>
-        <CardHeader title={t('cours')} />
+      <Accordion
+        expanded={expanded}
+        disabled={!selectCoursSessionQuery?.data}
+        onChange={() => setExpanded(!expanded)}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography variant="h5">{t('cours')}</Typography>
+        </AccordionSummary>
         <Divider />
-        <CardContent>
+        <AccordionDetails>
           <CoursTransferList
             includeMaitrise={includeMaitrise}
             onSelectedCoursChange={onSelectedCoursChange}
@@ -53,19 +72,20 @@ function SelectionCours() {
             )}
             label={t('inclureMaitrise')}
           />
-        </CardContent>
+        </AccordionDetails>
         <Divider />
-        <CardActions>
+        <AccordionActions>
           <Button
-            variant="text"
-            disabled={cours.length === 0 || cours?.every((v) => selectedCours?.includes(v))}
+            variant="contained"
+            disabled={cours.length === 0
+      || (cours?.length === selectedCours?.length
+      && cours?.every((v) => selectedCours?.includes(v)))}
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}
-            <Sync />
           </Button>
-        </CardActions>
-      </Card>
+        </AccordionActions>
+      </Accordion>
     </SelectionCoursWrapper>
   );
 }

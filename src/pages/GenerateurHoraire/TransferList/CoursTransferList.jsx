@@ -46,11 +46,9 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
     if (isLeft) {
       modifiedLeft = left.filter((v) => v !== value);
       modifiedRight = [...right, value];
-      setUnselectedFilter('');
     } else {
       modifiedRight = right.filter((v) => v !== value);
       modifiedLeft = [...left, value];
-      setSelectedFilter('');
     }
     setLeft(modifiedLeft);
     setRight(modifiedRight);
@@ -85,7 +83,13 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
     return (
       <Paper className="selection-list">
         <Typography>{listName}</Typography>
-        <TextField required value={filter} label={t('filtrerSigle')} variant="standard" onChange={(event) => handleFilterChange(event, setFilter)} />
+        <TextField
+          value={filter}
+          label={t('filtrerSigle')}
+          variant="standard"
+          onChange={(event) => handleFilterChange(event, setFilter)}
+          type="search"
+        />
         <List dense component="div" role="list">
           {[...filteredItems].sort(sortFunction).map((value) => (
             <ListItemButton
