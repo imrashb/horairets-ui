@@ -12,12 +12,22 @@ import { useSelector } from 'react-redux';
 import CoursTransferListWrapper from './CoursTransferList.styles';
 import { selectCoursSession } from '../../../features/generateur/generateur.api';
 import { selectProgramme, selectSession } from '../../../features/generateur/generateur.slice';
-import { MAITRISE } from '../generateurHoraire.constants';
+import { MAITRISE, NOMBRE_MAX_COURS } from '../generateurHoraire.constants';
+
+const RIGHT = 'right';
+const LEFT = 'left';
+
+const createListProperties = (id, listName, icon, filter, setFilter) => ({
+  id,
+  listName,
+  icon,
+  filter,
+  setFilter,
+});
 
 export default function CoursTransferList({ includeMaitrise, onSelectedCoursChange }) {
   const { t } = useTranslation('common');
 
-  console.log(includeMaitrise);
   const programme = useSelector(selectProgramme);
   const session = useSelector(selectSession);
 
@@ -62,7 +72,15 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
     setState(event?.target?.value);
   };
 
-  const customList = (items, listName, icon, filter, setFilter) => {
+  const lists = {
+    [LEFT]: createListProperties(LEFT, t('coursDisponibles'), <ChevronRight />, unselectedFilter, setUnselectedFilter),
+    [RIGHT]: createListProperties(RIGHT, t('coursSelectionnes'), <ChevronLeft />, selectedFilter, setSelectedFilter),
+  };
+
+  const customList = (items, properties) => {
+    const {
+      id, listName, icon, filter, setFilter,
+    } = properties;
     const filterFunction = (i) => i?.sigle.toLowerCase().includes(filter.toLowerCase());
 
     let filteredItems = filter ? items.filter(filterFunction) : items;
@@ -79,10 +97,12 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
       }
       return 0;
     };
+    const title = id === RIGHT ? `${listName} (${right.length}/${NOMBRE_MAX_COURS})`
+      : `${listName} (${left.length})`;
 
     return (
       <Paper className="selection-list">
-        <Typography>{listName}</Typography>
+        <Typography>{title}</Typography>
         <TextField
           value={filter}
           label={t('filtrerSigle')}
@@ -97,6 +117,7 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
               divider
               key={value?.sigle}
               onClick={() => handleToggle(value)}
+              disabled={id === LEFT && right.length === 15}
             >
               <ListItemIcon>
                 {icon}
@@ -104,6 +125,15 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
               <ListItemText primary={value?.sigle} />
             </ListItemButton>
           ))}
+          {id === RIGHT && right.length === 0
+            && (
+            <ListItemButton
+              disableGutters
+              disabled
+            >
+              <ListItemText primary={t('aucunCoursSelectionne')} />
+            </ListItemButton>
+            )}
         </List>
       </Paper>
     );
@@ -111,9 +141,9 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
 
   return (
     <CoursTransferListWrapper>
-      {customList(left, t('coursDisponibles'), <ChevronRight />, unselectedFilter, setUnselectedFilter)}
+      {customList(left, lists[LEFT])}
       <SwapHoriz className="swap-icon" />
-      {customList(right, t('coursSelectionnes'), <ChevronLeft />, selectedFilter, setSelectedFilter)}
+      {customList(right, lists[RIGHT])}
     </CoursTransferListWrapper>
   );
 }
