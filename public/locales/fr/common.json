@@ -39,5 +39,16 @@
   "GPA": "Génie de la production automatisée",
   "TI": "Génie des technologies de l'information",
   "selectionActuelle": "Sélection actuelle: ",
-  "inclureMaitrise": "Inclure les cours de maîtrise"
+  "inclureMaitrise": "Inclure les cours de maîtrise",
+  "selectionnesProgramme": "Sélectionnes un programme",
+  "aucunCoursSelectionne": "Aucun cours sélectionné",
+  "parametres": "Paramètres",
+  "nombreCoursParHoraire": "Nombre de cours par horaire",
+  "annuler": "Annuler",
+  "appliquerParametres": "Appliquer les paramètres",
+  "parametresHoraire": "Paramètres d'horaire",
+  "joursConges": "Jours de congés",
+  "horairesGeneres_zero": "Aucun horaire généré",
+  "horairesGeneres_one": "{{count}} horaire généré",
+  "horairesGeneres_other": "{{count}} horaires générés"
 }

@@ -1,12 +1,13 @@
-import { Sync } from '@mui/icons-material';
+import { Check, ExpandMore } from '@mui/icons-material';
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
+  CircularProgress,
   Divider,
-  FormControl, FormHelperText, InputLabel, MenuItem, Select, Skeleton,
+  FormControl, InputLabel, MenuItem, Select, Skeleton, Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +27,7 @@ function SelectionSessionProgramme() {
   const programme = useSelector(selectProgramme);
   const session = useSelector(selectSession);
 
-  const [controlledSession, setControlledSession] = useState('');
+  const [controlledSession, setControlledSession] = useState(session);
   const sessionsQuery = useGetSessionsQuery();
 
   useEffect(() => {
@@ -35,10 +36,10 @@ function SelectionSessionProgramme() {
     }
   }, [sessionsQuery?.data]);
 
-  const [controlledProgramme, setControlledProgramme] = useState('');
+  const [controlledProgramme, setControlledProgramme] = useState(programme);
   const programmesQuery = useGetProgrammesQuery();
 
-  const [coursSessionTrigger] = useLazyGetCoursSessionQuery();
+  const [coursSessionTrigger, coursSessionQuery] = useLazyGetCoursSessionQuery();
 
   const handleSelection = () => {
     dispatch(setSession(controlledSession));
@@ -48,67 +49,74 @@ function SelectionSessionProgramme() {
 
   const isSelectionSame = (programme === controlledProgramme && session === controlledSession);
 
+  const [expanded, setExpanded] = useState(true);
+
   return (
     <SelectionSessionProgrammeWrapper>
-      <Card variant="elevation" className="choix-session">
-        <CardHeader title={t('sessionProgramme')} />
+      <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} className="choix-session">
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography variant="h5">{t('sessionProgramme')}</Typography>
+          {coursSessionQuery?.isFetching && <CircularProgress size="2rem" thickness="8" />}
+        </AccordionSummary>
         <Divider />
-        <CardContent className="selection-wrapper">
-
+        <AccordionDetails className="selection-wrapper">
           {sessionsQuery.isLoading
             ? <Skeleton variant="rectangular" width="100%" height="3rem" />
             : (
-              <FormControl variant="standard">
+              <FormControl required variant="standard">
                 <InputLabel>{t('session')}</InputLabel>
                 <Select
                   value={controlledSession}
                   onChange={(e) => setControlledSession(e?.target?.value)}
                   label={t('session')}
                 >
-                  {sessionsQuery?.data?.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
+                  {sessionsQuery?.data?.map((s) => (
+                    <MenuItem key={s} value={s}>
+                      {s}
+                      {' '}
+                      {s === session && <Check />}
+                    </MenuItem>
+                  ))}
                 </Select>
-                {session && (
-                <FormHelperText>
-                  {t('selectionActuelle')}
-                  {session}
-                </FormHelperText>
-                )}
               </FormControl>
             )}
           {programmesQuery.isLoading
             ? <Skeleton variant="rectangular" width="100%" height="3rem" />
             : (
-              <FormControl variant="standard">
+              <FormControl error={controlledProgramme === ''} required variant="standard">
                 <InputLabel>{t('programme')}</InputLabel>
                 <Select
                   value={controlledProgramme}
                   onChange={(e) => setControlledProgramme(e?.target?.value)}
                   label={t('programme')}
                 >
-                  {programmesQuery?.data?.map((p) => <MenuItem key={p} value={p}>{t(p)}</MenuItem>)}
+                  {programmesQuery?.data?.map(
+                    (p) => (
+                      <MenuItem key={p} value={p}>
+                        {t(p)}
+                        {' '}
+                        {p === programme && <Check />}
+                      </MenuItem>
+                    ),
+                  )}
                 </Select>
-                {programme && (
-                <FormHelperText>
-                  {t('selectionActuelle')}
-                  {t(programme)}
-                </FormHelperText>
-                )}
               </FormControl>
             )}
-        </CardContent>
+        </AccordionDetails>
         <Divider />
-        <CardActions>
+        <AccordionActions>
           <Button
-            variant="text"
+            variant="contained"
             onClick={handleSelection}
             disabled={!controlledProgramme || !controlledSession
             || isSelectionSame}
           >
             {t('synchroniserCours')}
-            <Sync />
           </Button>
-        </CardActions>
-      </Card>
+        </AccordionActions>
+      </Accordion>
     </SelectionSessionProgrammeWrapper>
   );
 }

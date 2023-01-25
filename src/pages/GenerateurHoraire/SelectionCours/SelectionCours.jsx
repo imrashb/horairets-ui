@@ -1,15 +1,22 @@
-import { Sync } from '@mui/icons-material';
+import { ExpandMore, Settings } from '@mui/icons-material';
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Button,
-  Card, CardActions, CardContent, CardHeader, Divider, FormControlLabel, Switch,
+  Divider, FormControlLabel, Switch, Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCoursSession, useLazyGetCombinaisonsQuery } from '../../../features/generateur/generateur.api';
 import {
-  selectProgramme, selectSelectedCours, selectSession, setSelectedCours,
+  selectConges,
+  selectNombreCours,
+  selectProgramme, selectSelectedCours, selectSession, setConges, setNombreCours, setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
+import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
 
@@ -22,9 +29,15 @@ function SelectionCours() {
   const session = useSelector(selectSession);
   const programme = useSelector(selectProgramme);
   const selectedCours = useSelector(selectSelectedCours);
-  const { isUninitialized } = useSelector(selectCoursSession(session, programme));
+  const nombreCours = useSelector(selectNombreCours);
+  const conges = useSelector(selectConges);
+  const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [cours, setCours] = useState([]);
+  const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [controlledNombreCours, setControlledNombreCours] = useState(undefined);
+  const [controlledConges, setControlledConges] = useState(undefined);
 
   const onSelectedCoursChange = (value) => {
     setCours(value?.map((c) => c?.sigle));
@@ -32,15 +45,42 @@ function SelectionCours() {
 
   const handleGenerateCombinaisons = () => {
     dispatch(setSelectedCours(cours));
-    getCombinaisonsTrigger({ session, cours });
+    dispatch(setNombreCours(controlledNombreCours));
+    dispatch(setConges(controlledConges));
+    getCombinaisonsTrigger({
+      session, cours, conges: controlledConges, nombreCours: controlledNombreCours,
+    });
   };
+
+  const handleDialogClose = (values) => {
+    if (values) {
+      setControlledNombreCours(values?.nombreCours);
+      setControlledConges(values?.conges);
+    }
+    setDialogOpen(false);
+  };
+
+  useEffect(() => {
+    if (selectCoursSessionQuery?.data) {
+      setExpanded(!!selectCoursSessionQuery?.data);
+    }
+  }, [selectCoursSessionQuery?.data]);
 
   return (
     <SelectionCoursWrapper>
-      <Card>
-        <CardHeader title={t('cours')} />
+      <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
+      <Accordion
+        expanded={expanded}
+        disabled={!selectCoursSessionQuery?.data}
+        onChange={() => setExpanded(!expanded)}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography variant="h5">{t('cours')}</Typography>
+        </AccordionSummary>
         <Divider />
-        <CardContent>
+        <AccordionDetails>
           <CoursTransferList
             includeMaitrise={includeMaitrise}
             onSelectedCoursChange={onSelectedCoursChange}
@@ -53,19 +93,29 @@ function SelectionCours() {
             )}
             label={t('inclureMaitrise')}
           />
-        </CardContent>
+        </AccordionDetails>
         <Divider />
-        <CardActions>
+        <AccordionActions>
           <Button
-            variant="text"
-            disabled={cours.length === 0 || cours?.every((v) => selectedCours?.includes(v))}
+            startIcon={<Settings />}
+            variant="outlined"
+            onClick={() => setDialogOpen(true)}
+          >
+            {t('parametres')}
+          </Button>
+          <Button
+            variant="contained"
+            disabled={cours.length === 0
+      || (cours?.length === selectedCours?.length
+      && cours?.every((v) => selectedCours?.includes(v))
+      && nombreCours === controlledNombreCours
+      && conges === controlledConges)}
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}
-            <Sync />
           </Button>
-        </CardActions>
-      </Card>
+        </AccordionActions>
+      </Accordion>
     </SelectionCoursWrapper>
   );
 }

@@ -7,6 +7,8 @@ import { MAITRISE } from '../../pages/GenerateurHoraire/generateurHoraire.consta
 const PROGRAMMES = 'programmes';
 const SESSION = 'session';
 const COURS = 'cours';
+const NOMBRE_COURS = 'nbCours';
+const CONGES = 'conges';
 
 export const generateurApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_API_URL }),
@@ -29,10 +31,20 @@ export const generateurApi = createApi({
       },
     }),
     getCombinaisons: builder.query({
-      query: ({ session, cours }) => {
+      query: ({
+        session, cours, conges, nombreCours,
+      }) => {
         const params = new URLSearchParams();
         params.append(SESSION, session);
         params.append(COURS, cours);
+
+        if (nombreCours) {
+          params.append(NOMBRE_COURS, nombreCours);
+        }
+
+        if (conges && conges.length > 0) {
+          params.append(CONGES, conges);
+        }
         return `${GET_COMBINAISONS_ENDPOINT}?${params.toString()}`;
       },
     }),
@@ -42,8 +54,10 @@ export const generateurApi = createApi({
 export const selectCoursSession = (session, programme) => (state) => generateurApi
   .endpoints.getCoursSession.select({ session, programme })(state);
 
-export const selectCombinaisons = (session, cours) => (state) => generateurApi
-  .endpoints.getCombinaisons.select({ session, cours })(state);
+export const selectCombinaisons = (session, cours, nombreCours, conges) => (state) => generateurApi
+  .endpoints.getCombinaisons.select({
+    session, cours, nombreCours, conges,
+  })(state);
 
 // Export hooks for usage in functional components
 export const {

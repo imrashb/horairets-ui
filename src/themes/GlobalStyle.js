@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
         -webkit-text-fill-color: transparent;
 
         background-size: 200% auto;
-        animation: shine 10s linear infinite;
+        animation: shine 5s linear infinite;
     }
 
     .horairets-animated-background {
@@ -43,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
 
         background: linear-gradient(to right, ${({ theme }) => theme.palette.primary.light},${({ theme }) => theme.palette.primary.main}, ${({ theme }) => theme.palette.primary.light});
         background-size: 200% auto;
-        animation: shine 10s linear infinite;
+        animation: shine 5s linear infinite;
     }
 
     ::-webkit-scrollbar {

@@ -5,6 +5,7 @@ import {
 } from './CombinasonHoraire.constants';
 import CombinaisonHoraireWrapper from './CombinaisonHoraire.styles';
 import Jour from './Jour';
+import { JOURS } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
 
 function CombinaisonHoraire({
   disableHeures,
@@ -14,7 +15,7 @@ function CombinaisonHoraire({
   disableLocaux,
   combinaison,
 }) {
-  const jours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
+  const jours = JOURS;
 
   const heures = [...Array(HEURE_FIN_COURS - HEURE_DEBUT_COURS + 1).keys()]
     .map((v) => v + HEURE_DEBUT_COURS);

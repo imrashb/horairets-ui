@@ -36,6 +36,11 @@ const GenerateurHoraireFiltersWrapper = styled.div`
         }
     }
 
+    .nb-horaires-generes {
+        margin-left: ${({ theme }) => theme.sizes.size_16};
+        margin-right: auto;
+    }
+
     .sort-wrapper {
         display:flex;
         flex-direction: row;

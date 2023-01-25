@@ -10,6 +10,12 @@ const SelectionSessionProgrammeWrapper = styled.div`
         align-items: center;
         justify-content: space-between;
 
+        .MuiSelect-select {
+            display:flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
         & > * {
             flex: 1;
             margin: ${({ theme }) => theme.sizes.size_0} ${({ theme }) => theme.sizes.size_8} !important;

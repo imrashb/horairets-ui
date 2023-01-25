@@ -7,8 +7,10 @@ const SelectionCoursWrapper = styled.div`
     width: 100%;
     height: 100%;
 
-    .MuiSvgIcon-root {
-        margin-left: ${({ theme }) => theme.sizes.size_8};
+    .MuiAccordionActions-root {
+
+        justify-content: space-between;
+
     }
 
 `;

@@ -13,7 +13,7 @@ const CoursTransferListWrapper = styled.div`
         
         padding: ${({ theme }) => theme.sizes.size_8};
 
-        width: 40%;
+        width: 50%;
         
         & > * {
             width: 100%;
@@ -28,6 +28,7 @@ const CoursTransferListWrapper = styled.div`
 
     .swap-icon {
         align-self: center;
+        margin: ${({ theme }) => theme.sizes.size_8};
     }
 
 
