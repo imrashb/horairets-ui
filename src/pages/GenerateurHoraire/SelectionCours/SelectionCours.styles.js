@@ -7,6 +7,12 @@ const SelectionCoursWrapper = styled.div`
     width: 100%;
     height: 100%;
 
+    .MuiAccordionActions-root {
+
+        justify-content: space-between;
+
+    }
+
 `;
 
 export default SelectionCoursWrapper;

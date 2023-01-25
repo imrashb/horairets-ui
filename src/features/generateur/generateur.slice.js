@@ -7,6 +7,8 @@ const initialState = {
   programme: '',
   selectedCours: undefined,
   view: GENERATEUR_LIST_VIEW,
+  conges: undefined,
+  nombreCours: undefined,
 };
 
 const GENERATEUR_SLICE = 'generateur';
@@ -29,13 +31,19 @@ const generateurSlice = createSlice({
     setView: (state, action) => {
       state.view = action.payload;
     },
+    setConges: (state, action) => {
+      state.conges = action.payload;
+    },
+    setNombreCours: (state, action) => {
+      state.nombreCours = action.payload;
+    },
   },
 });
 
 export const generateurReducer = generateurSlice.reducer;
 
 export const {
-  setProgramme, setSession, setSelectedCours, setView,
+  setProgramme, setSession, setSelectedCours, setView, setConges, setNombreCours,
 } = generateurSlice.actions;
 
 export const selectProgramme = (state) => state.generateur.programme;
@@ -45,5 +53,9 @@ export const selectSession = (state) => state.generateur.session;
 export const selectSelectedCours = (state) => state.generateur.selectedCours;
 
 export const selectView = (state) => state.generateur.view;
+
+export const selectConges = (state) => state.generateur.conges;
+
+export const selectNombreCours = (state) => state.generateur.nombreCours;
 
 export default generateurSlice;

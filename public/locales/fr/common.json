@@ -41,5 +41,11 @@
   "selectionActuelle": "Sélection actuelle: ",
   "inclureMaitrise": "Inclure les cours de maîtrise",
   "selectionnesProgramme": "Sélectionnes un programme",
-  "aucunCoursSelectionne": "Aucun cours sélectionné"
+  "aucunCoursSelectionne": "Aucun cours sélectionné",
+  "parametres": "Paramètres",
+  "nombreCoursParHoraire": "Nombre de cours par horaire",
+  "annuler": "Annuler",
+  "appliquerParametres": "Appliquer les paramètres",
+  "parametresHoraire": "Paramètres d'horaire",
+  "joursConges": "Jours de congés"
 }

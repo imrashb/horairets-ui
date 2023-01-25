@@ -1,4 +1,4 @@
-import { ExpandMore } from '@mui/icons-material';
+import { ExpandMore, Settings } from '@mui/icons-material';
 import {
   Accordion,
   AccordionActions,
@@ -12,8 +12,11 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCoursSession, useLazyGetCombinaisonsQuery } from '../../../features/generateur/generateur.api';
 import {
-  selectProgramme, selectSelectedCours, selectSession, setSelectedCours,
+  selectConges,
+  selectNombreCours,
+  selectProgramme, selectSelectedCours, selectSession, setConges, setNombreCours, setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
+import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
 
@@ -26,10 +29,15 @@ function SelectionCours() {
   const session = useSelector(selectSession);
   const programme = useSelector(selectProgramme);
   const selectedCours = useSelector(selectSelectedCours);
+  const nombreCours = useSelector(selectNombreCours);
+  const conges = useSelector(selectConges);
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [cours, setCours] = useState([]);
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [controlledNombreCours, setControlledNombreCours] = useState(undefined);
+  const [controlledConges, setControlledConges] = useState(undefined);
 
   const onSelectedCoursChange = (value) => {
     setCours(value?.map((c) => c?.sigle));
@@ -37,7 +45,19 @@ function SelectionCours() {
 
   const handleGenerateCombinaisons = () => {
     dispatch(setSelectedCours(cours));
-    getCombinaisonsTrigger({ session, cours });
+    dispatch(setNombreCours(controlledNombreCours));
+    dispatch(setConges(controlledConges));
+    getCombinaisonsTrigger({
+      session, cours, conges: controlledConges, nombreCours: controlledNombreCours,
+    });
+  };
+
+  const handleDialogClose = (values) => {
+    if (values) {
+      setControlledNombreCours(values?.nombreCours);
+      setControlledConges(values?.conges);
+    }
+    setDialogOpen(false);
   };
 
   useEffect(() => {
@@ -48,6 +68,7 @@ function SelectionCours() {
 
   return (
     <SelectionCoursWrapper>
+      <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
       <Accordion
         expanded={expanded}
         disabled={!selectCoursSessionQuery?.data}
@@ -76,10 +97,19 @@ function SelectionCours() {
         <Divider />
         <AccordionActions>
           <Button
+            startIcon={<Settings />}
+            variant="outlined"
+            onClick={() => setDialogOpen(true)}
+          >
+            {t('parametres')}
+          </Button>
+          <Button
             variant="contained"
             disabled={cours.length === 0
       || (cours?.length === selectedCours?.length
-      && cours?.every((v) => selectedCours?.includes(v)))}
+      && cours?.every((v) => selectedCours?.includes(v))
+      && nombreCours === controlledNombreCours
+      && conges === controlledConges)}
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}

@@ -4,15 +4,19 @@ import { useSelector } from 'react-redux';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { selectCombinaisons } from '../../../features/generateur/generateur.api';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
-import { selectSelectedCours, selectSession, selectView } from '../../../features/generateur/generateur.slice';
+import {
+  selectConges, selectNombreCours, selectSelectedCours, selectSession, selectView,
+} from '../../../features/generateur/generateur.slice';
 import CombinaisonsWrapper from './Combinaisons.styles';
 
 function Combinaisons() {
   const session = useSelector(selectSession);
   const selectedCours = useSelector(selectSelectedCours);
+  const nombreCours = useSelector(selectNombreCours);
+  const conges = useSelector(selectConges);
   const view = useSelector(selectView);
 
-  const { data } = useSelector(selectCombinaisons(session, selectedCours));
+  const { data } = useSelector(selectCombinaisons(session, selectedCours, nombreCours, conges));
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
