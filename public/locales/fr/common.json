@@ -47,5 +47,8 @@
   "annuler": "Annuler",
   "appliquerParametres": "Appliquer les paramètres",
   "parametresHoraire": "Paramètres d'horaire",
-  "joursConges": "Jours de congés"
+  "joursConges": "Jours de congés",
+  "horairesGeneres_zero": "Aucun horaire généré",
+  "horairesGeneres_one": "{{count}} horaire généré",
+  "horairesGeneres_other": "{{count}} horaires générés"
 }
