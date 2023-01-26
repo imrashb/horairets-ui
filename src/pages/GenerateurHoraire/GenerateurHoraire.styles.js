@@ -26,13 +26,16 @@ const GenerateurHoraireWrapper = styled.div`
 
         .left {
             flex: 1;
-
             height: 100%;
 
             display:flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+
+            .fixed-wrapper {
+                width: 100%;
+            }
 
         }
 

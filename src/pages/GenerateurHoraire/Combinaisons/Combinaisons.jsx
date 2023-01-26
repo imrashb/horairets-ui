@@ -45,6 +45,8 @@ function Combinaisons() {
       onPageChange={(e, p) => setPage(p)}
       onRowsPerPageChange={handleRowsPerPageChange}
       labelRowsPerPage={t('horaireParPage')}
+      showFirstButton
+      showLastButton
       labelDisplayedRows={(params) => t(
         'paginationHoraire',
         {

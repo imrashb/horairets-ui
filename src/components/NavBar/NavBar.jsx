@@ -60,7 +60,7 @@ export default function NavBar() {
   };
 
   return (
-    <NavBarWrapper>
+    <NavBarWrapper id="navbar">
       <AppBar position="static">
         <Toolbar>
           <div className="navbar-left">
