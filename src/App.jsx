@@ -12,6 +12,7 @@ function App() {
       <CssBaseline />
       <NavBar />
       <Container
+        id="main-container"
         maxWidth
         disableGutters
         sx={{
