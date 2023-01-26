@@ -13,6 +13,9 @@ const CombinaisonsWrapper = styled.div`
         padding: 0 ${({ theme }) => theme.sizes.size_24};
         & > .MuiGrid-item {
 
+            max-width: 1200px;
+            margin: 0 auto;
+
             &:not(:first-child) {
                 .numero-horaire {
                     margin-top: ${({ theme }) => theme.sizes.size_24};

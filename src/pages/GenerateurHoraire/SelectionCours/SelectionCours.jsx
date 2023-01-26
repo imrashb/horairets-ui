@@ -4,7 +4,9 @@ import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Backdrop,
   Button,
+  CircularProgress,
   Divider, FormControlLabel, Switch, Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -25,7 +27,7 @@ function SelectionCours() {
 
   const dispatch = useDispatch();
 
-  const [getCombinaisonsTrigger] = useLazyGetCombinaisonsQuery();
+  const [getCombinaisonsTrigger, getCombinaisonQuery] = useLazyGetCombinaisonsQuery();
   const session = useSelector(selectSession);
   const programme = useSelector(selectProgramme);
   const selectedCours = useSelector(selectSelectedCours);
@@ -113,6 +115,9 @@ function SelectionCours() {
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}
+            <Backdrop open={getCombinaisonQuery?.isFetching}>
+              <CircularProgress color="inherit" />
+            </Backdrop>
           </Button>
         </AccordionActions>
       </Accordion>

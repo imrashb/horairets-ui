@@ -85,7 +85,7 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
 
     let filteredItems = filter ? items.filter(filterFunction) : items;
 
-    filteredItems = includeMaitrise
+    filteredItems = (includeMaitrise || id === RIGHT)
       ? filteredItems : filteredItems.filter((i) => !i?.programmes?.includes(MAITRISE));
 
     const sortFunction = (a, b) => {
@@ -97,8 +97,8 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
       }
       return 0;
     };
-    const title = id === RIGHT ? `${listName} (${right.length}/${NOMBRE_MAX_COURS})`
-      : `${listName} (${left.length})`;
+    const title = id === RIGHT ? `${listName} (${filteredItems.length}/${NOMBRE_MAX_COURS})`
+      : `${listName} (${filteredItems.length})`;
 
     return (
       <Paper className="selection-list">
