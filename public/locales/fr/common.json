@@ -50,5 +50,8 @@
   "joursConges": "Jours de congés",
   "horairesGeneres_zero": "Aucun horaire généré",
   "horairesGeneres_one": "{{count}} horaire généré",
-  "horairesGeneres_other": "{{count}} horaires générés"
+  "horairesGeneres_other": "{{count}} horaires générés",
+  "horaireParPage": "Horaires par page:",
+  "paginationHoraire": "{{from}}-{{to}} de {{count}}",
+  "horaire": "Horaire"
 }
