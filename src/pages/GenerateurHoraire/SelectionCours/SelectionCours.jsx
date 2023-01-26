@@ -70,6 +70,12 @@ function SelectionCours() {
 
   return (
     <SelectionCoursWrapper>
+      <Backdrop
+        open={getCombinaisonQuery?.isFetching}
+        sx={{ zIndex: 3000 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
       <Accordion
         expanded={expanded}
@@ -115,9 +121,6 @@ function SelectionCours() {
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}
-            <Backdrop open={getCombinaisonQuery?.isFetching}>
-              <CircularProgress color="inherit" />
-            </Backdrop>
           </Button>
         </AccordionActions>
       </Accordion>
