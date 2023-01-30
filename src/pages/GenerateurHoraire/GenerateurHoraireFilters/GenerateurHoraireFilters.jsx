@@ -10,10 +10,18 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import GenerateurHoraireFiltersWrapper from './GenerateurHoraireFilters.styles';
 import {
-  selectConges, selectNombreCours, selectSelectedCours, selectSession, selectView, setView,
+  selectConges,
+  selectNombreCours,
+  selectSelectedCours,
+  selectSession,
+  selectSorting,
+  selectView,
+  setSorting,
+  setView,
 } from '../../../features/generateur/generateur.slice';
 import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
 import { selectCombinaisons } from '../../../features/generateur/generateur.api';
+import { COMBINAISONS_SORTS } from '../generateurHoraire.sorting';
 
 function GenerateurHoraireFilters() {
   const { t } = useTranslation('common');
@@ -22,6 +30,7 @@ function GenerateurHoraireFilters() {
   const selectedCours = useSelector(selectSelectedCours);
   const nombreCours = useSelector(selectNombreCours);
   const conges = useSelector(selectConges);
+  const sorting = useSelector(selectSorting);
   const { data } = useSelector(selectCombinaisons(session, selectedCours, nombreCours, conges));
   const dispatch = useDispatch();
 
@@ -54,9 +63,12 @@ function GenerateurHoraireFilters() {
           <Select
             size="small"
             variant="outlined"
-            value={10}
+            value={sorting}
+            onChange={(e) => dispatch(setSorting(e?.target?.value))}
           >
-            <MenuItem value={10}>Lorem ipsum</MenuItem>
+            {Object.keys(COMBINAISONS_SORTS).map(
+              (value) => (<MenuItem value={value}>{t(value)}</MenuItem>),
+            )}
           </Select>
         </FormControl>
       </div>

@@ -53,5 +53,8 @@
   "horairesGeneres_other": "{{count}} horaires générés",
   "horaireParPage": "Horaires par page:",
   "paginationHoraire": "{{from}}-{{to}} de {{count}}",
-  "horaire": "Horaire"
+  "horaire": "Horaire",
+  "LOST_TIME_BETWEEN_CLASSES_SORT": "Temps perdu entre cours",
+  "CONGES_SORT": "Nombre de congés",
+  "CONGES_LOST_TIME_SORT": "Nombre de congés et temps perdu entre cours"
 }
