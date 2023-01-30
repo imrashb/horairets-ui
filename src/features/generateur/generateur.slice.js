@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
 import { GENERATEUR_LIST_VIEW } from './generateur.constants';
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   view: GENERATEUR_LIST_VIEW,
   conges: undefined,
   nombreCours: undefined,
+  sorting: Object.keys(COMBINAISONS_SORTS)[0],
 };
 
 const GENERATEUR_SLICE = 'generateur';
@@ -37,13 +39,16 @@ const generateurSlice = createSlice({
     setNombreCours: (state, action) => {
       state.nombreCours = action.payload;
     },
+    setSorting: (state, action) => {
+      state.sorting = action.payload;
+    },
   },
 });
 
 export const generateurReducer = generateurSlice.reducer;
 
 export const {
-  setProgramme, setSession, setSelectedCours, setView, setConges, setNombreCours,
+  setProgramme, setSession, setSelectedCours, setView, setConges, setNombreCours, setSorting,
 } = generateurSlice.actions;
 
 export const selectProgramme = (state) => state.generateur.programme;
@@ -57,5 +62,7 @@ export const selectView = (state) => state.generateur.view;
 export const selectConges = (state) => state.generateur.conges;
 
 export const selectNombreCours = (state) => state.generateur.nombreCours;
+
+export const selectSorting = (state) => state.generateur.sorting;
 
 export default generateurSlice;
