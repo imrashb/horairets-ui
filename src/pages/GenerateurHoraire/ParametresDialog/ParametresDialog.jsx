@@ -12,17 +12,22 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectConges, selectNombreCours } from '../../../features/generateur/generateur.slice';
 import { JOURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import ParametresDialogWrapper from './ParametresDialog.styles';
 
 function ParametresDialog({ open, onClose }) {
   const { t } = useTranslation('common');
 
-  const [nombreCours, setNombreCours] = useState(5);
-  const [conges, setConges] = useState([]);
+  const nombreCours = useSelector(selectNombreCours);
+  const conges = useSelector(selectConges);
+
+  const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours || 5);
+  const [controlledConges, setControlledConges] = useState(conges || []);
 
   const applyParameters = () => {
-    onClose({ nombreCours, conges });
+    onClose({ nombreCours: controlledNombreCours, conges: controlledConges });
   };
 
   return (
@@ -33,8 +38,8 @@ function ParametresDialog({ open, onClose }) {
           <FormControl fullWidth variant="standard">
             <InputLabel>{t('nombreCoursParHoraire')}</InputLabel>
             <Select
-              value={nombreCours}
-              onChange={(event) => setNombreCours(event?.target?.value)}
+              value={controlledNombreCours}
+              onChange={(event) => setControlledNombreCours(event?.target?.value)}
               label={t('nombreCoursParHoraire')}
             >
               {[...Array(NOMBRE_MAX_COURS_PAR_HORAIRE).keys()].map(
@@ -50,9 +55,9 @@ function ParametresDialog({ open, onClose }) {
             <InputLabel>{t('joursConges')}</InputLabel>
             <Select
               multiple
-              value={conges}
+              value={controlledConges}
               onChange={(event) => {
-                setConges(event?.target?.value);
+                setControlledConges(event?.target?.value);
               }}
             >
               {JOURS.map((conge) => (

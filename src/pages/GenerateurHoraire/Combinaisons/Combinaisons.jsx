@@ -3,25 +3,22 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
-import { selectCombinaisons } from '../../../features/generateur/generateur.api';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
 import {
-  selectConges, selectNombreCours, selectSelectedCours, selectSession, selectSorting, selectView,
+  selectSorting, selectView,
 } from '../../../features/generateur/generateur.slice';
 import { COMBINAISONS_SORTS } from '../generateurHoraire.sorting';
 import CombinaisonsWrapper from './Combinaisons.styles';
+import useCombinaisonsSelector from './useCombinaisonsSelector';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
 function Combinaisons() {
   const { t } = useTranslation('common');
-  const session = useSelector(selectSession);
-  const selectedCours = useSelector(selectSelectedCours);
-  const nombreCours = useSelector(selectNombreCours);
-  const conges = useSelector(selectConges);
   const view = useSelector(selectView);
   const sorting = useSelector(selectSorting);
-  const { data } = useSelector(selectCombinaisons(session, selectedCours, nombreCours, conges));
+
+  const data = useCombinaisonsSelector();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);

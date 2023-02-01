@@ -18,6 +18,7 @@ import {
   selectNombreCours,
   selectProgramme, selectSelectedCours, selectSession, setConges, setNombreCours, setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
+import useCombinaisonsSelector from '../Combinaisons/useCombinaisonsSelector';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
@@ -35,11 +36,11 @@ function SelectionCours() {
   const conges = useSelector(selectConges);
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
-  const [cours, setCours] = useState([]);
+  const [cours, setCours] = useState(selectedCours || []);
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [controlledNombreCours, setControlledNombreCours] = useState(undefined);
-  const [controlledConges, setControlledConges] = useState(undefined);
+  const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours);
+  const [controlledConges, setControlledConges] = useState(conges);
 
   const onSelectedCoursChange = (value) => {
     setCours(value?.map((c) => c?.sigle));

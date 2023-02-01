@@ -10,28 +10,20 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import GenerateurHoraireFiltersWrapper from './GenerateurHoraireFilters.styles';
 import {
-  selectConges,
-  selectNombreCours,
-  selectSelectedCours,
-  selectSession,
   selectSorting,
   selectView,
   setSorting,
   setView,
 } from '../../../features/generateur/generateur.slice';
 import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
-import { selectCombinaisons } from '../../../features/generateur/generateur.api';
 import { COMBINAISONS_SORTS } from '../generateurHoraire.sorting';
+import useCombinaisonsSelector from '../Combinaisons/useCombinaisonsSelector';
 
 function GenerateurHoraireFilters() {
   const { t } = useTranslation('common');
   const view = useSelector(selectView);
-  const session = useSelector(selectSession);
-  const selectedCours = useSelector(selectSelectedCours);
-  const nombreCours = useSelector(selectNombreCours);
-  const conges = useSelector(selectConges);
   const sorting = useSelector(selectSorting);
-  const { data } = useSelector(selectCombinaisons(session, selectedCours, nombreCours, conges));
+  const data = useCombinaisonsSelector();
   const dispatch = useDispatch();
 
   const handleAlignment = (event, value) => {
