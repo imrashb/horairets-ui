@@ -13,6 +13,10 @@ const SelectionCoursWrapper = styled.div`
 
     }
 
+    .MuiSnackbar-root {
+        max-width: 32rem;
+    }
+ 
 `;
 
 export default SelectionCoursWrapper;

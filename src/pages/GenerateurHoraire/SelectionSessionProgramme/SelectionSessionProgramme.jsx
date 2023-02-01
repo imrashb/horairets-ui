@@ -41,6 +41,13 @@ function SelectionSessionProgramme() {
 
   const [coursSessionTrigger, coursSessionQuery] = useLazyGetCoursSessionQuery();
 
+  // Resubscribe component to RTK Query Cache
+  useEffect(() => {
+    if (session && programme) {
+      coursSessionTrigger({ session, programme });
+    }
+  }, []);
+
   const handleSelection = () => {
     dispatch(setSession(controlledSession));
     dispatch(setProgramme(controlledProgramme));

@@ -4,10 +4,12 @@ import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Alert,
+  AlertTitle,
   Backdrop,
   Button,
   CircularProgress,
-  Divider, FormControlLabel, Switch, Typography,
+  Divider, FormControlLabel, Snackbar, Switch, Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +20,7 @@ import {
   selectNombreCours,
   selectProgramme, selectSelectedCours, selectSession, setConges, setNombreCours, setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
+import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
@@ -35,11 +38,14 @@ function SelectionCours() {
   const conges = useSelector(selectConges);
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
-  const [cours, setCours] = useState([]);
+  const [cours, setCours] = useState(selectedCours || []);
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [controlledNombreCours, setControlledNombreCours] = useState(undefined);
-  const [controlledConges, setControlledConges] = useState(undefined);
+  const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours);
+  const [controlledConges, setControlledConges] = useState(conges);
+
+  const nombreCoursGeneration = controlledNombreCours
+  || Math.min(cours?.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   const onSelectedCoursChange = (value) => {
     setCours(value?.map((c) => c?.sigle));
@@ -47,10 +53,10 @@ function SelectionCours() {
 
   const handleGenerateCombinaisons = () => {
     dispatch(setSelectedCours(cours));
-    dispatch(setNombreCours(controlledNombreCours));
+    dispatch(setNombreCours(nombreCoursGeneration));
     dispatch(setConges(controlledConges));
     getCombinaisonsTrigger({
-      session, cours, conges: controlledConges, nombreCours: controlledNombreCours,
+      session, cours, conges: controlledConges, nombreCours: nombreCoursGeneration,
     });
   };
 
@@ -68,6 +74,13 @@ function SelectionCours() {
     }
   }, [selectCoursSessionQuery?.data]);
 
+  const isntReadyToGenerate = cours.length === 0
+  || controlledNombreCours > cours?.length
+  || (cours?.length === selectedCours?.length
+  && cours?.every((v) => selectedCours?.includes(v))
+  && nombreCours === nombreCoursGeneration
+  && conges === controlledConges);
+
   return (
     <SelectionCoursWrapper>
       <Backdrop
@@ -76,6 +89,28 @@ function SelectionCours() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={!isntReadyToGenerate}>
+        <Alert severity="info">
+          <AlertTitle>
+            {t('parametresHoraire')}
+          </AlertTitle>
+          {`${t('cours')}: ${cours?.join(', ')}`}
+          <br />
+          {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
+          <br />
+          {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
+        </Alert>
+      </Snackbar>
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isntReadyToGenerate && controlledNombreCours > cours?.length}>
+        <Alert severity="error">
+          <AlertTitle>
+            {t('nombreCoursInvalide')}
+          </AlertTitle>
+          {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
+        </Alert>
+      </Snackbar>
+
       <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
       <Accordion
         expanded={expanded}
@@ -113,11 +148,7 @@ function SelectionCours() {
           </Button>
           <Button
             variant="contained"
-            disabled={cours.length === 0
-      || (cours?.length === selectedCours?.length
-      && cours?.every((v) => selectedCours?.includes(v))
-      && nombreCours === controlledNombreCours
-      && conges === controlledConges)}
+            disabled={isntReadyToGenerate}
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}

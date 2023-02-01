@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight, SwapHoriz } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import CoursTransferListWrapper from './CoursTransferList.styles';
 import { selectCoursSession } from '../../../features/generateur/generateur.api';
-import { selectProgramme, selectSession } from '../../../features/generateur/generateur.slice';
+import { selectProgramme, selectSelectedCours, selectSession } from '../../../features/generateur/generateur.slice';
 import { MAITRISE, NOMBRE_MAX_COURS } from '../generateurHoraire.constants';
 
 const RIGHT = 'right';
@@ -30,7 +30,7 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
 
   const programme = useSelector(selectProgramme);
   const session = useSelector(selectSession);
-
+  const selectedCours = useSelector(selectSelectedCours);
   const coursSessionQuery = useSelector(selectCoursSession(session, programme));
 
   const [left, setLeft] = useState([]);
@@ -46,6 +46,15 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
       setUnselectedFilter('');
     }
   }, [coursSessionQuery?.data]);
+
+  useEffect(() => {
+    if (selectedCours && coursSessionQuery?.data) {
+      const selected = coursSessionQuery?.data?.filter((c) => selectedCours.includes(c?.sigle));
+      const unselected = coursSessionQuery?.data?.filter((c) => !selected.includes(c));
+      setRight(selected);
+      setLeft(unselected);
+    }
+  }, []);
 
   const handleToggle = (value) => {
     const isLeft = left.find((v) => v?.sigle === value?.sigle);
@@ -97,7 +106,7 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
       }
       return 0;
     };
-    const title = id === RIGHT ? `${listName} (${filteredItems.length}/${NOMBRE_MAX_COURS})`
+    const title = id === RIGHT ? `${listName} (${right.length}/${NOMBRE_MAX_COURS})`
       : `${listName} (${filteredItems.length})`;
 
     return (
