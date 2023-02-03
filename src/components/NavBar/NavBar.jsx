@@ -1,6 +1,6 @@
 import { CalendarToday, Dashboard, Info } from '@mui/icons-material';
 import {
-  AppBar, Tab, Tabs, Toolbar, Typography,
+  AppBar, Tab, Tabs, Toolbar, Typography, useMediaQuery, useTheme,
 } from '@mui/material';
 import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -59,19 +59,31 @@ export default function NavBar() {
     }
   };
 
+  const theme = useTheme();
+  const isMediumViewport = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallViewport = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <NavBarWrapper id="navbar">
       <AppBar position="static">
         <Toolbar>
           <div className="navbar-left">
             <img className="logo-horairets" src="./logo.png" alt="Logo HorairÉTS" />
-            <Typography variant="h5" component="div" className="navbar-title">
-              {t('horairets')}
-            </Typography>
+            {!isMediumViewport && (
+              <Typography variant="h5" component="div" className="navbar-title">
+                {t('horairets')}
+              </Typography>
+            )}
           </div>
           <Tabs className="navbar-center" value={selectedTab} onChange={(e, value) => handleTabSelection(value)}>
             {
-              tabs.map((tab) => <Tab value={tab.id} icon={<tab.icon />} label={t(tab.label)} />)
+              tabs.map((tab) => (
+                <Tab
+                  value={tab.id}
+                  icon={<tab.icon />}
+                  label={isSmallViewport ? undefined : t(tab.label)}
+                />
+              ))
             }
           </Tabs>
           <div className="navbar-right" />

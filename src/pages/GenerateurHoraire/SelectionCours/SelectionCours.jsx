@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { ExpandMore, Settings } from '@mui/icons-material';
 import {
   Accordion,
@@ -9,7 +10,7 @@ import {
   Backdrop,
   Button,
   CircularProgress,
-  Divider, FormControlLabel, Snackbar, Switch, Typography,
+  Divider, FormControlLabel, Portal, Snackbar, Switch, Typography, useMediaQuery,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -81,35 +82,48 @@ function SelectionCours() {
   && nombreCours === nombreCoursGeneration
   && conges === controlledConges);
 
+  const theme = useTheme();
+  const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
     <SelectionCoursWrapper>
-      <Backdrop
-        open={getCombinaisonQuery?.isFetching}
-        sx={{ zIndex: 3000 }}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <Portal>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={!isntReadyToGenerate && isLargeViewport}
+        >
+          <Alert severity="info">
+            <AlertTitle>
+              {t('parametresHoraire')}
+            </AlertTitle>
+            {`${t('cours')}: ${cours?.join(', ')}`}
+            <br />
+            {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
+            <br />
+            {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={isntReadyToGenerate && controlledNombreCours > cours?.length && isLargeViewport}
+        >
+          <Alert severity="error">
+            <AlertTitle>
+              {t('nombreCoursInvalide')}
+            </AlertTitle>
+            {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
+          </Alert>
+        </Snackbar>
 
-      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={!isntReadyToGenerate}>
-        <Alert severity="info">
-          <AlertTitle>
-            {t('parametresHoraire')}
-          </AlertTitle>
-          {`${t('cours')}: ${cours?.join(', ')}`}
-          <br />
-          {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
-          <br />
-          {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
-        </Alert>
-      </Snackbar>
-      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isntReadyToGenerate && controlledNombreCours > cours?.length}>
-        <Alert severity="error">
-          <AlertTitle>
-            {t('nombreCoursInvalide')}
-          </AlertTitle>
-          {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
-        </Alert>
-      </Snackbar>
+        {getCombinaisonQuery?.isFetching && (
+        <Backdrop
+          open={getCombinaisonQuery?.isFetching}
+          sx={{ zIndex: 3000 }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        )}
+      </Portal>
 
       <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
       <Accordion

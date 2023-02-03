@@ -11,6 +11,15 @@ const CombinaisonsWrapper = styled.div`
     .combinaisons-grid {
         width: 100%;
         padding: 0 ${({ theme }) => theme.sizes.size_24};
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            padding: 0;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            width: 100%;
+        }
+
         & > .MuiGrid-item {
 
             max-width: 1200px;
@@ -33,6 +42,13 @@ const CombinaisonsWrapper = styled.div`
 
             & > div {
                 height: 75vh;
+                min-height: 30rem;
+                max-height: 40rem;
+
+                ${({ theme }) => theme.breakpoints.down('md')} {
+                    height: 50vh;
+                }
+
             }
         }
 
@@ -41,6 +57,10 @@ const CombinaisonsWrapper = styled.div`
     .MuiTablePagination-root {
         min-height: 4rem;
         display:flex;
+
+        .MuiToolbar-root {
+            padding: 0;
+        }
     }
 
 `;

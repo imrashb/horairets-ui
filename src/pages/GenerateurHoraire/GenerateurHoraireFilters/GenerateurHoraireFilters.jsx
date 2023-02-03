@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { GridView, ViewList } from '@mui/icons-material';
+import { GridView, Sort, ViewList } from '@mui/icons-material';
 import {
-  FormControl, MenuItem, Select, Tooltip, Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip, Typography, useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from '@emotion/react';
 import GenerateurHoraireFiltersWrapper from './GenerateurHoraireFilters.styles';
 import {
   selectSorting,
@@ -24,14 +30,31 @@ function GenerateurHoraireFilters() {
   const view = useSelector(selectView);
   const sorting = useSelector(selectSorting);
   const data = useCombinaisonsSelector();
+  const [sortDialogVisible, setSortDialogVisible] = useState(false);
   const dispatch = useDispatch();
 
   const handleAlignment = (event, value) => {
     dispatch(setView(value));
   };
 
+  const theme = useTheme();
+  const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
+  const isSmallViewport = useMediaQuery(theme.breakpoints.down('sm'));
+  useEffect(() => {
+    if (!isLargeViewport) {
+      dispatch(setView(GENERATEUR_LIST_VIEW));
+    }
+  }, [isLargeViewport]);
+
+  useEffect(() => {
+    if (!isSmallViewport) {
+      setSortDialogVisible(false);
+    }
+  }, [isSmallViewport]);
+
   return (
     <GenerateurHoraireFiltersWrapper>
+      {isLargeViewport && (
       <ToggleButtonGroup
         className="views-wrapper"
         value={view}
@@ -49,21 +72,65 @@ function GenerateurHoraireFilters() {
           </Tooltip>
         </ToggleButton>
       </ToggleButtonGroup>
+      )}
       <div className="sort-wrapper">
-        <Typography className="sort-text" variant="h5" component="div">{t('trierPar')}</Typography>
-        <FormControl className="sort-dropdown">
-          <Select
-            size="small"
-            variant="outlined"
-            value={sorting}
-            onChange={(e) => dispatch(setSorting(e?.target?.value))}
+        {!isSmallViewport ? (
+          <>
+            <Typography className="sort-text" variant="h5" component="div">{t('trierPar')}</Typography>
+            <FormControl className="sort-dropdown">
+              <Select
+                size="small"
+                variant="outlined"
+                value={sorting}
+                onChange={(e) => dispatch(setSorting(e?.target?.value))}
+              >
+                {Object.keys(COMBINAISONS_SORTS).map(
+                  (value) => (<MenuItem value={value}>{t(value)}</MenuItem>),
+                )}
+              </Select>
+            </FormControl>
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() => setSortDialogVisible(true)}
           >
-            {Object.keys(COMBINAISONS_SORTS).map(
-              (value) => (<MenuItem value={value}>{t(value)}</MenuItem>),
-            )}
-          </Select>
-        </FormControl>
+            {t('trier')}
+            {' '}
+            <Sort />
+          </Button>
+        )}
       </div>
+
+      <Dialog open={sortDialogVisible}>
+        <DialogTitle sx={{ alignItems: 'center', display: 'flex' }}>
+          {t('trier')}
+          <Sort />
+        </DialogTitle>
+        <DialogContent>
+          <FormControl fullWidth variant="standard">
+            <InputLabel>{t('trierPar')}</InputLabel>
+            <Select
+              value={sorting}
+              onChange={(e) => dispatch(setSorting(e?.target?.value))}
+              label={t('trierPar')}
+            >
+              {Object.keys(COMBINAISONS_SORTS).map(
+                (value) => (<MenuItem value={value}>{t(value)}</MenuItem>),
+              )}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={() => setSortDialogVisible(false)}
+          >
+            {t('fermer')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {data && (
       <Typography className="nb-horaires-generes" variant="h5">
         {t('horairesGeneres', { count: data?.length })}

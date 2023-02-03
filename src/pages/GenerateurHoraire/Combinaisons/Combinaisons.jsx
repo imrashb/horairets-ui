@@ -1,4 +1,7 @@
-import { Grid, TablePagination, Typography } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import {
+  Grid, TablePagination, Typography, useMediaQuery,
+} from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -36,6 +39,9 @@ function Combinaisons() {
     setPage(Math.floor((page * rowsPerPage) / value));
   };
 
+  const theme = useTheme();
+  const isSmallViewport = useMediaQuery(theme.breakpoints.down('sm'));
+
   const Pagination = (
     <TablePagination
       component="div"
@@ -45,7 +51,7 @@ function Combinaisons() {
       rowsPerPage={rowsPerPage}
       onPageChange={(e, p) => setPage(p)}
       onRowsPerPageChange={handleRowsPerPageChange}
-      labelRowsPerPage={t('horaireParPage')}
+      labelRowsPerPage={!isSmallViewport ? t('horaireParPage') : ''}
       showFirstButton
       showLastButton
       labelDisplayedRows={(params) => t(

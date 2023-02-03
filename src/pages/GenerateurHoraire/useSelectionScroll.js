@@ -1,6 +1,12 @@
-import { useEffect } from 'react';
+import { useTheme } from '@emotion/react';
+import { useMediaQuery } from '@mui/material';
+import { useEffect, useRef } from 'react';
 
 const useSelectionScroll = (mainContentRef, selectionRef) => {
+  const theme = useTheme();
+  const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
+  const isLargeViewportRef = useRef(isLargeViewport);
+
   const handleScroll = () => {
     if (mainContentRef?.current) {
       const { y } = mainContentRef.current.getBoundingClientRect();
@@ -11,7 +17,7 @@ const useSelectionScroll = (mainContentRef, selectionRef) => {
       if (selectionRef?.current) {
         const element = selectionRef.current;
         // Scrolling above appbar
-        if (y < navbarHeight - spacing) {
+        if (isLargeViewportRef.current && y < navbarHeight - spacing) {
           const mainElement = document.getElementById('main-container');
           const margin = (mainElement.scrollTop - 150) / 8;
           element.style.marginTop = `${margin}rem`;
@@ -30,6 +36,12 @@ const useSelectionScroll = (mainContentRef, selectionRef) => {
       element.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    isLargeViewportRef.current = isLargeViewport;
+    handleScroll();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLargeViewport]);
 };
 
 export default useSelectionScroll;
