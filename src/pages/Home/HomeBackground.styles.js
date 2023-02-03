@@ -12,11 +12,23 @@ const HomeBackgroundWrapper = styled.div`
     @keyframes move {
 
         0% {
-            transform: translate(-80vw, 0px) rotate(-30deg);
+            opacity: 0;
+            transform: translate(-808px, -95px) rotate(-30deg);
         }
 
+        1% {
+            opacity: 1;
+            transform: translate(-800px, -100px) rotate(-30deg);
+        }
+
+        99% {
+            opacity: 1;
+            transform: translate(0px,-560px) rotate(-30deg);
+        }
+        
         100% {
-            transform: translate(0px, -95vh) rotate(-30deg);
+            opacity: 0;
+            transform: translate(8px,-565px) rotate(-30deg);
         }
 
     }
@@ -30,18 +42,18 @@ const HomeBackgroundWrapper = styled.div`
     }
 
     .wrapper-home-background {
-        animation: move 300s linear infinite;
+        animation: move 90s linear infinite;
 
         filter: blur(${({ theme }) => theme.sizes.size_4});
 
         height: 200%;
-        width: 200%;
+        width: 3000px;
 
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         & > div {
-        width: 20%;
+        width: 500px;
         height: 20%;
         padding: 0.5%;
         }

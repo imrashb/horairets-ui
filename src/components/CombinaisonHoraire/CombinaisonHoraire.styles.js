@@ -7,6 +7,10 @@ const CombinaisonHoraireWrapper = styled.div`
     display:flex;
     flex-direction:row;
 
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        font-size: 2vw;
+    }
+
     padding-bottom: ${({ theme }) => theme.sizes.size_16};
 
     .heures-container {

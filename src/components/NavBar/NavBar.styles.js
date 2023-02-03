@@ -14,16 +14,28 @@ const NavBarWrapper = styled.div`
 
             &.navbar-left {
                 flex: 2;
+
+                ${({ theme }) => theme.breakpoints.down('md')} {
+                    flex: 1;
+                }
             }
 
             &.navbar-right {
                 flex: 2;
                 flex-direction: row-reverse;
+
+                ${({ theme }) => theme.breakpoints.down('md')} {
+                    flex: 1;
+                }
             }
 
             &.navbar-center {
                 flex:5;
                 justify-content: center;
+
+                ${({ theme }) => theme.breakpoints.down('md')} {
+                    flex: 7;
+                }
 
                 .MuiTabs-flexContainer {
                     justify-content: center;
@@ -41,6 +53,11 @@ const NavBarWrapper = styled.div`
                 width: ${({ theme }) => theme.sizes.size_32};
                 height: ${({ theme }) => theme.sizes.size_32};
                 margin-right: ${({ theme }) => theme.sizes.size_16};
+
+                ${({ theme }) => theme.breakpoints.down('md')} {
+                    margin-right: 0;
+                }
+
             }
         }
 

@@ -1,5 +1,5 @@
-import { Button, Typography } from '@mui/material';
-import { Container } from '@mui/system';
+import { Button, Typography, useMediaQuery } from '@mui/material';
+import { Container, useTheme } from '@mui/system';
 import React, { useRef, useEffect, useState } from 'react';
 import { FaDiscord } from 'react-icons/fa';
 
@@ -32,6 +32,8 @@ function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [horairetsRef]);
 
+  const theme = useTheme();
+  const isMediumViewport = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <HomeWrapper>
       <HomeBackground />
@@ -39,7 +41,7 @@ function Home() {
         <Typography variant="h2" component="div" className="body-bienvenue">
           <strong>{t('bienvenueSur')}</strong>
         </Typography>
-        <Container maxWidth disableGutters="true" sx={{ width: `${width}px` }}>
+        <Container className="text-container" maxWidth disableGutters sx={{ width: `${width}px` }}>
           <div className="body-horairets">
             <span ref={horairetsRef} className="horairets-wrapper">
               <span className="text-shadow">{t('horairets')}</span>
@@ -73,9 +75,11 @@ function Home() {
           </div>
         </Container>
       </div>
+      {!isMediumViewport && (
       <div className="right">
         <img className="logo-horairets" src="./logo.png" alt="Logo HorairÉTS" />
       </div>
+      )}
     </HomeWrapper>
   );
 }

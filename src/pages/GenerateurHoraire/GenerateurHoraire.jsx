@@ -1,7 +1,10 @@
-import { ChevronLeft, ChevronRight, OpenInFull } from '@mui/icons-material';
-import { IconButton, Paper, Typography } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import {
+  IconButton, Paper, Typography, useMediaQuery,
+} from '@mui/material';
 import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
@@ -20,6 +23,13 @@ function GenerateurHoraire() {
 
   const [expanded, setExpanded] = useState(true);
 
+  const theme = useTheme();
+  const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
+
+  useEffect(() => {
+    setExpanded(true);
+  }, [isLargeViewport]);
+
   return (
     <GenerateurHoraireWrapper>
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
@@ -28,6 +38,7 @@ function GenerateurHoraire() {
         <div className={classNames('left', expanded ? 'open' : 'closed')} ref={leftRef}>
           <SelectionSessionProgramme />
           <SelectionCours />
+          {isLargeViewport && (
           <Paper component="span" className="expand-btn">
             <IconButton
               color="primary"
@@ -36,6 +47,7 @@ function GenerateurHoraire() {
               {expanded ? <ChevronLeft /> : <ChevronRight />}
             </IconButton>
           </Paper>
+          )}
         </div>
         <div className="right">
           <Combinaisons />

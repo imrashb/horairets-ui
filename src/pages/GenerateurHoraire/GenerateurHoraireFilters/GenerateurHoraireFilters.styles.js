@@ -46,9 +46,14 @@ const GenerateurHoraireFiltersWrapper = styled.div`
         flex-direction: row;
         align-items: center;
 
+        margin-right: ${({ theme }) => theme.sizes.size_16};
         .sort-dropdown {
             width: ${({ theme }) => theme.sizes.size_256};
-            margin-right: ${({ theme }) => theme.sizes.size_16};
+
+            ${({ theme }) => theme.breakpoints.between('sm', 'md')} {
+                width: ${({ theme }) => theme.sizes.size_192};
+            }
+
         }
 
         .sort-text {

@@ -20,6 +20,13 @@ const ActiviteWrapper = styled.div`
         border-radius: ${({ theme }) => theme.sizes.size_16};
         border: ${({ theme }) => theme.sizes.size_2} solid ${(props) => `${props.borderColor}`};
         border-bottom: ${({ theme }) => theme.sizes.size_8} solid ${(props) => `${props.borderColor}`};
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            border-radius: ${({ theme }) => theme.sizes.size_8};
+            border: ${({ theme }) => theme.sizes.size_1} solid ${(props) => `${props.borderColor}`};
+            border-bottom: ${({ theme }) => theme.sizes.size_4} solid ${(props) => `${props.borderColor}`};
+        }
+
         border-top: none;
         
         padding: 3%;

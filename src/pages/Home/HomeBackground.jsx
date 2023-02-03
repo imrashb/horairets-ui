@@ -17,7 +17,7 @@ function HomeBackground() {
 
   return (
     <HomeBackgroundWrapper>
-      <div className="opacity-gradient" />
+      {true && <div className="opacity-gradient" />}
       <div className="wrapper-home-background">
         {MemoizedBackground}
       </div>

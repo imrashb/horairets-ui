@@ -13,7 +13,10 @@ const HomeWrapper = styled.div`
         margin-top: ${({ theme }) => theme.sizes.size_64};
         flex:2;
 
-        
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            margin-top: ${({ theme }) => theme.sizes.size_32} !important;
+        }
+
         .body-bienvenue {
             color: ${({ theme }) => theme.palette.primary.main};
             text-shadow: ${({ theme }) => theme.textShadow.main};
@@ -27,6 +30,14 @@ const HomeWrapper = styled.div`
             flex-direction:column;
             align-items: center;
             text-align: center;
+
+            ${({ theme }) => theme.breakpoints.down('md')} {
+                font-size:16vw;
+                
+                .description {
+                    font-size: 4vw !important;
+                }
+            }
 
             .horairets-wrapper {
                 width: fit-content;
@@ -74,6 +85,16 @@ const HomeWrapper = styled.div`
                 margin-left: ${({ theme }) => theme.sizes.size_16};
             }
 
+            ${({ theme }) => theme.breakpoints.down('md')} {
+                flex-direction: column !important;
+
+                .btn-rejoins-discord {
+                    margin-left: 0;
+                    margin-top: ${({ theme }) => theme.sizes.size_8};
+                }
+
+            }
+
         }
 
     }
@@ -85,7 +106,8 @@ const HomeWrapper = styled.div`
         align-items: center;
         justify-content:flex-start;
         .logo-horairets {
-            margin-top: ${({ theme }) => theme.sizes.size_64}
+            margin-top: 25%;
+            width: 80%;
         }
 
     }
