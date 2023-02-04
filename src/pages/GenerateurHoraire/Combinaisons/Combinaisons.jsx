@@ -1,10 +1,16 @@
 import { useTheme } from '@emotion/react';
+import { Download } from '@mui/icons-material';
 import {
-  Grid, TablePagination, Typography, useMediaQuery,
+  Alert,
+  Snackbar,
+  Grid, IconButton, TablePagination, Typography, useMediaQuery,
 } from '@mui/material';
+import axios from 'axios';
+import fileDownload from 'js-file-download';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
 import {
@@ -65,8 +71,25 @@ function Combinaisons() {
     />
   );
 
+  const [downloadError, setDownloadError] = useState(false);
+
   return (
     <CombinaisonsWrapper>
+      {downloadError && (
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={downloadError}
+      >
+        <Alert
+          severity="error"
+          onClose={() => {
+            setDownloadError(false);
+          }}
+        >
+          {t('erreurTelechargement')}
+        </Alert>
+      </Snackbar>
+      )}
       {data?.length > 0 && (
         Pagination
       )}
@@ -75,6 +98,22 @@ function Combinaisons() {
           <Grid item xs={1}>
             <Typography className="numero-horaire" variant="h4">
               {`${t('horaire')} ${sorted.indexOf(combinaison) + 1}`}
+              <IconButton
+                color="primary"
+                onClick={async () => {
+                  try {
+                    const url = `${BASE_API_URL + GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
+                    const res = await axios.get(url, {
+                      responseType: 'blob',
+                    });
+                    fileDownload(res.data, 'horaire.jpeg');
+                  } catch (error) {
+                    setDownloadError(true);
+                  }
+                }}
+              >
+                <Download />
+              </IconButton>
             </Typography>
             <CombinaisonHoraire combinaison={combinaison} />
           </Grid>

@@ -63,5 +63,6 @@
   "alerteNombreCoursInferieur_zero": "Vous tentez de générer des horaires avec {{nbCours}} cours, alors qu'aucun cours est sélectionné. Veuillez réduire le nombre de cours par horaire.",
   "nombreCoursInvalide": "Nombre de cours invalide",
   "trier": "Trier",
-  "fermer": "Fermer"
+  "fermer": "Fermer",
+  "erreurTelechargement": "Erreur lors du téléchargement de l'horaire. Veuillez réessayer."
 }
