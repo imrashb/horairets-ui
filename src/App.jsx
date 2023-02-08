@@ -15,10 +15,6 @@ function App() {
         id="main-container"
         maxWidth
         disableGutters
-        sx={{
-          overflow: 'auto',
-          height: '100%',
-        }}
       >
         <Routing />
       </Container>
