@@ -3,14 +3,11 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
 
     body {
-        height: 100vh;
-        min-height: 100vh;
 
         #root {
             height:100%;
             display:flex;
             flex-direction:column;
-            overflow: hidden;
         }
 
     }

@@ -4,22 +4,16 @@ import {
   IconButton, Paper, Typography, useMediaQuery,
 } from '@mui/material';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
 import GenerateurHoraireFilters from './GenerateurHoraireFilters/GenerateurHoraireFilters';
 import SelectionCours from './SelectionCours/SelectionCours';
 import SelectionSessionProgramme from './SelectionSessionProgramme/SelectionSessionProgramme';
-import useSelectionScroll from './useSelectionScroll';
 
 function GenerateurHoraire() {
   const { t } = useTranslation('common');
-
-  const ref = useRef(null);
-  const leftRef = useRef(null);
-
-  useSelectionScroll(ref, leftRef);
 
   const [expanded, setExpanded] = useState(true);
 
@@ -34,8 +28,8 @@ function GenerateurHoraire() {
     <GenerateurHoraireWrapper>
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
       <GenerateurHoraireFilters />
-      <div className="main-content-wrapper" ref={ref}>
-        <div className={classNames('left', expanded ? 'open' : 'closed')} ref={leftRef}>
+      <div className="main-content-wrapper">
+        <div className={classNames('left', expanded ? 'open' : 'closed')}>
           <SelectionSessionProgramme />
           <SelectionCours />
           {isLargeViewport && (

@@ -24,7 +24,7 @@ const GenerateurHoraireWrapper = styled.div`
     .main-content-wrapper {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         ${({ theme }) => theme.breakpoints.up('lg')} {
             height: 100%;
@@ -36,9 +36,10 @@ const GenerateurHoraireWrapper = styled.div`
         }
 
         .left {
-            position:relative;
             ${({ theme }) => theme.breakpoints.up('lg')} {
                 flex: 1;
+                position:sticky;
+                top: 4rem;
             }
 
             height: 100%;

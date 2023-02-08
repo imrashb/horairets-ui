@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const NavBarWrapper = styled.div`
-
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 
     .MuiToolbar-root {
         justify-content: space-between;
