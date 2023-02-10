@@ -4,15 +4,18 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import {
+  IconButton,
   ListItemButton, ListItemIcon, TextField, Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, SwapHoriz } from '@mui/icons-material';
+import {
+  ChevronLeft, ChevronRight, Lock, LockOpen, SwapHoriz,
+} from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import CoursTransferListWrapper from './CoursTransferList.styles';
 import { selectCoursSession } from '../../../features/generateur/generateur.api';
 import { selectProgramme, selectSelectedCours, selectSession } from '../../../features/generateur/generateur.slice';
-import { MAITRISE, NOMBRE_MAX_COURS } from '../generateurHoraire.constants';
+import { MAITRISE, NOMBRE_MAX_COURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 
 const RIGHT = 'right';
 const LEFT = 'left';
@@ -25,7 +28,9 @@ const createListProperties = (id, listName, icon, filter, setFilter) => ({
   setFilter,
 });
 
-export default function CoursTransferList({ includeMaitrise, onSelectedCoursChange }) {
+export default function CoursTransferList({
+  includeMaitrise, onSelectedCoursChange, onCoursObligatoiresChange, nombreCours,
+}) {
   const { t } = useTranslation('common');
 
   const programme = useSelector(selectProgramme);
@@ -37,6 +42,19 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
   const [right, setRight] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('');
   const [unselectedFilter, setUnselectedFilter] = useState('');
+  const [locked, setLocked] = useState([]);
+
+  useEffect(() => {
+    if (locked.length > nombreCours) {
+      setLocked([]);
+      if (onCoursObligatoiresChange) {
+        onCoursObligatoiresChange([]);
+      }
+    }
+  }, [nombreCours]);
+
+  // eslint-disable-next-line no-param-reassign
+  nombreCours = nombreCours || Math.min(right.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   useEffect(() => {
     if (coursSessionQuery?.data) {
@@ -69,11 +87,30 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
       modifiedRight = right.filter((v) => v !== value);
       modifiedLeft = [...left, value];
     }
+    const modifiedLocked = locked.filter((v) => v !== value);
+    setLocked(modifiedLocked);
     setLeft(modifiedLeft);
     setRight(modifiedRight);
 
     if (onSelectedCoursChange) {
       onSelectedCoursChange(modifiedRight);
+    }
+
+    if (onCoursObligatoiresChange) {
+      onCoursObligatoiresChange(modifiedLocked);
+    }
+  };
+
+  const handleLocked = (value) => {
+    let modified;
+    if (locked.includes(value)) {
+      modified = locked.filter((v) => v !== value);
+    } else {
+      modified = [...locked, value];
+    }
+    setLocked(modified);
+    if (onCoursObligatoiresChange) {
+      onCoursObligatoiresChange(modified);
     }
   };
 
@@ -132,6 +169,19 @@ export default function CoursTransferList({ includeMaitrise, onSelectedCoursChan
                 {icon}
               </ListItemIcon>
               <ListItemText primary={value?.sigle} />
+              {id === RIGHT && (
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLocked(value);
+                }}
+                disabled={!locked?.includes(value)
+                && (locked.length >= nombreCours
+                )}
+              >
+                {locked?.includes(value) ? <Lock /> : <LockOpen />}
+              </IconButton>
+              )}
             </ListItemButton>
           ))}
           {id === RIGHT && right.length === 0

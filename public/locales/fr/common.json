@@ -67,5 +67,6 @@
   "erreurTelechargement": "Erreur lors du téléchargement de l'horaire. Veuillez réessayer.",
   "sessionHiver": "Hiver {{annee}}",
   "sessionEte": "Été {{annee}}",
-  "sessionAutomne": "Automne {{annee}}"
+  "sessionAutomne": "Automne {{annee}}",
+  "coursRequisDansHoraire": "Cours requis dans l'horaire"
 }
