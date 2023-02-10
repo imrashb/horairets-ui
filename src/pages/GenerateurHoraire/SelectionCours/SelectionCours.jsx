@@ -10,7 +10,12 @@ import {
   Backdrop,
   Button,
   CircularProgress,
-  Divider, FormControlLabel, Portal, Snackbar, Switch, Typography, useMediaQuery,
+  Divider,
+  FormControlLabel,
+  Snackbar,
+  Switch,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,8 +23,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCoursSession, useLazyGetCombinaisonsQuery } from '../../../features/generateur/generateur.api';
 import {
   selectConges,
+  selectCoursObligatoires,
   selectNombreCours,
-  selectProgramme, selectSelectedCours, selectSession, setConges, setNombreCours, setSelectedCours,
+  selectProgramme, selectSelectedCours, selectSession, setConges, setCoursObligatoires, setNombreCours, setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
 import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
@@ -37,9 +43,11 @@ function SelectionCours() {
   const selectedCours = useSelector(selectSelectedCours);
   const nombreCours = useSelector(selectNombreCours);
   const conges = useSelector(selectConges);
+  const coursObligatoires = useSelector(selectCoursObligatoires);
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [cours, setCours] = useState(selectedCours || []);
+  const [controlledCoursObligatoires, setControlledCoursObligatoires] = useState();
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours);
@@ -52,12 +60,23 @@ function SelectionCours() {
     setCours(value?.map((c) => c?.sigle));
   };
 
+  const onCoursObligatoiresChange = (value) => {
+    setControlledCoursObligatoires(value?.map((c) => c?.sigle));
+  };
+
   const handleGenerateCombinaisons = () => {
     dispatch(setSelectedCours(cours));
     dispatch(setNombreCours(nombreCoursGeneration));
     dispatch(setConges(controlledConges));
+    dispatch(setCoursObligatoires(controlledCoursObligatoires));
     getCombinaisonsTrigger({
-      session, cours, conges: controlledConges, nombreCours: nombreCoursGeneration,
+      session,
+      cours,
+      conges:
+      controlledConges,
+      nombreCours:
+      nombreCoursGeneration,
+      coursObligatoires: controlledCoursObligatoires,
     });
   };
 
@@ -80,51 +99,14 @@ function SelectionCours() {
   || (cours?.length === selectedCours?.length
   && cours?.every((v) => selectedCours?.includes(v))
   && nombreCours === nombreCoursGeneration
-  && conges === controlledConges);
+  && conges === controlledConges
+  && controlledCoursObligatoires === coursObligatoires);
 
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <SelectionCoursWrapper>
-      <Portal>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          open={!isntReadyToGenerate && isLargeViewport}
-        >
-          <Alert severity="info">
-            <AlertTitle>
-              {t('parametresHoraire')}
-            </AlertTitle>
-            {`${t('cours')}: ${cours?.join(', ')}`}
-            <br />
-            {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
-            <br />
-            {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          open={isntReadyToGenerate && controlledNombreCours > cours?.length && isLargeViewport}
-        >
-          <Alert severity="error">
-            <AlertTitle>
-              {t('nombreCoursInvalide')}
-            </AlertTitle>
-            {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
-          </Alert>
-        </Snackbar>
-
-        {getCombinaisonQuery?.isFetching && (
-        <Backdrop
-          open={getCombinaisonQuery?.isFetching}
-          sx={{ zIndex: 3000 }}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-        )}
-      </Portal>
-
       <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
       <Accordion
         expanded={expanded}
@@ -139,8 +121,10 @@ function SelectionCours() {
         <Divider />
         <AccordionDetails>
           <CoursTransferList
+            nombreCours={controlledNombreCours}
             includeMaitrise={includeMaitrise}
             onSelectedCoursChange={onSelectedCoursChange}
+            onCoursObligatoiresChange={onCoursObligatoiresChange}
           />
           <FormControlLabel
             checked={includeMaitrise}
@@ -169,6 +153,51 @@ function SelectionCours() {
           </Button>
         </AccordionActions>
       </Accordion>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={!isntReadyToGenerate && isLargeViewport}
+      >
+        <Alert severity="info">
+          <AlertTitle>
+            {t('parametresHoraire')}
+          </AlertTitle>
+          {`${t('cours')}: ${cours?.join(', ')}`}
+          <br />
+          {
+           (controlledCoursObligatoires && controlledCoursObligatoires?.length !== 0)
+            && (
+            <>
+              {`${t('coursRequisDansHoraire')}: ${controlledCoursObligatoires?.join(', ')}`}
+              <br />
+            </>
+            )
+          }
+          {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
+          <br />
+          {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={isntReadyToGenerate && controlledNombreCours > cours?.length && isLargeViewport}
+      >
+        <Alert severity="error">
+          <AlertTitle>
+            {t('nombreCoursInvalide')}
+          </AlertTitle>
+          {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
+        </Alert>
+      </Snackbar>
+
+      {getCombinaisonQuery?.isFetching && (
+        <Backdrop
+          open={getCombinaisonQuery?.isFetching}
+          sx={{ zIndex: 3000 }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </SelectionCoursWrapper>
   );
 }

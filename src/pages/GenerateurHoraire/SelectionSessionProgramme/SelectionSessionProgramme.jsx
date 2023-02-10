@@ -54,6 +54,20 @@ function SelectionSessionProgramme() {
     coursSessionTrigger({ session: controlledSession, programme: controlledProgramme });
   };
 
+  const getSessionTranslation = (value) => {
+    const params = { annee: value?.substring(1, value?.length) };
+    switch (value?.charAt(0).toLowerCase()) {
+      case 'a':
+        return t('sessionAutomne', params);
+      case 'e':
+        return t('sessionEte', params);
+      case 'h':
+        return t('sessionHiver', params);
+      default:
+        return undefined;
+    }
+  };
+
   const isSelectionSame = (programme === controlledProgramme && session === controlledSession);
 
   const [expanded, setExpanded] = useState(true);
@@ -81,7 +95,7 @@ function SelectionSessionProgramme() {
                 >
                   {sessionsQuery?.data?.map((s) => (
                     <MenuItem key={s} value={s}>
-                      {s}
+                      {getSessionTranslation(s)}
                       {' '}
                       {s === session && <Check />}
                     </MenuItem>
