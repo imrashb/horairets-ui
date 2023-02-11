@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Download } from '@mui/icons-material';
+import { Download, South } from '@mui/icons-material';
 import {
   Alert,
   Snackbar,
@@ -7,7 +7,9 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
@@ -79,8 +81,20 @@ function Combinaisons() {
 
   const [downloadError, setDownloadError] = useState(false);
 
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (mainRef.current) {
+        const yOffset = -document.getElementById('navbar').clientHeight || 0;
+        const y = mainRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 0);
+  }, [page, data]);
+
   return (
-    <CombinaisonsWrapper>
+    <CombinaisonsWrapper ref={mainRef}>
       {downloadError && (
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
