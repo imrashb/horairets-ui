@@ -68,5 +68,6 @@
   "sessionHiver": "Hiver {{annee}}",
   "sessionEte": "Été {{annee}}",
   "sessionAutomne": "Automne {{annee}}",
-  "coursRequisDansHoraire": "Cours requis dans l'horaire"
+  "coursRequisDansHoraire": "Cours requis dans l'horaire",
+  "conflitEntreCours": "Les cours sélectionnés ont des conflits d'horaire, aucune combinaison d'horaire à {{nbCours}} cours est possible."
 }
