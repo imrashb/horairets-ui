@@ -25,7 +25,13 @@ import {
   selectConges,
   selectCoursObligatoires,
   selectNombreCours,
-  selectProgramme, selectSelectedCours, selectSession, setConges, setCoursObligatoires, setNombreCours, setSelectedCours,
+  selectProgramme,
+  selectSelectedCours,
+  selectSession,
+  setConges,
+  setCoursObligatoires,
+  setNombreCours,
+  setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
 import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';

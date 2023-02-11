@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
@@ -38,6 +38,12 @@ function Combinaisons() {
   const spacing = isGrid ? 4 : 0;
 
   const sorted = useMemo(() => (data ? COMBINAISONS_SORTS[sorting](data) : data), [data, sorting]);
+
+  useEffect(() => {
+    if (sorted) {
+      setPage(0);
+    }
+  }, [sorted]);
 
   const handleRowsPerPageChange = (event) => {
     const value = event?.target?.value;
