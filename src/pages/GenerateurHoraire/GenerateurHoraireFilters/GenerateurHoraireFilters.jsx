@@ -9,7 +9,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip, Typography, useMediaQuery,
+  FormControl, InputLabel, MenuItem, Select, Tooltip, Typography, useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';

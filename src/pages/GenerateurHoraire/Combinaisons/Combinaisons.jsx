@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Download, South } from '@mui/icons-material';
+import { Download } from '@mui/icons-material';
 import {
   Alert,
   Snackbar,
