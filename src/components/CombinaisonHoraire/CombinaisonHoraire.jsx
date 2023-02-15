@@ -23,10 +23,10 @@ function CombinaisonHoraire({
   const getHeureString = (heure) => `${String(heure).padStart(2, '0')}:00`;
 
   return (
-    <CombinaisonHoraireWrapper>
+    <CombinaisonHoraireWrapper key={combinaison.uniqueId}>
       {!disableHeures && (
       <div className="heures-container">
-        {heures.map((v) => <div>{getHeureString(v)}</div>)}
+        {heures.map((v) => <div key={v}>{getHeureString(v)}</div>)}
       </div>
       )}
       <Grid sx={{ height: '100%' }} container columns={{ xs: jours.length }}>

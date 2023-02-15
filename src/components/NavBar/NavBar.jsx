@@ -79,6 +79,7 @@ export default function NavBar() {
             {
               tabs.map((tab) => (
                 <Tab
+                  key={tab.id}
                   value={tab.id}
                   icon={<tab.icon />}
                   label={isSmallViewport ? undefined : t(tab.label)}

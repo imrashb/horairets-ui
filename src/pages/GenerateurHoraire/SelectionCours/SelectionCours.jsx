@@ -28,6 +28,7 @@ import {
   selectProgramme,
   selectSelectedCours,
   selectSession,
+  setCombinaisons,
   setConges,
   setCoursObligatoires,
   setNombreCours,
@@ -103,6 +104,10 @@ function SelectionCours() {
   const [aucunHoraire, setAucunHoraire] = useState(false);
 
   useEffect(() => {
+    if (getCombinaisonQuery?.data) {
+      dispatch(setCombinaisons(getCombinaisonQuery?.data));
+    }
+
     if (getCombinaisonQuery?.data?.length === 0) {
       setAucunHoraire(true);
     }

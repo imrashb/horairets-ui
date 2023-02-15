@@ -69,5 +69,10 @@
   "sessionEte": "Été {{annee}}",
   "sessionAutomne": "Automne {{annee}}",
   "coursRequisDansHoraire": "Cours requis dans l'horaire",
-  "conflitEntreCours": "Les cours sélectionnés ont des conflits d'horaire, aucune combinaison d'horaire à {{nbCours}} cours est possible."
+  "conflitEntreCours": "Les cours sélectionnés ont des conflits d'horaire, aucune combinaison d'horaire à {{nbCours}} cours est possible.",
+  "filtrer": "Filtrer",
+  "planificationSeances": "Planification des séances",
+  "matin": "Matin",
+  "apresmidi": "Après-midi",
+  "soir": "Soir"
 }

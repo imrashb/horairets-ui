@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
-import GenerateurHoraireFilters from './GenerateurHoraireFilters/GenerateurHoraireFilters';
+import GenerationModifiers from './GenerationModifiers/GenerationModifiers';
 import SelectionCours from './SelectionCours/SelectionCours';
 import SelectionSessionProgramme from './SelectionSessionProgramme/SelectionSessionProgramme';
 
@@ -27,7 +27,7 @@ function GenerateurHoraire() {
   return (
     <GenerateurHoraireWrapper>
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
-      <GenerateurHoraireFilters />
+      <GenerationModifiers />
       <div className="main-content-wrapper">
         <div className={classNames('left', expanded ? 'open' : 'closed')}>
           <SelectionSessionProgramme />
