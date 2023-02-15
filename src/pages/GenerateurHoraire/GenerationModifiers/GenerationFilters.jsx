@@ -14,10 +14,14 @@ import { useTheme } from 'styled-components';
 import { selectPlanification, setPlanification } from '../../../features/generateur/generateur.slice';
 import { FILTRES_PLANIFICATION } from '../generateurHoraire.constants';
 
+const areArraysSame = (a, b) => a?.length === b?.length
+  && a?.every((v) => b?.includes(v));
+
 function GenerationFilters() {
   const { t } = useTranslation('common');
-  const filtres = useSelector(selectPlanification);
+  const planification = useSelector(selectPlanification);
   const [filterDialogVisible, setFilterDialogVisible] = useState(false);
+  const [controlledPlanification, setControlledPlanification] = useState(planification);
   const dispatch = useDispatch();
 
   const theme = useTheme();
@@ -28,6 +32,14 @@ function GenerationFilters() {
       setFilterDialogVisible(false);
     }
   }, [isSmallViewport]);
+
+  const handleClose = () => {
+    setFilterDialogVisible(false);
+
+    if (!areArraysSame(controlledPlanification, planification)) {
+      dispatch(setPlanification(controlledPlanification));
+    }
+  };
 
   return (
     <>
@@ -52,8 +64,8 @@ function GenerationFilters() {
             <InputLabel>{t('planificationSeances')}</InputLabel>
             <Select
               multiple
-              value={filtres}
-              onChange={(e) => dispatch(setPlanification(e?.target?.value))}
+              value={controlledPlanification}
+              onChange={(e) => setControlledPlanification(e?.target?.value)}
               label={t('trierPar')}
             >
               {FILTRES_PLANIFICATION.map(
@@ -65,9 +77,9 @@ function GenerationFilters() {
         <DialogActions>
           <Button
             variant="contained"
-            onClick={() => setFilterDialogVisible(false)}
+            onClick={handleClose}
           >
-            {t('fermer')}
+            {t('appliquerParametres')}
           </Button>
         </DialogActions>
       </Dialog>
