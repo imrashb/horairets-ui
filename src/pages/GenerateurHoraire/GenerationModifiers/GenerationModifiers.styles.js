@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const GenerateurHoraireFiltersWrapper = styled.div`
+const GenerationModifiersWrapper = styled.div`
 
     display: flex;
     flex-direction: row-reverse;
@@ -64,4 +64,4 @@ const GenerateurHoraireFiltersWrapper = styled.div`
 
 `;
 
-export default GenerateurHoraireFiltersWrapper;
+export default GenerationModifiersWrapper;

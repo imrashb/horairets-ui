@@ -28,6 +28,7 @@ import {
   selectProgramme,
   selectSelectedCours,
   selectSession,
+  setCombinaisons,
   setConges,
   setCoursObligatoires,
   setNombreCours,
@@ -99,6 +100,18 @@ function SelectionCours() {
       setExpanded(!!selectCoursSessionQuery?.data);
     }
   }, [selectCoursSessionQuery?.data]);
+
+  const [aucunHoraire, setAucunHoraire] = useState(false);
+
+  useEffect(() => {
+    if (getCombinaisonQuery?.data) {
+      dispatch(setCombinaisons(getCombinaisonQuery?.data));
+    }
+
+    if (getCombinaisonQuery?.data?.length === 0) {
+      setAucunHoraire(true);
+    }
+  }, [getCombinaisonQuery?.data]);
 
   const isntReadyToGenerate = cours.length === 0
   || controlledNombreCours > cours?.length
@@ -193,6 +206,27 @@ function SelectionCours() {
             {t('nombreCoursInvalide')}
           </AlertTitle>
           {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={aucunHoraire}
+        autoHideDuration={30000}
+        onClose={() => {
+          setAucunHoraire(false);
+        }}
+      >
+        <Alert
+          severity="warning"
+          onClose={() => {
+            setAucunHoraire(false);
+          }}
+        >
+          <AlertTitle>
+            {t('horairesGeneres', { count: 0 })}
+          </AlertTitle>
+          {t('conflitEntreCours', { nbCours: nombreCours })}
         </Alert>
       </Snackbar>
 

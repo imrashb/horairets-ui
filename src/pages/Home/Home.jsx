@@ -41,7 +41,7 @@ function Home() {
         <Typography variant="h2" component="div" className="body-bienvenue">
           <strong>{t('bienvenueSur')}</strong>
         </Typography>
-        <Container className="text-container" maxWidth disableGutters sx={{ width: `${width}px` }}>
+        <Container className="text-container" disableGutters sx={{ width: `${width}px` }}>
           <div className="body-horairets">
             <span ref={horairetsRef} className="horairets-wrapper">
               <span className="text-shadow">{t('horairets')}</span>

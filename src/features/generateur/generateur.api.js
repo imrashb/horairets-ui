@@ -60,13 +60,6 @@ export const generateurApi = createApi({
 export const selectCoursSession = (session, programme) => (state) => generateurApi
   .endpoints.getCoursSession.select({ session, programme })(state);
 
-export const selectCombinaisons = (session, cours, nombreCours, conges, coursObligatoires) => (
-  state,
-) => generateurApi
-  .endpoints.getCombinaisons.select({
-    session, cours, nombreCours, conges, coursObligatoires,
-  })(state);
-
 // Export hooks for usage in functional components
 export const {
   useGetSessionsQuery,

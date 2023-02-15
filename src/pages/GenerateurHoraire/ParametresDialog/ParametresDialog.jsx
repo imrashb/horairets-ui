@@ -44,7 +44,7 @@ function ParametresDialog({ open, onClose }) {
             >
               {[...Array(NOMBRE_MAX_COURS_PAR_HORAIRE).keys()].map(
                 (value) => (
-                  <MenuItem value={value + 1}>
+                  <MenuItem key={value + 1} value={value + 1}>
                     {`${value + 1} ${t('cours').toLowerCase()}`}
                   </MenuItem>
                 ),

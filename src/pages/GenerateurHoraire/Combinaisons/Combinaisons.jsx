@@ -8,7 +8,7 @@ import {
 import axios from 'axios';
 import fileDownload from 'js-file-download';
 import React, {
-  useEffect, useMemo, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -16,22 +16,20 @@ import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.co
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
 import {
-  selectSorting, selectView,
+  selectCombinaisons,
+  selectRawCombinaisons,
+  selectView,
 } from '../../../features/generateur/generateur.slice';
-import { COMBINAISONS_SORTS } from '../generateurHoraire.sorting';
 import CombinaisonsWrapper from './Combinaisons.styles';
-import useCombinaisonsSelector from './useCombinaisonsSelector';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
 function Combinaisons() {
   const { t } = useTranslation('common');
   const view = useSelector(selectView);
-  const sorting = useSelector(selectSorting);
-
-  const data = useCombinaisonsSelector();
-
-  const [page, setPage] = useState(0);
+  const data = useSelector(selectCombinaisons);
+  const rawCombinaisons = useSelector(selectRawCombinaisons);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
@@ -39,13 +37,11 @@ function Combinaisons() {
   const columns = isGrid ? 2 : 1;
   const spacing = isGrid ? 4 : 0;
 
-  const sorted = useMemo(() => (data ? COMBINAISONS_SORTS[sorting](data) : data), [data, sorting]);
-
   useEffect(() => {
-    if (sorted) {
+    if (rawCombinaisons) {
       setPage(0);
     }
-  }, [sorted]);
+  }, [rawCombinaisons]);
 
   const handleRowsPerPageChange = (event) => {
     const value = event?.target?.value;
@@ -91,7 +87,7 @@ function Combinaisons() {
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }, 0);
-  }, [page, data]);
+  }, [page, rawCombinaisons]);
 
   return (
     <CombinaisonsWrapper ref={mainRef}>
@@ -114,10 +110,10 @@ function Combinaisons() {
         Pagination
       )}
       <Grid className="combinaisons-grid" container columnSpacing={spacing} columns={{ xs: columns }}>
-        {sorted?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((combinaison) => (
-          <Grid item xs={1}>
+        {data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((combinaison) => (
+          <Grid key={combinaison.uniqueId} item xs={1}>
             <Typography className="numero-horaire" variant="h4">
-              {`${t('horaire')} ${sorted.indexOf(combinaison) + 1}`}
+              {`${t('horaire')} ${data.indexOf(combinaison) + 1}`}
               <IconButton
                 color="primary"
                 onClick={async () => {
