@@ -31,12 +31,15 @@ const CombinaisonsWrapper = styled.div`
                 }
             }
 
+            .credits {
+                margin-bottom: ${({ theme }) => theme.sizes.size_16};
+            }
+
            .numero-horaire {
 
 
                 white-space: nowrap;
                 width: 16rem;
-                margin-bottom: ${({ theme }) => theme.sizes.size_16};
                 border-bottom: ${({ theme }) => theme.sizes.size_2} solid ${({ theme }) => theme.palette.grey[900]};
            }
 

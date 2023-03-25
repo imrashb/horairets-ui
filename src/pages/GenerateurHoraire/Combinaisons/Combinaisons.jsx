@@ -131,6 +131,9 @@ function Combinaisons() {
                 <Download />
               </IconButton>
             </Typography>
+            <Typography className="credits" variant="h6">
+              {t('credits', { count: combinaison?.groupes?.reduce((prev, curr) => prev + curr.cours.credits, 0) })}
+            </Typography>
             <CombinaisonHoraire combinaison={combinaison} />
           </Grid>
         ))}
