@@ -26,7 +26,7 @@ export const generateurApi = createApi({
     getCoursSession: builder.query({
       query: ({ session, programme }) => {
         const params = new URLSearchParams();
-        params.append(PROGRAMMES, programme);
+        programme.forEach((p) => params.append(PROGRAMMES, p));
         params.append(PROGRAMMES, MAITRISE);
         return `${GET_SESSIONS_ENDPOINT}/${session}?${params.toString()}`;
       },

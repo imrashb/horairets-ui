@@ -34,6 +34,7 @@ import {
   setNombreCours,
   setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
+import { areArraysSame } from '../../../utils/Array.utils';
 import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
@@ -113,17 +114,26 @@ function SelectionCours() {
     }
   }, [getCombinaisonQuery?.data]);
 
+  const isCoursEqual = areArraysSame(selectedCours, cours);
+  const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
+  const isCongesEqual = areArraysSame(conges, controlledConges);
+  const isObligatoiresEqual = areArraysSame(controlledCoursObligatoires, coursObligatoires);
   const isntReadyToGenerate = cours.length === 0
   || controlledNombreCours > cours?.length
-  || (cours?.length === selectedCours?.length
-  && cours?.every((v) => selectedCours?.includes(v))
-  && nombreCours === nombreCoursGeneration
-  && conges === controlledConges
-  && controlledCoursObligatoires === coursObligatoires);
+  || (isCoursEqual
+  && isNombreCoursEqual
+  && isCongesEqual
+  && isObligatoiresEqual);
 
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
 
+  console.log(isCoursEqual);
+  console.log(isNombreCoursEqual);
+  console.log(isCongesEqual);
+  console.log(isObligatoiresEqual);
+  console.log(controlledCoursObligatoires);
+  console.log(coursObligatoires);
   return (
     <SelectionCoursWrapper>
       <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />

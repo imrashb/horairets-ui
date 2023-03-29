@@ -1,74 +1,50 @@
-import { Check, ExpandMore } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import {
   Accordion,
-  AccordionActions,
   AccordionDetails,
   AccordionSummary,
-  Button,
   CircularProgress,
   Divider,
-  FormControl, InputLabel, MenuItem, Select, Skeleton, Typography,
+  Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  useGetProgrammesQuery, useGetSessionsQuery, useLazyGetCoursSessionQuery,
+  useLazyGetCoursSessionQuery,
 } from '../../../features/generateur/generateur.api';
 import {
   selectProgramme, selectSession, setProgramme, setSession,
 } from '../../../features/generateur/generateur.slice';
+import { areArraysSame } from '../../../utils/Array.utils';
+import SelectionProgramme from './SelectionProgramme';
+import SelectionSession from './SelectionSession';
 import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles';
 
 function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
 
-  const programme = useSelector(selectProgramme);
   const session = useSelector(selectSession);
+  const programme = useSelector(selectProgramme);
 
   const [controlledSession, setControlledSession] = useState(session);
-  const sessionsQuery = useGetSessionsQuery();
-
-  useEffect(() => {
-    if (sessionsQuery?.data) {
-      setControlledSession(sessionsQuery?.data?.at(-1));
-    }
-  }, [sessionsQuery?.data]);
-
   const [controlledProgramme, setControlledProgramme] = useState(programme);
-  const programmesQuery = useGetProgrammesQuery();
 
   const [coursSessionTrigger, coursSessionQuery] = useLazyGetCoursSessionQuery();
 
   // Resubscribe component to RTK Query Cache
   useEffect(() => {
-    if (session && programme) {
-      coursSessionTrigger({ session, programme });
+    if (controlledSession && controlledProgramme && controlledProgramme.length > 0) {
+      const areProgrammesSame = areArraysSame(controlledProgramme, programme);
+      const isSessionSame = session === controlledSession;
+
+      if (!isSessionSame) { dispatch(setSession(controlledSession)); }
+      if (!areProgrammesSame) { dispatch(setProgramme(controlledProgramme)); }
+
+      coursSessionTrigger({ session: controlledSession, programme: controlledProgramme });
     }
-  }, []);
-
-  const handleSelection = () => {
-    dispatch(setSession(controlledSession));
-    dispatch(setProgramme(controlledProgramme));
-    coursSessionTrigger({ session: controlledSession, programme: controlledProgramme });
-  };
-
-  const getSessionTranslation = (value) => {
-    const params = { annee: value?.substring(1, value?.length) };
-    switch (value?.charAt(0).toLowerCase()) {
-      case 'a':
-        return t('sessionAutomne', params);
-      case 'e':
-        return t('sessionEte', params);
-      case 'h':
-        return t('sessionHiver', params);
-      default:
-        return undefined;
-    }
-  };
-
-  const isSelectionSame = (programme === controlledProgramme && session === controlledSession);
+  }, [controlledSession, controlledProgramme, programme, session, coursSessionTrigger, dispatch]);
 
   const [expanded, setExpanded] = useState(true);
 
@@ -83,60 +59,9 @@ function SelectionSessionProgramme() {
         </AccordionSummary>
         <Divider />
         <AccordionDetails className="selection-wrapper">
-          {sessionsQuery.isLoading
-            ? <Skeleton variant="rectangular" width="100%" height="3rem" />
-            : (
-              <FormControl required variant="standard">
-                <InputLabel>{t('session')}</InputLabel>
-                <Select
-                  value={controlledSession}
-                  onChange={(e) => setControlledSession(e?.target?.value)}
-                  label={t('session')}
-                >
-                  {sessionsQuery?.data?.map((s) => (
-                    <MenuItem key={s} value={s}>
-                      {getSessionTranslation(s)}
-                      {' '}
-                      {s === session && <Check />}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-          {programmesQuery.isLoading
-            ? <Skeleton variant="rectangular" width="100%" height="3rem" />
-            : (
-              <FormControl error={controlledProgramme === ''} required variant="standard">
-                <InputLabel>{t('programme')}</InputLabel>
-                <Select
-                  value={controlledProgramme}
-                  onChange={(e) => setControlledProgramme(e?.target?.value)}
-                  label={t('programme')}
-                >
-                  {programmesQuery?.data?.map(
-                    (p) => (
-                      <MenuItem key={p} value={p}>
-                        {t(p)}
-                        {' '}
-                        {p === programme && <Check />}
-                      </MenuItem>
-                    ),
-                  )}
-                </Select>
-              </FormControl>
-            )}
+          <SelectionSession onChange={(s) => setControlledSession(s)} />
+          <SelectionProgramme onChange={(p) => setControlledProgramme(p)} />
         </AccordionDetails>
-        <Divider />
-        <AccordionActions>
-          <Button
-            variant="contained"
-            onClick={handleSelection}
-            disabled={!controlledProgramme || !controlledSession
-            || isSelectionSame}
-          >
-            {t('synchroniserCours')}
-          </Button>
-        </AccordionActions>
       </Accordion>
     </SelectionSessionProgrammeWrapper>
   );
