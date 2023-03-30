@@ -7,7 +7,7 @@ import { GENERATEUR_LIST_VIEW } from './generateur.constants';
 
 const initialState = {
   session: '',
-  programme: '',
+  programme: [],
   selectedCours: undefined,
   coursObligatoires: undefined,
   view: GENERATEUR_LIST_VIEW,

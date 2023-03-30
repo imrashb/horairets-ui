@@ -12,10 +12,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
 import { selectPlanification, setPlanification } from '../../../features/generateur/generateur.slice';
+import { areArraysSame } from '../../../utils/Array.utils';
 import { FILTRES_PLANIFICATION } from '../generateurHoraire.constants';
-
-const areArraysSame = (a, b) => a?.length === b?.length
-  && a?.every((v) => b?.includes(v));
 
 function GenerationFilters() {
   const { t } = useTranslation('common');
