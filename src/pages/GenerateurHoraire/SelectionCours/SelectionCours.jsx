@@ -36,6 +36,7 @@ import {
 } from '../../../features/generateur/generateur.slice';
 import { areArraysSame } from '../../../utils/Array.utils';
 import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
@@ -46,31 +47,29 @@ function SelectionCours() {
   const dispatch = useDispatch();
 
   const [getCombinaisonsTrigger, getCombinaisonQuery] = useLazyGetCombinaisonsQuery();
+
+  // Current Generateur Settings
   const session = useSelector(selectSession);
   const programme = useSelector(selectProgramme);
   const selectedCours = useSelector(selectSelectedCours);
   const nombreCours = useSelector(selectNombreCours);
   const conges = useSelector(selectConges);
   const coursObligatoires = useSelector(selectCoursObligatoires);
+
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
-  const [cours, setCours] = useState(selectedCours || []);
-  const [controlledCoursObligatoires, setControlledCoursObligatoires] = useState();
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours);
-  const [controlledConges, setControlledConges] = useState(conges);
+
+  const {
+    cours,
+    coursObligatoires: controlledCoursObligatoires,
+    conges: controlledConges,
+    nombreCours: controlledNombreCours,
+  } = useGenerateurHoraire();
 
   const nombreCoursGeneration = controlledNombreCours
   || Math.min(cours?.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
-
-  const onSelectedCoursChange = (value) => {
-    setCours(value?.map((c) => c?.sigle));
-  };
-
-  const onCoursObligatoiresChange = (value) => {
-    setControlledCoursObligatoires(value?.map((c) => c?.sigle));
-  };
 
   const handleGenerateCombinaisons = () => {
     dispatch(setSelectedCours(cours));
@@ -86,14 +85,6 @@ function SelectionCours() {
       nombreCoursGeneration,
       coursObligatoires: controlledCoursObligatoires,
     });
-  };
-
-  const handleDialogClose = (values) => {
-    if (values) {
-      setControlledNombreCours(values?.nombreCours);
-      setControlledConges(values?.conges);
-    }
-    setDialogOpen(false);
   };
 
   useEffect(() => {
@@ -128,15 +119,9 @@ function SelectionCours() {
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
 
-  console.log(isCoursEqual);
-  console.log(isNombreCoursEqual);
-  console.log(isCongesEqual);
-  console.log(isObligatoiresEqual);
-  console.log(controlledCoursObligatoires);
-  console.log(coursObligatoires);
   return (
     <SelectionCoursWrapper>
-      <ParametresDialog open={dialogOpen} onClose={handleDialogClose} />
+      <ParametresDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <Accordion
         expanded={expanded}
         disabled={!selectCoursSessionQuery?.data}
@@ -150,10 +135,7 @@ function SelectionCours() {
         <Divider />
         <AccordionDetails>
           <CoursTransferList
-            nombreCours={controlledNombreCours}
             includeMaitrise={includeMaitrise}
-            onSelectedCoursChange={onSelectedCoursChange}
-            onCoursObligatoiresChange={onCoursObligatoiresChange}
           />
           <FormControlLabel
             checked={includeMaitrise}

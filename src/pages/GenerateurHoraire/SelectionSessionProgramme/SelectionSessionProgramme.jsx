@@ -17,6 +17,7 @@ import {
   selectProgramme, selectSession, setProgramme, setSession,
 } from '../../../features/generateur/generateur.slice';
 import { areArraysSame } from '../../../utils/Array.utils';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import SelectionProgramme from './SelectionProgramme';
 import SelectionSession from './SelectionSession';
 import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles';
@@ -25,26 +26,25 @@ function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
 
-  const session = useSelector(selectSession);
-  const programme = useSelector(selectProgramme);
+  const currentSession = useSelector(selectSession);
+  const currentProgramme = useSelector(selectProgramme);
 
-  const [controlledSession, setControlledSession] = useState(session);
-  const [controlledProgramme, setControlledProgramme] = useState(programme);
+  const { session, programmes } = useGenerateurHoraire();
 
   const [coursSessionTrigger, coursSessionQuery] = useLazyGetCoursSessionQuery();
 
   // Resubscribe component to RTK Query Cache
   useEffect(() => {
-    if (controlledSession && controlledProgramme && controlledProgramme.length > 0) {
-      const areProgrammesSame = areArraysSame(controlledProgramme, programme);
-      const isSessionSame = session === controlledSession;
+    if (session && programmes && programmes.length > 0) {
+      const areProgrammesSame = areArraysSame(programmes, currentProgramme);
+      const isSessionSame = currentSession === session;
 
-      if (!isSessionSame) { dispatch(setSession(controlledSession)); }
-      if (!areProgrammesSame) { dispatch(setProgramme(controlledProgramme)); }
+      if (!isSessionSame) { dispatch(setSession(session)); }
+      if (!areProgrammesSame) { dispatch(setProgramme(programmes)); }
 
-      coursSessionTrigger({ session: controlledSession, programme: controlledProgramme });
+      coursSessionTrigger({ session, programme: programmes });
     }
-  }, [controlledSession, controlledProgramme, programme, session, coursSessionTrigger, dispatch]);
+  }, [session, programmes, currentProgramme, currentSession, coursSessionTrigger, dispatch]);
 
   const [expanded, setExpanded] = useState(true);
 
@@ -59,8 +59,8 @@ function SelectionSessionProgramme() {
         </AccordionSummary>
         <Divider />
         <AccordionDetails className="selection-wrapper">
-          <SelectionSession onChange={(s) => setControlledSession(s)} />
-          <SelectionProgramme onChange={(p) => setControlledProgramme(p)} />
+          <SelectionSession />
+          <SelectionProgramme />
         </AccordionDetails>
       </Accordion>
     </SelectionSessionProgrammeWrapper>

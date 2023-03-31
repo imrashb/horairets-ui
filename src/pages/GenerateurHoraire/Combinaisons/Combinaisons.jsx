@@ -36,7 +36,6 @@ function Combinaisons() {
 
   const columns = isGrid ? 2 : 1;
   const spacing = isGrid ? 4 : 0;
-
   useEffect(() => {
     if (rawCombinaisons) {
       setPage(0);

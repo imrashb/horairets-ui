@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
+import GenerateurHoraireProvider from './GenerateurHoraireContexts/GenerateurHoraireProvider';
 import GenerationModifiers from './GenerationModifiers/GenerationModifiers';
 import SelectionCours from './SelectionCours/SelectionCours';
 import SelectionSessionProgramme from './SelectionSessionProgramme/SelectionSessionProgramme';
@@ -29,20 +30,22 @@ function GenerateurHoraire() {
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
       <GenerationModifiers />
       <div className="main-content-wrapper">
-        <div className={classNames('left', expanded ? 'open' : 'closed')}>
-          <SelectionSessionProgramme />
-          <SelectionCours />
-          {isLargeViewport && (
-          <Paper component="span" className="expand-btn">
-            <IconButton
-              color="primary"
-              onClick={() => setExpanded(!expanded)}
-            >
-              {expanded ? <ChevronLeft /> : <ChevronRight />}
-            </IconButton>
-          </Paper>
-          )}
-        </div>
+        <GenerateurHoraireProvider>
+          <div className={classNames('left', expanded ? 'open' : 'closed')}>
+            <SelectionSessionProgramme />
+            <SelectionCours />
+            {isLargeViewport && (
+              <Paper component="span" className="expand-btn">
+                <IconButton
+                  color="primary"
+                  onClick={() => setExpanded(!expanded)}
+                >
+                  {expanded ? <ChevronLeft /> : <ChevronRight />}
+                </IconButton>
+              </Paper>
+            )}
+          </div>
+        </GenerateurHoraireProvider>
         <div className="right">
           <Combinaisons />
         </div>
