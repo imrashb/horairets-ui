@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectConges, selectNombreCours } from '../../../features/generateur/generateur.slice';
 import { JOURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import ParametresDialogWrapper from './ParametresDialog.styles';
 
 function ParametresDialog({ open, onClose }) {
@@ -26,8 +27,12 @@ function ParametresDialog({ open, onClose }) {
   const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours || 5);
   const [controlledConges, setControlledConges] = useState(conges || []);
 
+  const { setNombreCours, setConges } = useGenerateurHoraire();
+
   const applyParameters = () => {
-    onClose({ nombreCours: controlledNombreCours, conges: controlledConges });
+    setNombreCours(controlledNombreCours);
+    setConges(controlledConges);
+    if (onClose) onClose();
   };
 
   return (
