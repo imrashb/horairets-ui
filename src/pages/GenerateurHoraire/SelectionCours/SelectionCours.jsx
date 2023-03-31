@@ -1,21 +1,16 @@
-import { useTheme } from '@emotion/react';
 import { ExpandMore, Settings } from '@mui/icons-material';
 import {
   Accordion,
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
-  Alert,
-  AlertTitle,
   Backdrop,
   Button,
   CircularProgress,
   Divider,
   FormControlLabel,
-  Snackbar,
   Switch,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,6 +35,8 @@ import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerate
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
 import SelectionCoursWrapper from './SelectionCours.styles';
+import GenerationInformationToasts from './toasts/GenerationInformationToasts';
+import ParametresGenerationToast from './toasts/ParametresGenerationToast';
 
 function SelectionCours() {
   const { t } = useTranslation('common');
@@ -93,15 +90,9 @@ function SelectionCours() {
     }
   }, [selectCoursSessionQuery?.data]);
 
-  const [aucunHoraire, setAucunHoraire] = useState(false);
-
   useEffect(() => {
     if (getCombinaisonQuery?.data) {
       dispatch(setCombinaisons(getCombinaisonQuery?.data));
-    }
-
-    if (getCombinaisonQuery?.data?.length === 0) {
-      setAucunHoraire(true);
     }
   }, [getCombinaisonQuery?.data]);
 
@@ -109,15 +100,12 @@ function SelectionCours() {
   const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
   const isCongesEqual = areArraysSame(conges, controlledConges);
   const isObligatoiresEqual = areArraysSame(controlledCoursObligatoires, coursObligatoires);
-  const isntReadyToGenerate = cours.length === 0
+  const readyToGenerate = !(cours.length === 0
   || controlledNombreCours > cours?.length
   || (isCoursEqual
   && isNombreCoursEqual
   && isCongesEqual
-  && isObligatoiresEqual);
-
-  const theme = useTheme();
-  const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
+  && isObligatoiresEqual));
 
   return (
     <SelectionCoursWrapper>
@@ -157,7 +145,7 @@ function SelectionCours() {
           </Button>
           <Button
             variant="contained"
-            disabled={isntReadyToGenerate}
+            disabled={!readyToGenerate}
             onClick={handleGenerateCombinaisons}
           >
             {t('genererHoraires')}
@@ -165,62 +153,8 @@ function SelectionCours() {
         </AccordionActions>
       </Accordion>
 
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={!isntReadyToGenerate && isLargeViewport}
-      >
-        <Alert severity="info">
-          <AlertTitle>
-            {t('parametresHoraire')}
-          </AlertTitle>
-          {`${t('cours')}: ${cours?.join(', ')}`}
-          <br />
-          {
-           (controlledCoursObligatoires && controlledCoursObligatoires?.length !== 0)
-            && (
-            <>
-              {`${t('coursRequisDansHoraire')}: ${controlledCoursObligatoires?.join(', ')}`}
-              <br />
-            </>
-            )
-          }
-          {`${t('nombreCoursParHoraire')}: ${controlledNombreCours || nombreCoursGeneration} ${t('cours').toLowerCase()}`}
-          <br />
-          {`${t('joursConges')}: ${controlledConges?.map((c) => t(c))?.join(', ') || t('aucun')}`}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={isntReadyToGenerate && controlledNombreCours > cours?.length && isLargeViewport}
-      >
-        <Alert severity="error">
-          <AlertTitle>
-            {t('nombreCoursInvalide')}
-          </AlertTitle>
-          {t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: controlledNombreCours })}
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={aucunHoraire}
-        autoHideDuration={30000}
-        onClose={() => {
-          setAucunHoraire(false);
-        }}
-      >
-        <Alert
-          severity="warning"
-          onClose={() => {
-            setAucunHoraire(false);
-          }}
-        >
-          <AlertTitle>
-            {t('horairesGeneres', { count: 0 })}
-          </AlertTitle>
-          {t('conflitEntreCours', { nbCours: nombreCours })}
-        </Alert>
-      </Snackbar>
+      <ParametresGenerationToast readyToGenerate={readyToGenerate} />
+      <GenerationInformationToasts readyToGenerate={readyToGenerate} />
 
       {getCombinaisonQuery?.isFetching && (
         <Backdrop

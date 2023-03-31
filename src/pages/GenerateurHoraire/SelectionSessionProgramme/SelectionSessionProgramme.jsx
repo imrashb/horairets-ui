@@ -47,7 +47,6 @@ function SelectionSessionProgramme() {
   }, [session, programmes, currentProgramme, currentSession, coursSessionTrigger, dispatch]);
 
   const [expanded, setExpanded] = useState(true);
-
   return (
     <SelectionSessionProgrammeWrapper>
       <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} className="choix-session">

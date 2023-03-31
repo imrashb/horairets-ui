@@ -1,8 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { Download } from '@mui/icons-material';
 import {
-  Alert,
-  Snackbar,
   Grid, IconButton, TablePagination, Typography, useMediaQuery,
 } from '@mui/material';
 import axios from 'axios';
@@ -12,6 +10,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
@@ -74,8 +73,6 @@ function Combinaisons() {
     />
   );
 
-  const [downloadError, setDownloadError] = useState(false);
-
   const mainRef = useRef(null);
 
   useEffect(() => {
@@ -90,21 +87,6 @@ function Combinaisons() {
 
   return (
     <CombinaisonsWrapper ref={mainRef}>
-      {downloadError && (
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={downloadError}
-      >
-        <Alert
-          severity="error"
-          onClose={() => {
-            setDownloadError(false);
-          }}
-        >
-          {t('erreurTelechargement')}
-        </Alert>
-      </Snackbar>
-      )}
       {data?.length > 0 && (
         Pagination
       )}
@@ -123,7 +105,7 @@ function Combinaisons() {
                     });
                     fileDownload(res.data, 'horaire.jpeg');
                   } catch (error) {
-                    setDownloadError(true);
+                    toast.error(t('erreurTelechargement'));
                   }
                 }}
               >
