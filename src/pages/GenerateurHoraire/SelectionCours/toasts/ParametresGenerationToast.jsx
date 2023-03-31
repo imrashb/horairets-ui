@@ -7,7 +7,7 @@ import useGenerateurHoraire from '../../GenerateurHoraireContexts/hooks/useGener
 function ParametresGenerationToast({ readyToGenerate }) {
   const { t } = useTranslation('common');
   const {
-    coursObligatoire, cours, conges, nombreCours,
+    coursObligatoires, cours, conges, nombreCours,
   } = useGenerateurHoraire();
 
   const nombreCoursGeneration = nombreCours
@@ -18,10 +18,10 @@ function ParametresGenerationToast({ readyToGenerate }) {
       {`${t('cours')}: ${cours?.join(', ')}`}
       <br />
       {
-        (coursObligatoire && coursObligatoire?.length !== 0)
+        (coursObligatoires && coursObligatoires?.length !== 0)
         && (
         <>
-            {`${t('coursRequisDansHoraire')}: ${coursObligatoire?.join(', ')}`}
+            {`${t('coursRequisDansHoraire')}: ${coursObligatoires?.join(', ')}`}
           <br />
         </>
         )
