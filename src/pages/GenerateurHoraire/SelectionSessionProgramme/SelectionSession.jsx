@@ -1,11 +1,10 @@
 import {
   FormControl, InputLabel, MenuItem, Select, Skeleton,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useGetSessionsQuery } from '../../../features/generateur/generateur.api';
-import { selectSession } from '../../../features/generateur/generateur.slice';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 
 const getSessionTranslation = (value, t) => {
   const params = { annee: value?.substring(1, value?.length) };
@@ -21,26 +20,17 @@ const getSessionTranslation = (value, t) => {
   }
 };
 
-function SelectionSession({ onChange }) {
+function SelectionSession() {
   const { t } = useTranslation('common');
-  const session = useSelector(selectSession);
-  const [controlledSession, setControlledSession] = useState(session);
+  const { session, setSession } = useGenerateurHoraire();
   const sessionsQuery = useGetSessionsQuery();
 
   useEffect(() => {
     if (sessionsQuery?.data) {
-      setControlledSession(sessionsQuery?.data?.at(-1));
+      setSession(sessionsQuery?.data?.at(-1));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionsQuery?.data]);
-
-  const onSessionChange = (event) => {
-    const s = event?.target?.value;
-    setControlledSession(s);
-  };
-
-  useEffect(() => {
-    if (onChange) onChange(controlledSession);
-  }, [controlledSession]);
 
   return (
     sessionsQuery.isLoading
@@ -49,8 +39,8 @@ function SelectionSession({ onChange }) {
         <FormControl required variant="standard">
           <InputLabel>{t('session')}</InputLabel>
           <Select
-            value={controlledSession}
-            onChange={onSessionChange}
+            value={session}
+            onChange={(e) => setSession(e?.target?.value)}
             label={t('session')}
           >
             {sessionsQuery?.data?.map((s) => (

@@ -73,6 +73,8 @@
   "sessionAutomne": "Automne {{annee}}",
   "coursRequisDansHoraire": "Cours requis dans l'horaire",
   "conflitEntreCours": "Les cours sélectionnés ont des conflits d'horaire, aucune combinaison d'horaire à {{nbCours}} cours est possible.",
+  "aucunHoraireAvecFiltres_other": "Aucune combinaison d'horaire est possible avec les filtres sélectionnés. {{count}} combinaisons d'horaire sont disponibles sans les filtres.",
+  "aucunHoraireAvecFiltres_one": "Aucune combinaison d'horaire est possible avec les filtres sélectionnés. Une combinaison d'horaire est disponible sans les filtres.",
   "filtrer": "Filtrer",
   "planificationSeances": "Planification des séances",
   "matin": "Matin",

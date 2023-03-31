@@ -1,6 +1,35 @@
 import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
+
+    @keyframes slide {
+        from {
+            transform: translateY(-30vh);
+        }
+
+        to {
+            transform: none;
+        }
+    }
+
+    @keyframes opacity {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .left, .right {
+        animation: 0.5s slide ease, 1s opacity ease;
+    }
+
+    .home-background-wrapper {
+        animation: 2s opacity ease;
+    }
+
     display:flex;
     flex-direction: row;
     height:100%;

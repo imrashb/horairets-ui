@@ -15,5 +15,4 @@ i18n
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     saveMissing: true,
-    debug: true,
   });
