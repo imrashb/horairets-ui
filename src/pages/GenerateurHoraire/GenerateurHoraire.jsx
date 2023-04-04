@@ -6,7 +6,6 @@ import {
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import StyledToastContainer from '../../components/Toasts/StyledToastContainer';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
 import GenerateurHoraireProvider from './GenerateurHoraireContexts/GenerateurHoraireProvider';
@@ -51,18 +50,6 @@ function GenerateurHoraire() {
           <Combinaisons />
         </div>
       </div>
-      <StyledToastContainer
-        position="bottom-right"
-        autoClose={10000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </GenerateurHoraireWrapper>
   );
 }

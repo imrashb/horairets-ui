@@ -6,11 +6,14 @@ import store from './app/store';
 import AppThemeProvider from './themes/AppThemeProvider';
 import App from './App';
 import './i18n';
+import AuthProvider from './components/Auth/AuthProvider';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <AppThemeProvider>
-      <App />
-    </AppThemeProvider>
+    <AuthProvider>
+      <AppThemeProvider>
+        <App />
+      </AppThemeProvider>
+    </AuthProvider>
   </Provider>,
 );

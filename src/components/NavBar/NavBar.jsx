@@ -1,4 +1,6 @@
-import { CalendarToday, Dashboard, Info } from '@mui/icons-material';
+import {
+  CalendarToday, Dashboard, Info,
+} from '@mui/icons-material';
 import {
   AppBar, Tab, Tabs, Toolbar, Typography, useMediaQuery, useTheme,
 } from '@mui/material';
@@ -7,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GENERATEUR_HORAIRE_URL } from '../../routes/Routes.constants';
 import NavBarWrapper from './NavBar.styles';
+import LoginButton from './components/LoginButton';
 
 const tabs = [
   {
@@ -87,7 +90,9 @@ export default function NavBar() {
               ))
             }
           </Tabs>
-          <div className="navbar-right" />
+          <div className="navbar-right">
+            <LoginButton />
+          </div>
         </Toolbar>
       </AppBar>
     </NavBarWrapper>

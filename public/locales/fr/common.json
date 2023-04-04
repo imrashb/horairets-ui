@@ -79,5 +79,9 @@
   "planificationSeances": "Planification des séances",
   "matin": "Matin",
   "apresmidi": "Après-midi",
-  "soir": "Soir"
+  "soir": "Soir",
+  "seConnecter": "Se connecter",
+  "seDeconnecter": "Se déconnecter",
+  "deconnexionSucces": "Déconnexion réussie!",
+  "deconnexionErreur": "Déconnexion échouée, veuillez réessayer"
 }
