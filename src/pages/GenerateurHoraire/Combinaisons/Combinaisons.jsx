@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Download } from '@mui/icons-material';
+import { Download, Favorite } from '@mui/icons-material';
 import {
   Grid, IconButton, TablePagination, Typography, useMediaQuery,
 } from '@mui/material';
@@ -45,6 +45,10 @@ function Combinaisons() {
     const value = event?.target?.value;
     setRowsPerPage(value);
     setPage(Math.floor((page * rowsPerPage) / value));
+  };
+
+  const handleFavorite = () => {
+
   };
 
   const theme = useTheme();
@@ -110,6 +114,11 @@ function Combinaisons() {
                 }}
               >
                 <Download />
+              </IconButton>
+              <IconButton
+                onClick={() => handleFavorite(combinaison?.uniqueId)}
+              >
+                <Favorite />
               </IconButton>
             </Typography>
             <Typography className="credits" variant="h6">

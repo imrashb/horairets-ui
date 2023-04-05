@@ -1,6 +1,8 @@
 import React from 'react';
 import { initializeApp } from 'firebase/app';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import AuthContext from './AuthContext';
 
 const firebaseConfig = {
@@ -20,6 +22,10 @@ const auth = getAuth(app);
 
 if (process.env.NODE_ENV === 'development') {
   connectAuthEmulator(auth, 'http://localhost:9099');
+  const db = getFirestore(app);
+  connectFirestoreEmulator(db, 'localhost', 9098);
+  const fn = getFunctions(app);
+  connectFunctionsEmulator(fn, 'localhost', 9100);
 }
 
 function AuthProvider({ children }) {
