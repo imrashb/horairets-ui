@@ -39,10 +39,14 @@ const generateurSlice = createSlice({
   reducers: {
     setProgramme: (state, action) => {
       // immutable­tate based off those changes
+      state.combinaisons = undefined;
+      state.rawCombinaisons = undefined;
       state.programme = action.payload;
     },
     setSession: (state, action) => {
       // immutable state based off those changes
+      state.combinaisons = undefined;
+      state.rawCombinaisons = undefined;
       state.session = action.payload;
     },
     setSelectedCours: (state, action) => {

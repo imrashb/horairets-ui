@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Download, Favorite } from '@mui/icons-material';
+import { Download } from '@mui/icons-material';
 import {
   Grid, IconButton, TablePagination, Typography, useMediaQuery,
 } from '@mui/material';
@@ -20,6 +20,7 @@ import {
   selectView,
 } from '../../../features/generateur/generateur.slice';
 import CombinaisonsWrapper from './Combinaisons.styles';
+import FavoriteButton from './FavoriteButton';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -45,10 +46,6 @@ function Combinaisons() {
     const value = event?.target?.value;
     setRowsPerPage(value);
     setPage(Math.floor((page * rowsPerPage) / value));
-  };
-
-  const handleFavorite = () => {
-
   };
 
   const theme = useTheme();
@@ -115,11 +112,7 @@ function Combinaisons() {
               >
                 <Download />
               </IconButton>
-              <IconButton
-                onClick={() => handleFavorite(combinaison?.uniqueId)}
-              >
-                <Favorite />
-              </IconButton>
+              <FavoriteButton combinaison={combinaison} />
             </Typography>
             <Typography className="credits" variant="h6">
               {t('credits', { count: combinaison?.groupes?.reduce((prev, curr) => prev + curr.cours.credits, 0) })}
