@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
 
-    @keyframes slide {
+    @keyframes textSlide {
         from {
             transform: translateY(-30vh);
         }
@@ -23,7 +23,7 @@ const HomeWrapper = styled.div`
     }
 
     .left, .right {
-        animation: 0.5s slide ease, 1s opacity ease;
+        animation: 0.5s textSlide ease, 1s opacity ease;
     }
 
     .home-background-wrapper {
