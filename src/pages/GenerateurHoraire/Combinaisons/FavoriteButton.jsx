@@ -28,9 +28,9 @@ function FavoriteButton({ combinaison }) {
         [session]: isFavorited ? arrayRemove(id) : arrayUnion(id),
       },
     };
+    const options = { autoClose: 5000 };
     try {
       await setDoc(document, newFavorites, { merge: true });
-      const options = { autoClose: 5000 };
       if (isFavorited) {
         toast.success(t('retraitFavoris'), options);
       } else {
