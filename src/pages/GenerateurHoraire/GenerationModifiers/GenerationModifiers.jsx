@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 import GenerationModifiersWrapper from './GenerationModifiers.styles';
 import {
-  selectCombinaisons,
   selectView,
   setView,
 } from '../../../features/generateur/generateur.slice';
@@ -19,10 +18,9 @@ import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/ge
 import GenerationSorting from './GenerationSorting';
 import GenerationFilters from './GenerationFilters';
 
-function GenerationModifiers() {
+function GenerationModifiers({ title }) {
   const { t } = useTranslation('common');
   const view = useSelector(selectView);
-  const data = useSelector(selectCombinaisons);
   const dispatch = useDispatch();
 
   const handleAlignment = (event, value) => {
@@ -60,9 +58,9 @@ function GenerationModifiers() {
       )}
       <GenerationSorting />
       <GenerationFilters />
-      {data && (
+      {title && (
       <Typography className="nb-horaires-generes" variant="h5">
-        {t('horairesGeneres', { count: data?.length })}
+        {title}
       </Typography>
       )}
     </GenerationModifiersWrapper>

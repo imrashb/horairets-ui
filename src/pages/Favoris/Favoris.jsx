@@ -1,0 +1,84 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography,
+} from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import FavorisWrapper from './Favoris.styles';
+import withAuth from '../../components/Auth/AuthenticatedComponent';
+import { HOME_URL } from '../../routes/Routes.constants';
+import GenerationModifiers from '../GenerateurHoraire/GenerationModifiers/GenerationModifiers';
+import Combinaisons from '../GenerateurHoraire/Combinaisons/Combinaisons';
+import useFirebaseUserDocument from '../../hooks/useFirebaseUserDocument';
+import { getSessionTranslation, sortSession as sortSessions } from '../../utils/Sessions.utils';
+import { useLazyGetCombinaisonsFromIdQuery } from '../../features/generateur/generateur.api';
+
+function Favoris() {
+  const { t } = useTranslation('common');
+
+  const document = useFirebaseUserDocument();
+  const [userData, loading] = useDocumentData(document);
+  const sessions = useMemo(() => (
+    userData?.favorites ? Object.keys(userData?.favorites) : []
+  ), [userData?.favorites]);
+  sortSessions(sessions);
+
+  const [session, setSession] = useState('');
+
+  useEffect(() => {
+    if (sessions && sessions?.length > 0) {
+      setSession(sessions?.at(-1));
+    }
+  }, [sessions]);
+
+  const [trigger, query] = useLazyGetCombinaisonsFromIdQuery();
+
+  useEffect(() => {
+    if (session) {
+      trigger(userData?.favorites[session]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
+  return (
+    <FavorisWrapper>
+      <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('favoris').toUpperCase()}</Typography>
+      <GenerationModifiers />
+
+      {(loading || query?.isFetching) ? (
+        <Backdrop
+          open={loading}
+          sx={{ zIndex: 3000 }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : undefined}
+
+      {sessions?.length > 0 ? (
+        <>
+          <FormControl fullWidth required variant="standard">
+            <InputLabel>{t('session')}</InputLabel>
+            <Select
+              value={session}
+              onChange={(e) => setSession(e?.target?.value)}
+              label={t('session')}
+            >
+              {sessions?.map((s) => (
+                userData?.favorites[s]?.length > 0
+                  ? (
+                    <MenuItem key={s} value={s}>
+                      {getSessionTranslation(s, t)}
+                    </MenuItem>
+                  ) : undefined
+              ))}
+            </Select>
+          </FormControl>
+          {query?.data && <Combinaisons combinaisons={query?.data} />}
+        </>
+      )
+        : <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('aucunFavoris').toUpperCase()}</Typography>}
+    </FavorisWrapper>
+  );
+}
+
+export default withAuth(Favoris, HOME_URL);

@@ -2,26 +2,23 @@ import { Favorite } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import React from 'react';
 import { arrayRemove, arrayUnion, setDoc } from 'firebase/firestore';
-import { useSelector } from 'react-redux';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import withAuth from '../../../components/Auth/AuthenticatedComponent';
 import useFirebaseUserDocument from '../../../hooks/useFirebaseUserDocument';
-import { selectSession } from '../../../features/generateur/generateur.slice';
+import { getSessionFromCombinaisonUniqueId } from '../../../utils/Sessions.utils';
 
 function FavoriteButton({ combinaison }) {
   const { t } = useTranslation('common');
   const id = combinaison?.uniqueId;
-  const session = useSelector(selectSession);
   const document = useFirebaseUserDocument();
 
+  const session = getSessionFromCombinaisonUniqueId(combinaison?.uniqueId);
   const [data] = useDocumentData(document);
 
   const isFavorited = data?.favorites
-  && data?.favorites[session]
-   && data?.favorites[session].includes(id);
-
+  && Object.values(data?.favorites).find((s) => s.includes(id));
   const handleFavorite = async () => {
     const newFavorites = {
       favorites: {

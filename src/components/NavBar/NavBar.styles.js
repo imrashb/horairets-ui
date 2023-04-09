@@ -60,6 +60,8 @@ const NavBarWrapper = styled.div`
                     margin-right: 0;
                 }
 
+                cursor: pointer;
+
             }
         }
 

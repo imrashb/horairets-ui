@@ -5,20 +5,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetSessionsQuery } from '../../../features/generateur/generateur.api';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
-
-const getSessionTranslation = (value, t) => {
-  const params = { annee: value?.substring(1, value?.length) };
-  switch (value?.charAt(0).toLowerCase()) {
-    case 'a':
-      return t('sessionAutomne', params);
-    case 'e':
-      return t('sessionEte', params);
-    case 'h':
-      return t('sessionHiver', params);
-    default:
-      return undefined;
-  }
-};
+import { getSessionTranslation } from '../../../utils/Sessions.utils';
 
 function SelectionSession() {
   const { t } = useTranslation('common');
