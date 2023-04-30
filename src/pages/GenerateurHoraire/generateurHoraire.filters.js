@@ -17,14 +17,14 @@ const HEURES_COURS = {
   },
 };
 
+const noOperationFilter = (combinaisons) => combinaisons;
+
 // eslint-disable-next-line import/prefer-default-export
 export const filterPlanification = (filtres) => {
   const heures = FILTRES_PLANIFICATION.filter((f) => !filtres.includes(f));
 
   if (heures.length === 0) {
-    return (
-      combinaisons,
-    ) => combinaisons;
+    return noOperationFilter;
   } // Pas besoin de filter si aucun filtre
 
   // Trouve un overlap, fait propager dans les "find", si true on le filter out donc retourne false
@@ -36,4 +36,17 @@ export const filterPlanification = (filtres) => {
     <= Math.min(a?.horaire?.heureFin, HEURES_COURS[h].max), // Overlap
     ))),
   );
+};
+
+export const filterGroupes = (filtres) => {
+  if (filtres.length === 0) {
+    return noOperationFilter;
+  }
+
+  return (combinaisons) => combinaisons.filter((comb) => comb?.groupes.find((groupe) => {
+    const sigle = groupe?.cours?.sigle;
+    const numeroGroupe = groupe?.numeroGroupe;
+    const cours = filtres[sigle];
+    return !(cours && cours?.includes(numeroGroupe));
+  }));
 };

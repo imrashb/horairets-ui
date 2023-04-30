@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { FILTRES_PLANIFICATION } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
-import { filterPlanification } from '../../pages/GenerateurHoraire/generateurHoraire.filters';
+import { filterGroupes, filterPlanification } from '../../pages/GenerateurHoraire/generateurHoraire.filters';
 import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
 import { GENERATEUR_LIST_VIEW } from './generateur.constants';
 
@@ -16,9 +16,11 @@ const initialState = {
   sorting: Object.keys(COMBINAISONS_SORTS)[0],
   filters: {
     planification: FILTRES_PLANIFICATION,
+    groupes: {},
   },
   combinaisons: undefined,
   rawCombinaisons: undefined,
+  combinaisonsInfo: undefined,
 };
 
 const GENERATEUR_SLICE = 'generateur';
@@ -30,7 +32,28 @@ const pipeAndFilterCombinaisons = (state) => {
     ? pipe(
       COMBINAISONS_SORTS[state.sorting],
       filterPlanification(state.filters.planification),
+      filterGroupes(state.filters.groupes),
     )(state.rawCombinaisons) : state.rawCombinaisons;
+};
+
+const getCombinaisonsInfo = (combinaisons) => {
+  const combinaisonsInfo = combinaisons?.reduce((prev, comb) => {
+    comb?.groupes?.forEach((groupe) => {
+      const sigle = groupe?.cours?.sigle;
+      const numeroGroupe = groupe?.numeroGroupe;
+
+      if (prev[sigle]) {
+        const cours = prev[sigle];
+        if (!cours.includes(numeroGroupe)) {
+          prev[sigle] = [...cours, numeroGroupe];
+        }
+      } else {
+        prev[sigle] = [numeroGroupe];
+      }
+    });
+    return prev;
+  }, {});
+  return combinaisonsInfo;
 };
 
 const generateurSlice = createSlice({
@@ -70,6 +93,8 @@ const generateurSlice = createSlice({
     },
     setCombinaisons: (state, action) => {
       state.rawCombinaisons = action.payload;
+      state.combinaisonsInfo = getCombinaisonsInfo(action.payload);
+      state.filters.groupes = {};
       pipeAndFilterCombinaisons(state);
     },
   },
@@ -106,10 +131,14 @@ export const selectNombreCours = (state) => state.generateur.nombreCours;
 
 export const selectSorting = (state) => state.generateur.sorting;
 
-export const selectPlanification = (state) => state.generateur.filters.planification;
+export const selectFilterPlanification = (state) => state.generateur.filters.planification;
+
+export const selectFilterGroupes = (state) => state.generateur.filters.groupes;
 
 export const selectCombinaisons = (state) => state.generateur.combinaisons;
 
 export const selectRawCombinaisons = (state) => state.generateur.rawCombinaisons;
+
+export const selectCombinaisonsInfo = (state) => state.generateur.combinaisonsInfo;
 
 export default generateurSlice;

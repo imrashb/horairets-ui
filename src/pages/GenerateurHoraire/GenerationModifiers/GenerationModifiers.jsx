@@ -17,7 +17,7 @@ import {
 } from '../../../features/generateur/generateur.slice';
 import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
 import GenerationSorting from './GenerationSorting';
-import GenerationFilters from './GenerationFilters';
+import GenerationFilters from './filters/GenerationFilters';
 
 function GenerationModifiers() {
   const { t } = useTranslation('common');

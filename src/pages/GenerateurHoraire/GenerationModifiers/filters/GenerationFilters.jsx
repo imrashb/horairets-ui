@@ -5,21 +5,20 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl, InputLabel, MenuItem, Select, useMediaQuery,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
-import { selectPlanification, setPlanification } from '../../../features/generateur/generateur.slice';
-import { areArraysSame } from '../../../utils/Array.utils';
-import { FILTRES_PLANIFICATION } from '../generateurHoraire.constants';
+import { selectFilterPlanification, setPlanification } from '../../../../features/generateur/generateur.slice';
+import { areArraysSame } from '../../../../utils/Array.utils';
+import PlanificationSeanceFilter from './PlanificationSeanceFilter';
 
 function GenerationFilters() {
   const { t } = useTranslation('common');
-  const planification = useSelector(selectPlanification);
+  const planification = useSelector(selectFilterPlanification);
   const [filterDialogVisible, setFilterDialogVisible] = useState(false);
-  const [controlledPlanification, setControlledPlanification] = useState(planification);
   const dispatch = useDispatch();
 
   const theme = useTheme();
@@ -30,6 +29,8 @@ function GenerationFilters() {
       setFilterDialogVisible(false);
     }
   }, [isSmallViewport]);
+
+  const [controlledPlanification, setControlledPlanification] = useState(planification);
 
   const handleClose = () => {
     setFilterDialogVisible(false);
@@ -58,19 +59,10 @@ function GenerationFilters() {
           <FilterList />
         </DialogTitle>
         <DialogContent>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{t('planificationSeances')}</InputLabel>
-            <Select
-              multiple
-              value={controlledPlanification}
-              onChange={(e) => setControlledPlanification(e?.target?.value)}
-              label={t('trierPar')}
-            >
-              {FILTRES_PLANIFICATION.map(
-                (value) => (<MenuItem key={value} value={value}>{t(value)}</MenuItem>),
-              )}
-            </Select>
-          </FormControl>
+          <PlanificationSeanceFilter onChange={
+            (p) => setControlledPlanification(p)
+          }
+          />
         </DialogContent>
         <DialogActions>
           <Button
