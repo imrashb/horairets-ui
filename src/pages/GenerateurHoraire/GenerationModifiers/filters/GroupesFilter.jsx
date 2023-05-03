@@ -42,13 +42,6 @@ function GroupesFilter() {
         onChange={handleChange}
         label={t('trierPar')}
         renderValue={(value) => t('groupesSelectionnes', { count: value.length })}
-        MenuProps={{
-          PaperProps: {
-            style: {
-              maxHeight: '30%',
-            },
-          },
-        }}
       >
         {sorted.map((cours) => (
 
