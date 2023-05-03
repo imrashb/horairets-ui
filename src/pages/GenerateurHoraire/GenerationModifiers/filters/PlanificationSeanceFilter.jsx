@@ -1,25 +1,24 @@
 import {
   FormControl, InputLabel, MenuItem, Select,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { FILTRES_PLANIFICATION } from '../../generateurHoraire.constants';
-import { selectFilterPlanification } from '../../../../features/generateur/generateur.slice';
+import useFilters from './context/useFilters';
 
-function PlanificationSeanceFilter({ onChange }) {
+function PlanificationSeanceFilter() {
   const { t } = useTranslation('common');
-  const planification = useSelector(selectFilterPlanification);
-  const [controlledPlanification, setControlledPlanification] = useState(planification);
+
+  const { planification, setPlanification } = useFilters();
+
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel>{t('planificationSeances')}</InputLabel>
       <Select
         multiple
-        value={controlledPlanification}
+        value={planification}
         onChange={(e) => {
-          setControlledPlanification(e?.target?.value);
-          if (onChange) onChange(e?.target?.value);
+          setPlanification(e?.target?.value);
         }}
         label={t('trierPar')}
       >

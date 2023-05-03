@@ -4,6 +4,7 @@ import { FILTRES_PLANIFICATION } from '../../pages/GenerateurHoraire/generateurH
 import { filterGroupes, filterPlanification } from '../../pages/GenerateurHoraire/generateurHoraire.filters';
 import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
 import { GENERATEUR_LIST_VIEW } from './generateur.constants';
+import { reduceCombinaisonsInfoToGroupesOnly } from '../../utils/Groupes.utils';
 
 const initialState = {
   session: '',
@@ -16,7 +17,7 @@ const initialState = {
   sorting: Object.keys(COMBINAISONS_SORTS)[0],
   filters: {
     planification: FILTRES_PLANIFICATION,
-    groupes: {},
+    groupes: [],
   },
   combinaisons: undefined,
   rawCombinaisons: undefined,
@@ -42,17 +43,21 @@ const getCombinaisonsInfo = (combinaisons) => {
       const sigle = groupe?.cours?.sigle;
       const numeroGroupe = groupe?.numeroGroupe;
 
-      if (prev[sigle]) {
-        const cours = prev[sigle];
-        if (!cours.includes(numeroGroupe)) {
-          prev[sigle] = [...cours, numeroGroupe];
+      const cours = prev.find((v) => v?.sigle === sigle);
+
+      if (cours) {
+        if (!cours.groupes.includes(numeroGroupe)) {
+          const addGroupFunction = (c) => (c.sigle === cours.sigle ? {
+            sigle: c.sigle, groupes: [...c.groupes, numeroGroupe],
+          } : c);
+          prev = prev.map(addGroupFunction);
         }
       } else {
-        prev[sigle] = [numeroGroupe];
+        prev = [...prev, { sigle, groupes: [numeroGroupe] }];
       }
     });
     return prev;
-  }, {});
+  }, []);
   return combinaisonsInfo;
 };
 
@@ -87,14 +92,14 @@ const generateurSlice = createSlice({
     setCoursObligatoires: (state, action) => {
       state.coursObligatoires = action.payload;
     },
-    setPlanification: (state, action) => {
-      state.filters.planification = action.payload;
+    setFilters: (state, action) => {
+      state.filters = action.payload;
       pipeAndFilterCombinaisons(state);
     },
     setCombinaisons: (state, action) => {
       state.rawCombinaisons = action.payload;
       state.combinaisonsInfo = getCombinaisonsInfo(action.payload);
-      state.filters.groupes = {};
+      state.filters.groupes = reduceCombinaisonsInfoToGroupesOnly(state.combinaisonsInfo);
       pipeAndFilterCombinaisons(state);
     },
   },
@@ -111,8 +116,8 @@ export const {
   setNombreCours,
   setSorting,
   setCoursObligatoires,
-  setPlanification,
   setCombinaisons,
+  setFilters,
 } = generateurSlice.actions;
 
 export const selectProgramme = (state) => state.generateur.programme;

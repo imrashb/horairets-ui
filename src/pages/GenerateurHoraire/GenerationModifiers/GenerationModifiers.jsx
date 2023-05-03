@@ -18,6 +18,7 @@ import {
 import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
 import GenerationSorting from './GenerationSorting';
 import GenerationFilters from './filters/GenerationFilters';
+import FiltersProvider from './filters/context/FiltersProvider';
 
 function GenerationModifiers() {
   const { t } = useTranslation('common');
@@ -59,7 +60,9 @@ function GenerationModifiers() {
       </ToggleButtonGroup>
       )}
       <GenerationSorting />
-      <GenerationFilters />
+      <FiltersProvider>
+        <GenerationFilters />
+      </FiltersProvider>
       {data && (
       <Typography className="nb-horaires-generes" variant="h5">
         {t('horairesGeneres', { count: data?.length })}

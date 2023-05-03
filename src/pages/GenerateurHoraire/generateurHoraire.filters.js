@@ -1,3 +1,4 @@
+import { getGroupeId } from '../../utils/Groupes.utils';
 import {
   APRES_MIDI, FILTRES_PLANIFICATION, MATIN, SOIR,
 } from './generateurHoraire.constants';
@@ -38,15 +39,16 @@ export const filterPlanification = (filtres) => {
   );
 };
 
-export const filterGroupes = (filtres) => {
-  if (filtres.length === 0) {
+export const filterGroupes = (groupes) => {
+  if (groupes.length === 0) {
     return noOperationFilter;
   }
 
-  return (combinaisons) => combinaisons.filter((comb) => comb?.groupes.find((groupe) => {
+  return (combinaisons) => combinaisons.filter((comb) => comb?.groupes.every((groupe) => {
     const sigle = groupe?.cours?.sigle;
     const numeroGroupe = groupe?.numeroGroupe;
-    const cours = filtres[sigle];
-    return !(cours && cours?.includes(numeroGroupe));
+    const id = getGroupeId(sigle, numeroGroupe);
+
+    return !!groupes.includes(id);
   }));
 };

@@ -79,5 +79,9 @@
   "planificationSeances": "Planification des séances",
   "matin": "Matin",
   "apresmidi": "Après-midi",
-  "soir": "Soir"
+  "soir": "Soir",
+  "groupesSelectionnes_other": "{{count}} groupes sélectionnés",
+  "groupesSelectionnes_zero": "Aucun groupe sélectionné",
+  "groupesSelectionnes_one": "1 groupe sélectionné",
+  "groupes": "Groupes"
 }

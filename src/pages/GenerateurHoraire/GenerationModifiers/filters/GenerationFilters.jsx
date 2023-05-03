@@ -9,15 +9,17 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTheme } from 'styled-components';
-import { selectFilterPlanification, setPlanification } from '../../../../features/generateur/generateur.slice';
-import { areArraysSame } from '../../../../utils/Array.utils';
+import { useDispatch } from 'react-redux';
+import styled, { useTheme } from 'styled-components';
+import {
+  setFilters,
+} from '../../../../features/generateur/generateur.slice';
 import PlanificationSeanceFilter from './PlanificationSeanceFilter';
+import useFilters from './context/useFilters';
+import GroupesFilter from './GroupesFilter';
 
 function GenerationFilters() {
   const { t } = useTranslation('common');
-  const planification = useSelector(selectFilterPlanification);
   const [filterDialogVisible, setFilterDialogVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -30,14 +32,14 @@ function GenerationFilters() {
     }
   }, [isSmallViewport]);
 
-  const [controlledPlanification, setControlledPlanification] = useState(planification);
+  const { planification, groupes } = useFilters();
 
   const handleClose = () => {
     setFilterDialogVisible(false);
-
-    if (!areArraysSame(controlledPlanification, planification)) {
-      dispatch(setPlanification(controlledPlanification));
-    }
+    dispatch(setFilters({
+      planification,
+      groupes,
+    }));
   };
 
   return (
@@ -59,10 +61,10 @@ function GenerationFilters() {
           <FilterList />
         </DialogTitle>
         <DialogContent>
-          <PlanificationSeanceFilter onChange={
-            (p) => setControlledPlanification(p)
-          }
-          />
+          <DialogContentWrapper>
+            <PlanificationSeanceFilter />
+            <GroupesFilter />
+          </DialogContentWrapper>
         </DialogContent>
         <DialogActions>
           <Button
@@ -76,5 +78,15 @@ function GenerationFilters() {
     </>
   );
 }
+
+const DialogContentWrapper = styled.div`
+  
+    & > * {
+      &:not(:last-child) {
+        margin-bottom: ${({ theme }) => theme.sizes.size_16};
+      }
+    }  
+
+  `;
 
 export default GenerationFilters;
