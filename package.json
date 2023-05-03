@@ -7,15 +7,12 @@
   "author": "Emmanuel Coulombe <emmanuel.coulombe.1@ens.etsmtl.ca>",
   "keywords": [
     "react",
-    "boilerplate",
     "javaScript",
-    "starter",
     "vite",
     "redux",
     "material-ui",
-    "axios",
-    "rrd",
-    "prettier"
+    "eslint",
+    "HorairÉTS"
   ],
   "scripts": {
     "dev": "vite --open",
