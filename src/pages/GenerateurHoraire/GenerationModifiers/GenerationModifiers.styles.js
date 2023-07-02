@@ -41,7 +41,7 @@ const GenerationModifiersWrapper = styled.div`
         margin-right: auto;
     }
 
-    .sort-wrapper {
+    & > * {
         display:flex;
         flex-direction: row;
         align-items: center;
