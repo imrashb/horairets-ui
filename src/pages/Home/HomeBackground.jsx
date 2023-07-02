@@ -12,6 +12,7 @@ function HomeBackground() {
       disableNomActivite
       disableNomCours
       disableNomJours
+      forceLegacyColors
     />
   )), []);
 
