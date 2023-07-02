@@ -5,6 +5,7 @@ import Activite from './Activite/Activite';
 import ActiviteSpacer from './Activite/ActiviteSpacer';
 import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
+import { getDeterministicRandomBorderCoursColor, getDeterministicRandomCoursColor } from './combinaisonHoraire.utils';
 
 function Jour({
   jour,
@@ -32,8 +33,6 @@ function Jour({
     return [...prev, ...mapped];
   }, []);
 
-  const sigles = combinaison?.groupes?.map((g) => g?.cours?.sigle);
-
   const sortedActivites = activites.sort(
     // eslint-disable-next-line no-unsafe-optional-chaining
     (a, b) => a?.horaire?.heureDepart - b?.horaire?.heureDepart,
@@ -47,9 +46,10 @@ function Jour({
   let index = 0;
 
   const getActiviteComponent = (activite) => {
-    const deg = (sigles.indexOf(activite.sigle) / sigles.length) * 360;
-    const color = `hsl(${deg}deg 80% 50%)`;
-    const borderColor = `hsl(${deg}deg 80% 40%)`;
+    const color = getDeterministicRandomCoursColor(activite.sigle);
+
+    const borderColor = getDeterministicRandomBorderCoursColor(activite.sigle);
+
     return (
       <Activite
         activite={activite}

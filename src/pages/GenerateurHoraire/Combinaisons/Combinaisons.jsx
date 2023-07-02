@@ -20,6 +20,7 @@ import {
   selectView,
 } from '../../../features/generateur/generateur.slice';
 import CombinaisonsWrapper from './Combinaisons.styles';
+import { selectShowLocaux, selectShowNomActivite, selectShowNomCoursGroupe } from '../../../features/affichage/affichage.slice';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -30,6 +31,10 @@ function Combinaisons() {
   const rawCombinaisons = useSelector(selectRawCombinaisons);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
+
+  const showNomCoursGroupe = useSelector(selectShowNomCoursGroupe);
+  const showNomActivite = useSelector(selectShowNomActivite);
+  const showLocaux = useSelector(selectShowLocaux);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
@@ -115,7 +120,12 @@ function Combinaisons() {
             <Typography className="credits" variant="h6">
               {t('credits', { count: combinaison?.groupes?.reduce((prev, curr) => prev + curr.cours.credits, 0) })}
             </Typography>
-            <CombinaisonHoraire combinaison={combinaison} />
+            <CombinaisonHoraire
+              combinaison={combinaison}
+              disableLocaux={!showLocaux}
+              disableNomActivite={!showNomActivite}
+              disableNomCours={!showNomCoursGroupe}
+            />
           </Grid>
         ))}
       </Grid>

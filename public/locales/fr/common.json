@@ -83,5 +83,10 @@
   "groupesSelectionnes_other": "{{count}} groupes sélectionnés",
   "groupesSelectionnes_zero": "Aucun groupe sélectionné",
   "groupesSelectionnes_one": "1 groupe sélectionné",
-  "groupes": "Groupes"
+  "groupes": "Groupes",
+  "affichage": "Affichage",
+  "parametresAffichageCombinaisons": "Paramètres d'affichage des combinaisons d'horaire",
+  "afficherNomCoursGroupe": "Afficher le sigle des cours",
+  "afficherLocaux": "Afficher les locaux de cours",
+  "afficherTypeActivite": "Afficher le type d'activité (Cours, TP, Labo, etc.)"
 }
