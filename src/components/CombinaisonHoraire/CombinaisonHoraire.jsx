@@ -13,6 +13,7 @@ function CombinaisonHoraire({
   disableNomCours,
   disableNomActivite,
   disableLocaux,
+  disableModeEnseignement,
   combinaison,
 }) {
   const jours = JOURS;
@@ -40,6 +41,7 @@ function CombinaisonHoraire({
               disableNomActivite={disableNomActivite}
               disableNomCours={disableNomCours}
               disableLocaux={disableLocaux}
+              disableModeEnseignement={disableModeEnseignement}
             />
           </Grid>
         ))}

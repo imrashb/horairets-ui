@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import ActiviteWrapper from './Activite.styles';
 
 function Activite({
@@ -10,7 +11,9 @@ function Activite({
   disableNomCours,
   disableNomActivite,
   disableLocaux,
+  disableModeEnseignement,
 }) {
+  const { t } = useTranslation('common');
   return (
     <ActiviteWrapper flex={flex} borderColor={borderColor} color={color}>
       <div className="wrapper">
@@ -23,6 +26,14 @@ function Activite({
           </strong>
         </span>
         )}
+        {
+          !disableModeEnseignement
+          && (
+          <span>
+            {t(activite?.modeEnseignement)}
+          </span>
+          )
+}
         {!disableNomActivite && (
         <span>
           {activite?.nom}
@@ -47,12 +58,14 @@ Activite.propTypes = {
   disableNomCours: PropTypes.bool,
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
+  disableModeEnseignement: PropTypes.bool,
 };
 
 Activite.defaultProps = {
   disableNomCours: false,
   disableNomActivite: false,
   disableLocaux: false,
+  disableModeEnseignement: true,
 };
 
 export default Activite;
