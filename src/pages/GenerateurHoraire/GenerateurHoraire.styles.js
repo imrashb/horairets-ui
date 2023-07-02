@@ -132,6 +132,7 @@ const GenerateurHoraireWrapper = styled.div`
                 flex: 2;
             }
             height: 100%;
+            width:100%;
         }
 
     }

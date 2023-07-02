@@ -31,6 +31,8 @@ function ButtonDialog({
     onClose();
   };
 
+  const Spacer = <div style={{ width: 4 }} />;
+
   return (
     <>
       <div className="button-dialog-wrapper">
@@ -39,7 +41,7 @@ function ButtonDialog({
           onClick={() => setVisible(true)}
         >
           {!isSmallViewport && title}
-          {!isSmallViewport && <div style={{ width: 4 }} />}
+          {!isSmallViewport && Spacer}
           {icon}
         </Button>
       </div>
@@ -47,6 +49,7 @@ function ButtonDialog({
       <Dialog fullWidth open={visible}>
         <DialogTitle sx={{ alignItems: 'center', display: 'flex' }}>
           {title}
+          {Spacer}
           {icon}
         </DialogTitle>
         <DialogContent>
@@ -55,6 +58,13 @@ function ButtonDialog({
           </DialogContentWrapper>
         </DialogContent>
         <DialogActions>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setVisible(false)}
+          >
+            {t('annuler')}
+          </Button>
           <Button
             variant="contained"
             onClick={handleClose}

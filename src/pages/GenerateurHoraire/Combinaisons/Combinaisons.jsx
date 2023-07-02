@@ -20,7 +20,9 @@ import {
   selectView,
 } from '../../../features/generateur/generateur.slice';
 import CombinaisonsWrapper from './Combinaisons.styles';
-import { selectShowLocaux, selectShowNomActivite, selectShowNomCoursGroupe } from '../../../features/affichage/affichage.slice';
+import {
+  selectShowLocaux, selectShowModeEnseignement, selectShowNomActivite, selectShowNomCoursGroupe,
+} from '../../../features/affichage/affichage.slice';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -35,6 +37,7 @@ function Combinaisons() {
   const showNomCoursGroupe = useSelector(selectShowNomCoursGroupe);
   const showNomActivite = useSelector(selectShowNomActivite);
   const showLocaux = useSelector(selectShowLocaux);
+  const showModeEnseignement = useSelector(selectShowModeEnseignement);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
@@ -125,6 +128,8 @@ function Combinaisons() {
               disableLocaux={!showLocaux}
               disableNomActivite={!showNomActivite}
               disableNomCours={!showNomCoursGroupe}
+              disableModeEnseignement={!showModeEnseignement}
+              disble
             />
           </Grid>
         ))}

@@ -1,11 +1,20 @@
 /* eslint-disable react/forbid-prop-types */
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Activite from './Activite/Activite';
 import ActiviteSpacer from './Activite/ActiviteSpacer';
 import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
 import { getDeterministicRandomBorderCoursColor, getDeterministicRandomCoursColor } from './combinaisonHoraire.utils';
+import { selectShowUniqueCoursColors } from '../../features/affichage/affichage.slice';
+
+const getLegacyColors = (sigle, sigles) => {
+  const deg = (sigles.indexOf(sigle) / sigles.length) * 360;
+  const color = `hsl(${deg}deg 80% 50%)`;
+  const borderColor = `hsl(${deg}deg 80% 40%)`;
+  return { color, borderColor };
+};
 
 function Jour({
   jour,
@@ -14,8 +23,11 @@ function Jour({
   disableNomCours,
   disableNomActivite,
   disableLocaux,
+  disableModeEnseignement,
 }) {
   const { t } = useTranslation('common');
+
+  const showUniqueCoursColors = useSelector(selectShowUniqueCoursColors);
 
   const min = HEURE_DEBUT_COURS;
   const max = HEURE_FIN_COURS;
@@ -45,10 +57,15 @@ function Jour({
 
   let index = 0;
 
-  const getActiviteComponent = (activite) => {
-    const color = getDeterministicRandomCoursColor(activite.sigle);
+  const sigles = combinaison?.groupes?.map((g) => g?.cours?.sigle);
 
-    const borderColor = getDeterministicRandomBorderCoursColor(activite.sigle);
+  const getActiviteComponent = (activite) => {
+    const legacyColors = getLegacyColors(activite.sigle, sigles);
+
+    const color = showUniqueCoursColors
+      ? getDeterministicRandomCoursColor(activite.sigle) : legacyColors.color;
+    const borderColor = showUniqueCoursColors
+      ? getDeterministicRandomBorderCoursColor(activite.sigle) : legacyColors.borderColor;
 
     return (
       <Activite
@@ -59,6 +76,7 @@ function Jour({
         disableNomActivite={disableNomActivite}
         disableNomCours={disableNomCours}
         disableLocaux={disableLocaux}
+        disableModeEnseignement={disableModeEnseignement}
       />
     );
   };
@@ -112,6 +130,7 @@ Jour.propTypes = {
   disableNomCours: PropTypes.bool,
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
+  disableModeEnseignement: PropTypes.bool,
 };
 
 Jour.defaultProps = {
@@ -119,6 +138,7 @@ Jour.defaultProps = {
   disableNomCours: false,
   disableNomActivite: false,
   disableLocaux: false,
+  disableModeEnseignement: true,
 };
 
 export default Jour;

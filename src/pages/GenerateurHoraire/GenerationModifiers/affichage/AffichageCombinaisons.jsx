@@ -2,7 +2,9 @@ import { Panorama } from '@mui/icons-material';
 import {
   Checkbox,
   Divider,
+  FormControl,
   FormControlLabel,
+  FormHelperText,
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
@@ -10,19 +12,31 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
 import {
-  selectShowLocaux, selectShowNomActivite, selectShowNomCoursGroupe, setAffichageCombinaisons,
+  selectShowLocaux,
+  selectShowModeEnseignement,
+  selectShowNomActivite,
+  selectShowNomCoursGroupe,
+  selectShowUniqueCoursColors,
+  setAffichageCombinaisons,
 } from '../../../../features/affichage/affichage.slice';
 
-const getCheckbox = (label, checked, setChecked) => (
-  <FormControlLabel
-    control={(
-      <Checkbox
-        checked={checked}
-        onChange={() => setChecked(!checked)}
-      />
-)}
-    label={label}
-  />
+const getCheckbox = (label, checked, setChecked, tooltip) => (
+  <FormControl>
+    <FormControlLabel
+      control={(
+        <Checkbox
+          checked={checked}
+          onChange={() => setChecked(!checked)}
+        />
+    )}
+      label={label}
+    />
+    {tooltip && (
+    <FormHelperText>
+      {tooltip}
+    </FormHelperText>
+    )}
+  </FormControl>
 );
 
 function AffichageCombinaisons() {
@@ -32,16 +46,22 @@ function AffichageCombinaisons() {
   const showNomCoursGroupeGlobal = useSelector(selectShowNomCoursGroupe);
   const showLocauxGlobal = useSelector(selectShowLocaux);
   const showNomActiviteGlobal = useSelector(selectShowNomActivite);
+  const showUniqueCoursColorsGlobal = useSelector(selectShowUniqueCoursColors);
+  const showModeEnseignementGlobal = useSelector(selectShowModeEnseignement);
 
   const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(showNomCoursGroupeGlobal);
   const [showLocaux, setShowLocaux] = useState(showLocauxGlobal);
   const [showNomActivite, setShowNomActivite] = useState(showNomActiviteGlobal);
+  const [showUniqueCoursColors, setShowUniqueCoursColors] = useState(showUniqueCoursColorsGlobal);
+  const [showModeEnseignement, setShowModeEnseignement] = useState(showModeEnseignementGlobal);
 
   const onClose = () => {
     dispatch(setAffichageCombinaisons({
       showNomCoursGroupe,
       showLocaux,
       showNomActivite,
+      showUniqueCoursColors,
+      showModeEnseignement,
     }));
   };
 
@@ -52,7 +72,9 @@ function AffichageCombinaisons() {
       </Typography>
       {getCheckbox(t('afficherNomCoursGroupe'), showNomCoursGroupe, setShowNomCoursGroupe)}
       {getCheckbox(t('afficherLocaux'), showLocaux, setShowLocaux)}
-      {getCheckbox(t('afficherTypeActivite'), showNomActivite, setShowNomActivite)}
+      {getCheckbox(t('afficherTypeActivite'), showNomActivite, setShowNomActivite, t('typesActivites'))}
+      {getCheckbox(t('afficherModeEnseignement'), showModeEnseignement, setShowModeEnseignement, t('modesEnseignements'))}
+      {getCheckbox(t('afficherCouleursCoursUniques'), showUniqueCoursColors, setShowUniqueCoursColors)}
       <Divider />
     </ButtonDialog>
   );
