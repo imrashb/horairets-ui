@@ -24,6 +24,7 @@ function Jour({
   disableNomActivite,
   disableLocaux,
   disableModeEnseignement,
+  forceLegacyColors,
 }) {
   const { t } = useTranslation('common');
 
@@ -62,9 +63,11 @@ function Jour({
   const getActiviteComponent = (activite) => {
     const legacyColors = getLegacyColors(activite.sigle, sigles);
 
-    const color = showUniqueCoursColors
+    const showUniqueColors = !forceLegacyColors && showUniqueCoursColors;
+
+    const color = showUniqueColors
       ? getDeterministicRandomCoursColor(activite.sigle) : legacyColors.color;
-    const borderColor = showUniqueCoursColors
+    const borderColor = showUniqueColors
       ? getDeterministicRandomBorderCoursColor(activite.sigle) : legacyColors.borderColor;
 
     return (
@@ -131,6 +134,7 @@ Jour.propTypes = {
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
   disableModeEnseignement: PropTypes.bool,
+  forceLegacyColors: PropTypes.bool,
 };
 
 Jour.defaultProps = {
@@ -139,6 +143,7 @@ Jour.defaultProps = {
   disableNomActivite: false,
   disableLocaux: false,
   disableModeEnseignement: true,
+  forceLegacyColors: false,
 };
 
 export default Jour;
