@@ -2,12 +2,15 @@
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import Activite from './Activite/Activite';
 import ActiviteSpacer from './Activite/ActiviteSpacer';
 import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
 import { getDeterministicRandomBorderCoursColor, getDeterministicRandomCoursColor } from './combinaisonHoraire.utils';
 import { selectShowUniqueCoursColors } from '../../features/affichage/affichage.slice';
+import useGenerateurHoraire from '../../pages/GenerateurHoraire/GenerateurHoraireContexts/hooks/useGenerateurHoraire';
+import { CONGE_DND, getDragAndDropColor as getDragAndDropState } from '../../pages/GenerateurHoraire/generateurHoraire.dnd';
 
 const getLegacyColors = (sigle, sigles) => {
   const deg = (sigles.indexOf(sigle) / sigles.length) * 360;
@@ -116,8 +119,24 @@ function Jour({
     currentFlex += 1;
   }
 
+  const { conges, setConges } = useGenerateurHoraire();
+  const [{ dndState }, drop] = useDrop(
+    () => ({
+      accept: CONGE_DND,
+      drop: () => {
+        setConges([...conges, jour]);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        dndState: getDragAndDropState(monitor.isOver(), monitor.canDrop()),
+      }),
+      canDrop: () => !conges.includes(jour),
+    }),
+    [jour, conges],
+  );
+
   return (
-    <JourWrapper>
+    <JourWrapper ref={drop} dndState={dndState}>
       {!disableNomJours && <div className="nom-jour">{t(jour)}</div>}
       <div className="classes-wrapper">
         {components}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SelectionCoursWrapper = styled.div`
+const SelectionAccordionWrapper = styled.div`
 
     flex: 1;
     padding-top: ${({ theme }) => theme.sizes.size_16};
@@ -17,11 +17,6 @@ const SelectionCoursWrapper = styled.div`
         justify-content: space-between;
 
     }
-
-    .MuiSnackbar-root {
-        max-width: 32rem;
-    }
- 
 `;
 
-export default SelectionCoursWrapper;
+export default SelectionAccordionWrapper;

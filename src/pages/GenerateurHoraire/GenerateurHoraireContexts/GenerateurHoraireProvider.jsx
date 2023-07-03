@@ -20,7 +20,7 @@ function GenerateurHoraireProvider({ children }) {
   const [cours, setCours] = useState(currentCours || []);
   const [nombreCours, setNombreCours] = useState(currentNombreCours);
   const [coursObligatoires, setCoursObligatoires] = useState(currentCoursObligatoires);
-  const [conges, setConges] = useState(currentConges);
+  const [conges, setConges] = useState(currentConges || []);
 
   const context = useMemo(() => ({
     session,

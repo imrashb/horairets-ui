@@ -1,16 +1,10 @@
-import { ExpandMore, Settings } from '@mui/icons-material';
+import { Settings } from '@mui/icons-material';
 import {
-  Accordion,
-  AccordionActions,
-  AccordionDetails,
-  AccordionSummary,
   Backdrop,
   Button,
   CircularProgress,
-  Divider,
   FormControlLabel,
   Switch,
-  Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,9 +28,9 @@ import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import ParametresDialog from '../ParametresDialog/ParametresDialog';
 import CoursTransferList from '../TransferList/CoursTransferList';
-import SelectionCoursWrapper from './SelectionCours.styles';
 import GenerationInformationToasts from './toasts/GenerationInformationToasts';
 import ParametresGenerationToast from './toasts/ParametresGenerationToast';
+import SelectionAccordion from '../../../components/SelectionAccordion/SelectionAccordion';
 
 function SelectionCours() {
   const { t } = useTranslation('common');
@@ -96,6 +90,8 @@ function SelectionCours() {
     }
   }, [getCombinaisonQuery?.data]);
 
+  console.log(conges);
+
   const isCoursEqual = areArraysSame(selectedCours, cours);
   const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
   const isCongesEqual = areArraysSame(conges, controlledConges);
@@ -108,51 +104,48 @@ function SelectionCours() {
   && isObligatoiresEqual));
 
   return (
-    <SelectionCoursWrapper>
-      <ParametresDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
-      <Accordion
-        expanded={expanded}
-        disabled={!selectCoursSessionQuery?.data}
-        onChange={() => setExpanded(!expanded)}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography variant="h5">{t('cours')}</Typography>
-        </AccordionSummary>
-        <Divider />
-        <AccordionDetails>
-          <CoursTransferList
-            includeMaitrise={includeMaitrise}
-          />
-          <FormControlLabel
-            checked={includeMaitrise}
-            onChange={() => setIncludeMaitrise(!includeMaitrise)}
-            control={(
-              <Switch />
-            )}
-            label={t('inclureMaitrise')}
-          />
-        </AccordionDetails>
-        <Divider />
-        <AccordionActions>
-          <Button
-            startIcon={<Settings />}
-            variant="outlined"
-            onClick={() => setDialogOpen(true)}
-          >
-            {t('parametres')}
-          </Button>
-          <Button
-            variant="contained"
-            disabled={!readyToGenerate}
-            onClick={handleGenerateCombinaisons}
-          >
-            {t('genererHoraires')}
-          </Button>
-        </AccordionActions>
-      </Accordion>
 
+    <>
+      <SelectionAccordion
+        title={t('cours')}
+        disabled={!selectCoursSessionQuery?.data}
+        expanded={expanded}
+        onAccordionChange={() => setExpanded(!expanded)}
+        accordionContent={(
+          <>
+            <CoursTransferList
+              includeMaitrise={includeMaitrise}
+            />
+            <FormControlLabel
+              checked={includeMaitrise}
+              onChange={() => setIncludeMaitrise(!includeMaitrise)}
+              control={(
+                <Switch />
+            )}
+              label={t('inclureMaitrise')}
+            />
+          </>
+        )}
+        accordionActions={(
+          <>
+            <Button
+              startIcon={<Settings />}
+              variant="outlined"
+              onClick={() => setDialogOpen(true)}
+            >
+              {t('parametres')}
+            </Button>
+            <Button
+              variant="contained"
+              disabled={!readyToGenerate}
+              onClick={handleGenerateCombinaisons}
+            >
+              {t('genererHoraires')}
+            </Button>
+          </>
+        )}
+      />
+      <ParametresDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <ParametresGenerationToast readyToGenerate={readyToGenerate} />
       <GenerationInformationToasts readyToGenerate={readyToGenerate} />
 
@@ -164,7 +157,7 @@ function SelectionCours() {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-    </SelectionCoursWrapper>
+    </>
   );
 }
 

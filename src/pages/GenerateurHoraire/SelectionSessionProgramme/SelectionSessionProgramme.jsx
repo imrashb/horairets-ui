@@ -1,11 +1,5 @@
-import { ExpandMore } from '@mui/icons-material';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   CircularProgress,
-  Divider,
-  Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +15,7 @@ import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerate
 import SelectionProgramme from './SelectionProgramme';
 import SelectionSession from './SelectionSession';
 import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles';
+import SelectionAccordion from '../../../components/SelectionAccordion/SelectionAccordion';
 
 function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
@@ -48,21 +43,19 @@ function SelectionSessionProgramme() {
 
   const [expanded, setExpanded] = useState(true);
   return (
-    <SelectionSessionProgrammeWrapper>
-      <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} className="choix-session">
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography variant="h5">{t('sessionProgramme')}</Typography>
-          {coursSessionQuery?.isFetching && <CircularProgress size="2rem" thickness="8" />}
-        </AccordionSummary>
-        <Divider />
-        <AccordionDetails className="selection-wrapper">
+
+    <SelectionAccordion
+      title={t('sessionProgramme')}
+      expanded={expanded}
+      onAccordionChange={() => setExpanded(!expanded)}
+      accordionTitleAdditionalContent={coursSessionQuery?.isFetching && <CircularProgress size="2rem" thickness="8" />}
+      accordionContent={(
+        <SelectionSessionProgrammeWrapper>
           <SelectionSession />
           <SelectionProgramme />
-        </AccordionDetails>
-      </Accordion>
-    </SelectionSessionProgrammeWrapper>
+        </SelectionSessionProgrammeWrapper>
+        )}
+    />
   );
 }
 

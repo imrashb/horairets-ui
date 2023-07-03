@@ -2,6 +2,7 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 import { useSelector } from 'react-redux';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { selectMode } from '../features/user/userSlice';
+import { DND_AVAILABLE, DND_DISABLED } from '../pages/GenerateurHoraire/generateurHoraire.dnd';
 
 export default function AppThemeProvider({ children }) {
   const mode = useSelector(selectMode);
@@ -37,6 +38,10 @@ export default function AppThemeProvider({ children }) {
           700: mode === 'dark' ? 'hsl(0, 0%, 83%)' : 'hsl(0, 0%, 25%)',
           800: mode === 'dark' ? 'hsl(0, 0%, 90%)' : 'hsl(0, 0%, 15%)',
           900: mode === 'dark' ? 'hsl(0, 10%, 97%)' : 'hsl(0, 0%, 9%)',
+        },
+        dnd: {
+          [DND_AVAILABLE]: '#3B82F6',
+          [DND_DISABLED]: '#EF4444',
         },
       },
       sizes: {

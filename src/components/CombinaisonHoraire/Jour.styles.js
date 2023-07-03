@@ -4,6 +4,8 @@ const JourWrapper = styled.div`
     height:100%;
     display:flex;
     flex-direction:column;
+
+    ${({ dndState, theme }) => dndState && `background: ${theme.palette.dnd[dndState]};`}
     .nom-jour {
         text-align: center;
         border-bottom: ${({ theme }) => theme.sizes.size_1} solid ${({ theme }) => theme.palette.grey[700]};
