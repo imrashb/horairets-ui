@@ -1,4 +1,3 @@
-import { Settings } from '@mui/icons-material';
 import {
   Backdrop,
   Button,
@@ -50,7 +49,6 @@ function SelectionCours() {
   const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const {
     cours,
@@ -90,8 +88,6 @@ function SelectionCours() {
     }
   }, [getCombinaisonQuery?.data]);
 
-  console.log(conges);
-
   const isCoursEqual = areArraysSame(selectedCours, cours);
   const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
   const isCongesEqual = areArraysSame(conges, controlledConges);
@@ -128,13 +124,7 @@ function SelectionCours() {
         )}
         accordionActions={(
           <>
-            <Button
-              startIcon={<Settings />}
-              variant="outlined"
-              onClick={() => setDialogOpen(true)}
-            >
-              {t('parametres')}
-            </Button>
+            <ParametresDialog />
             <Button
               variant="contained"
               disabled={!readyToGenerate}
@@ -145,7 +135,6 @@ function SelectionCours() {
           </>
         )}
       />
-      <ParametresDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <ParametresGenerationToast readyToGenerate={readyToGenerate} />
       <GenerationInformationToasts readyToGenerate={readyToGenerate} />
 

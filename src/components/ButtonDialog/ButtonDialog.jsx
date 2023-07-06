@@ -12,7 +12,7 @@ import styled, { useTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 
 function ButtonDialog({
-  icon, title, onClose, children,
+  icon, title, onClose, children, variant,
 }) {
   const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
@@ -37,7 +37,7 @@ function ButtonDialog({
     <>
       <div className="button-dialog-wrapper">
         <Button
-          variant="contained"
+          variant={variant}
           onClick={() => setVisible(true)}
         >
           {!isSmallViewport && title}
@@ -90,11 +90,16 @@ const DialogContentWrapper = styled.div`
 
   `;
 
+ButtonDialog.defaultProps = {
+  variant: 'contained',
+};
+
 ButtonDialog.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  variant: PropTypes.oneOf(['contained', 'outlined', 'text']),
 };
 
 export default ButtonDialog;

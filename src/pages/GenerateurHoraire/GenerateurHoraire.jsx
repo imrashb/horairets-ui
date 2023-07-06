@@ -6,8 +6,6 @@ import {
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import StyledToastContainer from '../../components/Toasts/StyledToastContainer';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
@@ -30,17 +28,16 @@ function GenerateurHoraire() {
   }, [isLargeViewport]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <GenerateurHoraireProvider>
-        <GenerateurHoraireWrapper>
-          <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
-          <GenerationModifiers />
-          <div className="main-content-wrapper">
-            <div className={classNames('left', expanded ? 'open' : 'closed')}>
-              <SelectionSessionProgramme />
-              <SelectionCours />
-              <SelectionParametres />
-              {isLargeViewport && (
+    <GenerateurHoraireProvider>
+      <GenerateurHoraireWrapper>
+        <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('generateurHoraire').toUpperCase()}</Typography>
+        <GenerationModifiers />
+        <div className="main-content-wrapper">
+          <div className={classNames('left', expanded ? 'open' : 'closed')}>
+            <SelectionSessionProgramme />
+            <SelectionCours />
+            <SelectionParametres />
+            {isLargeViewport && (
               <Paper component="span" className="expand-btn">
                 <IconButton
                   color="primary"
@@ -49,27 +46,26 @@ function GenerateurHoraire() {
                   {expanded ? <ChevronLeft /> : <ChevronRight />}
                 </IconButton>
               </Paper>
-              )}
-            </div>
-            <div className="right">
-              <Combinaisons />
-            </div>
+            )}
           </div>
-          <StyledToastContainer
-            position="bottom-right"
-            autoClose={10000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-        </GenerateurHoraireWrapper>
-      </GenerateurHoraireProvider>
-    </DndProvider>
+          <div className="right">
+            <Combinaisons />
+          </div>
+        </div>
+        <StyledToastContainer
+          position="bottom-right"
+          autoClose={10000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+      </GenerateurHoraireWrapper>
+    </GenerateurHoraireProvider>
   );
 }
 
