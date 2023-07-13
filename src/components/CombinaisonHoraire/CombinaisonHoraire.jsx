@@ -16,6 +16,7 @@ function CombinaisonHoraire({
   disableModeEnseignement,
   combinaison,
   forceLegacyColors,
+  enableEdit,
 }) {
   const jours = JOURS;
 
@@ -44,6 +45,7 @@ function CombinaisonHoraire({
               disableLocaux={disableLocaux}
               disableModeEnseignement={disableModeEnseignement}
               forceLegacyColors={forceLegacyColors}
+              enableEdit={enableEdit}
             />
           </Grid>
         ))}
@@ -59,6 +61,7 @@ CombinaisonHoraire.propTypes = {
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
   forceLegacyColors: PropTypes.bool,
+  enableEdit: PropTypes.bool,
 };
 
 CombinaisonHoraire.defaultProps = {
@@ -68,6 +71,7 @@ CombinaisonHoraire.defaultProps = {
   disableNomActivite: false,
   disableLocaux: false,
   forceLegacyColors: false,
+  enableEdit: false,
 };
 
 export default CombinaisonHoraire;

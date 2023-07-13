@@ -18,6 +18,7 @@ function SelectionAccordion({
   disabled,
   expanded,
   onAccordionChange,
+  Badge,
 }) {
   return (
     <SelectionAccordionWrapper>
@@ -29,7 +30,7 @@ function SelectionAccordion({
         <AccordionSummary
           expandIcon={<ExpandMore />}
         >
-          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h5">{Badge ? <Badge>{title}</Badge> : title }</Typography>
           {accordionTitleAdditionalContent && accordionTitleAdditionalContent}
         </AccordionSummary>
         <Divider />

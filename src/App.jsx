@@ -6,22 +6,25 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Routing from './routes/Routing';
 import GlobalStyle from './themes/GlobalStyle';
 import NavBar from './components/NavBar/NavBar';
+import GenerateurHoraireProvider from './pages/GenerateurHoraire/GenerateurHoraireContexts/GenerateurHoraireProvider';
 
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <CssBaseline />
-        <NavBar />
-        <Container
-          id="main-container"
-          maxWidth
-          disableGutters
-        >
-          <Routing />
-        </Container>
-      </BrowserRouter>
+      <GenerateurHoraireProvider>
+        <BrowserRouter>
+          <GlobalStyle />
+          <CssBaseline />
+          <NavBar />
+          <Container
+            id="main-container"
+            maxWidth
+            disableGutters
+          >
+            <Routing />
+          </Container>
+        </BrowserRouter>
+      </GenerateurHoraireProvider>
     </DndProvider>
   );
 }

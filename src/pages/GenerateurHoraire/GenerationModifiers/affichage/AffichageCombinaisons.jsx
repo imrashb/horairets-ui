@@ -19,6 +19,7 @@ import {
   selectShowUniqueCoursColors,
   setAffichageCombinaisons,
 } from '../../../../features/affichage/affichage.slice';
+import { withNewBadge } from '../../../../components/BetaBadge/NewBadge';
 
 const getCheckbox = (label, checked, setChecked, tooltip) => (
   <FormControl>
@@ -80,4 +81,4 @@ function AffichageCombinaisons() {
   );
 }
 
-export default AffichageCombinaisons;
+export default withNewBadge(AffichageCombinaisons, { horizontal: 'left', vertical: 'top' });

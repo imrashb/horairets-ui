@@ -43,6 +43,12 @@ export default function AppThemeProvider({ children }) {
           [DND_AVAILABLE]: '#3B82F6',
           [DND_DISABLED]: '#EF4444',
         },
+        beta: {
+          main: '#FFA500',
+        },
+        new: {
+          main: '#007AFF',
+        },
       },
       sizes: {
         size_1: '0.0625rem',

@@ -28,6 +28,7 @@ function Jour({
   disableLocaux,
   disableModeEnseignement,
   forceLegacyColors,
+  enableEdit,
 }) {
   const { t } = useTranslation('common');
 
@@ -136,7 +137,7 @@ function Jour({
   );
 
   return (
-    <JourWrapper ref={drop} dndState={dndState}>
+    <JourWrapper ref={enableEdit ? drop : null} dndState={enableEdit && dndState}>
       {!disableNomJours && <div className="nom-jour">{t(jour)}</div>}
       <div className="classes-wrapper">
         {components}
@@ -154,6 +155,7 @@ Jour.propTypes = {
   disableLocaux: PropTypes.bool,
   disableModeEnseignement: PropTypes.bool,
   forceLegacyColors: PropTypes.bool,
+  enableEdit: PropTypes.bool,
 };
 
 Jour.defaultProps = {
@@ -163,6 +165,7 @@ Jour.defaultProps = {
   disableLocaux: false,
   disableModeEnseignement: true,
   forceLegacyColors: false,
+  enableEdit: false,
 };
 
 export default Jour;

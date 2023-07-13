@@ -98,5 +98,8 @@
   "DISTANCE": "Distance",
   "HYBRIDE": "Hybride",
   "COMODAL": "Comodal",
-  "conge": "Congé"
+  "conge": "Congé",
+  "beta": "BETA",
+  "new": "NOUVEAU",
+  "tooltipBeta": "Cette fonctionnalité est encore en développement, il risque encore d'avoir des bugs."
 }
