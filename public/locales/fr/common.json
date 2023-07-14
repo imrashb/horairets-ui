@@ -97,6 +97,6 @@
   "PRESENTIEL": "Présentiel",
   "DISTANCE": "Distance",
   "HYBRIDE": "Hybride",
-  "COMODAL": "Comodal"
-
+  "COMODAL": "Comodal",
+  "maintenance": "HorairÉTS est présentement en maintenance. La maintenance devrait être terminée vers {{heures}}:{{minutes}}. Merci de votre compréhension"
 }
