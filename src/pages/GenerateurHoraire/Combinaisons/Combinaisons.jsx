@@ -5,21 +5,22 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
-import React, {
-  useEffect, useRef, useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
-import {
-  selectRawCombinaisons,
-  selectView,
-} from '../../../features/generateur/generateur.slice';
+import { selectRawCombinaisons, selectView } from '../../../features/generateur/generateur.slice';
 import CombinaisonsWrapper from './Combinaisons.styles';
 import FavoriteButton from './FavoriteButton';
+import {
+  selectShowLocaux,
+  selectShowModeEnseignement,
+  selectShowNomActivite,
+  selectShowNomCoursGroupe,
+} from '../../../features/affichage/affichage.slice';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -29,6 +30,11 @@ function Combinaisons({ combinaisons }) {
   const rawCombinaisons = useSelector(selectRawCombinaisons);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
+
+  const showNomCoursGroupe = useSelector(selectShowNomCoursGroupe);
+  const showNomActivite = useSelector(selectShowNomActivite);
+  const showLocaux = useSelector(selectShowLocaux);
+  const showModeEnseignement = useSelector(selectShowModeEnseignement);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
@@ -61,14 +67,11 @@ function Combinaisons({ combinaisons }) {
       labelRowsPerPage={!isSmallViewport ? t('horaireParPage') : ''}
       showFirstButton
       showLastButton
-      labelDisplayedRows={(params) => t(
-        'paginationHoraire',
-        {
-          from: params.from,
-          to: params.to === -1 ? params.count : params.to,
-          count: params.count,
-        },
-      )}
+      labelDisplayedRows={(params) => t('paginationHoraire', {
+        from: params.from,
+        to: params.to === -1 ? params.count : params.to,
+        count: params.count,
+      })}
     />
   );
 
@@ -86,12 +89,10 @@ function Combinaisons({ combinaisons }) {
 
   return (
     <CombinaisonsWrapper ref={mainRef}>
-      {combinaisons?.length > 0 && (
-        Pagination
-      )}
+      {combinaisons?.length > 0 && Pagination}
       <Grid className="combinaisons-grid" container columnSpacing={spacing} columns={{ xs: columns }}>
-        {combinaisons?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((combinaison) => (
+        {combinaisons?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+          (combinaison) => (
             <Grid key={combinaison.uniqueId} item xs={1}>
               <Typography className="numero-horaire" variant="h4">
                 {`${t('horaire')} ${combinaisons.indexOf(combinaison) + 1}`}
@@ -116,13 +117,19 @@ function Combinaisons({ combinaisons }) {
               <Typography className="credits" variant="h6">
                 {t('credits', { count: combinaison?.groupes?.reduce((prev, curr) => prev + curr.cours.credits, 0) })}
               </Typography>
-              <CombinaisonHoraire combinaison={combinaison} />
+              <CombinaisonHoraire
+                combinaison={combinaison}
+                disableLocaux={!showLocaux}
+                disableNomActivite={!showNomActivite}
+                disableNomCours={!showNomCoursGroupe}
+                disableModeEnseignement={!showModeEnseignement}
+                disble
+              />
             </Grid>
-          ))}
+          ),
+        )}
       </Grid>
-      {combinaisons?.length > 0 && (
-        Pagination
-      )}
+      {combinaisons?.length > 0 && Pagination}
     </CombinaisonsWrapper>
   );
 }

@@ -7,15 +7,12 @@
   "author": "Emmanuel Coulombe <emmanuel.coulombe.1@ens.etsmtl.ca>",
   "keywords": [
     "react",
-    "boilerplate",
     "javaScript",
-    "starter",
     "vite",
     "redux",
     "material-ui",
-    "axios",
-    "rrd",
-    "prettier"
+    "eslint",
+    "HorairÉTS"
   ],
   "scripts": {
     "dev": "vite --open & firebase emulators:start",
@@ -47,6 +44,7 @@
     "i18next": "^22.4.5",
     "i18next-http-backend": "^2.1.0",
     "js-file-download": "^0.4.12",
+    "randomcolor": "^0.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
