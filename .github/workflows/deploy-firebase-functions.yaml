@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: '20.x'
       - run: npm i -g firebase-tools
+      - run: cd functions && npm i
       - run: firebase deploy --token $FIREBASE_TOKEN
         env:
          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
