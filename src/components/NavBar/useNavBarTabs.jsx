@@ -25,6 +25,7 @@ const useNavBarTabs = () => {
       icon: Favorite,
       label: 'favoris',
       hidden: !user,
+      new: true,
     },
     {
       path: '/',

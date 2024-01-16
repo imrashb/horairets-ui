@@ -10,6 +10,7 @@ import NavBarWrapper from './NavBar.styles';
 import LoginButton from './components/LoginButton';
 import useNavBarTabs from './useNavBarTabs';
 import { HOME_URL } from '../../routes/Routes.constants';
+import NewBadge from '../NewBadge/NewBadge';
 
 export default function NavBar() {
   const tabs = useNavBarTabs();
@@ -73,7 +74,12 @@ export default function NavBar() {
                     key={tab.label}
                     value={tab.label}
                     icon={<tab.icon />}
-                    label={isSmallViewport ? undefined : t(tab.label)}
+                    label={isSmallViewport ? undefined : (
+                      <>
+                        {t(tab.label)}
+                        {tab.new && <NewBadge />}
+                      </>
+                    )}
                   />
                 )
               ))
