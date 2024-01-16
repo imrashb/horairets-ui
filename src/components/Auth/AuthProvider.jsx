@@ -7,7 +7,7 @@ import AuthContext from './AuthContext';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCsD9fw1PKCFrb3SW2evjeRaPowGVo0030',
-  authDomain: 'horairets-a8b7e.firebaseapp.com',
+  authDomain: 'auth.horairets.emmanuelcoulombe.dev',
   projectId: 'horairets-a8b7e',
   storageBucket: 'horairets-a8b7e.appspot.com',
   messagingSenderId: '940888231644',
