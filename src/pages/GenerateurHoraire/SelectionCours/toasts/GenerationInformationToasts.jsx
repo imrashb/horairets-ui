@@ -3,15 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useUpdatableToast, { TOAST_ERROR } from '../../../../components/Toasts/useUpdatableToast';
-import { selectCombinaisons, selectNombreCours, selectRawCombinaisons } from '../../../../features/generateur/generateur.slice';
+import { selectNombreCours, selectRawCombinaisons } from '../../../../features/generateur/generateur.slice';
 import useGenerateurHoraire from '../../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
+import useFilteredCombinaisons from '../../../../hooks/useFilteredCombinaisons';
 
 const AUCUN_HORAIRE_TOAST_ID = 'AUCUN_HORAIRE_TOAST_ID';
 
 function GenerationInformationToasts({ readyToGenerate }) {
   const { t } = useTranslation('common');
   const { nombreCours, cours } = useGenerateurHoraire();
-  const combinaisons = useSelector(selectCombinaisons);
+  const combinaisons = useFilteredCombinaisons();
   const rawCombinaisons = useSelector(selectRawCombinaisons);
   const currentNombreCours = useSelector(selectNombreCours);
 

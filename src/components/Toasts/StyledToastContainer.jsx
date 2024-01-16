@@ -10,6 +10,7 @@ const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
   }
   .Toastify__toast-body {
+    font-family: Titillium Web, sans-serif !important;
   }
   .Toastify__progress-bar {
   }

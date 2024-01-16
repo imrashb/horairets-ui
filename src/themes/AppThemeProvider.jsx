@@ -17,6 +17,9 @@ export default function AppThemeProvider({ children }) {
           light: mode === 'dark' ? '#5c00b4' : '#9D4EDD',
           ets: '#EF3E45',
         },
+        badgeNew: {
+          main: '#3498db',
+        },
         button: {
           main: mode === 'dark' ? '#7B2CBF' : '#3C096C',
         },

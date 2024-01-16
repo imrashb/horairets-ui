@@ -4,6 +4,7 @@ import { Container } from '@mui/system';
 import Routing from './routes/Routing';
 import GlobalStyle from './themes/GlobalStyle';
 import NavBar from './components/NavBar/NavBar';
+import StyledToastContainer from './components/Toasts/StyledToastContainer';
 
 function App() {
   return (
@@ -18,6 +19,18 @@ function App() {
       >
         <Routing />
       </Container>
+      <StyledToastContainer
+        position="bottom-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </BrowserRouter>
   );
 }

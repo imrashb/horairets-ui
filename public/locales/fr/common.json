@@ -80,6 +80,16 @@
   "matin": "Matin",
   "apresmidi": "Après-midi",
   "soir": "Soir",
+  "seConnecter": "Se connecter",
+  "seDeconnecter": "Se déconnecter",
+  "deconnexionSucces": "Déconnexion réussie!",
+  "deconnexionErreur": "Déconnexion échouée, veuillez réessayer",
+  "retraitFavoris": "La combinaison d'horaire a été retirée des favoris!",
+  "ajoutFavoris": "La combinaison d'horaire a été ajoutée aux favoris!",
+  "erreurFavoris": "Erreur lors de l'ajout/retrait des favoris. Veuillez réessayer.",
+  "favoris": "Favoris",
+  "aucunFavoris": "Aucun favori disponible",
+  "loginSuccess": "Connexion réussie!",
   "groupesSelectionnes_other": "{{count}} groupes sélectionnés",
   "groupesSelectionnes_zero": "Aucun groupe sélectionné",
   "groupesSelectionnes_one": "1 groupe sélectionné",
@@ -97,6 +107,7 @@
   "PRESENTIEL": "Présentiel",
   "DISTANCE": "Distance",
   "HYBRIDE": "Hybride",
-  "COMODAL": "Comodal"
-
+  "COMODAL": "Comodal",
+  "retourGenerateurHoraire": "Retour au générateur d'horaire",
+  "badgeNew": "Nouveau"
 }

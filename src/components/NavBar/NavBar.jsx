@@ -1,36 +1,19 @@
-import { CalendarToday, Dashboard, Info } from '@mui/icons-material';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
   AppBar, Tab, Tabs, Toolbar, Typography, useMediaQuery, useTheme,
 } from '@mui/material';
 import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GENERATEUR_HORAIRE_URL } from '../../routes/Routes.constants';
 import NavBarWrapper from './NavBar.styles';
-
-const tabs = [
-  {
-    id: 0,
-    path: '/',
-    icon: Dashboard,
-    label: 'accueil',
-  },
-  {
-    id: 1,
-    path: GENERATEUR_HORAIRE_URL,
-    icon: CalendarToday,
-    label: 'generateurHoraire',
-
-  },
-  {
-    id: 2,
-    path: '/',
-    icon: Info,
-    label: 'aPropos',
-  },
-];
+import LoginButton from './components/LoginButton';
+import useNavBarTabs from './useNavBarTabs';
+import { HOME_URL } from '../../routes/Routes.constants';
+import NewBadge from '../NewBadge/NewBadge';
 
 export default function NavBar() {
+  const tabs = useNavBarTabs();
   const { t } = useTranslation('common');
 
   const [selectedTab, setSelectedTab] = useState(0);
@@ -44,7 +27,7 @@ export default function NavBar() {
       const tab = tabs.find((ta) => ta.path === location.pathname);
 
       if (tab) {
-        setSelectedTab(tab.id);
+        setSelectedTab(tab.label);
       } else {
         setSelectedTab(null);
       }
@@ -53,7 +36,7 @@ export default function NavBar() {
 
   const handleTabSelection = (value) => {
     setSelectedTab(value);
-    const tab = tabs.find((tmp) => tmp.id === value);
+    const tab = tabs.find((tmp) => tmp.label === value);
     if (tab) {
       navigate(tab.path);
     }
@@ -68,7 +51,14 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <div className="navbar-left">
-            <img className="logo-horairets" src="./logo.png" alt="Logo HorairÉTS" />
+            <img
+              className="logo-horairets"
+              src="./logo.png"
+              alt="Logo HorairÉTS"
+              onClick={() => {
+                navigate(HOME_URL);
+              }}
+            />
             {!isMediumViewport && (
               <Typography variant="h5" component="div" className="navbar-title">
                 {t('horairets')}
@@ -78,16 +68,26 @@ export default function NavBar() {
           <Tabs className="navbar-center" value={selectedTab} onChange={(e, value) => handleTabSelection(value)}>
             {
               tabs.map((tab) => (
-                <Tab
-                  key={tab.id}
-                  value={tab.id}
-                  icon={<tab.icon />}
-                  label={isSmallViewport ? undefined : t(tab.label)}
-                />
+                !tab.hidden && (
+                  <Tab
+                    disabled={tab.disabled}
+                    key={tab.label}
+                    value={tab.label}
+                    icon={<tab.icon />}
+                    label={isSmallViewport ? undefined : (
+                      <>
+                        {t(tab.label)}
+                        {tab.new && <NewBadge />}
+                      </>
+                    )}
+                  />
+                )
               ))
             }
           </Tabs>
-          <div className="navbar-right" />
+          <div className="navbar-right">
+            <LoginButton />
+          </div>
         </Toolbar>
       </AppBar>
     </NavBarWrapper>
