@@ -12,6 +12,7 @@ import Combinaisons from '../GenerateurHoraire/Combinaisons/Combinaisons';
 import useFirebaseUserDocument from '../../hooks/useFirebaseUserDocument';
 import { getSessionTranslation, sortSession as sortSessions } from '../../utils/Sessions.utils';
 import { useLazyGetCombinaisonsFromIdQuery } from '../../features/generateur/generateur.api';
+import AucunFavorisDisponible from './AucunFavorisDisponible/AucunFavorisDisponible';
 
 function Favoris() {
   const { t } = useTranslation('common');
@@ -27,7 +28,9 @@ function Favoris() {
 
   useEffect(() => {
     if (sessions && sessions?.length > 0) {
-      setSession(sessions?.at(-1));
+      console.log('Here', sessions?.at(-1));
+      const latestSession = sessions.find((s) => userData?.favorites[s]?.length > 0);
+      setSession(latestSession);
     }
   }, [sessions]);
 
@@ -54,29 +57,32 @@ function Favoris() {
         </Backdrop>
       ) : undefined}
 
-      {sessions?.length > 0 ? (
+      {session ? (
         <>
-          <FormControl fullWidth required variant="standard">
-            <InputLabel>{t('session')}</InputLabel>
-            <Select
-              value={session}
-              onChange={(e) => setSession(e?.target?.value)}
-              label={t('session')}
-            >
-              {sessions?.map((s) => (
-                userData?.favorites[s]?.length > 0
-                  ? (
-                    <MenuItem key={s} value={s}>
-                      {getSessionTranslation(s, t)}
-                    </MenuItem>
-                  ) : undefined
-              ))}
-            </Select>
-          </FormControl>
+          <div className="control-wrapper">
+            <FormControl fullWidth required variant="standard">
+
+              <InputLabel>{t('session')}</InputLabel>
+              <Select
+                value={session}
+                onChange={(e) => setSession(e?.target?.value)}
+                label={t('session')}
+              >
+                {sessions?.map((s) => (
+                  userData?.favorites[s]?.length > 0
+                    ? (
+                      <MenuItem key={s} value={s}>
+                        {getSessionTranslation(s, t)}
+                      </MenuItem>
+                    ) : undefined
+                ))}
+              </Select>
+            </FormControl>
+          </div>
           {query?.data && <Combinaisons combinaisons={query?.data} />}
         </>
       )
-        : <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('aucunFavoris').toUpperCase()}</Typography>}
+        : <AucunFavorisDisponible />}
     </FavorisWrapper>
   );
 }

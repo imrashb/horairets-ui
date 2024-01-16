@@ -14,6 +14,15 @@ const FavorisWrapper = styled.div`
         padding: ${({ theme }) => theme.sizes.size_8} ${({ theme }) => theme.sizes.size_8};
     }
 
+    .control-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: ${({ theme }) => theme.sizes.size_8} 0;
+        max-width: 20rem
+    }
+
 `;
 
 export default FavorisWrapper;

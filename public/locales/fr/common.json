@@ -88,7 +88,7 @@
   "ajoutFavoris": "La combinaison d'horaire a été ajoutée aux favoris!",
   "erreurFavoris": "Erreur lors de l'ajout/retrait des favoris. Veuillez réessayer.",
   "favoris": "Favoris",
-  "aucunFavoris": "Aucun favoris disponible",
+  "aucunFavoris": "Aucun favori disponible",
   "loginSuccess": "Connexion réussie!",
   "groupesSelectionnes_other": "{{count}} groupes sélectionnés",
   "groupesSelectionnes_zero": "Aucun groupe sélectionné",
@@ -107,6 +107,7 @@
   "PRESENTIEL": "Présentiel",
   "DISTANCE": "Distance",
   "HYBRIDE": "Hybride",
-  "COMODAL": "Comodal"
+  "COMODAL": "Comodal",
+  "retourGenerateurHoraire": "Retour au générateur d'horaire"
 
 }
