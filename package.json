@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "dev": "vite --open & firebase emulators:start",
-    "firebase:setup": "npm install -g firebase-tools && firebase login && firebase init emulators && cd functions && npm i",
+    "firebase:setup": "npm install -g firebase-tools && firebase logout && firebase login && firebase init emulators && cd functions && npm i",
     "start": "vite --open",
     "host": "vite --open --host",
     "build": "vite build",

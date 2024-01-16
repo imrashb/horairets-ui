@@ -49,7 +49,6 @@ function GenerationModifiers({ title }) {
         </ToggleButtonGroup>
       )}
       <GenerationSorting />
-      <GenerationFilters />
       <FiltersProvider>
         <GenerationFilters />
       </FiltersProvider>
