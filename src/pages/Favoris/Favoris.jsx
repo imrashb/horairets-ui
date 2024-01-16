@@ -81,7 +81,7 @@ function Favoris() {
               </Select>
             </FormControl>
           </div>
-          {filteredCombinaisons ? <Combinaisons combinaisons={filteredCombinaisons} />
+          {filteredCombinaisons?.length > 0 ? <Combinaisons combinaisons={filteredCombinaisons} />
             : <AucunFavorisDisponible />}
         </>
       )

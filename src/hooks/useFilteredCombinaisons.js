@@ -22,10 +22,10 @@ const useFilteredCombinaisons = (combinaisons) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (rawCombinaisons) {
-      dispatch(updateCombinaisonsInfo(rawCombinaisons));
+    if (combinaisonsToFilter) {
+      dispatch(updateCombinaisonsInfo(combinaisonsToFilter));
     }
-  }, [rawCombinaisons]);
+  }, [combinaisonsToFilter, dispatch, rawCombinaisons]);
 
   const filteredCombinaisons = useMemo(
     () => pipeAndFilterCombinaisons(combinaisonsToFilter, sorting, filters),
