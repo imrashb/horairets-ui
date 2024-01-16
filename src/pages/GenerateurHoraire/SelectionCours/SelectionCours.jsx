@@ -23,10 +23,10 @@ import {
   selectProgramme,
   selectSelectedCours,
   selectSession,
-  setCombinaisons,
   setConges,
   setCoursObligatoires,
   setNombreCours,
+  setRawCombinaisons,
   setSelectedCours,
 } from '../../../features/generateur/generateur.slice';
 import { areArraysSame } from '../../../utils/Array.utils';
@@ -92,7 +92,7 @@ function SelectionCours() {
 
   useEffect(() => {
     if (getCombinaisonQuery?.data) {
-      dispatch(setCombinaisons(getCombinaisonQuery?.data));
+      dispatch(setRawCombinaisons(getCombinaisonQuery?.data));
     }
   }, [getCombinaisonQuery?.data]);
 

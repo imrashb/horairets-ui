@@ -13,6 +13,7 @@ import useFirebaseUserDocument from '../../hooks/useFirebaseUserDocument';
 import { getSessionTranslation, sortSession as sortSessions } from '../../utils/Sessions.utils';
 import { useLazyGetCombinaisonsFromIdQuery } from '../../features/generateur/generateur.api';
 import AucunFavorisDisponible from './AucunFavorisDisponible/AucunFavorisDisponible';
+import useFilteredCombinaisons from '../../hooks/useFilteredCombinaisons';
 
 function Favoris() {
   const { t } = useTranslation('common');
@@ -35,6 +36,8 @@ function Favoris() {
 
   const [trigger, query] = useLazyGetCombinaisonsFromIdQuery();
 
+  const filteredCombinaisons = useFilteredCombinaisons(query?.data);
+
   useEffect(() => {
     if (session) {
       trigger(userData?.favorites[session]);
@@ -49,7 +52,7 @@ function Favoris() {
 
       {(loading || query?.isFetching) ? (
         <Backdrop
-          open={loading}
+          open={loading || query?.isFetching}
           sx={{ zIndex: 3000 }}
         >
           <CircularProgress color="inherit" />
@@ -78,7 +81,7 @@ function Favoris() {
               </Select>
             </FormControl>
           </div>
-          {!query?.isFetching ? <Combinaisons combinaisons={query?.data} />
+          {filteredCombinaisons ? <Combinaisons combinaisons={filteredCombinaisons} />
             : <AucunFavorisDisponible />}
         </>
       )

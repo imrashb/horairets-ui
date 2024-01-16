@@ -6,20 +6,19 @@ import {
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import Combinaisons from './Combinaisons/Combinaisons';
 import GenerateurHoraireWrapper from './GenerateurHoraire.styles';
 import GenerateurHoraireProvider from './GenerateurHoraireContexts/GenerateurHoraireProvider';
 import GenerationModifiers from './GenerationModifiers/GenerationModifiers';
 import SelectionCours from './SelectionCours/SelectionCours';
 import SelectionSessionProgramme from './SelectionSessionProgramme/SelectionSessionProgramme';
-import { selectCombinaisons } from '../../features/generateur/generateur.slice';
+import useFilteredCombinaisons from '../../hooks/useFilteredCombinaisons';
 
 function GenerateurHoraire() {
   const { t } = useTranslation('common');
 
   const [expanded, setExpanded] = useState(true);
-  const combinaisons = useSelector(selectCombinaisons);
+  const combinaisons = useFilteredCombinaisons();
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
 

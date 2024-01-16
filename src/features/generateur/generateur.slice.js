@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { FILTRES_PLANIFICATION } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
-import { filterGroupes, filterPlanification } from '../../pages/GenerateurHoraire/generateurHoraire.filters';
 import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
 import { GENERATEUR_LIST_VIEW } from './generateur.constants';
 import { reduceCombinaisonsInfoToGroupesOnly } from '../../utils/Groupes.utils';
@@ -19,25 +18,13 @@ const initialState = {
     planification: FILTRES_PLANIFICATION,
     groupes: [],
   },
-  combinaisons: undefined,
   rawCombinaisons: undefined,
   combinaisonsInfo: undefined,
 };
 
 const GENERATEUR_SLICE = 'generateur';
 
-const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x);
-
-const pipeAndFilterCombinaisons = (state) => {
-  state.combinaisons = state.rawCombinaisons
-    ? pipe(
-      COMBINAISONS_SORTS[state.sorting],
-      filterPlanification(state.filters.planification),
-      filterGroupes(state.filters.groupes),
-    )(state.rawCombinaisons) : state.rawCombinaisons;
-};
-
-const getCombinaisonsInfo = (combinaisons) => {
+export const getCombinaisonsInfo = (combinaisons) => {
   const combinaisonsInfo = combinaisons?.reduce((prev, comb) => {
     comb?.groupes?.forEach((groupe) => {
       const sigle = groupe?.cours?.sigle;
@@ -91,20 +78,21 @@ const generateurSlice = createSlice({
     },
     setSorting: (state, action) => {
       state.sorting = action.payload;
-      pipeAndFilterCombinaisons(state);
     },
     setCoursObligatoires: (state, action) => {
       state.coursObligatoires = action.payload;
     },
     setFilters: (state, action) => {
       state.filters = action.payload;
-      pipeAndFilterCombinaisons(state);
     },
-    setCombinaisons: (state, action) => {
+    setRawCombinaisons: (state, action) => {
       state.rawCombinaisons = action.payload;
       state.combinaisonsInfo = getCombinaisonsInfo(action.payload);
       state.filters.groupes = reduceCombinaisonsInfoToGroupesOnly(state.combinaisonsInfo);
-      pipeAndFilterCombinaisons(state);
+    },
+    updateCombinaisonsInfo: (state, action) => {
+      state.combinaisonsInfo = getCombinaisonsInfo(action.payload);
+      state.filters.groupes = reduceCombinaisonsInfoToGroupesOnly(state.combinaisonsInfo);
     },
   },
 });
@@ -120,8 +108,9 @@ export const {
   setNombreCours,
   setSorting,
   setCoursObligatoires,
-  setCombinaisons,
   setFilters,
+  setRawCombinaisons,
+  updateCombinaisonsInfo,
 } = generateurSlice.actions;
 
 export const selectProgramme = (state) => state.generateur.programme;
@@ -143,8 +132,6 @@ export const selectSorting = (state) => state.generateur.sorting;
 export const selectFilterPlanification = (state) => state.generateur.filters.planification;
 
 export const selectFilterGroupes = (state) => state.generateur.filters.groupes;
-
-export const selectCombinaisons = (state) => state.generateur.combinaisons;
 
 export const selectRawCombinaisons = (state) => state.generateur.rawCombinaisons;
 
