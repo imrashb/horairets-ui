@@ -2,7 +2,7 @@ name: Deploy Firebase Functions
 on:
   push:
     branches:
-      - feat-authentication
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
