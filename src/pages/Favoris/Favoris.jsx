@@ -28,7 +28,6 @@ function Favoris() {
 
   useEffect(() => {
     if (sessions && sessions?.length > 0) {
-      console.log('Here', sessions?.at(-1));
       const latestSession = sessions.find((s) => userData?.favorites[s]?.length > 0);
       setSession(latestSession);
     }
@@ -79,7 +78,8 @@ function Favoris() {
               </Select>
             </FormControl>
           </div>
-          {query?.data && <Combinaisons combinaisons={query?.data} />}
+          {!query?.isFetching ? <Combinaisons combinaisons={query?.data} />
+            : <AucunFavorisDisponible />}
         </>
       )
         : <AucunFavorisDisponible />}
