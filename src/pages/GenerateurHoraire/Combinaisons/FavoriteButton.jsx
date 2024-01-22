@@ -12,8 +12,8 @@ import useHoraireFavoris from '../../../hooks/useHoraireFavoris';
 
 function FavoriteButton({ combinaison }) {
   const { t } = useTranslation('common');
-  
-  const {isFavorited, favorite} = useHoraireFavoris(combinaison)
+
+  const { isFavorited, favorite } = useHoraireFavoris(combinaison);
   return (
     <Badge badgeContent={t('badgeNew')} color="badgeNew">
       {' '}

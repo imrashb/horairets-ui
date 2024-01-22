@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const affichageInitialState = {
   showNomCoursGroupe: true,
   showNomActivite: true,
   showLocaux: true,
@@ -13,7 +13,7 @@ const AFFICHAGE_SLICE = 'affichage';
 
 const affichageSlice = createSlice({
   name: AFFICHAGE_SLICE,
-  initialState,
+  initialState: affichageInitialState,
   reducers: {
     setAffichageCombinaisons: (state, action) => {
       // immutable­tate based off those changes
@@ -41,5 +41,7 @@ export const selectShowLocaux = (state) => state.affichage.showLocaux;
 export const selectShowUniqueCoursColors = (state) => state.affichage.showUniqueCoursColors;
 
 export const selectShowModeEnseignement = (state) => state.affichage.showModeEnseignement;
+
+export const selectAffichage = (state) => state.affichage;
 
 export default affichageSlice;

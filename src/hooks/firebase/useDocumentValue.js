@@ -1,9 +1,9 @@
 import { setDoc } from 'firebase/firestore';
 import React, { useMemo } from 'react';
-import useFirebaseUserDocument from '../useFirebaseUserDocument';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import useFirebaseUserDocument from '../useFirebaseUserDocument';
 
-const useDocumentValue = ({ selector, merge = true }) => {
+const useDocumentValue = (selector, { initialArgs } = {}) => {
   const document = useFirebaseUserDocument();
   const [data] = useDocumentData(document);
 
@@ -15,6 +15,7 @@ const useDocumentValue = ({ selector, merge = true }) => {
     if (!data) return;
     const split = selector.split('.');
     let dataToUpdate = {};
+    const dataToReturn = dataToUpdate;
     for (let i = 0; i < split.length; i++) {
       if (i === split.length - 1) {
         dataToUpdate[split[i]] = newData;
@@ -24,7 +25,8 @@ const useDocumentValue = ({ selector, merge = true }) => {
         dataToUpdate = dataToUpdate[split[i]];
       }
     }
-    setDoc(document, newData, { merge });
+
+    setDoc(document, dataToReturn, { merge: true });
   };
 
   const selectedData = useMemo(() => {
@@ -39,6 +41,10 @@ const useDocumentValue = ({ selector, merge = true }) => {
 
     return selectedData;
   }, [data]);
+
+  if (!selectedData && initialArgs) {
+    update(initialArgs);
+  }
 
   return { data: selectedData, update };
 };
