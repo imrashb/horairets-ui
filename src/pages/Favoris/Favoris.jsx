@@ -29,7 +29,7 @@ function Favoris() {
 
   useEffect(() => {
     if (sessions && sessions?.length > 0) {
-      const latestSession = sessions.find((s) => userData?.favorites[s]?.length > 0);
+      const latestSession = sessions.reverse().find((s) => userData?.favorites[s]?.length > 0);
       setSession(latestSession);
     }
   }, [sessions]);
