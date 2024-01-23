@@ -19,6 +19,8 @@ const ProfileWrapper = styled.div`
             transform: translateY(-32rem)
         }
 
+        
+
     }       
     
    
@@ -30,6 +32,21 @@ const ProfileWrapper = styled.div`
          width:100%;
          border-top: ${({ theme }) => theme.sizes.size_8} solid ${({ theme }) => theme.palette.grey[800]};
         
+        .profile-header {
+            align-self: flex-start;
+            display:flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 20rem;
+            padding-left: ${({ theme }) => theme.sizes.size_32};
+            transform: translateY(-4rem);
+
+            .display-name {
+                margin-top: ${({ theme }) => theme.sizes.size_8};
+            }
+        }
+
    }
 
 `;
