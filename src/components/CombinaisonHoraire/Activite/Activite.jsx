@@ -10,14 +10,14 @@ function Activite({
   flex,
   borderColor,
   color,
-
+  onlyCard,
 }) {
   const { t } = useTranslation('common');
   const affichage = useSelector(selectAffichage);
   return (
     <ActiviteWrapper flex={flex} borderColor={borderColor} color={color}>
       <div className="wrapper">
-        {affichage.showNomCoursGroupe && (
+        {!onlyCard && affichage.showNomCoursGroupe && (
           <span>
             <strong>
               {activite?.sigle}
@@ -26,12 +26,13 @@ function Activite({
             </strong>
           </span>
         )}
-        {affichage.showModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
+        {!onlyCard && affichage.showModeEnseignement
+         && <span>{t(activite?.modeEnseignement)}</span>}
 
-        {affichage.showNomActivite && <span>{activite?.nom}</span>}
-        {affichage.showLocaux && <span>{activite?.locaux?.join(',')}</span>}
+        {!onlyCard && affichage.showNomActivite && <span>{activite?.nom}</span>}
+        {!onlyCard && affichage.showLocaux && <span>{activite?.locaux?.join(',')}</span>}
         {
-            affichage.showCharges && (
+            !onlyCard && affichage.showCharges && (
             <div>
               {activite?.charges.map((charge) => (
                 <span>{charge}</span>

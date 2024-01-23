@@ -1,5 +1,6 @@
 import { setDoc } from 'firebase/firestore';
-import React, { useMemo } from 'react';
+import lodash from 'lodash';
+import { useMemo } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import useFirebaseUserDocument from '../useFirebaseUserDocument';
 
@@ -42,7 +43,29 @@ const useDocumentValue = (selector, { initialArgs } = {}) => {
     return selectedData;
   }, [data]);
 
-  if (!selectedData && initialArgs) {
+  const initialArgsToUpdate = useMemo(() => {
+    if (!selectedData && initialArgs) {
+      return initialArgs;
+    }
+
+    if (selectedData && initialArgs) {
+      const differencies = lodash(initialArgs)
+        .keys()
+        .filter((key) => selectedData[key] === undefined && initialArgs[key] !== undefined)
+        .value();
+
+      const argsToUpdate = differencies.length === 0 ? undefined : differencies.reduce(
+        (acc, curr) => ({ ...acc, [curr]: initialArgs[curr] }),
+        {},
+      );
+
+      return argsToUpdate;
+    }
+
+    return undefined;
+  }, [initialArgs]);
+
+  if (initialArgsToUpdate) {
     update(initialArgs);
   }
 

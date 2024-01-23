@@ -5,17 +5,15 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
-import useFirebaseAuth from '../../Auth/useFirebaseAuth';
 import AccountMenu from '../../Auth/AccountMenu/AccountMenu';
+import useCurrentUser from '../../../hooks/user/useCurrentUser';
 
 function LoginButton() {
   const { t } = useTranslation('common');
 
   // Auth
-  const auth = useFirebaseAuth();
-  const [user, loading] = useAuthState(auth);
+  const { user, loading, auth } = useCurrentUser();
 
   // Menu
   const [open, setOpen] = useState(false);
@@ -40,7 +38,7 @@ function LoginButton() {
 
   return (
     loading
-      ? <Skeleton variant="rounded" width="12rem" height="2rem" />
+      ? <Skeleton variant="rounded" width={isMediumViewport ? '12rem' : '2rem'} height="2rem" />
       : (
         <>
           {isMediumViewport ? (

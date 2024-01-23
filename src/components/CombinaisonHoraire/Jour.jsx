@@ -20,10 +20,6 @@ function Jour({
   jour,
   combinaison,
   disableNomJours,
-  disableNomCours,
-  disableNomActivite,
-  disableLocaux,
-  disableModeEnseignement,
   forceLegacyColors,
 }) {
   const { t } = useTranslation('common');
@@ -76,10 +72,7 @@ function Jour({
         flex={currentFlex}
         color={color}
         borderColor={borderColor}
-        disableNomActivite={disableNomActivite}
-        disableNomCours={disableNomCours}
-        disableLocaux={disableLocaux}
-        disableModeEnseignement={disableModeEnseignement}
+        onlyCard={forceLegacyColors}
       />
     );
   };
@@ -130,19 +123,11 @@ Jour.propTypes = {
   combinaison: PropTypes.object.isRequired,
   jour: PropTypes.string.isRequired,
   disableNomJours: PropTypes.bool,
-  disableNomCours: PropTypes.bool,
-  disableNomActivite: PropTypes.bool,
-  disableLocaux: PropTypes.bool,
-  disableModeEnseignement: PropTypes.bool,
   forceLegacyColors: PropTypes.bool,
 };
 
 Jour.defaultProps = {
   disableNomJours: false,
-  disableNomCours: false,
-  disableNomActivite: false,
-  disableLocaux: false,
-  disableModeEnseignement: true,
   forceLegacyColors: false,
 };
 

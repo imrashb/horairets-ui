@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const HomeBackgroundWrapper = styled.div`
 
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
-    position: fixed;
+    position: ${({ fixed }) => (fixed ? 'fixed' : 'absolute')};
     z-index: -1;
     overflow: hidden;
 

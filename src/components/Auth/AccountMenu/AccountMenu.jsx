@@ -1,4 +1,4 @@
-import { Logout } from '@mui/icons-material';
+import { Logout, ManageAccounts } from '@mui/icons-material';
 import {
   ListItemIcon, Menu, MenuItem,
 } from '@mui/material';
@@ -6,12 +6,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSignOut } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../useFirebaseAuth';
+import { PROFIL_URL } from '../../../routes/Routes.constants';
 
 function AccountMenu({ open, onClose, anchor }) {
   const { t } = useTranslation('common');
 
   const auth = useFirebaseAuth();
+  const navigate = useNavigate();
   const [signOut] = useSignOut(auth);
 
   const logout = async () => {
@@ -22,6 +25,11 @@ function AccountMenu({ open, onClose, anchor }) {
     } else {
       toast.error(t('deconnexionErreur'));
     }
+  };
+
+  const editProfile = async () => {
+    if (onClose) onClose();
+    navigate(PROFIL_URL);
   };
 
   return (
@@ -58,7 +66,15 @@ function AccountMenu({ open, onClose, anchor }) {
         },
       }}
     >
+
+      <MenuItem color="red" onClick={editProfile}>
+        <ListItemIcon>
+          <ManageAccounts fontSize="small" />
+        </ListItemIcon>
+        {t('editProfile')}
+      </MenuItem>
       <MenuItem color="red" onClick={logout}>
+
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

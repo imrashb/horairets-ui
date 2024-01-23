@@ -3,7 +3,9 @@ import {
   CalendarToday, Dashboard, Favorite, Info,
 } from '@mui/icons-material';
 import useFirebaseAuth from '../Auth/useFirebaseAuth';
-import { FAVORIS_URL, GENERATEUR_HORAIRE_URL, HOME_URL } from '../../routes/Routes.constants';
+import {
+  FAVORIS_URL, GENERATEUR_HORAIRE_URL, HOME_URL,
+} from '../../routes/Routes.constants';
 
 const useNavBarTabs = () => {
   const auth = useFirebaseAuth();

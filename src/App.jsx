@@ -15,6 +15,7 @@ function App() {
       <Container
         id="main-container"
         maxWidth
+        maxHeight
         disableGutters
       >
         <Routing />
