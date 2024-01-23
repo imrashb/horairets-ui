@@ -2,7 +2,7 @@ import { Panorama } from '@mui/icons-material';
 import {
   Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Typography,
 } from '@mui/material';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
@@ -25,7 +25,7 @@ const getCheckbox = (label, state, dispatch, key, tooltip) => {
               [key]: !checked,
             })}
           />
-)}
+        )}
         label={label}
       />
       {tooltip && <FormHelperText>{tooltip}</FormHelperText>}
@@ -39,7 +39,8 @@ function AffichageCombinaisons() {
 
   const { data, update } = useDocumentValue('affichage.combinaisons', { initialArgs: affichageInitialState });
   const affichageGlobal = useSelector(selectAffichage);
-  const [state, localDispatch] = useReducer((state, newState) => ({ ...state, ...newState }), affichageGlobal);
+  const [state, localDispatch] = useReducer((oldState, newState) => (
+    { ...oldState, ...newState }), affichageGlobal);
 
   useEffect(() => {
     if (affichageGlobal) {
@@ -52,9 +53,7 @@ function AffichageCombinaisons() {
   }, [data]);
 
   const onClose = () => {
-    dispatch(
-      setAffichageCombinaisons(state),
-    );
+    dispatch(setAffichageCombinaisons(state));
     update(state);
   };
 
@@ -64,7 +63,14 @@ function AffichageCombinaisons() {
       {getCheckbox(t('afficherNomCoursGroupe'), state, localDispatch, 'showNomCoursGroupe')}
       {getCheckbox(t('afficherLocaux'), state, localDispatch, 'showLocaux')}
       {getCheckbox(t('afficherTypeActivite'), state, localDispatch, 'showNomActivite', t('typesActivites'))}
-      {getCheckbox(t('afficherModeEnseignement'), state, localDispatch, 'showModeEnseignement', t('modesEnseignements'))}
+      {getCheckbox(t('afficherCharges'), state, localDispatch, 'showCharges')}
+      {getCheckbox(
+        t('afficherModeEnseignement'),
+        state,
+        localDispatch,
+        'showModeEnseignement',
+        t('modesEnseignements'),
+      )}
       {getCheckbox(t('afficherCouleursCoursUniques'), state, localDispatch, 'showUniqueCoursColors')}
       <Divider />
     </ButtonDialog>

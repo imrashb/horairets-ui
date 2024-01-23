@@ -48,7 +48,7 @@ function Favoris() {
   return (
     <FavorisWrapper>
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('favoris').toUpperCase()}</Typography>
-      <GenerationModifiers title={t('horairesGeneres', { count: filteredCombinaisons?.length })} />
+      <GenerationModifiers title={t('horairesGeneres', { count: filteredCombinaisons?.length ?? 0 })} />
 
       {(loading || query?.isFetching) ? (
         <Backdrop

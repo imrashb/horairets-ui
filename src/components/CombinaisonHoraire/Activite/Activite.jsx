@@ -1,49 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import ActiviteWrapper from './Activite.styles';
+import { selectAffichage } from '../../../features/affichage/affichage.slice';
 
 function Activite({
   activite,
   flex,
   borderColor,
   color,
-  disableNomCours,
-  disableNomActivite,
-  disableLocaux,
-  disableModeEnseignement,
+
 }) {
   const { t } = useTranslation('common');
+  const affichage = useSelector(selectAffichage);
   return (
     <ActiviteWrapper flex={flex} borderColor={borderColor} color={color}>
       <div className="wrapper">
-        {!disableNomCours && (
-        <span>
-          <strong>
-            {activite?.sigle}
-            -
-            {activite?.numeroGroupe}
-          </strong>
-        </span>
-        )}
-        {
-          !disableModeEnseignement
-          && (
+        {affichage.showNomCoursGroupe && (
           <span>
-            {t(activite?.modeEnseignement)}
+            <strong>
+              {activite?.sigle}
+              -
+              {activite?.numeroGroupe}
+            </strong>
           </span>
-          )
-}
-        {!disableNomActivite && (
-        <span>
-          {activite?.nom}
-        </span>
         )}
-        {!disableLocaux && (
-        <span>
-          {activite?.locaux?.join(',')}
-        </span>
-        )}
+        {affichage.showModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
+
+        {affichage.showNomActivite && <span>{activite?.nom}</span>}
+        {affichage.showLocaux && <span>{activite?.locaux?.join(',')}</span>}
+        {
+            affichage.showCharges && (
+            <div>
+              {activite?.charges.map((charge) => (
+                <span>{charge}</span>
+              ))}
+            </div>
+            )
+          }
       </div>
     </ActiviteWrapper>
   );
@@ -55,17 +50,6 @@ Activite.propTypes = {
   flex: PropTypes.number.isRequired,
   borderColor: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  disableNomCours: PropTypes.bool,
-  disableNomActivite: PropTypes.bool,
-  disableLocaux: PropTypes.bool,
-  disableModeEnseignement: PropTypes.bool,
-};
-
-Activite.defaultProps = {
-  disableNomCours: false,
-  disableNomActivite: false,
-  disableLocaux: false,
-  disableModeEnseignement: true,
 };
 
 export default Activite;

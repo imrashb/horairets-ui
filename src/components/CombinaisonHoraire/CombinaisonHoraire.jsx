@@ -10,10 +10,6 @@ import { JOURS } from '../../pages/GenerateurHoraire/generateurHoraire.constants
 function CombinaisonHoraire({
   disableHeures,
   disableNomJours,
-  disableNomCours,
-  disableNomActivite,
-  disableLocaux,
-  disableModeEnseignement,
   combinaison,
   forceLegacyColors,
 }) {
@@ -39,10 +35,6 @@ function CombinaisonHoraire({
               jour={jour}
               combinaison={combinaison}
               disableNomJours={disableNomJours}
-              disableNomActivite={disableNomActivite}
-              disableNomCours={disableNomCours}
-              disableLocaux={disableLocaux}
-              disableModeEnseignement={disableModeEnseignement}
               forceLegacyColors={forceLegacyColors}
             />
           </Grid>
@@ -55,18 +47,12 @@ function CombinaisonHoraire({
 CombinaisonHoraire.propTypes = {
   disableHeures: PropTypes.bool,
   disableNomJours: PropTypes.bool,
-  disableNomCours: PropTypes.bool,
-  disableNomActivite: PropTypes.bool,
-  disableLocaux: PropTypes.bool,
   forceLegacyColors: PropTypes.bool,
 };
 
 CombinaisonHoraire.defaultProps = {
   disableHeures: false,
   disableNomJours: false,
-  disableNomCours: false,
-  disableNomActivite: false,
-  disableLocaux: false,
   forceLegacyColors: false,
 };
 
