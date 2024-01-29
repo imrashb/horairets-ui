@@ -111,5 +111,9 @@
   "COMODAL": "Comodal",
   "retourGenerateurHoraire": "Retour au générateur d'horaire",
   "badgeNew": "Nouveau",
-  "editProfile": "Modifier le profil"
+  "editProfile": "Modifier le profil",
+  "seeProfile": "Voir le profil",
+  "aucunProgramme": "Programme inconnu",
+  "plusProgrammes_one": "... et un autre programme",
+  "plusProgrammes_other": "... et {{count}} autres programmes"
 }

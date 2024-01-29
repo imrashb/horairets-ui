@@ -19,8 +19,6 @@ const ProfileWrapper = styled.div`
             transform: translateY(-32rem)
         }
 
-        
-
     }       
     
    
@@ -44,6 +42,10 @@ const ProfileWrapper = styled.div`
 
             .display-name {
                 margin-top: ${({ theme }) => theme.sizes.size_8};
+            }
+
+            .edit-profile-btn {
+                margin-top: ${({ theme }) => theme.sizes.size_16};
             }
         }
 

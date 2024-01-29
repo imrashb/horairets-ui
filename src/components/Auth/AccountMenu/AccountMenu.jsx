@@ -71,7 +71,7 @@ function AccountMenu({ open, onClose, anchor }) {
         <ListItemIcon>
           <ManageAccounts fontSize="small" />
         </ListItemIcon>
-        {t('editProfile')}
+        {t('seeProfile')}
       </MenuItem>
       <MenuItem color="red" onClick={logout}>
 
