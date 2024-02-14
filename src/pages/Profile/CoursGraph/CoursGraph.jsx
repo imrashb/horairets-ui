@@ -1,26 +1,29 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { GraphCanvas } from 'reagraph';
 import useGraphTheme from './useGraphTheme';
+import { useGetCoursQuery } from '../../../features/generateur/generateur.api';
+import useCurrentUser from '../../../hooks/user/useCurrentUser';
 
 function CoursGraph({ width = '30rem', height = '30rem' }) {
-  const cours = useMemo(() => [
-    { sigle: 'LOG100', prealable: [] },
-    { sigle: 'LOG121', prealable: ['LOG100'] },
-    { sigle: 'MAT350', prealable: [] },
-    { sigle: 'MAT472', prealable: ['MAT350', 'LOG121'] },
-  ], []);
+  const { user } = useCurrentUser();
+  const { data: cours, isLoading } = useGetCoursQuery(
+    user?.programmes,
+    { skip: !user },
+  );
 
-  const nodes = useMemo(() => cours.map((c) => ({
+  const nodes = useMemo(() => cours?.map((c) => ({
     id: c.sigle,
     label: c.sigle,
   })), [cours]);
 
-  const edges = useMemo(() => cours.flatMap((c) => c.prealable.map((p) => ({
-    id: `${p}->${c.sigle}`,
-    source: p,
-    target: c.sigle,
-    label: `${p}->${c.sigle}`,
-  }))), [cours]);
+  const edges = useMemo(() => cours?.flatMap(
+    (c) => c.prealables?.filter((p) => cours.find((c1) => c1.sigle === p)).map((p) => ({
+      id: `${p}->${c.sigle}`,
+      source: p,
+      target: c.sigle,
+      label: `${p}->${c.sigle}`,
+    })) || [],
+  ), [cours]);
 
   const theme = useGraphTheme();
   const graphRef = useRef(null);
@@ -34,6 +37,9 @@ function CoursGraph({ width = '30rem', height = '30rem' }) {
       return [...prev, node.id];
     });
   };
+
+  if (isLoading || !user) return null;
+  console.log('here');
 
   return (
     <div style={{ position: 'relative', width, height }}>

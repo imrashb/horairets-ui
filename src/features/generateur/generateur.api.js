@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   BASE_API_URL, GET_PROGRAMMES_ENDPOINT, GET_SESSIONS_ENDPOINT, GET_COMBINAISONS_ENDPOINT,
+  GET_COURS_ENDPOINT,
   GET_COMBINAISONS_FROM_IDS_ENDPOINT,
 } from '../../app/api/api.constants';
 import { MAITRISE } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
@@ -64,6 +65,13 @@ export const generateurApi = createApi({
         return `${GET_COMBINAISONS_FROM_IDS_ENDPOINT}?${params.toString()}`;
       },
     }),
+    getCours: builder.query({
+      query: (programmes) => {
+        const params = new URLSearchParams();
+        programmes?.forEach((p) => params.append(PROGRAMMES, p));
+        return `${GET_COURS_ENDPOINT}?${params.toString()}`;
+      },
+    }),
   }),
 });
 
@@ -77,4 +85,5 @@ export const {
   useLazyGetCoursSessionQuery,
   useLazyGetCombinaisonsQuery,
   useLazyGetCombinaisonsFromIdQuery,
+  useGetCoursQuery,
 } = generateurApi;

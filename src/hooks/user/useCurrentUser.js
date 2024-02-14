@@ -10,7 +10,7 @@ const useCurrentUser = () => {
     initialArgs: {
       id: user?.uid,
       displayName: user?.displayName,
-      programmes: ['LOG', 'ELE', 'MEC', 'SEG'],
+      programmes: ['LOG'],
     },
   });
 

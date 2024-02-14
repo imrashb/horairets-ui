@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button, Typography, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/system';
+import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Edit } from '@mui/icons-material';
 import ProfileWrapper from './Profile.styles';
@@ -12,15 +11,12 @@ import useCurrentUser from '../../hooks/user/useCurrentUser';
 import CoursGraph from './CoursGraph/CoursGraph';
 
 function Profile() {
-  const theme = useTheme();
   const { user } = useCurrentUser();
   const { t } = useTranslation('common');
 
   const programmes = useMemo(() => (user?.programmes?.length > 0
     ? user?.programmes.map((p) => t(p))
     : undefined), [t, user?.programmes]);
-
-  const isMediumViewport = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <ProfileWrapper>
@@ -38,7 +34,7 @@ function Profile() {
           )) : <Typography className="programmes">{t('aucunProgramme')}</Typography>}
           <Button disabled startIcon={<Edit />} className="edit-profile-btn" variant="contained" color="primary">{t('editProfile')}</Button>
         </div>
-        <CoursGraph width="30rem" height="30rem" />
+        <CoursGraph width="60rem" height="60rem" />
 
       </div>
     </ProfileWrapper>
