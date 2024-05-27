@@ -77,7 +77,7 @@ export default function NavBar() {
                     label={isSmallViewport ? undefined : (
                       <>
                         {t(tab.label)}
-                        {tab.new && <NewBadge />}
+                        {tab.new}
                       </>
                     )}
                   />
