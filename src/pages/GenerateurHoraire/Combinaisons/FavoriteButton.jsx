@@ -1,4 +1,4 @@
-import { Favorite } from '@mui/icons-material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { Badge, IconButton } from '@mui/material';
 import React from 'react';
 import { arrayRemove, arrayUnion, setDoc } from 'firebase/firestore';
@@ -39,16 +39,12 @@ function FavoriteButton({ combinaison }) {
   };
 
   return (
-    <Badge badgeContent={t('badgeNew')} color="badgeNew">
-      {' '}
-      <IconButton
-        color={isFavorited ? 'primary' : undefined}
-        onClick={handleFavorite}
-      >
-        <Favorite />
-      </IconButton>
-    </Badge>
-
+    <IconButton
+      color={isFavorited ? 'primary' : undefined}
+      onClick={handleFavorite}
+    >
+      {isFavorited ? <Favorite /> : <FavoriteBorder />}
+    </IconButton>
   );
 }
 
