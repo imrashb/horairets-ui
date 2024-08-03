@@ -20,7 +20,11 @@ export const generateurApi = createApi({
       query: () => GET_SESSIONS_ENDPOINT,
     }),
     getProgrammes: builder.query({
-      query: () => GET_PROGRAMMES_ENDPOINT,
+      query: ({ session }) => {
+        const params = new URLSearchParams();
+        params.append(SESSION, session);
+        return `${GET_PROGRAMMES_ENDPOINT}?${params.toString()}`;
+      },
       transformResponse: (
         response,
       ) => response?.filter((programme) => programme !== MAITRISE),
