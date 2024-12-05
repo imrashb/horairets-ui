@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import ActiviteWrapper from './Activite.styles';
@@ -12,38 +11,25 @@ function Activite({
   disableNomActivite,
   disableLocaux,
   disableModeEnseignement,
+  disableEnseignant,
 }) {
   const { t } = useTranslation('common');
   return (
     <ActiviteWrapper flex={flex} borderColor={borderColor} color={color}>
       <div className="wrapper">
         {!disableNomCours && (
-        <span>
-          <strong>
-            {activite?.sigle}
-            -
-            {activite?.numeroGroupe}
-          </strong>
-        </span>
-        )}
-        {
-          !disableModeEnseignement
-          && (
           <span>
-            {t(activite?.modeEnseignement)}
+            <strong>
+              {activite?.sigle}
+              -
+              {activite?.numeroGroupe}
+            </strong>
           </span>
-          )
-}
-        {!disableNomActivite && (
-        <span>
-          {activite?.nom}
-        </span>
         )}
-        {!disableLocaux && (
-        <span>
-          {activite?.locaux?.join(',')}
-        </span>
-        )}
+        {!disableModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
+        {!disableEnseignant && <span>{t(activite?.charge?.join(','))}</span>}
+        {!disableNomActivite && <span>{activite?.nom}</span>}
+        {!disableLocaux && <span>{activite?.locaux?.join(',')}</span>}
       </div>
     </ActiviteWrapper>
   );
@@ -59,6 +45,7 @@ Activite.propTypes = {
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
   disableModeEnseignement: PropTypes.bool,
+  disableEnseignant: PropTypes.bool,
 };
 
 Activite.defaultProps = {
@@ -66,6 +53,7 @@ Activite.defaultProps = {
   disableNomActivite: false,
   disableLocaux: false,
   disableModeEnseignement: true,
+  disableEnseignant: true,
 };
 
 export default Activite;

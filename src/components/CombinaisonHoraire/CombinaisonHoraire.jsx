@@ -14,6 +14,7 @@ function CombinaisonHoraire({
   disableNomActivite,
   disableLocaux,
   disableModeEnseignement,
+  disableEnseignant,
   combinaison,
   forceLegacyColors,
 }) {
@@ -43,6 +44,7 @@ function CombinaisonHoraire({
               disableNomCours={disableNomCours}
               disableLocaux={disableLocaux}
               disableModeEnseignement={disableModeEnseignement}
+              disableEnseignant={disableEnseignant}
               forceLegacyColors={forceLegacyColors}
             />
           </Grid>

@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
 import {
+  selectShowEnseignant,
   selectShowLocaux,
   selectShowModeEnseignement,
   selectShowNomActivite,
@@ -48,12 +49,14 @@ function AffichageCombinaisons() {
   const showNomActiviteGlobal = useSelector(selectShowNomActivite);
   const showUniqueCoursColorsGlobal = useSelector(selectShowUniqueCoursColors);
   const showModeEnseignementGlobal = useSelector(selectShowModeEnseignement);
+  const showEnseignantGlobal = useSelector(selectShowEnseignant);
 
   const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(showNomCoursGroupeGlobal);
   const [showLocaux, setShowLocaux] = useState(showLocauxGlobal);
   const [showNomActivite, setShowNomActivite] = useState(showNomActiviteGlobal);
   const [showUniqueCoursColors, setShowUniqueCoursColors] = useState(showUniqueCoursColorsGlobal);
   const [showModeEnseignement, setShowModeEnseignement] = useState(showModeEnseignementGlobal);
+  const [showEnseignant, setShowEnseignant] = useState(showEnseignantGlobal);
 
   const onClose = () => {
     dispatch(setAffichageCombinaisons({
@@ -62,6 +65,7 @@ function AffichageCombinaisons() {
       showNomActivite,
       showUniqueCoursColors,
       showModeEnseignement,
+      showEnseignant,
     }));
   };
 
@@ -74,6 +78,7 @@ function AffichageCombinaisons() {
       {getCheckbox(t('afficherLocaux'), showLocaux, setShowLocaux)}
       {getCheckbox(t('afficherTypeActivite'), showNomActivite, setShowNomActivite, t('typesActivites'))}
       {getCheckbox(t('afficherModeEnseignement'), showModeEnseignement, setShowModeEnseignement, t('modesEnseignements'))}
+      {getCheckbox(t('afficherEnseignant'), showEnseignant, setShowEnseignant)}
       {getCheckbox(t('afficherCouleursCoursUniques'), showUniqueCoursColors, setShowUniqueCoursColors)}
       <Divider />
     </ButtonDialog>
