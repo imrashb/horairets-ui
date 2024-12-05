@@ -54,10 +54,9 @@ const useDocumentValue = (selector, { initialArgs } = {}) => {
         .filter((key) => selectedData[key] === undefined && initialArgs[key] !== undefined)
         .value();
 
-      const argsToUpdate = differencies.length === 0 ? undefined : differencies.reduce(
-        (acc, curr) => ({ ...acc, [curr]: initialArgs[curr] }),
-        {},
-      );
+      const argsToUpdate = differencies.length === 0
+        ? undefined
+        : differencies.reduce((acc, curr) => ({ ...acc, [curr]: initialArgs[curr] }), {});
 
       return argsToUpdate;
     }
