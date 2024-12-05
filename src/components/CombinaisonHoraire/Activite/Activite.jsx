@@ -27,7 +27,7 @@ function Activite({
           </span>
         )}
         {!disableModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
-        {!disableEnseignant && <span>{t(activite?.charge?.join(','))}</span>}
+        {!disableEnseignant && <span>{t(activite?.charges[0])}</span>}
         {!disableNomActivite && <span>{activite?.nom}</span>}
         {!disableLocaux && <span>{activite?.locaux?.join(',')}</span>}
       </div>

@@ -126,7 +126,6 @@ function Combinaisons({ combinaisons }) {
                 disableNomCours={!showNomCoursGroupe}
                 disableModeEnseignement={!showModeEnseignement}
                 disableEnseignant={!showEnseignant}
-                disble
               />
             </Grid>
           ),
