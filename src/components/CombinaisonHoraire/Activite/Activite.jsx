@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import ActiviteWrapper from './Activite.styles';
@@ -27,7 +28,7 @@ function Activite({
           </span>
         )}
         {!disableModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
-        {!disableEnseignant && <span>{t(activite?.charges[0])}</span>}
+        {!disableEnseignant && <span>{t(activite?.charges?.join(','))}</span>}
         {!disableNomActivite && <span>{activite?.nom}</span>}
         {!disableLocaux && <span>{activite?.locaux?.join(',')}</span>}
       </div>

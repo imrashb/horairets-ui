@@ -104,7 +104,7 @@
   "typesActivites": "Cours, TP, Labo, etc.",
   "afficherCouleursCoursUniques": "Afficher des couleurs uniques pour chaque cours",
   "afficherChargeCours": "Afficher les chargés de cours",
-  "afficherModeEnseignement": "Afficher le mode d'enseignement",
+  "afficherModeEnseignement": "Afficher le chargé de l'activité de cours",
   "modesEnseignements": "Présentiel, Distance, Hybride, Comodal",
   "afficherEnseignant": "Afficher l'enseignant du cours",
   "PRESENTIEL": "Présentiel",
