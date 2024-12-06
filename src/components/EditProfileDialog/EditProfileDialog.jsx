@@ -37,7 +37,7 @@ function EditProfileDialog() {
           onChange={(e) => setDisplayName(e.target.value)}
         />
       </div>
-      <SelectionProgramme programmes={programmes} setProgrammes={setProgrammes} />
+      <SelectionProgramme ignoreSession programmes={programmes} setProgrammes={setProgrammes} />
     </ButtonDialog>
   );
 }

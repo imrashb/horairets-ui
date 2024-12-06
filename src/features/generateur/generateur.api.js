@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  BASE_API_URL, GET_PROGRAMMES_ENDPOINT, GET_SESSIONS_ENDPOINT, GET_COMBINAISONS_ENDPOINT,
+  BASE_API_URL,
+  GET_PROGRAMMES_ENDPOINT,
+  GET_SESSIONS_ENDPOINT,
+  GET_COMBINAISONS_ENDPOINT,
   GET_COURS_ENDPOINT,
   GET_COMBINAISONS_FROM_IDS_ENDPOINT,
 } from '../../app/api/api.constants';
@@ -21,10 +24,13 @@ export const generateurApi = createApi({
       query: () => GET_SESSIONS_ENDPOINT,
     }),
     getProgrammes: builder.query({
-      query: () => GET_PROGRAMMES_ENDPOINT,
-      transformResponse: (
-        response,
-      ) => response?.filter((programme) => programme !== MAITRISE),
+      query: ({ session }) => {
+        const params = new URLSearchParams();
+        if (session) params.append(SESSION, session);
+        if (params.toString() === '') return GET_PROGRAMMES_ENDPOINT;
+        return `${GET_PROGRAMMES_ENDPOINT}?${params.toString()}`;
+      },
+      transformResponse: (response) => response?.filter((programme) => programme !== MAITRISE),
     }),
     getCoursSession: builder.query({
       query: ({ session, programme }) => {
@@ -75,8 +81,7 @@ export const generateurApi = createApi({
   }),
 });
 
-export const selectCoursSession = (session, programme) => (state) => generateurApi
-  .endpoints.getCoursSession.select({ session, programme })(state);
+export const selectCoursSession = (session, programme) => (state) => generateurApi.endpoints.getCoursSession.select({ session, programme })(state);
 
 // Export hooks for usage in functional components
 export const {
