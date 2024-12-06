@@ -62,7 +62,7 @@ const useDocumentValue = (selector, { initialArgs } = {}) => {
     }
 
     return undefined;
-  }, [initialArgs]);
+  }, [initialArgs, selectedData]);
 
   if (initialArgsToUpdate) {
     update(initialArgs);

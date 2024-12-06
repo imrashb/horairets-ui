@@ -6,11 +6,7 @@ import ActiviteWrapper from './Activite.styles';
 import { selectAffichage } from '../../../features/affichage/affichage.slice';
 
 function Activite({
-  activite,
-  flex,
-  borderColor,
-  color,
-  onlyCard,
+  activite, flex, borderColor, color, onlyCard,
 }) {
   const { t } = useTranslation('common');
   const affichage = useSelector(selectAffichage);
@@ -26,20 +22,10 @@ function Activite({
             </strong>
           </span>
         )}
-        {!onlyCard && affichage.showModeEnseignement
-         && <span>{t(activite?.modeEnseignement)}</span>}
-
+        {!onlyCard && affichage.showModeEnseignement && <span>{t(activite?.modeEnseignement)}</span>}
         {!onlyCard && affichage.showNomActivite && <span>{activite?.nom}</span>}
-        {!onlyCard && affichage.showLocaux && <span>{activite?.locaux?.join(',')}</span>}
-        {
-            !onlyCard && affichage.showCharges && (
-            <div>
-              {activite?.charges.map((charge) => (
-                <span>{charge}</span>
-              ))}
-            </div>
-            )
-          }
+        {!onlyCard && affichage.showLocaux && <span>{activite?.locaux?.join(', ')}</span>}
+        {!onlyCard && affichage.showCharges && <span>{activite?.charges?.join(', ')}</span>}
       </div>
     </ActiviteWrapper>
   );

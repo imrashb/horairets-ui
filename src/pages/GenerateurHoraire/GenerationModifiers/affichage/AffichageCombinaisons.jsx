@@ -39,8 +39,7 @@ function AffichageCombinaisons() {
 
   const { data, update } = useDocumentValue('affichage.combinaisons', { initialArgs: affichageInitialState });
   const affichageGlobal = useSelector(selectAffichage);
-  const [state, localDispatch] = useReducer((oldState, newState) => (
-    { ...oldState, ...newState }), affichageGlobal);
+  const [state, localDispatch] = useReducer((oldState, newState) => ({ ...oldState, ...newState }), affichageGlobal);
 
   useEffect(() => {
     if (affichageGlobal) {

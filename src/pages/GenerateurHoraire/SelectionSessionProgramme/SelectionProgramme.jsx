@@ -15,8 +15,6 @@ function SelectionProgramme({ ignoreSession = false, programmes, setProgrammes }
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(programmesQuery.data, !ignoreSession && !session);
-
   useEffect(() => {
     if (programmesQuery.data && programmes.length > 0) {
       const invalid = programmes.filter((p) => !programmesQuery.data.includes(p));
@@ -45,3 +43,4 @@ function SelectionProgramme({ ignoreSession = false, programmes, setProgrammes }
 }
 
 export default SelectionProgramme;
+
