@@ -22,11 +22,19 @@ const useCurrentUser = () => {
     [update],
   );
 
+  const updateProgrammes = useCallback(
+    (programmes) => {
+      update({ programmes });
+    },
+    [update],
+  );
+
   return {
     loading,
     user: data,
     auth,
     updateDisplayName,
+    updateProgrammes,
   };
 };
 

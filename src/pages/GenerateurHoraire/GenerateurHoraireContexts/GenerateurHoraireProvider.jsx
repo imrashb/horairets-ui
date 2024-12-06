@@ -1,13 +1,21 @@
-import React, { useMemo, useState } from 'react';
+import React, {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import {
   selectConges,
-  selectCoursObligatoires, selectNombreCours, selectProgramme, selectSelectedCours, selectSession,
+  selectCoursObligatoires,
+  selectNombreCours,
+  selectProgramme,
+  selectSelectedCours,
+  selectSession,
 } from '../../../features/generateur/generateur.slice';
 import GenerateurHoraireContext from './GenerateurHoraireContext';
+import useCurrentUser from '../../../hooks/user/useCurrentUser';
 
 function GenerateurHoraireProvider({ children }) {
-  // Get current generateur values
+  const { user } = useCurrentUser();
+
   const currentSession = useSelector(selectSession);
   const currentProgramme = useSelector(selectProgramme);
   const currentCours = useSelector(selectSelectedCours);
@@ -22,26 +30,31 @@ function GenerateurHoraireProvider({ children }) {
   const [coursObligatoires, setCoursObligatoires] = useState(currentCoursObligatoires);
   const [conges, setConges] = useState(currentConges);
 
-  const context = useMemo(() => ({
-    session,
-    setSession,
-    programmes,
-    setProgrammes,
-    cours,
-    setCours,
-    nombreCours,
-    setNombreCours,
-    coursObligatoires,
-    setCoursObligatoires,
-    conges,
-    setConges,
-  }), [session, programmes, cours, nombreCours, coursObligatoires, conges]);
+  useEffect(() => {
+    if (user?.programmes && currentProgramme?.length === 0) {
+      setProgrammes(user?.programmes);
+    }
+  }, [user?.programmes]);
 
-  return (
-    <GenerateurHoraireContext.Provider value={context}>
-      {children}
-    </GenerateurHoraireContext.Provider>
+  const context = useMemo(
+    () => ({
+      session,
+      setSession,
+      programmes,
+      setProgrammes,
+      cours,
+      setCours,
+      nombreCours,
+      setNombreCours,
+      coursObligatoires,
+      setCoursObligatoires,
+      conges,
+      setConges,
+    }),
+    [session, programmes, cours, nombreCours, coursObligatoires, conges],
   );
+
+  return <GenerateurHoraireContext.Provider value={context}>{children}</GenerateurHoraireContext.Provider>;
 }
 
 export default GenerateurHoraireProvider;
