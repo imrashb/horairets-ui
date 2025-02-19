@@ -106,6 +106,7 @@
   "afficherChargeCours": "Afficher les chargés de cours",
   "afficherModeEnseignement": "Afficher le mode d'enseignement",
   "modesEnseignements": "Présentiel, Distance, Hybride, Comodal",
+  "afficherEnseignant": "Afficher le chargé de l'activité de cours",
   "PRESENTIEL": "Présentiel",
   "DISTANCE": "Distance",
   "HYBRIDE": "Hybride",

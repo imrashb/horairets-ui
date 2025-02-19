@@ -24,6 +24,7 @@ function Jour({
   disableNomActivite,
   disableLocaux,
   disableModeEnseignement,
+  disableEnseignant,
   forceLegacyColors,
 }) {
   const { t } = useTranslation('common');
@@ -80,6 +81,7 @@ function Jour({
         disableNomCours={disableNomCours}
         disableLocaux={disableLocaux}
         disableModeEnseignement={disableModeEnseignement}
+        disableEnseignant={disableEnseignant}
       />
     );
   };
@@ -134,6 +136,7 @@ Jour.propTypes = {
   disableNomActivite: PropTypes.bool,
   disableLocaux: PropTypes.bool,
   disableModeEnseignement: PropTypes.bool,
+  disableEnseignant: PropTypes.bool,
   forceLegacyColors: PropTypes.bool,
 };
 
@@ -143,6 +146,7 @@ Jour.defaultProps = {
   disableNomActivite: false,
   disableLocaux: false,
   disableModeEnseignement: true,
+  disableEnseignant: true,
   forceLegacyColors: false,
 };
 

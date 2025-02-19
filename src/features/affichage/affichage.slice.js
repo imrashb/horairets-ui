@@ -7,6 +7,7 @@ const initialState = {
   showLocaux: true,
   showUniqueCoursColors: true,
   showModeEnseignement: false,
+  showEnseignant: false,
 };
 
 const AFFICHAGE_SLICE = 'affichage';
@@ -22,6 +23,7 @@ const affichageSlice = createSlice({
       state.showNomActivite = action.payload.showNomActivite;
       state.showUniqueCoursColors = action.payload.showUniqueCoursColors;
       state.showModeEnseignement = action.payload.showModeEnseignement;
+      state.showEnseignant = action.payload.showEnseignant;
     },
   },
 });
@@ -41,5 +43,7 @@ export const selectShowLocaux = (state) => state.affichage.showLocaux;
 export const selectShowUniqueCoursColors = (state) => state.affichage.showUniqueCoursColors;
 
 export const selectShowModeEnseignement = (state) => state.affichage.showModeEnseignement;
+
+export const selectShowEnseignant = (state) => state.affichage.showEnseignant;
 
 export default affichageSlice;

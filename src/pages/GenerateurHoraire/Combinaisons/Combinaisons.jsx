@@ -16,6 +16,7 @@ import { selectRawCombinaisons, selectView } from '../../../features/generateur/
 import CombinaisonsWrapper from './Combinaisons.styles';
 import FavoriteButton from './FavoriteButton';
 import {
+  selectShowEnseignant,
   selectShowLocaux,
   selectShowModeEnseignement,
   selectShowNomActivite,
@@ -35,6 +36,7 @@ function Combinaisons({ combinaisons }) {
   const showNomActivite = useSelector(selectShowNomActivite);
   const showLocaux = useSelector(selectShowLocaux);
   const showModeEnseignement = useSelector(selectShowModeEnseignement);
+  const showEnseignant = useSelector(selectShowEnseignant);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
@@ -123,7 +125,7 @@ function Combinaisons({ combinaisons }) {
                 disableNomActivite={!showNomActivite}
                 disableNomCours={!showNomCoursGroupe}
                 disableModeEnseignement={!showModeEnseignement}
-                disble
+                disableEnseignant={!showEnseignant}
               />
             </Grid>
           ),

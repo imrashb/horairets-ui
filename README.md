@@ -1,6 +1,6 @@
 ## HorairÉTS
 
-HorairÉTS est un générateur de combinaisons d'horaire pour les étudiants de [l'École de technologie supérieure](https://www.etsmtl.ca/). L'application officiel est hébergé sur [https://horairets.emmanuelcoulombe.dev/](https://horairets.emmanuelcoulombe.dev/). Cette application est séparée en deux projets différents, soit l'interface utilisateur et le backend. Pour en savoir plus sur le backend de HorairÉTS, vous pouvez le retrouver [ici](https://github.com/imrashb/horaire-ets).
+HorairÉTS est un générateur de combinaisons d'horaire pour les étudiants de [l'École de technologie supérieure](https://www.etsmtl.ca/). L'application officielle est hébergée sur [https://horairets.emmanuelcoulombe.dev/](https://horairets.emmanuelcoulombe.dev/). Cette application est séparée en deux projets différents, soit l'interface utilisateur et le backend. Pour en savoir plus sur le backend de HorairÉTS, vous pouvez le retrouver [ici](https://github.com/imrashb/horaire-ets).
 
 ![horairets](public/logo.png)
 
