@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import { toast } from 'react-toastify';
 import useUpdatableToast, { TOAST_ERROR } from '../../../../components/Toasts/useUpdatableToast';
-import { selectNombreCours, selectRawCombinaisons } from '../../../../features/generateur/generateur.slice';
+import { nombreCoursAtom, rawCombinaisonsAtom } from '../../../../features/generateur/generateurAtoms';
 import useGenerateurHoraire from '../../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import useFilteredCombinaisons from '../../../../hooks/useFilteredCombinaisons';
 
@@ -13,8 +13,8 @@ function GenerationInformationToasts({ readyToGenerate }) {
   const { t } = useTranslation('common');
   const { nombreCours, cours } = useGenerateurHoraire();
   const combinaisons = useFilteredCombinaisons();
-  const rawCombinaisons = useSelector(selectRawCombinaisons);
-  const currentNombreCours = useSelector(selectNombreCours);
+  const rawCombinaisons = useAtomValue(rawCombinaisonsAtom);
+  const currentNombreCours = useAtomValue(nombreCoursAtom);
 
   const coursInferieurToast = useUpdatableToast(t('alerteNombreCoursInferieur', { count: cours?.length, nbCours: nombreCours }), TOAST_ERROR);
 

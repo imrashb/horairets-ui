@@ -4,16 +4,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useGetProgrammesQuery } from '../../../features/generateur/generateur.api';
+import { useGetProgrammes } from '../../../features/generateur/generateurQueries';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 
 function SelectionProgramme() {
   const { t } = useTranslation('common');
-  const { programmes, setProgrammes, session } = useGenerateurHoraire();
-  const programmesQuery = useGetProgrammesQuery({ session }, {
-    skip: !session,
-    refetchOnMountOrArgChange: true,
-  });
+  const { programmes, setProgrammes } = useGenerateurHoraire();
+  const programmesQuery = useGetProgrammes();
 
   useEffect(() => {
     if (programmesQuery.data && programmes.length > 0) {

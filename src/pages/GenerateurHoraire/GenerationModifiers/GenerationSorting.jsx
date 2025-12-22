@@ -4,16 +4,15 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAtom } from 'jotai';
 import { useTheme } from 'styled-components';
-import { selectSorting, setSorting } from '../../../features/generateur/generateur.slice';
+import { sortingAtom } from '../../../features/generateur/generateurAtoms';
 import { COMBINAISONS_SORTS } from '../generateurHoraire.sorting';
 import ButtonDialog from '../../../components/ButtonDialog/ButtonDialog';
 
 function GenerationSorting() {
   const { t } = useTranslation('common');
-  const sorting = useSelector(selectSorting);
-  const dispatch = useDispatch();
+  const [sorting, setSorting] = useAtom(sortingAtom);
 
   const theme = useTheme();
   const isMediumViewport = useMediaQuery(theme.breakpoints.down('md'));
@@ -28,7 +27,7 @@ function GenerationSorting() {
               size="small"
               variant="outlined"
               value={sorting}
-              onChange={(e) => dispatch(setSorting(e?.target?.value))}
+              onChange={(e) => setSorting(e?.target?.value)}
             >
               {Object.keys(COMBINAISONS_SORTS).map(
                 (value) => (<MenuItem key={value} value={value}>{t(value)}</MenuItem>),
@@ -39,12 +38,12 @@ function GenerationSorting() {
 
       )
         : (
-          <ButtonDialog title={t('trier')} icon={<Sort />} onClose={() => {}}>
+          <ButtonDialog title={t('trier')} icon={<Sort />} onClose={() => { }}>
             <FormControl fullWidth variant="standard">
               <InputLabel>{t('trierPar')}</InputLabel>
               <Select
                 value={sorting}
-                onChange={(e) => dispatch(setSorting(e?.target?.value))}
+                onChange={(e) => setSorting(e?.target?.value)}
                 label={t('trierPar')}
               >
                 {Object.keys(COMBINAISONS_SORTS).map(

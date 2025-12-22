@@ -1,13 +1,13 @@
 /* eslint-disable react/forbid-prop-types */
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import Activite from './Activite/Activite';
 import ActiviteSpacer from './Activite/ActiviteSpacer';
 import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
 import { getDeterministicRandomBorderCoursColor, getDeterministicRandomCoursColor } from './combinaisonHoraire.utils';
-import { selectShowUniqueCoursColors } from '../../features/affichage/affichage.slice';
+import { showUniqueCoursColorsAtom } from '../../features/affichage/affichageAtoms';
 
 const getLegacyColors = (sigle, sigles) => {
   const deg = (sigles.indexOf(sigle) / sigles.length) * 360;
@@ -29,7 +29,7 @@ function Jour({
 }) {
   const { t } = useTranslation('common');
 
-  const showUniqueCoursColors = useSelector(selectShowUniqueCoursColors);
+  const showUniqueCoursColors = useAtomValue(showUniqueCoursColorsAtom);
 
   const min = HEURE_DEBUT_COURS;
   const max = HEURE_FIN_COURS;

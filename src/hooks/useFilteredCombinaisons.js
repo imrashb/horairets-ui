@@ -1,10 +1,13 @@
 import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { filterGroupes, filterPlanification } from '../pages/GenerateurHoraire/generateurHoraire.filters';
 import { COMBINAISONS_SORTS } from '../pages/GenerateurHoraire/generateurHoraire.sorting';
 import {
-  selectRawCombinaisons, updateCombinaisonsInfo,
-} from '../features/generateur/generateur.slice';
+  filtersAtom,
+  rawCombinaisonsAtom,
+  sortingAtom,
+  updateCombinaisonsInfoAtom,
+} from '../features/generateur/generateurAtoms';
 
 const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x);
 const pipeAndFilterCombinaisons = (combinaisons, sorting, filters) => (combinaisons
@@ -12,25 +15,27 @@ const pipeAndFilterCombinaisons = (combinaisons, sorting, filters) => (combinais
     COMBINAISONS_SORTS[sorting],
     filterPlanification(filters.planification),
     filterGroupes(filters.groupes),
-  )(combinaisons) : combinaisons);
+  )(combinaisons)
+  : combinaisons);
 
 const useFilteredCombinaisons = (combinaisons) => {
-  const rawCombinaisons = useSelector(selectRawCombinaisons);
+  const rawCombinaisons = useAtomValue(rawCombinaisonsAtom);
   const combinaisonsToFilter = combinaisons || rawCombinaisons;
-  const filters = useSelector((state) => state.generateur.filters);
-  const sorting = useSelector((state) => state.generateur.sorting);
-  const dispatch = useDispatch();
+  const filters = useAtomValue(filtersAtom);
+  const sorting = useAtomValue(sortingAtom);
+  const updateCombinaisonsInfo = useSetAtom(updateCombinaisonsInfoAtom);
 
   useEffect(() => {
     if (combinaisonsToFilter) {
-      dispatch(updateCombinaisonsInfo(combinaisonsToFilter));
+      updateCombinaisonsInfo(combinaisonsToFilter);
     }
-  }, [combinaisonsToFilter, dispatch, rawCombinaisons]);
+  }, [combinaisonsToFilter, updateCombinaisonsInfo, rawCombinaisons]);
 
   const filteredCombinaisons = useMemo(
     () => pipeAndFilterCombinaisons(combinaisonsToFilter, sorting, filters),
     [combinaisonsToFilter, filters, sorting],
   );
+
   return filteredCombinaisons;
 };
 

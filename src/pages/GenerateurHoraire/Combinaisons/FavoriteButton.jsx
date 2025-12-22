@@ -1,5 +1,5 @@
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { Badge, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import React from 'react';
 import { arrayRemove, arrayUnion, setDoc } from 'firebase/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';

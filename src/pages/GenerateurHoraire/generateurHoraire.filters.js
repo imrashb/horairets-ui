@@ -29,13 +29,15 @@ export const filterPlanification = (filtres) => {
   } // Pas besoin de filter si aucun filtre
 
   // Trouve un overlap, fait propager dans les "find", si true on le filter out donc retourne false
-  return (
-    combinaisons,
-  ) => combinaisons.filter(
-    (combinaison) => !combinaison?.groupes?.find((g) => !!g?.activites?.find((a) => !!heures?.find(
-      (h) => Math.max(a?.horaire?.heureDepart, HEURES_COURS[h].min) // Overlap
-    <= Math.min(a?.horaire?.heureFin, HEURES_COURS[h].max), // Overlap
-    ))),
+  return (combinaisons) => combinaisons.filter(
+    (combinaison) => !combinaison?.groupes?.find(
+      (g) => !!g?.activites?.find(
+        (a) => !!heures?.find(
+          (h) => Math.max(a?.horaire?.heureDepart, HEURES_COURS[h].min) // Overlap
+                    <= Math.min(a?.horaire?.heureFin, HEURES_COURS[h].max), // Overlap
+        ),
+      ),
+    ),
   );
 };
 

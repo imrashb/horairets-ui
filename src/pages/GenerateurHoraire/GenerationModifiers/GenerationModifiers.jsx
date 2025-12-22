@@ -5,10 +5,10 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { GridView, ViewList } from '@mui/icons-material';
 import { Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAtom } from 'jotai';
 import { useTheme } from '@emotion/react';
 import GenerationModifiersWrapper from './GenerationModifiers.styles';
-import { selectView, setView } from '../../../features/generateur/generateur.slice';
+import { viewAtom } from '../../../features/generateur/generateurAtoms';
 import { GENERATEUR_GRID_VIEW, GENERATEUR_LIST_VIEW } from '../../../features/generateur/generateur.constants';
 import GenerationSorting from './GenerationSorting';
 import GenerationFilters from './filters/GenerationFilters';
@@ -17,18 +17,17 @@ import AffichageCombinaisons from './affichage/AffichageCombinaisons';
 
 function GenerationModifiers({ title }) {
   const { t } = useTranslation('common');
-  const view = useSelector(selectView);
-  const dispatch = useDispatch();
+  const [view, setView] = useAtom(viewAtom);
 
   const handleAlignment = (event, value) => {
-    if (value) dispatch(setView(value));
+    if (value) setView(value);
   };
 
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up('lg'));
   useEffect(() => {
     if (!isLargeViewport) {
-      dispatch(setView(GENERATEUR_LIST_VIEW));
+      setView(GENERATEUR_LIST_VIEW);
     }
   }, [isLargeViewport]);
 

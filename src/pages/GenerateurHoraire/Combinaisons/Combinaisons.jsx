@@ -3,40 +3,40 @@ import { Download } from '@mui/icons-material';
 import {
   Grid, IconButton, TablePagination, Typography, useMediaQuery,
 } from '@mui/material';
-import axios from 'axios';
 import fileDownload from 'js-file-download';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import { toast } from 'react-toastify';
-import { BASE_API_URL, GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
+import axios from '../../../app/api/axiosInstance';
+import { GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
 import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
 import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
-import { selectRawCombinaisons, selectView } from '../../../features/generateur/generateur.slice';
+import { rawCombinaisonsAtom, viewAtom } from '../../../features/generateur/generateurAtoms';
 import CombinaisonsWrapper from './Combinaisons.styles';
 import FavoriteButton from './FavoriteButton';
 import {
-  selectShowEnseignant,
-  selectShowLocaux,
-  selectShowModeEnseignement,
-  selectShowNomActivite,
-  selectShowNomCoursGroupe,
-} from '../../../features/affichage/affichage.slice';
+  showEnseignantAtom,
+  showLocauxAtom,
+  showModeEnseignementAtom,
+  showNomActiviteAtom,
+  showNomCoursGroupeAtom,
+} from '../../../features/affichage/affichageAtoms';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
 function Combinaisons({ combinaisons }) {
   const { t } = useTranslation('common');
-  const view = useSelector(selectView);
-  const rawCombinaisons = useSelector(selectRawCombinaisons);
+  const view = useAtomValue(viewAtom);
+  const rawCombinaisons = useAtomValue(rawCombinaisonsAtom);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
 
-  const showNomCoursGroupe = useSelector(selectShowNomCoursGroupe);
-  const showNomActivite = useSelector(selectShowNomActivite);
-  const showLocaux = useSelector(selectShowLocaux);
-  const showModeEnseignement = useSelector(selectShowModeEnseignement);
-  const showEnseignant = useSelector(selectShowEnseignant);
+  const showNomCoursGroupe = useAtomValue(showNomCoursGroupeAtom);
+  const showNomActivite = useAtomValue(showNomActiviteAtom);
+  const showLocaux = useAtomValue(showLocauxAtom);
+  const showModeEnseignement = useAtomValue(showModeEnseignementAtom);
+  const showEnseignant = useAtomValue(showEnseignantAtom);
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 
@@ -102,7 +102,7 @@ function Combinaisons({ combinaisons }) {
                   color="primary"
                   onClick={async () => {
                     try {
-                      const url = `${BASE_API_URL + GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
+                      const url = `${GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
                       const res = await axios.get(url, {
                         responseType: 'blob',
                       });

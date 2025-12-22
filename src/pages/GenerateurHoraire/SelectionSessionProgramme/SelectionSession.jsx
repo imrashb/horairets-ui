@@ -3,20 +3,20 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useGetSessionsQuery } from '../../../features/generateur/generateur.api';
+import { useGetSessions } from '../../../features/generateur/generateurQueries';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import { getSessionTranslation } from '../../../utils/Sessions.utils';
 
 function SelectionSession() {
   const { t } = useTranslation('common');
   const { session, setSession } = useGenerateurHoraire();
-  const sessionsQuery = useGetSessionsQuery();
+  const sessionsQuery = useGetSessions();
 
   useEffect(() => {
     if (sessionsQuery?.data) {
       setSession(sessionsQuery?.data?.at(-1));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionsQuery?.data]);
 
   return (

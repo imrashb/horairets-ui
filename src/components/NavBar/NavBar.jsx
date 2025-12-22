@@ -10,7 +10,6 @@ import NavBarWrapper from './NavBar.styles';
 import LoginButton from './components/LoginButton';
 import useNavBarTabs from './useNavBarTabs';
 import { HOME_URL } from '../../routes/Routes.constants';
-import NewBadge from '../NewBadge/NewBadge';
 
 export default function NavBar() {
   const tabs = useNavBarTabs();

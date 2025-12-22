@@ -9,13 +9,11 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAtom } from 'jotai';
+import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
 import {
-  useLazyGetCoursSessionQuery,
-} from '../../../features/generateur/generateur.api';
-import {
-  selectProgramme, selectSession, setProgramme, setSession,
-} from '../../../features/generateur/generateur.slice';
+  programmeAtom, sessionAtom,
+} from '../../../features/generateur/generateurAtoms';
 import { areArraysSame } from '../../../utils/Array.utils';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import SelectionProgramme from './SelectionProgramme';
@@ -24,27 +22,23 @@ import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles
 
 function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
-  const dispatch = useDispatch();
 
-  const currentSession = useSelector(selectSession);
-  const currentProgramme = useSelector(selectProgramme);
+  const [currentSession, setCurrentSession] = useAtom(sessionAtom);
+  const [currentProgramme, setCurrentProgramme] = useAtom(programmeAtom);
 
   const { session, programmes } = useGenerateurHoraire();
 
-  const [coursSessionTrigger, coursSessionQuery] = useLazyGetCoursSessionQuery();
+  const coursSessionQuery = useGetCoursSession(session, programmes);
 
-  // Resubscribe component to RTK Query Cache
   useEffect(() => {
     if (session && programmes && programmes.length > 0) {
       const areProgrammesSame = areArraysSame(programmes, currentProgramme);
       const isSessionSame = currentSession === session;
 
-      if (!isSessionSame) { dispatch(setSession(session)); }
-      if (!areProgrammesSame) { dispatch(setProgramme(programmes)); }
-
-      coursSessionTrigger({ session, programme: programmes });
+      if (!isSessionSame) { setCurrentSession(session); }
+      if (!areProgrammesSame) { setCurrentProgramme(programmes); }
     }
-  }, [session, programmes, currentProgramme, currentSession, coursSessionTrigger, dispatch]);
+  }, [session, programmes, currentProgramme, currentSession]);
 
   const [expanded, setExpanded] = useState(true);
   return (

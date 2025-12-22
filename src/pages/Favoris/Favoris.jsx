@@ -11,7 +11,7 @@ import GenerationModifiers from '../GenerateurHoraire/GenerationModifiers/Genera
 import Combinaisons from '../GenerateurHoraire/Combinaisons/Combinaisons';
 import useFirebaseUserDocument from '../../hooks/useFirebaseUserDocument';
 import { getSessionTranslation, sortSession as sortSessions } from '../../utils/Sessions.utils';
-import { useLazyGetCombinaisonsFromIdQuery } from '../../features/generateur/generateur.api';
+import { useGetCombinaisonsFromId } from '../../features/generateur/generateurQueries';
 import AucunFavorisDisponible from './AucunFavorisDisponible/AucunFavorisDisponible';
 import useFilteredCombinaisons from '../../hooks/useFilteredCombinaisons';
 
@@ -34,15 +34,15 @@ function Favoris() {
     }
   }, [sessions]);
 
-  const [trigger, query] = useLazyGetCombinaisonsFromIdQuery();
+  const getCombinaisonsMutation = useGetCombinaisonsFromId();
 
-  const filteredCombinaisons = useFilteredCombinaisons(query?.data);
+  const filteredCombinaisons = useFilteredCombinaisons(getCombinaisonsMutation?.data);
 
   useEffect(() => {
     if (session) {
-      trigger(userData?.favorites[session]);
+      getCombinaisonsMutation.mutate(userData?.favorites[session]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   return (
@@ -50,9 +50,9 @@ function Favoris() {
       <Typography className="title" color="primary" fontWeight={600} variant="h2">{t('favoris').toUpperCase()}</Typography>
       <GenerationModifiers title={t('horairesGeneres', { count: filteredCombinaisons?.length })} />
 
-      {(loading || query?.isFetching) ? (
+      {(loading || getCombinaisonsMutation.isPending) ? (
         <Backdrop
-          open={loading || query?.isFetching}
+          open={loading || getCombinaisonsMutation.isPending}
           sx={{ zIndex: 3000 }}
         >
           <CircularProgress color="inherit" />

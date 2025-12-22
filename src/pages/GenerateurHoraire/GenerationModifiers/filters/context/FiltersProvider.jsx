@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
+import { selectFilterGroupesAtom, selectFilterPlanificationAtom } from '../../../../../features/generateur/generateurAtoms';
 import FiltersContext from './FiltersContext';
-import { selectFilterGroupes, selectFilterPlanification } from '../../../../../features/generateur/generateur.slice';
 
 function FiltersProvider({ children }) {
-  const currentPlanification = useSelector(selectFilterPlanification);
-  const currentGroupes = useSelector(selectFilterGroupes);
+  const currentPlanification = useAtomValue(selectFilterPlanificationAtom);
+  const currentGroupes = useAtomValue(selectFilterGroupesAtom);
 
   const [planification, setPlanification] = useState(currentPlanification);
   const [groupes, setGroupes] = useState(currentGroupes);
@@ -23,7 +23,7 @@ function FiltersProvider({ children }) {
 
   return (
     <FiltersContext.Provider value={context}>
-      { children }
+      {children}
     </FiltersContext.Provider>
   );
 }

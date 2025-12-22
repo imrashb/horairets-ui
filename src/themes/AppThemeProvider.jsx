@@ -1,10 +1,10 @@
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { selectMode } from '../features/user/userSlice';
+import { modeAtom } from '../features/user/userAtoms';
 
 export default function AppThemeProvider({ children }) {
-  const mode = useSelector(selectMode);
+  const mode = useAtomValue(modeAtom);
   const theme = responsiveFontSizes(
     createTheme({
       palette: {

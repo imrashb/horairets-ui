@@ -14,21 +14,17 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCoursSession, useLazyGetCombinaisonsQuery } from '../../../features/generateur/generateur.api';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useGetCombinaisons, useGetCoursSession } from '../../../features/generateur/generateurQueries';
 import {
-  selectConges,
-  selectCoursObligatoires,
-  selectNombreCours,
-  selectProgramme,
-  selectSelectedCours,
-  selectSession,
-  setConges,
-  setCoursObligatoires,
-  setNombreCours,
-  setRawCombinaisons,
-  setSelectedCours,
-} from '../../../features/generateur/generateur.slice';
+  congesAtom,
+  coursObligatoiresAtom,
+  nombreCoursAtom,
+  programmeAtom,
+  selectedCoursAtom,
+  sessionAtom,
+  setRawCombinaisonsAtom,
+} from '../../../features/generateur/generateurAtoms';
 import { areArraysSame } from '../../../utils/Array.utils';
 import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
@@ -41,19 +37,18 @@ import ParametresGenerationToast from './toasts/ParametresGenerationToast';
 function SelectionCours() {
   const { t } = useTranslation('common');
 
-  const dispatch = useDispatch();
-
-  const [getCombinaisonsTrigger, getCombinaisonQuery] = useLazyGetCombinaisonsQuery();
+  const getCombinaisonsMutation = useGetCombinaisons();
+  const setRawCombinaisons = useSetAtom(setRawCombinaisonsAtom);
 
   // Current Generateur Settings
-  const session = useSelector(selectSession);
-  const programme = useSelector(selectProgramme);
-  const selectedCours = useSelector(selectSelectedCours);
-  const nombreCours = useSelector(selectNombreCours);
-  const conges = useSelector(selectConges);
-  const coursObligatoires = useSelector(selectCoursObligatoires);
+  const session = useAtomValue(sessionAtom);
+  const programme = useAtomValue(programmeAtom);
+  const [selectedCours, setSelectedCours] = useAtom(selectedCoursAtom);
+  const [nombreCours, setNombreCours] = useAtom(nombreCoursAtom);
+  const [conges, setConges] = useAtom(congesAtom);
+  const [coursObligatoires, setCoursObligatoires] = useAtom(coursObligatoiresAtom);
 
-  const selectCoursSessionQuery = useSelector(selectCoursSession(session, programme));
+  const selectCoursSessionQuery = useGetCoursSession(session, programme);
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
   const [expanded, setExpanded] = useState(!!selectCoursSessionQuery?.data);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -66,21 +61,23 @@ function SelectionCours() {
   } = useGenerateurHoraire();
 
   const nombreCoursGeneration = controlledNombreCours
-  || Math.min(cours?.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
+    || Math.min(cours?.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   const handleGenerateCombinaisons = () => {
-    dispatch(setSelectedCours(cours));
-    dispatch(setNombreCours(nombreCoursGeneration));
-    dispatch(setConges(controlledConges));
-    dispatch(setCoursObligatoires(controlledCoursObligatoires));
-    getCombinaisonsTrigger({
+    setSelectedCours(cours);
+    setNombreCours(nombreCoursGeneration);
+    setConges(controlledConges);
+    setCoursObligatoires(controlledCoursObligatoires);
+    getCombinaisonsMutation.mutate({
       session,
       cours,
-      conges:
-      controlledConges,
-      nombreCours:
-      nombreCoursGeneration,
+      conges: controlledConges,
+      nombreCours: nombreCoursGeneration,
       coursObligatoires: controlledCoursObligatoires,
+    }, {
+      onSuccess: (data) => {
+        setRawCombinaisons(data);
+      },
     });
   };
 
@@ -90,22 +87,16 @@ function SelectionCours() {
     }
   }, [selectCoursSessionQuery?.data]);
 
-  useEffect(() => {
-    if (getCombinaisonQuery?.data) {
-      dispatch(setRawCombinaisons(getCombinaisonQuery?.data));
-    }
-  }, [getCombinaisonQuery?.data]);
-
   const isCoursEqual = areArraysSame(selectedCours, cours);
   const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
   const isCongesEqual = areArraysSame(conges, controlledConges);
   const isObligatoiresEqual = areArraysSame(controlledCoursObligatoires, coursObligatoires);
   const readyToGenerate = !(cours.length === 0
-  || controlledNombreCours > cours?.length
-  || (isCoursEqual
-  && isNombreCoursEqual
-  && isCongesEqual
-  && isObligatoiresEqual));
+    || controlledNombreCours > cours?.length
+    || (isCoursEqual
+      && isNombreCoursEqual
+      && isCongesEqual
+      && isObligatoiresEqual));
 
   return (
     <SelectionCoursWrapper>
@@ -156,9 +147,9 @@ function SelectionCours() {
       <ParametresGenerationToast readyToGenerate={readyToGenerate} />
       <GenerationInformationToasts readyToGenerate={readyToGenerate} />
 
-      {getCombinaisonQuery?.isFetching && (
+      {getCombinaisonsMutation?.isPending && (
         <Backdrop
-          open={getCombinaisonQuery?.isFetching}
+          open={getCombinaisonsMutation?.isPending}
           sx={{ zIndex: 3000 }}
         >
           <CircularProgress color="inherit" />

@@ -11,10 +11,10 @@ import { useTranslation } from 'react-i18next';
 import {
   ChevronLeft, ChevronRight, Lock, LockOpen, SwapHoriz,
 } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import CoursTransferListWrapper from './CoursTransferList.styles';
-import { selectCoursSession } from '../../../features/generateur/generateur.api';
-import { selectProgramme, selectSelectedCours, selectSession } from '../../../features/generateur/generateur.slice';
+import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
+import { programmeAtom, selectedCoursAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
 import { MAITRISE, NOMBRE_MAX_COURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 
@@ -34,10 +34,10 @@ export default function CoursTransferList({
 }) {
   const { t } = useTranslation('common');
 
-  const programme = useSelector(selectProgramme);
-  const session = useSelector(selectSession);
-  const selectedCours = useSelector(selectSelectedCours);
-  const coursSessionQuery = useSelector(selectCoursSession(session, programme));
+  const programme = useAtomValue(programmeAtom);
+  const session = useAtomValue(sessionAtom);
+  const selectedCours = useAtomValue(selectedCoursAtom);
+  const coursSessionQuery = useGetCoursSession(session, programme);
   const { nombreCours: nbCours, setCoursObligatoires, setCours } = useGenerateurHoraire();
 
   const [left, setLeft] = useState([]);
@@ -162,28 +162,28 @@ export default function CoursTransferList({
               </ListItemIcon>
               <ListItemText primary={value?.sigle} />
               {id === RIGHT && (
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleLocked(value);
-                }}
-                disabled={!locked?.includes(value)
-                && (locked.length >= nombreCours
-                )}
-              >
-                {locked?.includes(value) ? <Lock /> : <LockOpen />}
-              </IconButton>
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLocked(value);
+                  }}
+                  disabled={!locked?.includes(value)
+                    && (locked.length >= nombreCours
+                    )}
+                >
+                  {locked?.includes(value) ? <Lock /> : <LockOpen />}
+                </IconButton>
               )}
             </ListItemButton>
           ))}
           {id === RIGHT && right.length === 0
             && (
-            <ListItemButton
-              disableGutters
-              disabled
-            >
-              <ListItemText primary={t('aucunCoursSelectionne')} />
-            </ListItemButton>
+              <ListItemButton
+                disableGutters
+                disabled
+              >
+                <ListItemText primary={t('aucunCoursSelectionne')} />
+              </ListItemButton>
             )}
         </List>
       </Paper>

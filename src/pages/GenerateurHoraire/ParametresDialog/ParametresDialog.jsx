@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { selectConges, selectNombreCours } from '../../../features/generateur/generateur.slice';
+import { useAtomValue } from 'jotai';
+import { congesAtom, nombreCoursAtom } from '../../../features/generateur/generateurAtoms';
 import { JOURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 import ParametresDialogWrapper from './ParametresDialog.styles';
@@ -21,8 +21,8 @@ import ParametresDialogWrapper from './ParametresDialog.styles';
 function ParametresDialog({ open, onClose }) {
   const { t } = useTranslation('common');
 
-  const nombreCours = useSelector(selectNombreCours);
-  const conges = useSelector(selectConges);
+  const nombreCours = useAtomValue(nombreCoursAtom);
+  const conges = useAtomValue(congesAtom);
 
   const [controlledNombreCours, setControlledNombreCours] = useState(nombreCours || 5);
   const [controlledConges, setControlledConges] = useState(conges || []);

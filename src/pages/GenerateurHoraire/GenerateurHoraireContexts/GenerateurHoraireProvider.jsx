@@ -1,19 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 import {
-  selectConges,
-  selectCoursObligatoires, selectNombreCours, selectProgramme, selectSelectedCours, selectSession,
-} from '../../../features/generateur/generateur.slice';
+  congesAtom,
+  coursObligatoiresAtom, nombreCoursAtom, programmeAtom, selectedCoursAtom, sessionAtom,
+} from '../../../features/generateur/generateurAtoms';
 import GenerateurHoraireContext from './GenerateurHoraireContext';
 
 function GenerateurHoraireProvider({ children }) {
   // Get current generateur values
-  const currentSession = useSelector(selectSession);
-  const currentProgramme = useSelector(selectProgramme);
-  const currentCours = useSelector(selectSelectedCours);
-  const currentNombreCours = useSelector(selectNombreCours);
-  const currentCoursObligatoires = useSelector(selectCoursObligatoires);
-  const currentConges = useSelector(selectConges);
+  const currentSession = useAtomValue(sessionAtom);
+  const currentProgramme = useAtomValue(programmeAtom);
+  const currentCours = useAtomValue(selectedCoursAtom);
+  const currentNombreCours = useAtomValue(nombreCoursAtom);
+  const currentCoursObligatoires = useAtomValue(coursObligatoiresAtom);
+  const currentConges = useAtomValue(congesAtom);
 
   const [session, setSession] = useState(currentSession);
   const [programmes, setProgrammes] = useState(currentProgramme);

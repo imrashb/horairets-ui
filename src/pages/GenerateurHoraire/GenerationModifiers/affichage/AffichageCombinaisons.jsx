@@ -9,17 +9,17 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAtomValue, useSetAtom } from 'jotai';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
 import {
-  selectShowEnseignant,
-  selectShowLocaux,
-  selectShowModeEnseignement,
-  selectShowNomActivite,
-  selectShowNomCoursGroupe,
-  selectShowUniqueCoursColors,
-  setAffichageCombinaisons,
-} from '../../../../features/affichage/affichage.slice';
+  showEnseignantAtom,
+  showLocauxAtom,
+  showModeEnseignementAtom,
+  showNomActiviteAtom,
+  showNomCoursGroupeAtom,
+  showUniqueCoursColorsAtom,
+  setAffichageCombinaisonsAtom,
+} from '../../../../features/affichage/affichageAtoms';
 
 const getCheckbox = (label, checked, setChecked, tooltip) => (
   <FormControl>
@@ -29,27 +29,27 @@ const getCheckbox = (label, checked, setChecked, tooltip) => (
           checked={checked}
           onChange={() => setChecked(!checked)}
         />
-    )}
+      )}
       label={label}
     />
     {tooltip && (
-    <FormHelperText>
-      {tooltip}
-    </FormHelperText>
+      <FormHelperText>
+        {tooltip}
+      </FormHelperText>
     )}
   </FormControl>
 );
 
 function AffichageCombinaisons() {
   const { t } = useTranslation('common');
-  const dispatch = useDispatch();
+  const setAffichageCombinaisons = useSetAtom(setAffichageCombinaisonsAtom);
 
-  const showNomCoursGroupeGlobal = useSelector(selectShowNomCoursGroupe);
-  const showLocauxGlobal = useSelector(selectShowLocaux);
-  const showNomActiviteGlobal = useSelector(selectShowNomActivite);
-  const showUniqueCoursColorsGlobal = useSelector(selectShowUniqueCoursColors);
-  const showModeEnseignementGlobal = useSelector(selectShowModeEnseignement);
-  const showEnseignantGlobal = useSelector(selectShowEnseignant);
+  const showNomCoursGroupeGlobal = useAtomValue(showNomCoursGroupeAtom);
+  const showLocauxGlobal = useAtomValue(showLocauxAtom);
+  const showNomActiviteGlobal = useAtomValue(showNomActiviteAtom);
+  const showUniqueCoursColorsGlobal = useAtomValue(showUniqueCoursColorsAtom);
+  const showModeEnseignementGlobal = useAtomValue(showModeEnseignementAtom);
+  const showEnseignantGlobal = useAtomValue(showEnseignantAtom);
 
   const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(showNomCoursGroupeGlobal);
   const [showLocaux, setShowLocaux] = useState(showLocauxGlobal);
@@ -59,14 +59,14 @@ function AffichageCombinaisons() {
   const [showEnseignant, setShowEnseignant] = useState(showEnseignantGlobal);
 
   const onClose = () => {
-    dispatch(setAffichageCombinaisons({
+    setAffichageCombinaisons({
       showNomCoursGroupe,
       showLocaux,
       showNomActivite,
       showUniqueCoursColors,
       showModeEnseignement,
       showEnseignant,
-    }));
+    });
   };
 
   return (

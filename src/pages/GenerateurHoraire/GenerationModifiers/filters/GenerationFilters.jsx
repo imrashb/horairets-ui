@@ -1,10 +1,10 @@
 import { FilterList } from '@mui/icons-material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useSetAtom } from 'jotai';
 import {
-  setFilters,
-} from '../../../../features/generateur/generateur.slice';
+  setFiltersAtom,
+} from '../../../../features/generateur/generateurAtoms';
 import PlanificationSeanceFilter from './PlanificationSeanceFilter';
 import useFilters from './context/useFilters';
 import GroupesFilter from './GroupesFilter';
@@ -12,15 +12,15 @@ import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
 
 function GenerationFilters() {
   const { t } = useTranslation('common');
-  const dispatch = useDispatch();
+  const setFilters = useSetAtom(setFiltersAtom);
 
   const { planification, groupes } = useFilters();
 
   const onClose = () => {
-    dispatch(setFilters({
+    setFilters({
       planification,
       groupes,
-    }));
+    });
   };
 
   return (
