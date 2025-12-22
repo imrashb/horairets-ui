@@ -9,17 +9,9 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
-import {
-  showEnseignantAtom,
-  showLocauxAtom,
-  showModeEnseignementAtom,
-  showNomActiviteAtom,
-  showNomCoursGroupeAtom,
-  showUniqueCoursColorsAtom,
-  setAffichageCombinaisonsAtom,
-} from '../../../../features/affichage/affichageAtoms';
+import affichageAtom from '../../../../features/affichage/affichageAtoms';
 
 const getCheckbox = (label, checked, setChecked, tooltip) => (
   <FormControl>
@@ -42,24 +34,20 @@ const getCheckbox = (label, checked, setChecked, tooltip) => (
 
 function AffichageCombinaisons() {
   const { t } = useTranslation('common');
-  const setAffichageCombinaisons = useSetAtom(setAffichageCombinaisonsAtom);
+  const [affichage, setAffichage] = useAtom(affichageAtom);
 
-  const showNomCoursGroupeGlobal = useAtomValue(showNomCoursGroupeAtom);
-  const showLocauxGlobal = useAtomValue(showLocauxAtom);
-  const showNomActiviteGlobal = useAtomValue(showNomActiviteAtom);
-  const showUniqueCoursColorsGlobal = useAtomValue(showUniqueCoursColorsAtom);
-  const showModeEnseignementGlobal = useAtomValue(showModeEnseignementAtom);
-  const showEnseignantGlobal = useAtomValue(showEnseignantAtom);
-
-  const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(showNomCoursGroupeGlobal);
-  const [showLocaux, setShowLocaux] = useState(showLocauxGlobal);
-  const [showNomActivite, setShowNomActivite] = useState(showNomActiviteGlobal);
-  const [showUniqueCoursColors, setShowUniqueCoursColors] = useState(showUniqueCoursColorsGlobal);
-  const [showModeEnseignement, setShowModeEnseignement] = useState(showModeEnseignementGlobal);
-  const [showEnseignant, setShowEnseignant] = useState(showEnseignantGlobal);
+  const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(affichage.showNomCoursGroupe);
+  const [showLocaux, setShowLocaux] = useState(affichage.showLocaux);
+  const [showNomActivite, setShowNomActivite] = useState(affichage.showNomActivite);
+  const [showUniqueCoursColors, setShowUniqueCoursColors] = useState(
+    affichage.showUniqueCoursColors,
+  );
+  const [showModeEnseignement, setShowModeEnseignement] = useState(affichage.showModeEnseignement);
+  const [showEnseignant, setShowEnseignant] = useState(affichage.showEnseignant);
 
   const onClose = () => {
-    setAffichageCombinaisons({
+    setAffichage({
+      ...affichage,
       showNomCoursGroupe,
       showLocaux,
       showNomActivite,

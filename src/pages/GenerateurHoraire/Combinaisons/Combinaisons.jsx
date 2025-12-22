@@ -15,13 +15,7 @@ import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.co
 import { rawCombinaisonsAtom, viewAtom } from '../../../features/generateur/generateurAtoms';
 import CombinaisonsWrapper from './Combinaisons.styles';
 import FavoriteButton from './FavoriteButton';
-import {
-  showEnseignantAtom,
-  showLocauxAtom,
-  showModeEnseignementAtom,
-  showNomActiviteAtom,
-  showNomCoursGroupeAtom,
-} from '../../../features/affichage/affichageAtoms';
+import affichageAtom from '../../../features/affichage/affichageAtoms';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -32,11 +26,14 @@ function Combinaisons({ combinaisons }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
 
-  const showNomCoursGroupe = useAtomValue(showNomCoursGroupeAtom);
-  const showNomActivite = useAtomValue(showNomActiviteAtom);
-  const showLocaux = useAtomValue(showLocauxAtom);
-  const showModeEnseignement = useAtomValue(showModeEnseignementAtom);
-  const showEnseignant = useAtomValue(showEnseignantAtom);
+  const affichage = useAtomValue(affichageAtom);
+  const {
+    showNomCoursGroupe,
+    showNomActivite,
+    showLocaux,
+    showModeEnseignement,
+    showEnseignant,
+  } = affichage;
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 

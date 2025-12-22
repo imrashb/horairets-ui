@@ -7,7 +7,7 @@ import ActiviteSpacer from './Activite/ActiviteSpacer';
 import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
 import JourWrapper from './Jour.styles';
 import { getDeterministicRandomBorderCoursColor, getDeterministicRandomCoursColor } from './combinaisonHoraire.utils';
-import { showUniqueCoursColorsAtom } from '../../features/affichage/affichageAtoms';
+import affichageAtom from '../../features/affichage/affichageAtoms';
 
 const getLegacyColors = (sigle, sigles) => {
   const deg = (sigles.indexOf(sigle) / sigles.length) * 360;
@@ -29,7 +29,7 @@ function Jour({
 }) {
   const { t } = useTranslation('common');
 
-  const showUniqueCoursColors = useAtomValue(showUniqueCoursColorsAtom);
+  const { showUniqueCoursColors } = useAtomValue(affichageAtom);
 
   const min = HEURE_DEBUT_COURS;
   const max = HEURE_FIN_COURS;
