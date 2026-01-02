@@ -1,41 +1,58 @@
-import React, { useMemo, useState } from 'react';
-import { useAtomValue } from 'jotai';
+import React, { useEffect, useMemo } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
 import {
-  congesAtom,
-  coursObligatoiresAtom, nombreCoursAtom, programmeAtom, selectedCoursAtom, sessionAtom,
+  activeGenerateurConfigAtom,
+  formGenerateurConfigAtom,
 } from '../../../features/generateur/generateurAtoms';
 import GenerateurHoraireContext from './GenerateurHoraireContext';
 
 function GenerateurHoraireProvider({ children }) {
-  // Get current generateur values
-  const currentSession = useAtomValue(sessionAtom);
-  const currentProgramme = useAtomValue(programmeAtom);
-  const currentCours = useAtomValue(selectedCoursAtom);
-  const currentNombreCours = useAtomValue(nombreCoursAtom);
-  const currentCoursObligatoires = useAtomValue(coursObligatoiresAtom);
-  const currentConges = useAtomValue(congesAtom);
+  const [formConfig, setFormConfig] = useAtom(formGenerateurConfigAtom);
+  const currentActiveConfig = useAtomValue(activeGenerateurConfigAtom);
 
-  const [session, setSession] = useState(currentSession);
-  const [programmes, setProgrammes] = useState(currentProgramme);
-  const [cours, setCours] = useState(currentCours || []);
-  const [nombreCours, setNombreCours] = useState(currentNombreCours);
-  const [coursObligatoires, setCoursObligatoires] = useState(currentCoursObligatoires);
-  const [conges, setConges] = useState(currentConges);
+  useEffect(() => {
+    if (currentActiveConfig) {
+      setFormConfig((prev) => ({ ...prev, ...(structuredClone(currentActiveConfig)) }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run once on mount
 
-  const context = useMemo(() => ({
+  const {
     session,
-    setSession,
     programmes,
-    setProgrammes,
     cours,
-    setCours,
     nombreCours,
-    setNombreCours,
     coursObligatoires,
-    setCoursObligatoires,
     conges,
-    setConges,
-  }), [session, programmes, cours, nombreCours, coursObligatoires, conges]);
+  } = formConfig;
+
+  const context = useMemo(() => {
+    const setSession = (val) => setFormConfig((prev) => ({ ...prev, session: val }));
+    const setProgrammes = (val) => setFormConfig((prev) => ({ ...prev, programmes: val }));
+    const setCours = (val) => setFormConfig((prev) => ({ ...prev, cours: val }));
+    const setNombreCours = (val) => setFormConfig((prev) => ({ ...prev, nombreCours: val }));
+    const setCoursObligatoires = (val) => setFormConfig((prev) => ({
+      ...prev, coursObligatoires: val,
+    }));
+    const setConges = (val) => setFormConfig((prev) => ({ ...prev, conges: val }));
+
+    return {
+      session,
+      setSession,
+      programmes,
+      setProgrammes,
+      cours,
+      setCours,
+      nombreCours,
+      setNombreCours,
+      coursObligatoires,
+      setCoursObligatoires,
+      conges,
+      setConges,
+    };
+  }, [
+    session, programmes, cours, nombreCours, coursObligatoires, conges, setFormConfig,
+  ]);
 
   return (
     <GenerateurHoraireContext.Provider value={context}>

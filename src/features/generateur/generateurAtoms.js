@@ -6,11 +6,49 @@ import { FILTRES_PLANIFICATION } from '../../pages/GenerateurHoraire/generateurH
 import { reduceCombinaisonsInfoToGroupesOnly } from '../../utils/Groupes.utils';
 
 export const sessionAtom = atom('');
-export const programmeAtom = atom([]);
-export const selectedCoursAtom = atom([]);
-export const nombreCoursAtom = atom(null);
-export const congesAtom = atom([]);
-export const coursObligatoiresAtom = atom([]);
+export const programmesAtom = atom([]);
+
+export const INITIAL_CONFIG = {
+  cours: [],
+  nombreCours: null,
+  conges: [],
+  coursObligatoires: [],
+  session: null,
+  programmes: [],
+};
+
+export const formGenerateurConfigAtom = atom({ ...INITIAL_CONFIG });
+
+export const activeGenerateurConfigAtom = atom({ ...INITIAL_CONFIG });
+
+export const selectedCoursAtom = atom(
+  (get) => get(activeGenerateurConfigAtom).cours,
+  (get, set, value) => {
+    set(activeGenerateurConfigAtom, (prev) => ({ ...prev, cours: value }));
+  },
+);
+
+export const nombreCoursAtom = atom(
+  (get) => get(activeGenerateurConfigAtom).nombreCours,
+  (get, set, value) => {
+    set(activeGenerateurConfigAtom, (prev) => ({ ...prev, nombreCours: value }));
+  },
+);
+
+export const congesAtom = atom(
+  (get) => get(activeGenerateurConfigAtom).conges,
+  (get, set, value) => {
+    set(activeGenerateurConfigAtom, (prev) => ({ ...prev, conges: value }));
+  },
+);
+
+export const coursObligatoiresAtom = atom(
+  (get) => get(activeGenerateurConfigAtom).coursObligatoires,
+  (get, set, value) => {
+    set(activeGenerateurConfigAtom, (prev) => ({ ...prev, coursObligatoires: value }));
+  },
+);
+
 export const viewAtom = atom(GENERATEUR_LIST_VIEW);
 export const sortingAtom = atom(Object.keys(COMBINAISONS_SORTS)[0]);
 export const filtersAtom = atom({

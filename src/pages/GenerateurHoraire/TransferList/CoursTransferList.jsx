@@ -14,7 +14,7 @@ import {
 import { useAtomValue } from 'jotai';
 import CoursTransferListWrapper from './CoursTransferList.styles';
 import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
-import { programmeAtom, selectedCoursAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
+import { programmesAtom, selectedCoursAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
 import { MAITRISE, NOMBRE_MAX_COURS, NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
 
@@ -34,7 +34,7 @@ export default function CoursTransferList({
 }) {
   const { t } = useTranslation('common');
 
-  const programme = useAtomValue(programmeAtom);
+  const programme = useAtomValue(programmesAtom);
   const session = useAtomValue(sessionAtom);
   const selectedCours = useAtomValue(selectedCoursAtom);
   const coursSessionQuery = useGetCoursSession(session, programme);

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
 import {
-  programmeAtom, sessionAtom,
+  programmesAtom, sessionAtom,
 } from '../../../features/generateur/generateurAtoms';
 import { areArraysSame } from '../../../utils/Array.utils';
 import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
@@ -24,7 +24,7 @@ function SelectionSessionProgramme() {
   const { t } = useTranslation('common');
 
   const [currentSession, setCurrentSession] = useAtom(sessionAtom);
-  const [currentProgramme, setCurrentProgramme] = useAtom(programmeAtom);
+  const [currentProgramme, setCurrentProgramme] = useAtom(programmesAtom);
 
   const { session, programmes } = useGenerateurHoraire();
 

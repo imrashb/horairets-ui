@@ -17,11 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useGetCombinaisons, useGetCoursSession } from '../../../features/generateur/generateurQueries';
 import {
-  congesAtom,
-  coursObligatoiresAtom,
-  nombreCoursAtom,
-  programmeAtom,
-  selectedCoursAtom,
+  activeGenerateurConfigAtom,
+  programmesAtom,
   sessionAtom,
   setRawCombinaisonsAtom,
 } from '../../../features/generateur/generateurAtoms';
@@ -42,11 +39,9 @@ function SelectionCours() {
 
   // Current Generateur Settings
   const session = useAtomValue(sessionAtom);
-  const programme = useAtomValue(programmeAtom);
-  const [selectedCours, setSelectedCours] = useAtom(selectedCoursAtom);
-  const [nombreCours, setNombreCours] = useAtom(nombreCoursAtom);
-  const [conges, setConges] = useAtom(congesAtom);
-  const [coursObligatoires, setCoursObligatoires] = useAtom(coursObligatoiresAtom);
+  const programme = useAtomValue(programmesAtom);
+
+  const [activeConfig, setActiveConfig] = useAtom(activeGenerateurConfigAtom);
 
   const selectCoursSessionQuery = useGetCoursSession(session, programme);
   const [includeMaitrise, setIncludeMaitrise] = useState(true);
@@ -64,10 +59,17 @@ function SelectionCours() {
     || Math.min(cours?.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   const handleGenerateCombinaisons = () => {
-    setSelectedCours(cours);
-    setNombreCours(nombreCoursGeneration);
-    setConges(controlledConges);
-    setCoursObligatoires(controlledCoursObligatoires);
+    // Commit Form State to Active State
+    setActiveConfig((prev) => ({
+      ...prev,
+      cours,
+      nombreCours: nombreCoursGeneration,
+      conges: controlledConges,
+      coursObligatoires: controlledCoursObligatoires,
+      session,
+      programmes: programme,
+    }));
+
     getCombinaisonsMutation.mutate({
       session,
       cours,
@@ -87,10 +89,13 @@ function SelectionCours() {
     }
   }, [selectCoursSessionQuery?.data]);
 
-  const isCoursEqual = areArraysSame(selectedCours, cours);
-  const isNombreCoursEqual = nombreCours === nombreCoursGeneration;
-  const isCongesEqual = areArraysSame(conges, controlledConges);
-  const isObligatoiresEqual = areArraysSame(controlledCoursObligatoires, coursObligatoires);
+  const isCoursEqual = areArraysSame(activeConfig.cours, cours);
+  const isNombreCoursEqual = activeConfig.nombreCours === nombreCoursGeneration;
+  const isCongesEqual = areArraysSame(activeConfig.conges, controlledConges);
+  const isObligatoiresEqual = areArraysSame(
+    activeConfig.coursObligatoires,
+    controlledCoursObligatoires,
+  );
   const readyToGenerate = !(cours.length === 0
     || controlledNombreCours > cours?.length
     || (isCoursEqual
