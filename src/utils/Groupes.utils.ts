@@ -1,6 +1,6 @@
-type CombinaisonInfo = {
+export type CombinaisonInfo = {
   sigle: string;
-  groupes: string[];
+  groupes: (string | number)[];
 };
 
 export const getGroupeId = (sigle: string, groupe: string): string =>
@@ -11,7 +11,7 @@ export const reduceCombinaisonsInfoToGroupesOnly = (
 ): string[] => {
   return (
     combinaisonsInfo?.reduce<string[]>((prev, cours) => {
-      const groupes = cours.groupes.map((g) => getGroupeId(cours.sigle, g));
+      const groupes = cours.groupes.map((g) => getGroupeId(cours.sigle, String(g)));
       return [...prev, ...groupes];
     }, []) ?? []
   );

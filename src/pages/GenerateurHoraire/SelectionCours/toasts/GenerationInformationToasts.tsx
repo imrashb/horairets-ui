@@ -37,7 +37,7 @@ function GenerationInformationToasts({
     TOAST_ERROR
   );
 
-  if (!readyToGenerate && nombreCours > (cours?.length || 0)) {
+  if (!readyToGenerate && (nombreCours || 0) > (cours?.length || 0)) {
     coursInferieurToast.play();
   } else {
     coursInferieurToast.stop();

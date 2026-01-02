@@ -63,6 +63,12 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    discord: true;
+  }
+}
+
 type AppThemeProviderProps = {
   children?: React.ReactNode;
 };
