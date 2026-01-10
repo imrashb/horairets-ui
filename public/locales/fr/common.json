@@ -115,5 +115,10 @@
   "COMODAL": "Comodal",
   "retourGenerateurHoraire": "Retour au générateur d'horaire",
   "badgeNew": "Nouveau",
-  "parametresAffichageAppliques": "Paramètres d'affichage appliqués!"
+  "parametresAffichageAppliques": "Paramètres d'affichage appliqués!",
+  "monProfil": "Mon profil",
+  "programmeEtudes": "Programme d'études",
+  "coursPlanifies": "Cours planifiés",
+  "aucunProgrammeSelectionne": "Aucun programme sélectionné",
+  "editionDesktopUniquement": "Modifier sur ordinateur"
 }

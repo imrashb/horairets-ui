@@ -1,9 +1,11 @@
-import { Logout } from "@mui/icons-material";
+import { AccountCircle, Logout } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { PROFILE_URL } from "../../../routes/Routes.constants";
 import useFirebaseAuth from "../useFirebaseAuth";
 
 interface AccountMenuProps {
@@ -14,9 +16,15 @@ interface AccountMenuProps {
 
 function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
 
   const auth = useFirebaseAuth();
   const [signOut] = useSignOut(auth);
+
+  const handleProfile = () => {
+    onClose();
+    navigate(PROFILE_URL);
+  };
 
   const logout = async () => {
     if (onClose) onClose();
@@ -62,6 +70,12 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
         },
       }}
     >
+      <MenuItem onClick={handleProfile}>
+        <ListItemIcon>
+          <AccountCircle fontSize="small" />
+        </ListItemIcon>
+        {t("monProfil")}
+      </MenuItem>
       <MenuItem onClick={logout}>
         <ListItemIcon>
           <Logout fontSize="small" />
@@ -73,3 +87,4 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
 }
 
 export default AccountMenu;
+
