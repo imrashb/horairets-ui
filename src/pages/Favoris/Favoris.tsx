@@ -9,13 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useTranslation } from "react-i18next";
 import withAuth from "../../components/Auth/AuthenticatedComponent";
-import { Combinaison } from "../../features/generateur/generateur.types";
 import { useGetCombinaisonsFromId } from "../../features/generateur/generateurQueries";
+import { useFavorites } from "../../hooks/firebase";
 import useFilteredCombinaisons from "../../hooks/useFilteredCombinaisons";
-import useFirebaseUserDocument from "../../hooks/useFirebaseUserDocument";
 import { HOME_URL } from "../../routes/Routes.constants";
 import {
   getSessionTranslation,
@@ -26,50 +24,47 @@ import GenerationModifiers from "../GenerateurHoraire/GenerationModifiers/Genera
 import AucunFavorisDisponible from "./AucunFavorisDisponible/AucunFavorisDisponible";
 import FavorisWrapper from "./Favoris.styles";
 
-export interface UserFavoritesData {
-  favorites?: Record<string, string[]>;
-}
-
 function Favoris(): JSX.Element {
   const { t } = useTranslation("common");
 
-  const document = useFirebaseUserDocument();
-  // Cast useDocumentData result
-  const [userData, loading] = useDocumentData(document);
-  const data = userData as UserFavoritesData | undefined;
+  const { favorites, sessions: rawSessions, isLoading, getFavoritesBySession } = useFavorites();
 
-  const sessions = useMemo(
-    () => (data?.favorites ? Object.keys(data.favorites) : []),
-    [data?.favorites]
-  );
-  sortSessions(sessions);
+  // Sort sessions for display
+  const sessions = useMemo(() => {
+    const sorted = [...rawSessions];
+    sortSessions(sorted);
+    return sorted;
+  }, [rawSessions]);
 
   const [session, setSession] = useState<string>("");
 
+  // Auto-select the first session with favorites
   useEffect(() => {
-    if (sessions && sessions.length > 0) {
+    if (sessions.length > 0) {
       const latestSession = sessions.find(
-        (s) => (data?.favorites?.[s]?.length || 0) > 0
+        (s) => getFavoritesBySession(s).length > 0
       );
       if (latestSession) {
         setSession(latestSession);
       }
     }
-  }, [sessions, data]);
+  }, [sessions, getFavoritesBySession]);
 
   const getCombinaisonsMutation = useGetCombinaisonsFromId();
 
-  // Assuming useFilteredCombinaisons expects Combinaison[] | undefined
-  // getCombinaisonsMutation.data is Combinaison[] | undefined
   const filteredCombinaisons = useFilteredCombinaisons(
     getCombinaisonsMutation?.data
   );
 
+  // Fetch combinaisons when session changes
   useEffect(() => {
-    if (session && data?.favorites?.[session]) {
-      getCombinaisonsMutation.mutate(data.favorites[session]);
+    const sessionFavorites = getFavoritesBySession(session);
+    if (session && sessionFavorites.length > 0) {
+      getCombinaisonsMutation.mutate(sessionFavorites);
     }
-  }, [session, data]); // Added data dependency or handle it in memo logic
+  }, [session, favorites]);
+
+  const isPending = isLoading || getCombinaisonsMutation.isPending;
 
   return (
     <FavorisWrapper>
@@ -85,11 +80,8 @@ function Favoris(): JSX.Element {
         title={t("horairesGeneres", { count: filteredCombinaisons?.length || 0 }) as string}
       />
 
-      {loading || getCombinaisonsMutation.isPending ? (
-        <Backdrop
-          open={loading || getCombinaisonsMutation.isPending}
-          sx={{ zIndex: 3000 }}
-        >
+      {isPending ? (
+        <Backdrop open={isPending} sx={{ zIndex: 3000 }}>
           <CircularProgress color="inherit" />
         </Backdrop>
       ) : undefined}
@@ -104,8 +96,8 @@ function Favoris(): JSX.Element {
                 onChange={(e) => setSession(e.target.value as string)}
                 label={t("session")}
               >
-                {sessions?.map((s) =>
-                  (data?.favorites?.[s]?.length || 0) > 0 ? (
+                {sessions.map((s) =>
+                  getFavoritesBySession(s).length > 0 ? (
                     <MenuItem key={s} value={s}>
                       {getSessionTranslation(s, t)}
                     </MenuItem>
