@@ -157,5 +157,6 @@
   "nbJoursConges_one": "{{count}} jour de congé",
   "nbJoursConges_other": "{{count}} jours de congé",
   "nbCoursParHoraire_one": "{{count}} cours/horaire",
-  "nbCoursParHoraire_other": "{{count}} cours/horaire"
+  "nbCoursParHoraire_other": "{{count}} cours/horaire",
+  "tousLesCours": "Tous les cours sélectionnés"
 }

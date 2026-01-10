@@ -16,7 +16,7 @@ export default function EditSessionConfigDialog({
   onSave,
 }: EditSessionConfigDialogProps): JSX.Element {
   const { t } = useTranslation("common");
-  const [nombreCours, setNombreCours] = useState(config.nombreCours);
+  const [nombreCours, setNombreCours] = useState<number | null>(config.nombreCours);
   const [conges, setConges] = useState<string[]>(config.conges);
 
   useEffect(() => {

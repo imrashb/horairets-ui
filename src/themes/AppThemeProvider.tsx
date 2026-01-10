@@ -178,6 +178,17 @@ export default function AppThemeProvider({
           },
         },
       },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            backgroundColor: "rgba(33, 33, 33, 0.95)",
+            color: "#ffffff",
+          },
+          arrow: {
+            color: "rgba(33, 33, 33, 0.95)",
+          },
+        },
+      },
     },
   };
 

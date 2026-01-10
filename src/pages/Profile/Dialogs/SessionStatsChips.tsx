@@ -1,4 +1,4 @@
-import { EventBusy, School } from "@mui/icons-material";
+import { EventBusy, School, WorkHistory } from "@mui/icons-material";
 import { Chip, Stack, Tooltip } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -6,19 +6,29 @@ import { SessionConfig } from "../../../hooks/firebase/types";
 
 interface SessionStatsChipsProps {
   config: SessionConfig;
+  totalCredits: number;
 }
 
 export default function SessionStatsChips({
   config,
+  totalCredits,
 }: SessionStatsChipsProps): JSX.Element {
   const { t } = useTranslation("common");
 
   const stats = [
     {
       key: "cours",
-      label: t("nbCoursParHoraire", { count: config.nombreCours }),
+      label: t("nbCoursParHoraire", {
+        count: config.nombreCours ?? config.cours.length,
+      }),
       Icon: School,
       visible: true,
+    },
+    {
+      key: "credits",
+      label: t("credits", { count: totalCredits }),
+      Icon: WorkHistory,
+      visible: totalCredits > 0,
     },
     {
       key: "conges",

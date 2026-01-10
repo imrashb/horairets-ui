@@ -31,8 +31,8 @@ function ParametresDialog({
   const nombreCours = useAtomValue(nombreCoursAtom);
   const conges = useAtomValue(congesAtom);
 
-  const [controlledNombreCours, setControlledNombreCours] = useState<number>(
-    nombreCours || 5
+  const [controlledNombreCours, setControlledNombreCours] = useState<number | null>(
+    nombreCours ?? null
   );
   const [controlledConges, setControlledConges] = useState<string[]>(
     conges || []

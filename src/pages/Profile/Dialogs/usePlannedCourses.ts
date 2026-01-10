@@ -11,7 +11,7 @@ import { getCurrentSession, getNextSession, getPreviousSession } from "../../../
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],
   coursObligatoires: [],
-  nombreCours: 4,
+  nombreCours: null,
   conges: [],
 };
 

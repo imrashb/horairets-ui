@@ -23,7 +23,7 @@ export const DEFAULT_DISPLAY_PREFERENCES: DisplayPreferences = {
 export interface SessionConfig {
   cours: string[];
   coursObligatoires: string[];
-  nombreCours: number;
+  nombreCours: number | null;
   conges: string[];
   selectedCombinaisonId?: string;
 }

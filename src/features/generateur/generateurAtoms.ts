@@ -42,7 +42,7 @@ export const selectedCoursAtom = atom(
 
 export const nombreCoursAtom = atom(
   (get) => get(activeGenerateurConfigAtom).nombreCours,
-  (get, set, value: number) => {
+  (get, set, value: number | null) => {
     set(activeGenerateurConfigAtom, (prev) => ({ ...prev, nombreCours: value }));
   }
 );
