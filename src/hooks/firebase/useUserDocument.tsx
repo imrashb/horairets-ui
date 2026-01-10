@@ -28,7 +28,7 @@ interface UserDocumentProviderProps {
 
 export function UserDocumentProvider({ children }: UserDocumentProviderProps): JSX.Element {
   const auth = useFirebaseAuth();
-  const [user] = useAuthState(auth);
+  const [user, authLoading] = useAuthState(auth);
 
   const documentRef: DocumentReference | undefined = useMemo(() => {
     if (!user?.uid) return undefined;
@@ -62,12 +62,16 @@ export function UserDocumentProvider({ children }: UserDocumentProviderProps): J
     [documentRef]
   );
 
-  const value = useMemo<UseUserDocumentResult<UserDocument>>(() => ({
-    data,
-    isLoading: loading,
-    error,
-    updateDocument,
-  }), [data, loading, error, updateDocument]);
+  const value = useMemo<UseUserDocumentResult<UserDocument>>(() => {
+    const isDataLoading = loading || (!!user && !data && !error);
+    
+    return {
+      data,
+      isLoading: authLoading || isDataLoading,
+      error,
+      updateDocument,
+    };
+  }, [data, loading, authLoading, user, error, updateDocument]);
 
   return (
     <UserDocumentContext.Provider value={value}>
