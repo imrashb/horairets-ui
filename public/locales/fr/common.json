@@ -158,5 +158,6 @@
   "nbJoursConges_other": "{{count}} jours de congé",
   "nbCoursParHoraire_one": "{{count}} cours/horaire",
   "nbCoursParHoraire_other": "{{count}} cours/horaire",
-  "tousLesCours": "Tous les cours sélectionnés"
+  "tousLesCours": "Tous les cours sélectionnés",
+  "importerCheminement": "Importer du cheminement"
 }

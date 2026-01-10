@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Id, toast, TypeOptions } from "react-toastify";
 
 export const TOAST_ERROR = "error";
@@ -39,16 +39,19 @@ function useUpdatableToast(
 
   const isRunning = () => !!ref.current;
 
-  // Fix: original code had `if (isRunning)` which is always true for a function.
-  // It effectively updated the toast on every render if ref.current existed?
-  // Or it was a bug and they meant `if (ref.current)`.
-  // Given `isRunning` is defined inside, `if (isRunning)` is truthy.
-  // I will assume they meant to update if the toast is currently active.
   if (ref.current) {
     toast.update(ref.current, {
       render: Component,
     });
   }
+
+  useEffect(() => {
+    return () => {
+      if (ref.current) {
+        toast.dismiss(ref.current);
+      }
+    };
+  }, []);
 
   return { play, stop, isRunning };
 }

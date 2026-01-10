@@ -20,6 +20,8 @@ import useGenerateurHoraire from "../GenerateurHoraireContexts/hooks/useGenerate
 import SelectionProgramme from "./SelectionProgramme";
 import SelectionSession from "./SelectionSession";
 import SelectionSessionProgrammeWrapper from "./SelectionSessionProgramme.styles";
+import useUserDocument from "../../../hooks/firebase/useUserDocument";
+import { UserDocument } from "../../../hooks/firebase/types";
 
 function SelectionSessionProgramme(): JSX.Element {
   const { t } = useTranslation("common");
@@ -27,9 +29,17 @@ function SelectionSessionProgramme(): JSX.Element {
   const [currentSession, setCurrentSession] = useAtom(sessionAtom);
   const [currentProgramme, setCurrentProgramme] = useAtom(programmesAtom);
 
-  const { session, programmes } = useGenerateurHoraire();
+  const { session, programmes, setProgrammes } = useGenerateurHoraire();
 
   const coursSessionQuery = useGetCoursSession(session, programmes);
+
+  const { data: userDoc } = useUserDocument<UserDocument>();
+  useEffect(() => {
+    if (userDoc?.profile?.programme && programmes.length === 0) {
+      setProgrammes([userDoc.profile.programme]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDoc?.profile?.programme]);
 
   useEffect(() => {
     if (session && programmes && programmes.length > 0) {

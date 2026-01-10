@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useAtomValue } from "jotai";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CongesSelector from "../../../components/Selectors/CongesSelector";
 import NombreCoursSelector from "../../../components/Selectors/NombreCoursSelector";
@@ -28,8 +28,12 @@ function ParametresDialog({
 }: ParametresDialogProps): JSX.Element {
   const { t } = useTranslation("common");
 
-  const nombreCours = useAtomValue(nombreCoursAtom);
-  const conges = useAtomValue(congesAtom);
+  const {
+    nombreCours,
+    conges,
+    setNombreCours,
+    setConges,
+  } = useGenerateurHoraire();
 
   const [controlledNombreCours, setControlledNombreCours] = useState<number | null>(
     nombreCours ?? null
@@ -38,7 +42,12 @@ function ParametresDialog({
     conges || []
   );
 
-  const { setNombreCours, setConges } = useGenerateurHoraire();
+  useEffect(() => {
+    if (open) {
+      setControlledNombreCours(nombreCours ?? null);
+      setControlledConges(conges || []);
+    }
+  }, [open, nombreCours, conges]);
 
   const applyParameters = () => {
     setNombreCours(controlledNombreCours);

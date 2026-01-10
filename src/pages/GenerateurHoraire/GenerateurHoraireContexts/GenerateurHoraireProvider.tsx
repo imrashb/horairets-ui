@@ -5,6 +5,7 @@ import {
   formGenerateurConfigAtom,
 } from "../../../features/generateur/generateurAtoms";
 import GenerateurHoraireContext from "./GenerateurHoraireContext";
+import { areArraysSame } from "../../../utils/Array.utils";
 
 interface GenerateurHoraireProviderProps {
   children?: React.ReactNode;
@@ -17,14 +18,14 @@ function GenerateurHoraireProvider({
   const currentActiveConfig = useAtomValue(activeGenerateurConfigAtom);
 
   useEffect(() => {
-    if (currentActiveConfig) {
+    if (currentActiveConfig?.session) {
       setFormConfig((prev) => ({
         ...prev,
         ...structuredClone(currentActiveConfig),
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run once on mount
+  }, []);
 
   const {
     session,
@@ -37,9 +38,15 @@ function GenerateurHoraireProvider({
 
   const context = useMemo(() => {
     const setSession = (val: string | null) =>
-      setFormConfig((prev) => ({ ...prev, session: val }));
+      setFormConfig((prev) => {
+        if (prev.session === val) return prev;
+        return { ...prev, session: val, cours: [], coursObligatoires: [] };
+      });
     const setProgrammes = (val: string[]) =>
-      setFormConfig((prev) => ({ ...prev, programmes: val }));
+      setFormConfig((prev) => {
+        if (areArraysSame(prev.programmes, val)) return prev;
+        return { ...prev, programmes: val, cours: [], coursObligatoires: [] };
+      });
     const setCours = (val: string[]) =>
       setFormConfig((prev) => ({ ...prev, cours: val }));
     const setNombreCours = (val: number | null) =>

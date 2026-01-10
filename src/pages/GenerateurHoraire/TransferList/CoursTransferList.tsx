@@ -68,17 +68,17 @@ export default function CoursTransferList({
 }: CoursTransferListProps): JSX.Element {
   const { t } = useTranslation("common");
 
-  const programme = useAtomValue(programmesAtom);
-  const session = useAtomValue(sessionAtom);
-  const selectedCours = useAtomValue(selectedCoursAtom);
-  // useGetCoursSession returns UseQueryResult<Cours[], Error>
-  // or similar. We assume data is Cours[]
-  const coursSessionQuery = useGetCoursSession(session, programme);
   const {
+    session,
+    programmes: programme,
+    cours: selectedCours,
+    coursObligatoires,
     nombreCours: nbCours,
     setCoursObligatoires,
     setCours,
   } = useGenerateurHoraire();
+
+  const coursSessionQuery = useGetCoursSession(session, programme);
 
   const [left, setLeft] = useState<Cours[]>([]);
   const [right, setRight] = useState<Cours[]>([]);
@@ -91,7 +91,7 @@ export default function CoursTransferList({
       setLocked([]);
       setCoursObligatoires([]);
     }
-  }, [nbCours, setCoursObligatoires]);
+  }, [nbCours]);
 
   // eslint-disable-next-line no-param-reassign
   const nombreCours =
@@ -99,31 +99,25 @@ export default function CoursTransferList({
 
   useEffect(() => {
     if (coursSessionQuery?.data) {
-      setLeft(coursSessionQuery.data);
-      setRight([]);
-      setSelectedFilter("");
-      setUnselectedFilter("");
-    }
-  }, [coursSessionQuery?.data]);
-
-  useEffect(() => {
-    if (selectedCours && coursSessionQuery?.data) {
-      const selected = coursSessionQuery.data.filter((c) =>
-        selectedCours.includes(c?.sigle)
-      );
-      const unselected = coursSessionQuery.data.filter(
-        (c) => !selected.includes(c)
-      );
+      const allCours = coursSessionQuery.data;
+      
+      const selected = allCours.filter((c) => selectedCours.includes(c.sigle));
+      const unselected = allCours.filter((c) => !selectedCours.includes(c.sigle));
+      
       setRight(selected);
       setLeft(unselected);
+
+      const lockedCourses = allCours.filter(c => coursObligatoires.includes(c.sigle));
+      setLocked(lockedCourses);
     }
-  }, []); // Only on mount/initial query/selected changes? The dep array is empty.
+  }, [coursSessionQuery?.data, selectedCours, coursObligatoires]);
 
   const handleToggle = (value: Cours) => {
     const isLeft = left.find((v) => v?.sigle === value?.sigle);
 
     let modifiedLeft: Cours[];
     let modifiedRight: Cours[];
+    let modifiedLocked = [...locked];
 
     if (isLeft) {
       modifiedLeft = left.filter((v) => v !== value);
@@ -131,17 +125,19 @@ export default function CoursTransferList({
     } else {
       modifiedRight = right.filter((v) => v !== value);
       modifiedLeft = [...left, value];
+      if (locked.includes(value)) {
+        modifiedLocked = modifiedLocked.filter((v) => v !== value);
+      }
     }
-    const modifiedLocked = locked.filter((v) => v !== value);
-    setLocked(modifiedLocked);
     setLeft(modifiedLeft);
     setRight(modifiedRight);
+    setLocked(modifiedLocked);
     setCours(modifiedRight.map((v) => v.sigle));
     setCoursObligatoires(modifiedLocked.map((v) => v.sigle));
   };
 
   const handleLocked = (value: Cours) => {
-    let modified;
+    let modified: Cours[];
     if (locked.includes(value)) {
       modified = locked.filter((v) => v !== value);
     } else {

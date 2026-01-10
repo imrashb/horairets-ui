@@ -1,4 +1,4 @@
-import { ExpandMore, Settings } from "@mui/icons-material";
+import { ExpandMore, Settings, Download } from "@mui/icons-material";
 import {
   Accordion,
   AccordionActions,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   activeGenerateurConfigAtom,
@@ -33,6 +33,8 @@ import CoursTransferList from "../TransferList/CoursTransferList";
 import SelectionCoursWrapper from "./SelectionCours.styles";
 import GenerationInformationToasts from "./toasts/GenerationInformationToasts";
 import ParametresGenerationToast from "./toasts/ParametresGenerationToast";
+import useUserDocument from "../../../hooks/firebase/useUserDocument";
+import { UserDocument } from "../../../hooks/firebase/types";
 
 function SelectionCours(): JSX.Element {
   const { t } = useTranslation("common");
@@ -56,7 +58,29 @@ function SelectionCours(): JSX.Element {
     coursObligatoires: controlledCoursObligatoires,
     conges: controlledConges,
     nombreCours: controlledNombreCours,
+    setCours,
+    setCoursObligatoires,
+    setConges,
+    setNombreCours,
   } = useGenerateurHoraire();
+
+  const { data: userDoc } = useUserDocument<UserDocument>();
+
+  const plannedSession = useMemo(() => {
+    if (!userDoc?.profile?.sessions || !session) return null;
+    return userDoc.profile.sessions[session];
+  }, [userDoc, session]);
+
+  const hasPlannedCourses = (plannedSession?.cours?.length || 0) > 0;
+
+  const handleImportFromPlanner = () => {
+    if (plannedSession) {
+      setCours(plannedSession.cours);
+      setCoursObligatoires(plannedSession.coursObligatoires);
+      setConges(plannedSession.conges);
+      setNombreCours(plannedSession.nombreCours);
+    }
+  };
 
   const nombreCoursGeneration =
     controlledNombreCours ||
@@ -104,6 +128,7 @@ function SelectionCours(): JSX.Element {
     activeConfig?.coursObligatoires,
     controlledCoursObligatoires
   );
+  const isSessionEqual = activeConfig?.session === session;
 
   const readyToGenerate = !(
     cours.length === 0 ||
@@ -111,7 +136,8 @@ function SelectionCours(): JSX.Element {
     (isCoursEqual &&
       isNombreCoursEqual &&
       isCongesEqual &&
-      isObligatoiresEqual)
+      isObligatoiresEqual &&
+      isSessionEqual)
   );
 
   return (
@@ -127,6 +153,20 @@ function SelectionCours(): JSX.Element {
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
           <Typography variant="h5">{t("cours")}</Typography>
+          {hasPlannedCourses && (
+            <Button
+              startIcon={<Download />}
+              variant="contained"
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleImportFromPlanner();
+              }}
+              sx={{ ml: "auto", mr: 2 }}
+            >
+              {t("importerCheminement")}
+            </Button>
+          )}
         </AccordionSummary>
         <Divider />
         <AccordionDetails>
