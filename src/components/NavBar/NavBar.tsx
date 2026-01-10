@@ -29,12 +29,12 @@ export default function NavBar(): JSX.Element {
 
   useLayoutEffect(() => {
     if (location.pathname) {
-      const tab = tabs.find((ta) => ta.path === location.pathname);
+      const tab = tabs.find((ta) => ta.path === location.pathname && !ta.hidden);
 
       if (tab) {
         setSelectedTab(tab.label);
       } else {
-        setSelectedTab(false); // Using false for 'no tab selected' compatible with MUI Tabs value
+        setSelectedTab(false);
       }
     }
   }, [location.pathname, tabs]);

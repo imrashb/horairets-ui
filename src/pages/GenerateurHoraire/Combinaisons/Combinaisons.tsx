@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { GET_COMBINAISONS_ENDPOINT } from "../../../app/api/api.constants";
 import axios from "../../../app/api/axiosInstance";
 import CombinaisonHoraire from "../../../components/CombinaisonHoraire/CombinaisonHoraire";
-import affichageAtom from "../../../features/affichage/affichageAtoms";
+import { useDisplayPreferences } from "../../../hooks/firebase";
 import { GENERATEUR_GRID_VIEW } from "../../../features/generateur/generateur.constants";
 import { Combinaison } from "../../../features/generateur/generateur.types";
 import {
@@ -39,14 +39,14 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0]);
 
-  const affichage = useAtomValue(affichageAtom);
+  const { preferences } = useDisplayPreferences();
   const {
     showNomCoursGroupe,
     showNomActivite,
     showLocaux,
     showModeEnseignement,
     showEnseignant,
-  } = affichage;
+  } = preferences;
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
 

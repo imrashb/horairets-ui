@@ -2,8 +2,27 @@ import { PartialWithFieldValue } from "firebase/firestore";
 
 export type FavoritesMap = Record<string, string[]>;
 
+export interface DisplayPreferences {
+  showNomCoursGroupe: boolean;
+  showLocaux: boolean;
+  showNomActivite: boolean;
+  showUniqueCoursColors: boolean;
+  showModeEnseignement: boolean;
+  showEnseignant: boolean;
+}
+
+export const DEFAULT_DISPLAY_PREFERENCES: DisplayPreferences = {
+  showNomCoursGroupe: true,
+  showLocaux: true,
+  showNomActivite: true,
+  showUniqueCoursColors: true,
+  showModeEnseignement: false,
+  showEnseignant: false,
+};
+
 export interface UserDocument {
   favorites?: FavoritesMap;
+  displayPreferences?: DisplayPreferences;
 }
 
 export interface UseFavoritesResult {
@@ -29,6 +48,23 @@ export interface UseFavoritesResult {
   ) => Promise<{ isFavorited: boolean }>;
 }
 
+export interface UseDisplayPreferencesResult {
+  preferences: DisplayPreferences;
+
+  isLoading: boolean;
+
+  error: Error | undefined;
+
+  updatePreferences: (updates: Partial<DisplayPreferences>) => Promise<void>;
+
+  setPreference: <K extends keyof DisplayPreferences>(
+    key: K,
+    value: DisplayPreferences[K]
+  ) => Promise<void>;
+
+  resetToDefaults: () => Promise<void>;
+}
+
 export interface UseUserDocumentResult<T> {
   data: T | undefined;
 
@@ -38,4 +74,5 @@ export interface UseUserDocumentResult<T> {
 
   updateDocument: (updates: PartialWithFieldValue<T>) => Promise<void>;
 }
+
 

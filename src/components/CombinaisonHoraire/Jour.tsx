@@ -1,7 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
-import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
-import affichageAtom from "../../features/affichage/affichageAtoms";
+import { useDisplayPreferences } from "../../hooks/firebase";
 import Activite from "./Activite/Activite";
 import ActiviteSpacer from "./Activite/ActiviteSpacer";
 import {
@@ -86,7 +85,8 @@ function Jour({
 }: JourProps): JSX.Element {
   const { t } = useTranslation("common");
 
-  const { showUniqueCoursColors } = useAtomValue(affichageAtom);
+  const { preferences } = useDisplayPreferences();
+  const { showUniqueCoursColors } = preferences;
 
   const min = HEURE_DEBUT_COURS;
   const max = HEURE_FIN_COURS;
