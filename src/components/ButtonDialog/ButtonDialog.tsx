@@ -15,14 +15,16 @@ import styled, { useTheme } from "styled-components";
 type ButtonDialogProps = {
   icon: React.ReactNode;
   title: string;
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
+  size?: "small" | "medium" | "large";
 };
 
 // Properly type the styled component with the theme type if needed, but inference is usually enough.
 const DialogContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: ${({ theme }) => (theme as Theme).sizes?.size_8};
 
   & > * {
     &:not(:last-child) {
@@ -51,7 +53,7 @@ function ButtonDialog({
 
   const handleClose = () => {
     setVisible(false);
-    onClose();
+    onClose?.();
   };
 
   const Spacer = <div style={{ width: 4 }} />;

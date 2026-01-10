@@ -1,22 +1,27 @@
-import { CalendarMonth, School, Warning } from "@mui/icons-material";
 import { Avatar, Typography } from "@mui/material";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useTranslation } from "react-i18next";
-import withAuth from "../../components/Auth/AuthenticatedComponent";
 import useFirebaseAuth from "../../components/Auth/useFirebaseAuth";
-import { HOME_URL } from "../../routes/Routes.constants";
-import ProfileBanner from "./ProfileBanner";
+import useUserDocument from "../../hooks/firebase/useUserDocument";
+import { UpdateOptions, UserDocument, UserProfile } from "../../hooks/firebase/types";
+import EditProfileDialog from "./Dialogs/EditProfileDialog";
+import PlannedCoursesEditor from "./Dialogs/PlannedCoursesEditor";
 import ProfileWrapper from "./Profile.styles";
+import ProfileBanner from "./ProfileBanner";
 
 function Profile(): JSX.Element {
   const { t } = useTranslation("common");
   const auth = useFirebaseAuth();
-  const [user] = useAuthState(auth);
+  const [firebaseUser] = useAuthState(auth);
 
-  const displayName = user?.displayName || user?.email?.split("@")[0] || "";
-  const email = user?.email || "";
-  const photoURL = user?.photoURL || undefined;
+  const { data: userDoc, updateDocument } = useUserDocument<UserDocument>();
+
+  const handleUpdateProfile = async (updates: UserProfile, options?: UpdateOptions) => {
+    await updateDocument({ profile: updates }, options);
+  };
+
+  const profile = userDoc?.profile;
 
   return (
     <ProfileWrapper>
@@ -28,60 +33,32 @@ function Profile(): JSX.Element {
       <div className="profile-header">
         <div className="avatar-container">
           <Avatar
+            src={firebaseUser?.photoURL || undefined}
+            alt={firebaseUser?.displayName || "User"}
             className="profile-avatar"
-            src={photoURL}
-            alt={displayName}
-          >
-            {displayName.charAt(0).toUpperCase()}
-          </Avatar>
+          />
         </div>
-
-        <div className="user-info">
-          <Typography variant="h5" className="display-name">
-            {displayName}
-          </Typography>
-          <Typography variant="body2" className="email">
-            {email}
-          </Typography>
+        <div className="profile-actions">
+          <EditProfileDialog
+            currentProfile={profile}
+            onSave={handleUpdateProfile}
+          />
         </div>
-      </div>
-
-      <div className="mobile-edit-notice">
-        <Warning sx={{ mr: 1, verticalAlign: "middle" }} />
-        {t("editionDesktopUniquement")}
       </div>
 
       <div className="profile-content">
-        <div className="profile-section">
-          <Typography variant="h6" className="section-title">
-            <School />
-            {t("programmeEtudes")}
+        <div className="user-info">
+          <Typography variant="h5" fontWeight="bold">
+            {firebaseUser?.displayName}
           </Typography>
-          <div className="section-content">
-            <Typography color="textSecondary">
-              {t("aucunProgrammeSelectionne")}
-            </Typography>
-          </div>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            {profile?.admissionSession || t("sessionAdmission")} • {profile?.programme ? t(profile.programme) : t("aucunProgrammeSelectionne")}
+          </Typography>
         </div>
 
-        <div className="profile-section">
-          <Typography variant="h6" className="section-title">
-            <CalendarMonth />
-            {t("coursPlanifies")}
-          </Typography>
-          <div className="section-content">
-            <div className="semester-item">
-              <Typography className="semester-name">Été 2026</Typography>
-              <Typography className="semester-courses">
-                LOG100, LOG210, LOG240
-              </Typography>
-            </div>
-            <div className="semester-item">
-              <Typography className="semester-name">Automne 2026</Typography>
-              <Typography className="semester-courses">
-                CHM131, MAT350
-              </Typography>
-            </div>
+        <div className="profile-grid">
+          <div className="profile-card">
+            <PlannedCoursesEditor />
           </div>
         </div>
       </div>
@@ -89,4 +66,4 @@ function Profile(): JSX.Element {
   );
 }
 
-export default withAuth(Profile, HOME_URL);
+export default Profile;

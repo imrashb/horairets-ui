@@ -1,9 +1,11 @@
 import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { FavoritesMap, UseFavoritesResult, UserDocument } from "./types";
 import useUserDocument from "./useUserDocument";
 
 function useFavorites(): UseFavoritesResult {
+  const { t } = useTranslation("common");
   const { data, isLoading, error, updateDocument } =
     useUserDocument<UserDocument>();
 
@@ -42,9 +44,13 @@ function useFavorites(): UseFavoritesResult {
         favorites: {
           [session]: arrayUnion(combinaisonId),
         },
+      }, {
+        showToast: true,
+        successMessage: t("ajoutFavoris") as string,
+        errorMessage: t("erreurFavoris") as string,
       });
     },
-    [updateDocument]
+    [updateDocument, t]
   );
 
   const removeFavorite = useCallback(
@@ -57,9 +63,13 @@ function useFavorites(): UseFavoritesResult {
         favorites: {
           [session]: arrayRemove(combinaisonId),
         },
+      }, {
+        showToast: true,
+        successMessage: t("retraitFavoris") as string,
+        errorMessage: t("erreurFavoris") as string,
       });
     },
-    [updateDocument]
+    [updateDocument, t]
   );
 
   const toggleFavorite = useCallback(

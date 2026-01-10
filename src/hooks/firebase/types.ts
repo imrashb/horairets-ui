@@ -20,9 +20,26 @@ export const DEFAULT_DISPLAY_PREFERENCES: DisplayPreferences = {
   showEnseignant: false,
 };
 
+export interface SessionConfig {
+  cours: string[];
+  coursObligatoires: string[];
+  nombreCours: number;
+  conges: string[];
+  selectedCombinaisonId?: string;
+}
+
+export type SessionsMap = Record<string, SessionConfig>;
+
+export interface UserProfile {
+  programme: string;
+  admissionSession: string;
+  sessions: SessionsMap;
+}
+
 export interface UserDocument {
   favorites?: FavoritesMap;
   displayPreferences?: DisplayPreferences;
+  profile?: UserProfile;
 }
 
 export interface UseFavoritesResult {
@@ -65,6 +82,12 @@ export interface UseDisplayPreferencesResult {
   resetToDefaults: () => Promise<void>;
 }
 
+export interface UpdateOptions {
+  showToast?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+}
+
 export interface UseUserDocumentResult<T> {
   data: T | undefined;
 
@@ -72,7 +95,7 @@ export interface UseUserDocumentResult<T> {
 
   error: Error | undefined;
 
-  updateDocument: (updates: PartialWithFieldValue<T>) => Promise<void>;
+  updateDocument: (updates: PartialWithFieldValue<T>, options?: UpdateOptions) => Promise<void>;
 }
 
 

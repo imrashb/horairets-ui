@@ -28,120 +28,121 @@ const ProfileWrapper = styled.div`
 
   .profile-header {
     position: relative;
-    padding: 0 24px 24px;
+    padding: 0 24px 12px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
     gap: 16px;
 
     @media (max-width: 600px) {
-      padding: 0 16px 16px;
+      padding: 0 16px 12px;
     }
 
     .avatar-container {
       margin-top: -60px;
       z-index: 10;
+      position: relative; /* Ensure it stays above banner */
 
       @media (max-width: 600px) {
-        margin-top: -40px;
+        margin-top: -50px;
       }
 
       .profile-avatar {
-        width: 120px;
-        height: 120px;
+        width: 130px;
+        height: 130px;
         border: 4px solid ${({ theme }) => theme.palette.background.default};
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
         @media (max-width: 600px) {
-          width: 80px;
-          height: 80px;
+          width: 90px;
+          height: 90px;
           border-width: 3px;
         }
       }
     }
+    
+    .profile-actions {
+      padding-bottom: 8px;
 
-    .user-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-
-      .display-name {
-        font-weight: 600;
-      }
-
-      .email {
-        opacity: 0.7;
+      @media (max-width: 600px) {
+        margin-top: 8px;
       }
     }
   }
 
+  /* Container for the main content area */
   .profile-content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    /* Left column (User Info) - Right column (Cards) */
+    grid-template-columns: 300px 1fr;
     gap: 24px;
-    padding: 0 24px 24px;
+    padding: 0 24px 48px;
 
     @media (max-width: 900px) {
       grid-template-columns: 1fr;
+      gap: 32px;
     }
 
     @media (max-width: 600px) {
-      padding: 0 16px 16px;
-      gap: 16px;
+      padding: 0 16px 32px;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        
+        @media (max-width: 900px) {
+            padding-left: 8px; /* Align with layout on mobile */
+        }
+    }
+
+    .profile-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        min-width: 0; /* Flex child overflow fix */
     }
   }
 
-  .profile-section {
+  .profile-card {
     background: ${({ theme }) => theme.palette.background.paper};
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    box-shadow: ${({ theme }) => theme.shadows[1]};
+    border: 1px solid ${({ theme }) => theme.palette.divider};
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
-    .section-title {
+    .card-title {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      font-weight: 600;
+      gap: 12px;
+      font-weight: 700;
+      color: ${({ theme }) => theme.palette.text.primary};
+      
+      svg {
+        color: ${({ theme }) => theme.palette.primary.main};
+      }
     }
 
-    .section-content {
+    .card-content {
       color: ${({ theme }) => theme.palette.text.secondary};
-    }
-
-    .semester-item {
-      padding: 12px;
-      margin-bottom: 8px;
-      background: ${({ theme }) => theme.palette.action.hover};
-      border-radius: 8px;
-
-      &:last-child {
-        margin-bottom: 0;
+      
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 24px;
+        background: ${({ theme }) => theme.palette.action.hover};
+        border-radius: 8px;
+        color: ${({ theme }) => theme.palette.text.secondary};
+        text-align: center;
       }
-
-      .semester-name {
-        font-weight: 500;
-        margin-bottom: 4px;
-      }
-
-      .semester-courses {
-        font-size: 0.875rem;
-        opacity: 0.8;
-      }
-    }
-  }
-
-  .mobile-edit-notice {
-    display: none;
-    padding: 16px;
-    margin: 0 16px 16px;
-    background: ${({ theme }) => theme.palette.warning.main}20;
-    border: 1px solid ${({ theme }) => theme.palette.warning.main};
-    border-radius: 8px;
-    text-align: center;
-    color: ${({ theme }) => theme.palette.warning.main};
-
-    @media (max-width: 600px) {
-      display: block;
     }
   }
 `;
