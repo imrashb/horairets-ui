@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { PlannedSessionsGrid } from "./PlannedSessionsGrid";
 import EditProfileDialog from "./EditProfileDialog";
 import { usePlannedCourses } from "./usePlannedCourses";
+import { useUnsavedChangesWarning } from "../../../hooks/useUnsavedChangesWarning";
 
 const EditorWrapper = styled.div`
   display: flex;
@@ -72,6 +73,8 @@ function PlannedCoursesEditor(): JSX.Element {
     handleSave,
     handleCancel,
   } = usePlannedCourses();
+
+  useUnsavedChangesWarning(t("avertissementNonSauvegarde"), hasChanges);
 
   return (
     <>

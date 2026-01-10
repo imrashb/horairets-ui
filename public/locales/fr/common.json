@@ -159,5 +159,6 @@
   "nbCoursParHoraire_one": "{{count}} cours/horaire",
   "nbCoursParHoraire_other": "{{count}} cours/horaire",
   "tousLesCours": "Tous les cours sélectionnés",
-  "importerCheminement": "Importer du cheminement"
+  "importerCheminement": "Importer du cheminement",
+  "avertissementNonSauvegarde": "Vous avez des changements non sauvegardés. Voulez-vous vraiment quitter?"
 }
