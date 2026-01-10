@@ -81,7 +81,7 @@ export const ContentContainer = styled.div`
   gap: 24px;
   padding: 0 24px 48px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     gap: 32px;
   }

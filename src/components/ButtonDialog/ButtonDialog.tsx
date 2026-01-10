@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Theme,
   PaletteMode,
+  IconButton,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,6 +19,7 @@ type ButtonDialogProps = {
   onClose?: () => void;
   children: React.ReactNode;
   size?: "small" | "medium" | "large";
+  isIconButton?: boolean;
 };
 
 // Properly type the styled component with the theme type if needed, but inference is usually enough.
@@ -38,6 +40,7 @@ function ButtonDialog({
   title,
   onClose,
   children,
+  isIconButton,
 }: ButtonDialogProps): JSX.Element {
   const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
@@ -58,14 +61,22 @@ function ButtonDialog({
 
   const Spacer = <div style={{ width: 4 }} />;
 
+  const Trigger = isIconButton ? (
+    <IconButton onClick={() => setVisible(true)}>
+      {icon}
+    </IconButton>
+  ) : (
+    <Button variant="contained" onClick={() => setVisible(true)}>
+      {!isSmallViewport && title}
+      {!isSmallViewport && Spacer}
+      {icon}
+    </Button>
+  );
+
   return (
     <>
       <div className="button-dialog-wrapper">
-        <Button variant="contained" onClick={() => setVisible(true)}>
-          {!isSmallViewport && title}
-          {!isSmallViewport && Spacer}
-          {icon}
-        </Button>
+        {Trigger}
       </div>
 
       <Dialog fullWidth open={visible}>

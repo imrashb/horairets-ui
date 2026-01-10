@@ -1,26 +1,19 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
 } from "@mui/material";
 import { useAtomValue } from "jotai";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import CongesSelector from "../../../components/Selectors/CongesSelector";
+import NombreCoursSelector from "../../../components/Selectors/NombreCoursSelector";
 import {
   congesAtom,
   nombreCoursAtom,
 } from "../../../features/generateur/generateurAtoms";
-import {
-  JOURS,
-  NOMBRE_MAX_COURS_PAR_HORAIRE,
-} from "../generateurHoraire.constants";
 import useGenerateurHoraire from "../GenerateurHoraireContexts/hooks/useGenerateurHoraire";
 import ParametresDialogWrapper from "./ParametresDialog.styles";
 
@@ -38,9 +31,9 @@ function ParametresDialog({
   const nombreCours = useAtomValue(nombreCoursAtom);
   const conges = useAtomValue(congesAtom);
 
-  const [controlledNombreCours, setControlledNombreCours] = useState<
-    number | string
-  >(nombreCours || 5);
+  const [controlledNombreCours, setControlledNombreCours] = useState<number>(
+    nombreCours || 5
+  );
   const [controlledConges, setControlledConges] = useState<string[]>(
     conges || []
   );
@@ -48,7 +41,7 @@ function ParametresDialog({
   const { setNombreCours, setConges } = useGenerateurHoraire();
 
   const applyParameters = () => {
-    setNombreCours(Number(controlledNombreCours));
+    setNombreCours(controlledNombreCours);
     setConges(controlledConges);
     if (onClose) onClose();
   };
@@ -58,43 +51,14 @@ function ParametresDialog({
       <DialogTitle>{t("parametresHoraire")}</DialogTitle>
       <DialogContent>
         <ParametresDialogWrapper>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{t("nombreCoursParHoraire")}</InputLabel>
-            <Select
-              value={controlledNombreCours}
-              onChange={(event) =>
-                setControlledNombreCours(event?.target?.value)
-              }
-              label={t("nombreCoursParHoraire")}
-            >
-              {[...Array(NOMBRE_MAX_COURS_PAR_HORAIRE).keys()].map(
-                (value) => (
-                  <MenuItem key={value + 1} value={value + 1}>
-                    {`${value + 1} ${t("cours").toLowerCase()}`}
-                  </MenuItem>
-                )
-              )}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{t("joursConges")}</InputLabel>
-            <Select
-              multiple
-              value={controlledConges}
-              onChange={(event) => {
-                const val = event?.target?.value;
-                setControlledConges(
-                  typeof val === "string" ? val.split(",") : val
-                );
-              }}
-            >
-              {JOURS.map((conge) => (
-                <MenuItem key={conge} value={conge}>
-                  {t(conge)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <NombreCoursSelector
+            value={controlledNombreCours}
+            onChange={setControlledNombreCours}
+          />
+          <CongesSelector
+            value={controlledConges}
+            onChange={setControlledConges}
+          />
         </ParametresDialogWrapper>
       </DialogContent>
       <DialogActions>

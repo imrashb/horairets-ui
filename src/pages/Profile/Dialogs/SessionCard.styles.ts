@@ -14,7 +14,7 @@ export const CardWrapper = styled.div`
 export const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const CoursesContainer = styled.div`

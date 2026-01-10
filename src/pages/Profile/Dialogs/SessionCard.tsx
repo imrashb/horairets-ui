@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { SessionConfig } from "../../../hooks/firebase/types";
 import { getSessionTranslation } from "../../../utils/Sessions.utils";
 import AddCourseAutocomplete from "./AddCourseAutocomplete";
+import EditSessionConfigDialog from "./EditSessionConfigDialog";
+import SessionStatsChips from "./SessionStatsChips";
 import {
   CardHeader,
   CardWrapper,
@@ -59,12 +61,21 @@ function SessionCard({
   return (
     <CardWrapper>
       <CardHeader>
-        <Typography variant="subtitle1" fontWeight="bold">
-          {getSessionTranslation(session, t) || session}
-        </Typography>
-        <DeleteButton size="small" onClick={onDeleteSession}>
-          <Delete sx={{ fontSize: 18 }} />
-        </DeleteButton>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {getSessionTranslation(session, t) || session}
+          </Typography>
+          <SessionStatsChips config={config} />
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <EditSessionConfigDialog 
+            config={config} 
+            onSave={onUpdateConfig} 
+          />
+          <DeleteButton size="small" onClick={onDeleteSession}>
+            <Delete sx={{ fontSize: 18 }} />
+          </DeleteButton>
+        </div>
       </CardHeader>
 
       <CoursesContainer>

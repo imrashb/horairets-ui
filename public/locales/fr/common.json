@@ -152,5 +152,10 @@
   "coursOptionnel": "Cours optionnel (cliquer pour verrouiller)",
   "veuillezSelectionnerAdmission": "Veuillez sélectionner votre session d'admission",
   "commencezPlanification": "Commencez votre planification",
-  "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission pour commencer votre cheminement."
+  "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission pour commencer votre cheminement.",
+  "nbJoursConges_zero": "{{count}} jour de congé",
+  "nbJoursConges_one": "{{count}} jour de congé",
+  "nbJoursConges_other": "{{count}} jours de congé",
+  "nbCoursParHoraire_one": "{{count}} cours/horaire",
+  "nbCoursParHoraire_other": "{{count}} cours/horaire"
 }

@@ -15,7 +15,7 @@ const EditorWrapper = styled.div`
 
 const SessionsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 
   @media (max-width: 768px) {
