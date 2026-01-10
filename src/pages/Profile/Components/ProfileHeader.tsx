@@ -1,7 +1,10 @@
-import { Avatar } from "@mui/material";
-import { User } from "firebase/auth";
+import { Edit } from "@mui/icons-material";
+import { Avatar, Button, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-import { UpdateOptions, UserProfile } from "../../../hooks/firebase/types";
+import { useTranslation } from "react-i18next";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useFirebaseAuth from "../../../components/Auth/useFirebaseAuth";
+import { UserProfile } from "../../../hooks/firebase/types";
 import EditProfileDialog from "../Dialogs/EditProfileDialog";
 import ProfileBanner from "../ProfileBanner";
 import {
@@ -13,12 +16,13 @@ import {
 } from "../Profile.styles";
 
 interface ProfileHeaderProps {
-  user: User | null | undefined;
   profile: UserProfile | undefined;
-  onUpdateProfile: (updates: UserProfile, options?: UpdateOptions) => Promise<void>;
 }
 
-function ProfileHeader({ user, profile, onUpdateProfile }: ProfileHeaderProps): JSX.Element {
+function ProfileHeader({ profile }: ProfileHeaderProps): JSX.Element {
+  const auth = useFirebaseAuth();
+  const [user] = useAuthState(auth);
+
   return (
     <>
       <ProfileBannerContainer>
@@ -45,7 +49,7 @@ function ProfileHeader({ user, profile, onUpdateProfile }: ProfileHeaderProps): 
           />
         </AvatarContainer>
         <ProfileActions>
-          <EditProfileDialog currentProfile={profile} onSave={onUpdateProfile} />
+          <EditProfileDialog currentProfile={profile} />
         </ProfileActions>
       </ProfileHeaderContainer>
     </>

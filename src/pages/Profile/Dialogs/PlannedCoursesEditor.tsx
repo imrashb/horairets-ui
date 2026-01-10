@@ -1,17 +1,11 @@
-import { deleteField } from "firebase/firestore";
-import { Save, Warning } from "@mui/icons-material";
+import { School, Save, Warning } from "@mui/icons-material";
 import { Button, Theme, Typography } from "@mui/material";
-import isEqual from "lodash/isEqual";
-import sortBy from "lodash/sortBy";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import useUserDocument from "../../../hooks/firebase/useUserDocument";
-import { SessionConfig, SessionsMap, UserDocument } from "../../../hooks/firebase/types";
-import { compareSession } from "../../../utils/Sessions.utils";
-import { getCurrentSession, getNextSession } from "../../../utils/SessionSequence.utils";
-import { AddSessionCard } from "./AddSessionCard";
-import SessionCard from "./SessionCard";
+import { PlannedSessionsGrid } from "./PlannedSessionsGrid";
+import EditProfileDialog from "./EditProfileDialog";
+import { usePlannedCourses } from "./usePlannedCourses";
 
 const EditorWrapper = styled.div`
   display: flex;
@@ -49,120 +43,35 @@ const ChangeIndicator = styled(Typography)`
   align-items: center;
 `;
 
-const DEFAULT_SESSION_CONFIG: SessionConfig = {
-  cours: [],
-  coursObligatoires: [],
-  nombreCours: 4,
-  conges: [],
-};
-
-function normalizeSessionConfig(config: SessionConfig): SessionConfig {
-  return {
-    ...config,
-    cours: sortBy(config.cours),
-    coursObligatoires: sortBy(config.coursObligatoires),
-    conges: sortBy(config.conges),
-  };
-}
-
-function normalizeSessionsMap(sessions: SessionsMap): SessionsMap {
-  const normalized: SessionsMap = {};
-  for (const [key, config] of Object.entries(sessions)) {
-    normalized[key] = normalizeSessionConfig(config);
-  }
-  return normalized;
-}
-
-function areSessionsEqual(a: SessionsMap, b: SessionsMap): boolean {
-  return isEqual(normalizeSessionsMap(a), normalizeSessionsMap(b));
-}
+const EmptyStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  background-color: ${({ theme }) => (theme as Theme).palette.action.hover};
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => (theme as Theme).palette.divider};
+`;
 
 function PlannedCoursesEditor(): JSX.Element {
   const { t } = useTranslation("common");
-  const { data: userDoc, updateDocument } = useUserDocument<UserDocument>();
-
-  const profile = userDoc?.profile;
   
-  const storedSessions = useMemo(() => {
-    return profile?.sessions || {};
-  }, [JSON.stringify(profile?.sessions)]);
-  
-  const [localSessions, setLocalSessions] = useState<SessionsMap>(storedSessions);
-
-  useEffect(() => {
-    setLocalSessions(storedSessions);
-  }, [storedSessions]);
-
-  const hasChanges = useMemo(() => {
-    return !areSessionsEqual(localSessions, storedSessions);
-  }, [localSessions, storedSessions]);
-
-  const sortedSessionKeys = useMemo(() => {
-    return Object.keys(localSessions).sort(compareSession);
-  }, [localSessions]);
-
-  const nextSession = useMemo(() => {
-    if (sortedSessionKeys.length === 0) {
-      return profile?.admissionSession || getCurrentSession();
-    }
-    const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
-    return getNextSession(lastSession);
-  }, [sortedSessionKeys, profile?.admissionSession]);
-
-  const programme = profile?.programme || "Maîtrise";
-
-  const handleAddNextSession = () => {
-    if (Object.hasOwn(localSessions, nextSession)) return;
-    setLocalSessions((prev) => ({
-      ...prev,
-      [nextSession]: { ...DEFAULT_SESSION_CONFIG },
-    }));
-  };
-
-  const handleDeleteLastSession = () => {
-    if (sortedSessionKeys.length === 0) return;
-    const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
-    setLocalSessions((prev) => {
-      const { [lastSession]: _, ...rest } = prev;
-      return rest;
-    });
-  };
-
-  const handleUpdateSessionConfig = (sessionKey: string, config: SessionConfig) => {
-    setLocalSessions((prev) => ({
-      ...prev,
-      [sessionKey]: config,
-    }));
-  };
-
-  const handleSave = async () => {
-    if (!profile) return;
-
-    // Create updates object containing current local sessions
-    // and explicit deleteField() for sessions that were removed
-    const sessionsUpdates: Record<string, any> = { ...localSessions };
-    
-    Object.keys(storedSessions).forEach((key) => {
-      if (!Object.hasOwn(localSessions, key)) {
-        sessionsUpdates[key] = deleteField();
-      }
-    });
-
-    await updateDocument({
-      profile: {
-        ...profile,
-        sessions: sessionsUpdates,
-      },
-    }, {
-      showToast: true,
-      successMessage: t("coursPlanifiesMisAJour") as string,
-      errorMessage: t("erreurMiseAJourCoursPlanifies") as string,
-    });
-  };
-
-  const handleCancel = () => {
-    setLocalSessions(storedSessions);
-  };
+  const {
+    profile,
+    localSessions,
+    sortedSessionKeys,
+    previousSession,
+    nextSession,
+    programme,
+    hasChanges,
+    handleAddSession,
+    handleDeleteSession,
+    handleUpdateSessionConfig,
+    handleSave,
+    handleCancel,
+  } = usePlannedCourses();
 
   return (
     <>
@@ -186,20 +95,32 @@ function PlannedCoursesEditor(): JSX.Element {
         )}
       </Header>
       <EditorWrapper>
-        <SessionsGrid>
-          {sortedSessionKeys.map((sessionKey, index) => (
-            <SessionCard
-              key={sessionKey}
-              session={sessionKey}
-              config={localSessions[sessionKey]}
+        {!profile?.admissionSession ? (
+          <EmptyStateContainer>
+            <School sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
+            <Typography variant="h6" gutterBottom>
+              {t("commencezPlanification")}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3, maxWidth: 400 }}>
+              {t("selectionnezAdmissionDescription")}
+            </Typography>
+            <EditProfileDialog currentProfile={profile} />
+          </EmptyStateContainer>
+        ) : (
+          <SessionsGrid>
+            <PlannedSessionsGrid
+              localSessions={localSessions}
+              sortedSessionKeys={sortedSessionKeys}
+              admissionSession={profile?.admissionSession}
               programme={programme}
-              isLast={index === sortedSessionKeys.length - 1}
-              onUpdateConfig={(config) => handleUpdateSessionConfig(sessionKey, config)}
-              onDeleteSession={handleDeleteLastSession}
+              previousSession={previousSession}
+              nextSession={nextSession}
+              onAddSession={handleAddSession}
+              onDeleteSession={handleDeleteSession}
+              onUpdateSessionConfig={handleUpdateSessionConfig}
             />
-          ))}
-          <AddSessionCard nextSession={nextSession} onAdd={handleAddNextSession} />
-        </SessionsGrid>
+          </SessionsGrid>
+        )}
       </EditorWrapper>
     </>
   );

@@ -17,16 +17,14 @@ interface SessionCardProps {
   session: string;
   config: SessionConfig;
   programme: string;
-  isLast: boolean;
   onUpdateConfig: (config: SessionConfig) => void;
-  onDeleteSession?: () => void;
+  onDeleteSession: () => void;
 }
 
 function SessionCard({
   session,
   config,
   programme,
-  isLast,
   onUpdateConfig,
   onDeleteSession,
 }: SessionCardProps): JSX.Element {
@@ -64,11 +62,9 @@ function SessionCard({
         <Typography variant="subtitle1" fontWeight="bold">
           {getSessionTranslation(session, t) || session}
         </Typography>
-        {isLast && onDeleteSession && (
-          <DeleteButton size="small" onClick={onDeleteSession}>
-            <Delete sx={{ fontSize: 18 }} />
-          </DeleteButton>
-        )}
+        <DeleteButton size="small" onClick={onDeleteSession}>
+          <Delete sx={{ fontSize: 18 }} />
+        </DeleteButton>
       </CardHeader>
 
       <CoursesContainer>

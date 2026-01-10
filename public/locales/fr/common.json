@@ -120,7 +120,7 @@
   "parametresAffichageAppliques": "Paramètres d'affichage appliqués!",
   "monProfil": "Mon profil",
   "programmeEtudes": "Programme d'études",
-  "coursPlanifies": "Cours planifiés",
+  "coursPlanifies": "Planification du cheminement",
   "aucunProgrammeSelectionne": "Aucun programme sélectionné",
   "aucunCoursPlanifie": "Aucun cours planifié",
   "modifierProfil": "Modifier le profil",
@@ -149,5 +149,8 @@
   "changementsNonSauvegardes": "Changements non sauvegardés",
   "sigle": "Sigle...",
   "coursObligatoire": "Cours obligatoire (cliquer pour rendre optionnel)",
-  "coursOptionnel": "Cours optionnel (cliquer pour verrouiller)"
+  "coursOptionnel": "Cours optionnel (cliquer pour verrouiller)",
+  "veuillezSelectionnerAdmission": "Veuillez sélectionner votre session d'admission",
+  "commencezPlanification": "Commencez votre planification",
+  "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission pour commencer votre cheminement."
 }

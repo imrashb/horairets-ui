@@ -54,22 +54,41 @@ export const getSessionFromCombinaisonUniqueId = (
   }
 };
 
-export const compareSession = (s1: string, s2: string): number => {
-  const parsed1 = parseSession(s1);
-  const parsed2 = parseSession(s2);
+export function compareSession(a: string, b: string): number {
+  const parsedA = parseSession(a);
+  const parsedB = parseSession(b);
 
-  if (!parsed1 || !parsed2) return 0;
-  const annee1 = parseInt(parsed1.annee, 10);
-  const annee2 = parseInt(parsed2.annee, 10);
+  if (!parsedA || !parsedB) return 0;
 
-  if (annee1 === annee2) {
-    return (TRIMESTRE_MAP[parsed1.trimestreId]?.order || 0) - (TRIMESTRE_MAP[parsed2.trimestreId]?.order || 0);
+  if (parsedA.annee !== parsedB.annee) {
+    return parseInt(parsedA.annee) - parseInt(parsedB.annee);
   }
-  return annee1 - annee2;
-};
+
+  const orderA = TRIMESTRE_MAP[parsedA.trimestreId]?.order || 0;
+  const orderB = TRIMESTRE_MAP[parsedB.trimestreId]?.order || 0;
+
+  return orderA - orderB;
+}
+
+export function isSessionBefore(a: string, b: string): boolean {
+  return compareSession(a, b) < 0;
+}
+
+export function isSessionAfter(a: string, b: string): boolean {
+  return compareSession(a, b) > 0;
+}
+
+export function isSessionSameOrBefore(a: string, b: string): boolean {
+  return compareSession(a, b) <= 0;
+}
+
+export function isSessionSameOrAfter(a: string, b: string): boolean {
+  return compareSession(a, b) >= 0;
+}
 
 export const sortSession = (session?: string[]): void => {
   if (session) {
     session.sort(compareSession);
   }
 };
+

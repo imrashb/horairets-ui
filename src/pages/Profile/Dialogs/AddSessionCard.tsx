@@ -42,11 +42,11 @@ const AddText = styled(Typography)`
 `;
 
 interface AddSessionCardProps {
-  nextSession: string;
+  session: string;
   onAdd: () => void;
 }
 
-export function AddSessionCard({ nextSession, onAdd }: AddSessionCardProps): JSX.Element {
+export function AddSessionCard({ session, onAdd }: AddSessionCardProps): JSX.Element {
   const { t } = useTranslation("common");
   
   return (
@@ -54,8 +54,8 @@ export function AddSessionCard({ nextSession, onAdd }: AddSessionCardProps): JSX
       <AddIcon>
         <Add />
       </AddIcon>
-      <AddText>
-        {getSessionTranslation(nextSession, t) || nextSession}
+      <AddText align="center">
+        {getSessionTranslation(session, t) || session}
       </AddText>
     </AddCardWrapper>
   );

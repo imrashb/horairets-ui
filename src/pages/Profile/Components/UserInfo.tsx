@@ -3,15 +3,17 @@ import React from "react";
 import { UserProfile } from "../../../hooks/firebase/types";
 import { UserInfoContainer } from "../Profile.styles";
 import { useTranslation } from "react-i18next";
-import { User } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useFirebaseAuth from "../../../components/Auth/useFirebaseAuth";
 
 interface UserInfoProps {
-  user: User | null | undefined;
   profile: UserProfile | undefined;
 }
 
-function UserInfo({ user, profile }: UserInfoProps): JSX.Element {
+function UserInfo({ profile }: UserInfoProps): JSX.Element {
   const { t } = useTranslation("common");
+  const auth = useFirebaseAuth();
+  const [user] = useAuthState(auth);
 
   return (
     <UserInfoContainer>

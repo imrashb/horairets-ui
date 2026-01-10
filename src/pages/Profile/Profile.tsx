@@ -1,11 +1,9 @@
 import { CircularProgress } from "@mui/material";
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 import withAuth from "../../components/Auth/AuthenticatedComponent";
-import useFirebaseAuth from "../../components/Auth/useFirebaseAuth";
 import useUserDocument from "../../hooks/firebase/useUserDocument";
-import { UpdateOptions, UserDocument, UserProfile } from "../../hooks/firebase/types";
+import { UserDocument } from "../../hooks/firebase/types";
 import PlannedCoursesEditor from "./Dialogs/PlannedCoursesEditor";
 import {
   ContentContainer,
@@ -24,14 +22,7 @@ const LoadingContainer = styled.div`
 `;
 
 function Profile(): JSX.Element {
-  const auth = useFirebaseAuth();
-  const [firebaseUser] = useAuthState(auth);
-
-  const { data: userDoc, updateDocument, isLoading } = useUserDocument<UserDocument>();
-
-  const handleUpdateProfile = async (updates: UserProfile, options?: UpdateOptions) => {
-    await updateDocument({ profile: updates }, options);
-  };
+  const { data: userDoc, isLoading } = useUserDocument<UserDocument>();
 
   const profile = userDoc?.profile;
 
@@ -45,14 +36,10 @@ function Profile(): JSX.Element {
 
   return (
     <ProfileWrapper>
-      <ProfileHeader 
-        user={firebaseUser} 
-        profile={profile} 
-        onUpdateProfile={handleUpdateProfile} 
-      />
+      <ProfileHeader profile={profile} />
 
       <ContentContainer>
-        <UserInfo user={firebaseUser} profile={profile} />
+        <UserInfo profile={profile} />
 
         <GridContainer>
           <ProfileCard>
