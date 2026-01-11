@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Cours } from '../../../features/generateur/generateur.types';
 import { SessionConfig } from '../../../hooks/firebase/types';
 import { fadeInOutAnimation } from '../../../utils/animations';
+import { calculateCreditsRange } from '../../../utils/credits.utils';
 import { getSessionTranslation } from '../../../utils/Sessions.utils';
 import AddCourseAutocomplete from './AddCourseAutocomplete';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
@@ -31,9 +32,10 @@ function SessionCard({
 }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
 
-  const totalCredits = useMemo(() => {
-    return allCours.filter((c) => config.cours.includes(c.sigle)).reduce((sum, c) => sum + c.credits, 0);
-  }, [allCours, config.cours]);
+  const creditsRange = useMemo(
+    () => calculateCreditsRange(allCours, config),
+    [allCours, config]
+  );
 
   const handleAddCourse = (sigle: string) => {
     onUpdateConfig({
@@ -81,7 +83,7 @@ function SessionCard({
               </Tooltip>
             )}
           </div>
-          <SessionStatsChips config={config} totalCredits={totalCredits} />
+          <SessionStatsChips config={config} creditsRange={creditsRange} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <EditSessionConfigDialog config={config} onSave={onUpdateConfig} />

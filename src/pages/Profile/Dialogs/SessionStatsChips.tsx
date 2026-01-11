@@ -3,17 +3,22 @@ import { Chip, Stack, Tooltip } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { SessionConfig } from "../../../hooks/firebase/types";
+import { CreditsRange } from "../../../utils/credits.utils";
 
 interface SessionStatsChipsProps {
   config: SessionConfig;
-  totalCredits: number;
+  creditsRange: CreditsRange;
 }
 
 export default function SessionStatsChips({
   config,
-  totalCredits,
+  creditsRange,
 }: SessionStatsChipsProps): JSX.Element {
   const { t } = useTranslation("common");
+
+  const creditsLabel = creditsRange.min === creditsRange.max
+    ? t("credits", { count: creditsRange.min })
+    : t("creditsRange", { min: creditsRange.min, max: creditsRange.max });
 
   const stats = [
     {
@@ -26,9 +31,9 @@ export default function SessionStatsChips({
     },
     {
       key: "credits",
-      label: t("credits", { count: totalCredits }),
+      label: creditsLabel,
       Icon: WorkHistory,
-      visible: totalCredits > 0,
+      visible: creditsRange.max > 0,
     },
     {
       key: "conges",
