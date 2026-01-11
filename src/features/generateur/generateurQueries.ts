@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   GET_COMBINAISONS_ENDPOINT,
   GET_COMBINAISONS_FROM_IDS_ENDPOINT,
+  GET_COURS_ENDPOINT,
   GET_PROGRAMMES_ENDPOINT,
   GET_SESSIONS_ENDPOINT,
 } from "../../app/api/api.constants";
@@ -103,5 +104,22 @@ export const useGetCombinaisonsFromId = () =>
         `${GET_COMBINAISONS_FROM_IDS_ENDPOINT}?${params.toString()}`
       );
       return data;
+    },
+  });
+
+export const useGetCours = (programmes?: string[]) =>
+  useQuery({
+    queryKey: ["cours", programmes],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (programmes && programmes.length > 0) {
+        programmes.forEach((p) => params.append(PROGRAMMES, p));
+      }
+      const queryString = params.toString();
+      const url = queryString
+        ? `${GET_COURS_ENDPOINT}?${queryString}`
+        : GET_COURS_ENDPOINT;
+      const { data } = await axios.get<Cours[]>(url);
+      return data.sort((a, b) => a.sigle.localeCompare(b.sigle));
     },
   });

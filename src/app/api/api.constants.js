@@ -3,3 +3,4 @@ export const GET_SESSIONS_ENDPOINT = 'sessions';
 export const GET_PROGRAMMES_ENDPOINT = `${GET_SESSIONS_ENDPOINT}/programmes`;
 export const GET_COMBINAISONS_ENDPOINT = 'combinaisons';
 export const GET_COMBINAISONS_FROM_IDS_ENDPOINT = `${GET_COMBINAISONS_ENDPOINT}/id`;
+export const GET_COURS_ENDPOINT = 'cours';

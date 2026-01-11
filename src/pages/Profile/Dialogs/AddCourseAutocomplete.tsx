@@ -2,19 +2,19 @@ import { Add, Close } from "@mui/icons-material";
 import { Autocomplete, ClickAwayListener, IconButton, TextField } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetCoursSession } from "../../../features/generateur/generateurQueries";
+import { Cours } from "../../../features/generateur/generateur.types";
 import { AddButton, InlineAutocomplete } from "./SessionCard.styles";
 
 interface AddCourseAutocompleteProps {
-  session: string;
-  programme: string;
+  allCours: Cours[];
+  isLoading?: boolean;
   existingCourses: string[];
   onAddCourse: (sigle: string) => void;
 }
 
 function AddCourseAutocomplete({
-  session,
-  programme,
+  allCours,
+  isLoading = false,
   existingCourses,
   onAddCourse,
 }: AddCourseAutocompleteProps): JSX.Element {
@@ -23,12 +23,9 @@ function AddCourseAutocomplete({
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Query is now handled locally, only fetches when isAdding is true
-  const coursQuery = useGetCoursSession(session, programme, isAdding);
-
-  const availableCourses = coursQuery.data?.filter(
+  const availableCourses = allCours.filter(
     (c) => !existingCourses.includes(c.sigle)
-  ) || [];
+  );
 
   const handleStartAdding = () => {
     setIsAdding(true);
@@ -56,7 +53,7 @@ function AddCourseAutocomplete({
             size="small"
             options={availableCourses}
             getOptionLabel={(option) => option.sigle}
-            loading={coursQuery.isLoading}
+            loading={isLoading}
             inputValue={inputValue}
             value={null}
             onInputChange={(_, value, reason) => {

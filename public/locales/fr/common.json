@@ -150,7 +150,6 @@
   "sigle": "Sigle...",
   "coursObligatoire": "Cours obligatoire (cliquer pour rendre optionnel)",
   "coursOptionnel": "Cours optionnel (cliquer pour verrouiller)",
-  "veuillezSelectionnerAdmission": "Veuillez sélectionner votre session d'admission",
   "commencezPlanification": "Commencez votre planification",
   "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission pour commencer votre cheminement.",
   "nbJoursConges_zero": "{{count}} jour de congé",

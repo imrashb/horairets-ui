@@ -1,4 +1,5 @@
 import React from "react";
+import { useGetCours } from "../../../features/generateur/generateurQueries";
 import { SessionConfig, SessionsMap } from "../../../hooks/firebase/types";
 import { isSessionSameOrAfter, isSessionSameOrBefore } from "../../../utils/Sessions.utils";
 import { getNextSession } from "../../../utils/SessionSequence.utils";
@@ -9,7 +10,7 @@ interface PlannedSessionsGridProps {
   localSessions: SessionsMap;
   sortedSessionKeys: string[];
   admissionSession?: string;
-  programme: string;
+  programme?: string;
   previousSession: string;
   nextSession: string;
   onAddSession: (sessionKey: string) => void;
@@ -28,10 +29,12 @@ export function PlannedSessionsGrid({
   onDeleteSession,
   onUpdateSessionConfig,
 }: PlannedSessionsGridProps): JSX.Element {
+  const { data: allCours = [], isLoading: isCoursLoading } = useGetCours(
+    programme ? [programme] : undefined
+  );
   
   if (!admissionSession) return <></>;
 
-  // Helper to determine if we can add a session before the current range
   const hasPlannedSessions = sortedSessionKeys.length > 0;
   const isPreviousSessionValid = hasPlannedSessions && isSessionSameOrAfter(previousSession, admissionSession);
 
@@ -55,7 +58,8 @@ export function PlannedSessionsGrid({
             key={sessionKey}
             session={sessionKey}
             config={localSessions[sessionKey]}
-            programme={programme}
+            allCours={allCours}
+            isCoursLoading={isCoursLoading}
             onUpdateConfig={(config) => onUpdateSessionConfig(sessionKey, config)}
             onDeleteSession={() => onDeleteSession(sessionKey)}
           />

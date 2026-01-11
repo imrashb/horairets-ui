@@ -1,7 +1,8 @@
 import { Delete, Lock, LockOpen, Warning } from "@mui/icons-material";
 import { Chip, Tooltip, Typography } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Cours } from "../../../features/generateur/generateur.types";
 import { SessionConfig } from "../../../hooks/firebase/types";
 import { getSessionTranslation } from "../../../utils/Sessions.utils";
 import AddCourseAutocomplete from "./AddCourseAutocomplete";
@@ -14,12 +15,12 @@ import {
   DeleteButton,
   EmptyState,
 } from "./SessionCard.styles";
-import { useGetCoursSession } from "../../../features/generateur/generateurQueries";
 
 interface SessionCardProps {
   session: string;
   config: SessionConfig;
-  programme: string;
+  allCours: Cours[];
+  isCoursLoading?: boolean;
   onUpdateConfig: (config: SessionConfig) => void;
   onDeleteSession: () => void;
 }
@@ -27,19 +28,18 @@ interface SessionCardProps {
 function SessionCard({
   session,
   config,
-  programme,
+  allCours,
+  isCoursLoading = false,
   onUpdateConfig,
   onDeleteSession,
 }: SessionCardProps): JSX.Element {
   const { t } = useTranslation("common");
-  const { data: coursDisponibles } = useGetCoursSession(session, programme);
 
   const totalCredits = useMemo(() => {
-    if (!coursDisponibles) return 0;
-    return coursDisponibles
+    return allCours
       .filter((c) => config.cours.includes(c.sigle))
       .reduce((sum, c) => sum + c.credits, 0);
-  }, [coursDisponibles, config.cours]);
+  }, [allCours, config.cours]);
 
   const handleAddCourse = (sigle: string) => {
     onUpdateConfig({
@@ -126,8 +126,8 @@ function SessionCard({
         })}
 
         <AddCourseAutocomplete
-          session={session}
-          programme={programme}
+          allCours={allCours}
+          isLoading={isCoursLoading}
           existingCourses={config.cours}
           onAddCourse={handleAddCourse}
         />
