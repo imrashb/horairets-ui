@@ -1,12 +1,15 @@
 import { School, Save, Warning } from "@mui/icons-material";
 import { Button, Theme, Typography } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { PlannedSessionsGrid } from "./PlannedSessionsGrid";
-import EditProfileDialog from "./EditProfileDialog";
-import { usePlannedCourses } from "./usePlannedCourses";
 import { useUnsavedChangesWarning } from "../../../hooks/useUnsavedChangesWarning";
+import { fadeInOutAnimation } from "../../../utils/animations";
+import EditProfileDialog from "./EditProfileDialog";
+import { PlannedSessionsGrid } from "./PlannedSessionsGrid";
+import { usePlannedCourses } from "./usePlannedCourses";
+
 
 const EditorWrapper = styled.div`
   display: flex;
@@ -82,20 +85,24 @@ function PlannedCoursesEditor(): JSX.Element {
         <Typography variant="h6" className="card-title" sx={{ mb: 0 }}>
           {t("coursPlanifies")}
         </Typography>
-        {hasChanges && (
-          <ActionsContainer>
-            <ChangeIndicator>
-              <Warning sx={{ fontSize: 16, mr: 0.5 }} />
-              {t("changementsNonSauvegardes")}
-            </ChangeIndicator>
-            <Button variant="outlined" onClick={handleCancel} size="small">
-              {t("annuler")}
-            </Button>
-            <Button variant="contained" startIcon={<Save />} onClick={handleSave} size="small">
-              {t("sauvegarder")}
-            </Button>
-          </ActionsContainer>
-        )}
+        <AnimatePresence>
+          {hasChanges && (
+            <motion.div key="actions" {...fadeInOutAnimation}>
+              <ActionsContainer>
+                <ChangeIndicator>
+                  <Warning sx={{ fontSize: 16, mr: 0.5 }} />
+                  {t("changementsNonSauvegardes")}
+                </ChangeIndicator>
+                <Button variant="outlined" onClick={handleCancel} size="small">
+                  {t("annuler")}
+                </Button>
+                <Button variant="contained" startIcon={<Save />} onClick={handleSave} size="small">
+                  {t("sauvegarder")}
+                </Button>
+              </ActionsContainer>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Header>
       <EditorWrapper>
         {!profile?.admissionSession ? (

@@ -151,7 +151,7 @@
   "coursObligatoire": "Cours obligatoire (cliquer pour rendre optionnel)",
   "coursOptionnel": "Cours optionnel (cliquer pour verrouiller)",
   "commencezPlanification": "Commencez votre planification",
-  "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission pour commencer votre cheminement.",
+  "selectionnezAdmissionDescription": "Veuillez sélectionner votre session d'admission et votre programme pour commencer votre cheminement.",
   "nbJoursConges_zero": "{{count}} jour de congé",
   "nbJoursConges_one": "{{count}} jour de congé",
   "nbJoursConges_other": "{{count}} jours de congé",

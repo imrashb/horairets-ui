@@ -18,6 +18,7 @@ const AddCardWrapper = styled.div`
   cursor: pointer;
   transition: all 0.2s;
   min-height: 80px;
+  height: 100%;
 
   &:hover {
     border-color: ${({ theme }) => (theme as Theme).palette.primary.main};
@@ -51,12 +52,12 @@ export function AddSessionCard({ session, onAdd }: AddSessionCardProps): JSX.Ele
   
   return (
     <AddCardWrapper onClick={onAdd}>
-      <AddIcon>
-        <Add />
-      </AddIcon>
-      <AddText align="center">
-        {getSessionTranslation(session, t) || session}
-      </AddText>
-    </AddCardWrapper>
+        <AddIcon>
+          <Add />
+        </AddIcon>
+        <AddText align="center">
+          {getSessionTranslation(session, t) || session}
+        </AddText>
+      </AddCardWrapper>
   );
 }
