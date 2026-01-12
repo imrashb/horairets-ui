@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import { useGetCours } from "../../../features/generateur/generateurQueries";
 import { SessionConfig, SessionsMap } from "../../../hooks/firebase/types";
 import { fadeInOutAnimation } from "../../../utils/animations";
 import { isSessionSameOrAfter, isSessionSameOrBefore } from "../../../utils/Sessions.utils";
@@ -31,9 +30,7 @@ export function PlannedSessionsGrid({
   onDeleteSession,
   onUpdateSessionConfig,
 }: PlannedSessionsGridProps): JSX.Element {
-  const { data: allCours = [], isLoading: isCoursLoading } = useGetCours(
-    programme ? [programme] : undefined
-  );
+
   
   if (!admissionSession) return <></>;
 
@@ -59,9 +56,7 @@ export function PlannedSessionsGrid({
             <SessionCard
               session={sessionKey}
               config={localSessions[sessionKey]}
-              allCours={allCours}
               programme={programme}
-              isCoursLoading={isCoursLoading}
               onUpdateConfig={(config) => onUpdateSessionConfig(sessionKey, config)}
               onDeleteSession={() => onDeleteSession(sessionKey)}
             />

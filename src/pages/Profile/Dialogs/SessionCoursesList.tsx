@@ -1,5 +1,5 @@
-import { Lock, LockOpen } from '@mui/icons-material';
-import { Chip } from '@mui/material';
+import { Lock, LockOpen, Warning } from '@mui/icons-material';
+import { Chip, Tooltip } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +28,12 @@ function SessionCoursesList({
 }: SessionCoursesListProps): JSX.Element {
   const { t } = useTranslation('common');
 
+  const isCourseInvalid = (sigle: string) => {
+    // If we are loading, or if no courses are available yet, we assume valid to prevent flashing errors
+    if (isCoursLoading || allCours.length === 0) return false;
+    return !allCours.some((c) => c.sigle === sigle);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <CourseSection>
@@ -37,18 +43,23 @@ function SessionCoursesList({
         </SectionLabel>
         <CoursesContainer>
           <AnimatePresence>
-            {config.coursObligatoires.map((sigle) => (
-              <motion.div key={`locked-${sigle}`} layout {...fadeInOutAnimation}>
-                <Chip
-                  label={sigle}
-                  icon={<Lock />}
-                  onClick={() => onToggleLock(sigle)}
-                  onDelete={() => onRemoveCourse(sigle)}
-                  color="secondary"
-                  size="small"
-                />
-              </motion.div>
-            ))}
+            {config.coursObligatoires.map((sigle) => {
+              const isInvalid = isCourseInvalid(sigle);
+              return (
+                <motion.div key={`locked-${sigle}`} layout {...fadeInOutAnimation}>
+                  <Tooltip title={isInvalid ? t('coursInvalide') : ''}>
+                    <Chip
+                      label={sigle}
+                      icon={isInvalid ? <Warning /> : <Lock />}
+                      onClick={() => onToggleLock(sigle)}
+                      onDelete={() => onRemoveCourse(sigle)}
+                      color={isInvalid ? 'error' : 'secondary'}
+                      size="small"
+                    />
+                  </Tooltip>
+                </motion.div>
+              );
+            })}
             {config.coursObligatoires.length === 0 && (
               <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <EmptyState style={{ fontSize: '0.75rem' }}>{t('aucunCoursObligatoire')}</EmptyState>
@@ -67,19 +78,24 @@ function SessionCoursesList({
           <AnimatePresence>
             {config.cours
               .filter((c) => !config.coursObligatoires.includes(c))
-              .map((sigle) => (
-                <motion.div key={`unlocked-${sigle}`} layout {...fadeInOutAnimation}>
-                  <Chip
-                    label={sigle}
-                    icon={<LockOpen />}
-                    onClick={() => onToggleLock(sigle)}
-                    onDelete={() => onRemoveCourse(sigle)}
-                    variant="outlined"
-                    color="primary"
-                    size="small"
-                  />
-                </motion.div>
-              ))}
+              .map((sigle) => {
+                const isInvalid = isCourseInvalid(sigle);
+                return (
+                  <motion.div key={`unlocked-${sigle}`} layout {...fadeInOutAnimation}>
+                    <Tooltip title={isInvalid ? t('coursInvalide') : ''}>
+                      <Chip
+                        label={sigle}
+                        icon={isInvalid ? <Warning /> : <LockOpen />}
+                        onClick={() => onToggleLock(sigle)}
+                        onDelete={() => onRemoveCourse(sigle)}
+                        variant={isInvalid ? 'filled' : 'outlined'}
+                        color={isInvalid ? 'error' : 'primary'}
+                        size="small"
+                      />
+                    </Tooltip>
+                  </motion.div>
+                );
+              })}
           </AnimatePresence>
           <AddCourseAutocomplete
             allCours={allCours}

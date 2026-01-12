@@ -107,7 +107,7 @@ export const useGetCombinaisonsFromId = () =>
     },
   });
 
-export const useGetCours = (programmes?: string[]) =>
+export const useGetCours = (programmes?: string[], enabled = true) =>
   useQuery({
     queryKey: ["cours", programmes],
     queryFn: async () => {
@@ -122,4 +122,5 @@ export const useGetCours = (programmes?: string[]) =>
       const { data } = await axios.get<Cours[]>(url);
       return data.sort((a, b) => a.sigle.localeCompare(b.sigle));
     },
+    enabled,
   });

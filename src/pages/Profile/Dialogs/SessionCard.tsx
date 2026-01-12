@@ -4,8 +4,8 @@ import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useSessionCourses } from './useSessionCourses';
 import { activeGenerateurConfigAtom, formGenerateurConfigAtom, programmesAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
-import { Cours } from '../../../features/generateur/generateur.types';
 import { SessionConfig } from '../../../hooks/firebase/types';
 import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
 import { calculateCreditsRange } from '../../../utils/credits.utils';
@@ -19,9 +19,7 @@ import { CardHeader, CardWrapper, DeleteButton } from './SessionCard.styles';
 interface SessionCardProps {
   session: string;
   config: SessionConfig;
-  allCours: Cours[];
   programme?: string;
-  isCoursLoading?: boolean;
   onUpdateConfig: (config: SessionConfig) => void;
   onDeleteSession: () => void;
 }
@@ -29,14 +27,17 @@ interface SessionCardProps {
 function SessionCard({
   session,
   config,
-  allCours,
   programme,
-  isCoursLoading = false,
   onUpdateConfig,
   onDeleteSession,
 }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+
+  const { allCours, isCoursLoading, isSessionAvailable, isLoadingSessions } = useSessionCourses(
+    session,
+    programme
+  );
 
   const setSession = useSetAtom(sessionAtom);
   const setProgrammes = useSetAtom(programmesAtom);
@@ -101,6 +102,11 @@ function SessionCard({
               {getSessionTranslation(session, t) || session}
             </Typography>
             <ViewSelectedScheduleButton session={session} />
+            {(!isSessionAvailable && !isLoadingSessions) && (
+              <Tooltip title={t("sessionInvalideWarning")}>
+                <Warning color="warning" sx={{ fontSize: 20 }} />
+              </Tooltip>
+            )}
             {hasWarning && (
               <Tooltip
                 title={t('alerteNombreCoursInferieur', {
