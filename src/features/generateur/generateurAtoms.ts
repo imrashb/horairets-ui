@@ -69,14 +69,10 @@ export const sortingAtom = atom(Object.keys(COMBINAISONS_SORTS)[0]);
 
 // TODO: Define proper type for Groupes filters, likely { sigle: string, groupes: (string|number)[] }[]
 export const filtersAtom = atom<Filters>({
-  planification: FILTRES_PLANIFICATION,
   groupes: [],
   disponibilites: Array.from({ length: 7 }, () => [true, true, true]),
 });
 
-export const selectFilterPlanificationAtom = atom(
-  (get) => get(filtersAtom).planification
-);
 export const selectFilterGroupesAtom = atom((get) => get(filtersAtom).groupes);
 export const selectFilterDisponibilitesAtom = atom(
   (get) => get(filtersAtom).disponibilites

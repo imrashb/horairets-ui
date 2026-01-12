@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   selectFilterDisponibilitesAtom,
   selectFilterGroupesAtom,
-  selectFilterPlanificationAtom,
 } from "../../../../../features/generateur/generateurAtoms";
 import FiltersContext from "./FiltersContext";
 
@@ -12,12 +11,9 @@ interface FiltersProviderProps {
 }
 
 function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
-  const currentPlanification = useAtomValue(selectFilterPlanificationAtom);
   const currentGroupes = useAtomValue(selectFilterGroupesAtom);
   const currentDisponibilites = useAtomValue(selectFilterDisponibilitesAtom);
 
-  const [planification, setPlanification] =
-    useState<string[]>(currentPlanification);
   const [groupes, setGroupes] = useState<string[]>(currentGroupes);
   const [disponibilites, setDisponibilites] = useState<boolean[][]>(
     currentDisponibilites || Array.from({ length: 7 }, () => [true, true, true])
@@ -25,14 +21,12 @@ function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
 
   const context = useMemo(
     () => ({
-      planification,
-      setPlanification,
       groupes,
       setGroupes,
       disponibilites,
       setDisponibilites,
     }),
-    [groupes, planification, disponibilites]
+    [groupes, disponibilites]
   );
 
   useEffect(() => {

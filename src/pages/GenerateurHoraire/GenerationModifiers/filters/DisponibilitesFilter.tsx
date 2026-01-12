@@ -1,4 +1,5 @@
 import { Button, Tooltip, Typography } from "@mui/material";
+import { Check, Close } from "@mui/icons-material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -125,7 +126,9 @@ function DisponibilitesFilter(): JSX.Element {
                   variant="contained"
                   disableElevation
                   onClick={() => toggleCell(dayIndex, periodIndex)}
-                />
+                >
+                  {dayDisp[periodIndex] ? <Check fontSize="small" /> : <Close fontSize="small" />}
+                </ToggleButton>
               </div>
             ))}
           </React.Fragment>

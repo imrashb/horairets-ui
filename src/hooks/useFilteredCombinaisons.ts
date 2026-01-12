@@ -9,7 +9,6 @@ import {
 import {
   filterDisponibilites,
   filterGroupes,
-  filterPlanification,
 } from "../pages/GenerateurHoraire/generateurHoraire.filters";
 import { COMBINAISONS_SORTS } from "../pages/GenerateurHoraire/generateurHoraire.sorting";
 
@@ -33,7 +32,6 @@ const pipeAndFilterCombinaisons = (
   combinaisons
     ? pipe(
         COMBINAISONS_SORTS[sorting as keyof typeof COMBINAISONS_SORTS],
-        filterPlanification(filters.planification),
         filterDisponibilites(filters.disponibilites),
         filterGroupes(filters.groupes)
       )(combinaisons)

@@ -12,11 +12,10 @@ function GenerationFilters(): JSX.Element {
   const { t } = useTranslation("common");
   const setFilters = useSetAtom(setFiltersAtom);
 
-  const { planification, groupes, disponibilites } = useFilters();
+  const { groupes, disponibilites } = useFilters();
 
   const onClose = () => {
     setFilters({
-      planification,
       groupes,
       disponibilites,
     });
