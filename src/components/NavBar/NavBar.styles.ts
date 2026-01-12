@@ -15,6 +15,7 @@ const NavBarWrapper = styled.div`
 
       &.navbar-left {
         flex: 2;
+        gap: 16px;
 
         ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
           flex: 1;

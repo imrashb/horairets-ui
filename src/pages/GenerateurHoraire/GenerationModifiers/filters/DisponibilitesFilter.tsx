@@ -1,8 +1,9 @@
-import { Button, Tooltip, Typography } from "@mui/material";
+import { Button, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { Theme } from "@mui/material/styles";
 import { FILTRES_PLANIFICATION, JOURS } from "../../generateurHoraire.constants";
 import useFilters from "./context/useFilters";
 
@@ -10,13 +11,12 @@ const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
 `;
 
-const GridContainer = styled.div`
+const GridContainer = styled.div<{ $isMobile: boolean }>`
   display: grid;
   grid-template-columns: auto repeat(7, 1fr);
-  gap: 4px;
+  gap: ${({ $isMobile }) => $isMobile ? '2px' : '4px'};
   align-items: center;
 `;
 
@@ -28,9 +28,10 @@ const HeaderCell = styled.div`
   padding: 4px;
 `;
 
-const ToggleButton = styled(Button)<{ $active: boolean }>`
-  min-width: 32px !important;
-  height: 32px;
+const ToggleButton = styled(Button)<{ $active: boolean; $isMobile: boolean }>`
+  min-width: ${({ $isMobile }) => $isMobile ? '24px' : '32px'} !important;
+  width: ${({ $isMobile }) => $isMobile ? '24px' : '32px'};
+  height: ${({ $isMobile }) => $isMobile ? '24px' : '32px'};
   padding: 0 !important;
   border-radius: 4px !important;
   background-color: ${({ $active, theme }) =>
@@ -48,6 +49,8 @@ const ToggleButton = styled(Button)<{ $active: boolean }>`
 function DisponibilitesFilter(): JSX.Element {
   const { t } = useTranslation("common");
   const { disponibilites, setDisponibilites } = useFilters();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const toggleCell = (dayIndex: number, periodIndex: number) => {
     const newDisp = disponibilites.map((d) => [...d]);
@@ -74,27 +77,33 @@ function DisponibilitesFilter(): JSX.Element {
     setDisponibilites(newDisp);
   };
 
-  // Short day names. Usually t("dimanche") returns "Dimanche". We can slice(0,3) or add short keys.
-  // Using slice(0,3) is quick and easy for French/English.
-  const getShortDay = (dayKey: string) => t(dayKey).substring(0, 3);
+  const getShortDay = (dayKey: string) => {
+    if (isMobile) {
+      return t(dayKey).substring(0, 1);
+    }
+    return t(dayKey).substring(0, 3);
+  };
 
   return (
     <FilterWrapper>
       <Typography variant="body2" color="textSecondary">
         {t("instructionsDisponibilites")}
       </Typography>
-      <GridContainer>
-        {/* Top-Left Empty Cell or "All" toggle */}
+      <GridContainer $isMobile={isMobile}>
         <div />
 
-        {/* Day Headers */}
         {JOURS.map((day, index) => (
           <HeaderCell key={day}>
-            <Tooltip title={t("toggleDay") || "Toggle Day"} placement="top">
+            <Tooltip title={t("toggleDay")} placement="top">
               <Button 
                 size="small" 
                 onClick={() => toggleDay(index)}
-                sx={{ minWidth: 'unset', fontWeight: 'bold' }}
+                sx={{ 
+                  minWidth: 'unset', 
+                  fontWeight: 'bold',
+                  fontSize: isMobile ? '0.65rem' : '0.875rem',
+                  padding: isMobile ? '2px' : '4px 8px',
+                }}
               >
                 {getShortDay(day)}
               </Button>
@@ -102,32 +111,35 @@ function DisponibilitesFilter(): JSX.Element {
           </HeaderCell>
         ))}
 
-        {/* Rows */}
         {FILTRES_PLANIFICATION.map((period, periodIndex) => (
           <React.Fragment key={period}>
-            {/* Period Header */}
             <HeaderCell>
-               <Tooltip title={t("togglePeriod") || "Toggle Period"} placement="left">
+              <Tooltip title={t("togglePeriod")} placement="left">
                 <Button 
                   size="small" 
                   onClick={() => togglePeriod(periodIndex)}
-                  sx={{ minWidth: 'unset', fontSize: '0.75rem', fontWeight: 'bold' }}
+                  sx={{ 
+                    minWidth: 'unset', 
+                    fontSize: isMobile ? '0.55rem' : '0.75rem', 
+                    fontWeight: 'bold',
+                    padding: isMobile ? '2px' : '4px 8px',
+                  }}
                 >
                   {t(period)}
                 </Button>
               </Tooltip>
             </HeaderCell>
 
-            {/* Cells */}
             {disponibilites.map((dayDisp, dayIndex) => (
               <div key={`${dayIndex}-${periodIndex}`} style={{ display: 'flex', justifyContent: 'center' }}>
                 <ToggleButton
                   $active={dayDisp[periodIndex]}
+                  $isMobile={isMobile}
                   variant="contained"
                   disableElevation
                   onClick={() => toggleCell(dayIndex, periodIndex)}
                 >
-                  {dayDisp[periodIndex] ? <Check fontSize="small" /> : <Close fontSize="small" />}
+                  {dayDisp[periodIndex] ? <Check sx={{ fontSize: isMobile ? 14 : 18 }} /> : <Close sx={{ fontSize: isMobile ? 14 : 18 }} />}
                 </ToggleButton>
               </div>
             ))}
