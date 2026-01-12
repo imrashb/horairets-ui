@@ -1,20 +1,18 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
   AppBar,
   Tab,
   Tabs,
   Toolbar,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
-import { HOME_URL } from "../../routes/Routes.constants";
 import HorairetsLogo from "../HorairetsLogo/HorairetsLogo";
 import LoginButton from "./components/LoginButton";
+import MobileNavDrawer from "./components/MobileNavDrawer";
+import NavLogo from "./components/NavLogo";
 import NavBarWrapper from "./NavBar.styles";
 import useNavBarTabs from "./useNavBarTabs";
 
@@ -49,22 +47,19 @@ export default function NavBar(): JSX.Element {
   };
 
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumViewport = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmallViewport = useMediaQuery(theme.breakpoints.down("sm"));
+
+  if (isMobile) {
+    return <MobileNavDrawer />;
+  }
 
   return (
     <NavBarWrapper id="navbar">
       <AppBar position="static">
         <Toolbar>
           <div className="navbar-left">
-            <img
-              className="logo-horairets"
-              src="./logo.png"
-              alt="Logo HorairÉTS"
-              onClick={() => {
-                navigate(HOME_URL);
-              }}
-            />
+            <NavLogo />
             {!isMediumViewport && (
               <HorairetsLogo fontSize="1.5rem" />
             )}
@@ -82,14 +77,7 @@ export default function NavBar(): JSX.Element {
                     key={tab.label}
                     value={tab.label}
                     icon={<tab.icon />}
-                    label={
-                      isSmallViewport ? undefined : (
-                        <>
-                          {t(tab.label)}
-                          {tab.new}
-                        </>
-                      )
-                    }
+                    label={t(tab.label)}
                   />
                 )
             )}

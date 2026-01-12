@@ -1,4 +1,4 @@
-import { Container, CssBaseline } from "@mui/material";
+import { Container, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,6 +13,8 @@ const AppLayout = (): JSX.Element => {
   const auth = getAuth();
   const [, loading] = useAuthState(auth);
   const { pathname } = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,7 +38,12 @@ const AppLayout = (): JSX.Element => {
       <CssBaseline />
       <FullPageLoader isLoading={false}>
         <NavBar />
-        <Container id="main-container" maxWidth={false} disableGutters>
+        <Container
+          id="main-container"
+          maxWidth={false}
+          disableGutters
+          sx={{ pt: isMobile ? "56px" : 0 }}
+        >
           <Outlet />
         </Container>
         <StyledToastContainer

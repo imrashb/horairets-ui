@@ -8,7 +8,7 @@ import { Section } from "../About.styles";
 const DEVELOPER = {
   name: "Emmanuel Coulombe",
   github: "imrashb",
-  linkedin: "emmanuel-coulombe",
+  linkedin: "emmanuelcoulombe",
 };
 
 const DeveloperCard = styled.div`
