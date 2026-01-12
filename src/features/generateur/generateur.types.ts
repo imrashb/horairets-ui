@@ -43,4 +43,5 @@ export interface GenerateurConfig {
 export interface Filters {
   planification: string[];
   groupes: string[];
+  disponibilites: boolean[][];
 }

@@ -178,5 +178,8 @@
   "compris": "Compris!",
   "continuerSansCompte": "Continuer sans compte",
   "fonctionnalitesNecessitentCompte": "Ces fonctionnalités nécessitent un compte pour sauvegarder vos données.",
-  "voirMonProfil": "Voir mon profil"
+  "voirMonProfil": "Voir mon profil",
+  "instructionsDisponibilites": "Cliquez sur les cases pour indiquer vos indisponibilités.",
+  "toggleDay": "Inverser la journée",
+  "togglePeriod": "Inverser la période"
 }

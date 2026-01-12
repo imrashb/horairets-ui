@@ -3,6 +3,7 @@ import { getGroupeId } from "../../utils/Groupes.utils";
 import {
   APRES_MIDI,
   FILTRES_PLANIFICATION,
+  JOURS,
   MATIN,
   SOIR,
 } from "./generateurHoraire.constants";
@@ -44,6 +45,48 @@ export const filterPlanification = (filtres: string[]) => {
             )
           )
         )
+    );
+};
+
+export const filterDisponibilites = (disponibilites: boolean[][]) => {
+  // Check if all are true (no filtering needed)
+  if (!disponibilites || disponibilites.every((day) => day.every((period) => period))) {
+    return noOperationFilter;
+  }
+
+  const PERIOD_KEYS = [MATIN, APRES_MIDI, SOIR];
+
+  return (combinaisons: Combinaison[]) =>
+    combinaisons.filter((comb) =>
+      comb.groupes.every((groupe) =>
+        groupe.activites.every((activite) => {
+          // Normalize day string
+          const jourStr = activite.horaire.jour.toUpperCase();
+          const jourIndex = JOURS.indexOf(jourStr);
+
+          // If day not found (should not happen), assume available
+          if (jourIndex === -1) return true;
+
+          // Check each period for overlap
+          for (let i = 0; i < 3; i++) {
+            const periodKey = PERIOD_KEYS[i];
+            const range = HEURES_COURS[periodKey];
+
+            // Check timing overlap
+            const isOverlapping =
+              Math.max(activite.horaire.heureDepart, range.min) <=
+              Math.min(activite.horaire.heureFin, range.max);
+
+            if (isOverlapping) {
+              // If overlaps a period, check if that period is Allowed (true)
+              if (!disponibilites[jourIndex][i]) {
+                return false; // Intersection with disallowed slot
+              }
+            }
+          }
+          return true;
+        })
+      )
     );
 };
 

@@ -7,6 +7,7 @@ import {
   updateCombinaisonsInfoAtom,
 } from "../features/generateur/generateurAtoms";
 import {
+  filterDisponibilites,
   filterGroupes,
   filterPlanification,
 } from "../pages/GenerateurHoraire/generateurHoraire.filters";
@@ -33,6 +34,7 @@ const pipeAndFilterCombinaisons = (
     ? pipe(
         COMBINAISONS_SORTS[sorting as keyof typeof COMBINAISONS_SORTS],
         filterPlanification(filters.planification),
+        filterDisponibilites(filters.disponibilites),
         filterGroupes(filters.groupes)
       )(combinaisons)
     : combinaisons;
