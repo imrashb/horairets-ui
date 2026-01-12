@@ -111,7 +111,7 @@ function DisponibilitesFilter(): JSX.Element {
                 <Button 
                   size="small" 
                   onClick={() => togglePeriod(periodIndex)}
-                  sx={{ minWidth: 'unset', fontSize: '0.75rem' }}
+                  sx={{ minWidth: 'unset', fontSize: '0.75rem', fontWeight: 'bold' }}
                 >
                   {t(period)}
                 </Button>
