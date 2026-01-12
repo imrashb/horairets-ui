@@ -7,6 +7,7 @@ import {
 } from "@mui/icons-material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
+  ABOUT_URL,
   FAVORIS_URL,
   GENERATEUR_HORAIRE_URL,
   HOME_URL,
@@ -45,10 +46,9 @@ const useNavBarTabs = (): NavBarTab[] => {
       new: true,
     },
     {
-      path: "/",
+      path: ABOUT_URL,
       icon: Info,
       label: "aPropos",
-      hidden: true,
     },
   ];
 

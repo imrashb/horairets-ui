@@ -195,5 +195,11 @@
   "coursVariables": "Cours flexibles",
   "aucunCoursObligatoire": "Aucun cours obligatoire",
   "precedent": "Précédent",
-  "suivant": "Suivant"
+  "suivant": "Suivant",
+  "liensUtiles": "Liens utiles",
+  "communauteDiscord": "Communauté Discord",
+  "rejoinsDiscordDescription": "Rejoins notre communauté pour discuter et obtenir de l'aide",
+  "codeSourceFrontend": "Code source (Frontend)",
+  "codeSourceBackend": "Code source (Backend)",
+  "developpeur": "Développeur"
 }
