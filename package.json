@@ -14,8 +14,9 @@
     "HorairÉTS"
   ],
   "scripts": {
-    "dev": "vite --open & firebase emulators:start",
+    "dev": "vite --open",
     "firebase:setup": "npm install -g firebase-tools && firebase logout && firebase login && firebase init emulators && cd functions && npm i",
+    "firebase:start": "firebase emulators:start",
     "start": "vite --open",
     "host": "vite --open --host",
     "build": "vite build",

@@ -17,7 +17,7 @@ const AddCardWrapper = styled.div`
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
-  min-height: 80px;
+  min-height: 200px;
   height: 100%;
 
   &:hover {
