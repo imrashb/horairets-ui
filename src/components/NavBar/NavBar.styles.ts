@@ -44,7 +44,38 @@ const NavBarWrapper = styled.div`
           .MuiTab-root {
             flex-direction: row;
             align-items: center;
+            gap: 8px;
+            min-height: 48px;
+            border-radius: 12px;
+            margin: 0 4px;
+            padding: 8px 16px;
+            transition: all 0.2s ease-in-out;
+            text-transform: none;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7) !important;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.1) !important;
+              color: #ffffff !important;
+              opacity: 1;
+            }
+
+            &.Mui-selected {
+              background-color: rgba(255, 255, 255, 0.25) !important;
+              color: #ffffff !important;
+              opacity: 1;
+            }
+
+            .MuiSvgIcon-root {
+              font-size: 20px;
+              color: inherit;
+              margin-bottom: 0 !important;
+            }
           }
+        }
+
+        .MuiTabs-indicator {
+          display: none;
         }
       }
 

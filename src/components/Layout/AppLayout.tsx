@@ -1,8 +1,8 @@
 import { Container, CssBaseline } from "@mui/material";
 import { getAuth } from "firebase/auth";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import ChangelogDialog from "../ChangelogDialog/ChangelogDialog";
 import FullPageLoader from "../Loaders/FullPageLoader";
 import NavBar from "../NavBar/NavBar";
@@ -12,6 +12,11 @@ import GlobalStyle from "../../themes/GlobalStyle";
 const AppLayout = (): JSX.Element => {
   const auth = getAuth();
   const [, loading] = useAuthState(auth);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   if (loading) {
     return (

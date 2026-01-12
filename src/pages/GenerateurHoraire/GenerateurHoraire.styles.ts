@@ -16,9 +16,7 @@ const GenerateurHoraireWrapper = styled.div`
       ${({ theme }) => (theme as Theme).sizes.size_8};
   }
 
-  .title {
-    text-shadow: ${({ theme }) => (theme as Theme).textShadow.main};
-  }
+
 
   .main-content-wrapper {
     display: flex;

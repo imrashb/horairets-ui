@@ -26,14 +26,7 @@ function GenerateurHoraire(): JSX.Element {
 
   return (
     <GenerateurHoraireWrapper>
-      <Typography
-        className="title"
-        color="primary"
-        fontWeight={600}
-        variant="h2"
-      >
-        {t("generateurHoraire").toUpperCase()}
-      </Typography>
+
       <GenerationModifiers
         title={
           combinaisons
