@@ -13,6 +13,7 @@ import { useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HOME_URL } from "../../routes/Routes.constants";
+import HorairetsLogo from "../HorairetsLogo/HorairetsLogo";
 import LoginButton from "./components/LoginButton";
 import NavBarWrapper from "./NavBar.styles";
 import useNavBarTabs from "./useNavBarTabs";
@@ -65,9 +66,7 @@ export default function NavBar(): JSX.Element {
               }}
             />
             {!isMediumViewport && (
-              <Typography variant="h5" component="div" className="navbar-title">
-                {t("horairets")}
-              </Typography>
+              <HorairetsLogo fontSize="1.5rem" />
             )}
           </div>
           <Tabs

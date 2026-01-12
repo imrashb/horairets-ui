@@ -67,6 +67,8 @@
   "EARLY_FINISH_SORT": "Terminer plus tôt",
   "lateStartSort": "Commencer plus tard",
   "earlyFinishSort": "Terminer plus tôt",
+  "tabCheminement": "Cheminement",
+  "tabAVenir": "À venir...",
   "aucun": "Aucun",
   "sessionInvalideWarning": "Les cours dans la liste pourraient possiblement être non-valide, car la liste des cours n'est présentement pas disponible",
   "coursInvalide": "Ce cours n'est pas disponible pour cette session.",

@@ -76,15 +76,10 @@ export const ProfileActions = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-  display: grid;
-  grid-template-columns: 300px 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
   padding: 0 24px 48px;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
 
   @media (max-width: 600px) {
     padding: 0 16px 32px;
