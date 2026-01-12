@@ -1,68 +1,66 @@
-import { Sort } from "@mui/icons-material";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles"; // standard MUI hook
+import { Check, Sort } from "@mui/icons-material";
+import { Button, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useAtom } from "jotai";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import ButtonDialog from "../../../components/ButtonDialog/ButtonDialog";
 import { sortingAtom } from "../../../features/generateur/generateurAtoms";
 import { COMBINAISONS_SORTS } from "../generateurHoraire.sorting";
 
 function GenerationSorting(): JSX.Element {
   const { t } = useTranslation("common");
   const [sorting, setSorting] = useAtom(sortingAtom);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-  const theme = useTheme<Theme>();
-  const isMediumViewport = useMediaQuery(theme.breakpoints.down("md"));
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (value: string) => {
+    setSorting(value);
+    handleClose();
+  };
 
   return (
     <div className="sort-wrapper">
-      {!isMediumViewport ? (
-        <>
-          <Typography className="sort-text" variant="h5" component="div">
-            {t("trierPar")}
-          </Typography>
-          <FormControl className="sort-dropdown">
-            <Select
-              size="small"
-              variant="outlined"
-              value={sorting}
-              onChange={(e) => setSorting(e?.target?.value as string)}
-            >
-              {Object.keys(COMBINAISONS_SORTS).map((value) => (
-                <MenuItem key={value} value={value}>
-                  {t(value)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </>
-      ) : (
-        <ButtonDialog title={t("trier")} icon={<Sort />} onClose={() => {}}>
-          <FormControl fullWidth variant="standard">
-            <InputLabel>{t("trierPar")}</InputLabel>
-            <Select
-              value={sorting}
-              onChange={(e) => setSorting(e?.target?.value as string)}
-              label={t("trierPar")}
-            >
-              {Object.keys(COMBINAISONS_SORTS).map((value) => (
-                <MenuItem key={value} value={value}>
-                  {t(value)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </ButtonDialog>
-      )}
+      <Button
+        id="sort-button"
+        aria-controls={open ? "sort-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        variant="text"
+        color="inherit"
+        startIcon={<Sort />}
+        onClick={handleClick}
+      >
+        {t("trier")}
+      </Button>
+      <Menu
+        id="sort-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "sort-button",
+        }}
+      >
+        {Object.keys(COMBINAISONS_SORTS).map((value) => (
+          <MenuItem
+            key={value}
+            selected={value === sorting}
+            onClick={() => handleSelect(value)}
+          >
+            <ListItemIcon>
+              {value === sorting && <Check fontSize="small" />}
+            </ListItemIcon>
+            <ListItemText>{t(value)}</ListItemText>
+          </MenuItem>
+        ))}
+      </Menu>
     </div>
   );
 }

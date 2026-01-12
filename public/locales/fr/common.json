@@ -63,6 +63,8 @@
   "LOST_TIME_BETWEEN_CLASSES_SORT": "Temps perdu entre cours",
   "CONGES_SORT": "Nombre de congés",
   "CONGES_LOST_TIME_SORT": "Nombre de congés et temps perdu entre cours",
+  "LATE_START_SORT": "Commencer plus tard",
+  "EARLY_FINISH_SORT": "Terminer plus tôt",
   "aucun": "Aucun",
   "alerteNombreCoursInferieur_other": "Vous tentez de générer des horaires avec {{nbCours}} cours, alors que {{count}} cours sont sélectionnés. Veuillez réduire le nombre de cours par horaire.",
   "alerteNombreCoursInferieur_one": "Vous tentez de générer des horaires avec {{nbCours}} cours, alors que {{count}} cours est sélectionné. Veuillez réduire le nombre de cours par horaire.",
@@ -181,5 +183,8 @@
   "voirMonProfil": "Voir mon profil",
   "instructionsDisponibilites": "Cliquez sur les cases pour indiquer vos indisponibilités.",
   "toggleDay": "Inverser la journée",
-  "togglePeriod": "Inverser la période"
+  "togglePeriod": "Inverser la période",
+  "coursObligatoires": "Cours obligatoires",
+  "coursVariables": "Cours flexibles",
+  "aucunCoursObligatoire": "Aucun cours obligatoire"
 }

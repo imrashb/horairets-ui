@@ -44,17 +44,6 @@ const GenerationModifiersWrapper = styled.div`
     align-items: center;
 
     margin-right: ${({ theme }) => (theme as Theme).sizes.size_16};
-    .sort-dropdown {
-      width: ${({ theme }) => (theme as Theme).sizes.size_256};
-
-      ${({ theme }) => (theme as Theme).breakpoints.between("sm", "md")} {
-        width: ${({ theme }) => (theme as Theme).sizes.size_192};
-      }
-    }
-
-    .sort-text {
-      margin-right: ${({ theme }) => (theme as Theme).sizes.size_16};
-    }
   }
 `;
 

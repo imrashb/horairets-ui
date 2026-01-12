@@ -18,6 +18,23 @@ export const CardHeader = styled.div`
   align-items: flex-start;
 `;
 
+export const CourseSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+`;
+
+export const SectionLabel = styled(Typography)`
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: ${({ theme }) => (theme as Theme).palette.text.secondary};
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`;
+
 export const CoursesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -62,7 +79,7 @@ export const InlineAutocomplete = styled.div`
 export const EmptyState = styled(Typography)`
   color: ${({ theme }) => (theme as Theme).palette.text.secondary};
   font-style: italic;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 28px;
 `;
 
@@ -74,4 +91,4 @@ export const DeleteButton = styled(IconButton)`
     opacity: 1;
     color: ${({ theme }) => (theme as Theme).palette.error.main};
   }
-`; 
+`;

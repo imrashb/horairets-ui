@@ -1,6 +1,5 @@
-import { CalendarMonth, Delete, Lock, LockOpen, Warning } from '@mui/icons-material';
-import { Chip, IconButton, Tooltip, Typography } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
+import { CalendarMonth, Delete, Warning } from '@mui/icons-material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,14 +8,13 @@ import { activeGenerateurConfigAtom, formGenerateurConfigAtom, programmesAtom, s
 import { Cours } from '../../../features/generateur/generateur.types';
 import { SessionConfig } from '../../../hooks/firebase/types';
 import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
-import { fadeInOutAnimation } from '../../../utils/animations';
 import { calculateCreditsRange } from '../../../utils/credits.utils';
 import { getSessionTranslation } from '../../../utils/Sessions.utils';
-import AddCourseAutocomplete from './AddCourseAutocomplete';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
+import SessionCoursesList from './SessionCoursesList';
 import ViewSelectedScheduleButton from './ViewSelectedScheduleButton';
-import { CardHeader, CardWrapper, CoursesContainer, DeleteButton, EmptyState } from './SessionCard.styles';
+import { CardHeader, CardWrapper, DeleteButton } from './SessionCard.styles';
 
 interface SessionCardProps {
   session: string;
@@ -145,36 +143,14 @@ function SessionCard({
         </div>
       </CardHeader>
 
-      <CoursesContainer>
-        {config.cours.length === 0 && <EmptyState>{t('aucunCoursPlanifie')}</EmptyState>}
-
-        <AnimatePresence>
-          {config.cours.map((sigle) => {
-            const isLocked = config.coursObligatoires.includes(sigle);
-            return (
-              <motion.div key={sigle} layout {...fadeInOutAnimation}>
-                <Tooltip title={isLocked ? t('coursObligatoire') : t('coursOptionnel')}>
-                  <Chip
-                    label={sigle}
-                    icon={isLocked ? <Lock /> : <LockOpen />}
-                    onClick={() => handleToggleLock(sigle)}
-                    onDelete={() => handleRemoveCourse(sigle)}
-                    color={isLocked ? 'secondary' : 'primary'}
-                    size="small"
-                  />
-                </Tooltip>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-
-        <AddCourseAutocomplete
-          allCours={allCours}
-          isLoading={isCoursLoading}
-          existingCourses={config.cours}
-          onAddCourse={handleAddCourse}
-        />
-      </CoursesContainer>
+      <SessionCoursesList
+        config={config}
+        allCours={allCours}
+        isCoursLoading={isCoursLoading}
+        onAddCourse={handleAddCourse}
+        onRemoveCourse={handleRemoveCourse}
+        onToggleLock={handleToggleLock}
+      />
     </CardWrapper>
   );
 }
