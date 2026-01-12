@@ -15,6 +15,7 @@ import { getSessionTranslation } from '../../../utils/Sessions.utils';
 import AddCourseAutocomplete from './AddCourseAutocomplete';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
+import ViewSelectedScheduleButton from './ViewSelectedScheduleButton';
 import { CardHeader, CardWrapper, CoursesContainer, DeleteButton, EmptyState } from './SessionCard.styles';
 
 interface SessionCardProps {
@@ -96,11 +97,12 @@ function SessionCard({
   return (
     <CardWrapper>
       <CardHeader>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Typography variant="subtitle1" fontWeight="bold">
               {getSessionTranslation(session, t) || session}
             </Typography>
+            <ViewSelectedScheduleButton session={session} />
             {hasWarning && (
               <Tooltip
                 title={t('alerteNombreCoursInferieur', {

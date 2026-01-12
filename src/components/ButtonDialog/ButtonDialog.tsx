@@ -1,13 +1,15 @@
+import { Close } from "@mui/icons-material";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  useMediaQuery,
-  Theme,
-  PaletteMode,
   IconButton,
+  IconButtonProps,
+  Theme,
+  Tooltip,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,12 +19,16 @@ type ButtonDialogProps = {
   icon: React.ReactNode;
   title: string;
   onClose?: () => void;
+  onOpen?: () => void;
   children: React.ReactNode;
   size?: "small" | "medium" | "large";
   isIconButton?: boolean;
+  iconButtonProps?: Partial<IconButtonProps>;
+  viewOnly?: boolean;
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+  tooltip?: string;
 };
 
-// Properly type the styled component with the theme type if needed, but inference is usually enough.
 const DialogContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,14 +45,21 @@ function ButtonDialog({
   icon,
   title,
   onClose,
+  onOpen,
   children,
   isIconButton,
+  iconButtonProps,
+  viewOnly = false,
+  maxWidth,
+  tooltip,
 }: ButtonDialogProps): JSX.Element {
   const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
 
   const theme = useTheme() as Theme;
   const isSmallViewport = useMediaQuery(theme.breakpoints.down("sm"));
+  const onOpenRef = React.useRef(onOpen);
+  onOpenRef.current = onOpen;
 
   useEffect(() => {
     if (!isSmallViewport) {
@@ -54,15 +67,25 @@ function ButtonDialog({
     }
   }, [isSmallViewport]);
 
+  useEffect(() => {
+    if (visible) {
+      onOpenRef.current?.();
+    }
+  }, [visible]);
+
   const handleClose = () => {
     setVisible(false);
     onClose?.();
   };
 
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
   const Spacer = <div style={{ width: 4 }} />;
 
-  const Trigger = isIconButton ? (
-    <IconButton onClick={() => setVisible(true)}>
+  const triggerButton = isIconButton ? (
+    <IconButton onClick={() => setVisible(true)} {...iconButtonProps}>
       {icon}
     </IconButton>
   ) : (
@@ -73,32 +96,46 @@ function ButtonDialog({
     </Button>
   );
 
+  const Trigger = tooltip ? (
+    <Tooltip title={tooltip}>{triggerButton}</Tooltip>
+  ) : (
+    triggerButton
+  );
+
   return (
     <>
-      <div className="button-dialog-wrapper">
-        {Trigger}
-      </div>
+      <div className="button-dialog-wrapper">{Trigger}</div>
 
-      <Dialog fullWidth open={visible}>
-        <DialogTitle sx={{ alignItems: "center", display: "flex" }}>
-          {title}
-          {Spacer}
-          {icon}
+      <Dialog fullWidth open={visible} onClose={handleCancel} maxWidth={maxWidth}>
+        <DialogTitle sx={{ alignItems: "center", display: "flex", justifyContent: viewOnly ? "space-between" : undefined }}>
+          <span style={{ display: "flex", alignItems: "center" }}>
+            {title}
+            {Spacer}
+            {icon}
+          </span>
+          {viewOnly && (
+            <IconButton onClick={handleCancel}>
+              <Close />
+            </IconButton>
+          )}
         </DialogTitle>
         <DialogContent>
           <DialogContentWrapper>{children}</DialogContentWrapper>
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" color="error" onClick={() => setVisible(false)}>
-            {t("annuler")}
-          </Button>
-          <Button variant="contained" onClick={handleClose}>
-            {t("appliquerParametres")}
-          </Button>
-        </DialogActions>
+        {!viewOnly && (
+          <DialogActions>
+            <Button variant="contained" color="error" onClick={handleCancel}>
+              {t("annuler")}
+            </Button>
+            <Button variant="contained" onClick={handleClose}>
+              {t("appliquerParametres")}
+            </Button>
+          </DialogActions>
+        )}
       </Dialog>
     </>
   );
 }
 
 export default ButtonDialog;
+

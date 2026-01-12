@@ -9,11 +9,11 @@ export const ProfileWrapper = styled.div`
 
 export const ProfileBannerContainer = styled.div`
   position: relative;
-  height: 200px;
+  height: 125px;
   overflow: hidden;
 
   @media (max-width: 600px) {
-    height: 150px;
+    height: 100px;
   }
 `;
 
