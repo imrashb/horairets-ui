@@ -2,10 +2,12 @@ import { ArrowForward, Close, Login, NewReleases } from "@mui/icons-material";
 import {
   Alert,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   IconButton,
   Typography,
 } from "@mui/material";
@@ -44,6 +46,7 @@ function ChangelogDialog(): JSX.Element {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [doNotShowAgain, setDoNotShowAgain] = useState(false);
   const auth = getAuth();
   const [user] = useAuthState(auth);
 
@@ -61,7 +64,9 @@ function ChangelogDialog(): JSX.Element {
   }, [isDev]);
 
   const handleDismiss = () => {
-    localStorage.setItem(CHANGELOG_STORAGE_KEY, CHANGELOG_VERSION);
+    if (doNotShowAgain) {
+      localStorage.setItem(CHANGELOG_STORAGE_KEY, CHANGELOG_VERSION);
+    }
     setOpen(false);
   };
 
@@ -123,21 +128,32 @@ function ChangelogDialog(): JSX.Element {
           )}
         </ChangelogContent>
       </DialogContent>
-      <DialogActions sx={{ gap: 1 }}>
-        {user ? (
-          <Button variant="contained" onClick={handleDismiss}>
-            {t("compris")}
-          </Button>
-        ) : (
-          <>
-            <Button variant="outlined" onClick={handleDismiss}>
-              {t("continuerSansCompte")}
+      <DialogActions sx={{ justifyContent: "space-between", px: 3, pb: 2 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={doNotShowAgain}
+              onChange={(e) => setDoNotShowAgain(e.target.checked)}
+            />
+          }
+          label={t("nePlusAfficher")}
+        />
+        <div style={{ display: "flex", gap: "8px" }}>
+          {user ? (
+            <Button variant="contained" onClick={handleDismiss}>
+              {t("compris")}
             </Button>
-            <Button variant="contained" startIcon={<Login />} onClick={handleSignIn}>
-              {t("seConnecter")}
-            </Button>
-          </>
-        )}
+          ) : (
+            <>
+              <Button variant="outlined" onClick={handleDismiss}>
+                {t("continuerSansCompte")}
+              </Button>
+              <Button variant="contained" startIcon={<Login />} onClick={handleSignIn}>
+                {t("seConnecter")}
+              </Button>
+            </>
+          )}
+        </div>
       </DialogActions>
     </Dialog>
   );
