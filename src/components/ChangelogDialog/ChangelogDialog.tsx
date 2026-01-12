@@ -112,7 +112,7 @@ function ChangelogDialog(): JSX.Element {
           </Typography>
           <ul>
             <li>💾 Vos préférences d'affichage sont maintenant sauvegardées sur votre compte</li>
-            <li>💡 Nouveaux tooltips sur tous les boutons d'actions</li>
+            <li>✨ Améliorations diverses de l'interface et de l'expérience utilisateur</li>
             <li>🕒 Nouveau filtre de disponibilités pour filtrer les horaires selon vos plages libres</li>
           </ul>
 
