@@ -8,3 +8,4 @@ function NewBadge(): JSX.Element {
 }
 
 export default NewBadge;
+
