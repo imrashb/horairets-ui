@@ -1,28 +1,25 @@
-import { ArrowForward, Close, Login, NewReleases } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, Close, NewReleases } from "@mui/icons-material";
 import {
-  Alert,
   Button,
-  Checkbox,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   IconButton,
-  Typography,
+  MobileStepper,
 } from "@mui/material";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { PROFILE_URL } from "../../routes/Routes.constants";
+import {
+  CHANGELOG_STORAGE_KEY,
+  CHANGELOGS,
+  getLatestChangelogDate,
+  getUnseenChangelogs,
+} from "./changelog.config";
 
-const CHANGELOG_VERSION = "2026-01-11";
-const CHANGELOG_STORAGE_KEY = "horairets_changelog_dismissed";
-
-const ChangelogContent = styled.div`
+const ChangelogContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -42,117 +39,121 @@ const ChangelogContent = styled.div`
   }
 `;
 
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+`;
+
 function ChangelogDialog(): JSX.Element {
   const { t } = useTranslation("common");
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [doNotShowAgain, setDoNotShowAgain] = useState(false);
-  const auth = getAuth();
-  const [user] = useAuthState(auth);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const isDev = import.meta.env.DEV;
+
+  const unseenChangelogs = useMemo(() => {
+      if(isDev) {
+        return CHANGELOGS;
+      }
+
+    const lastSeenDate = localStorage.getItem(CHANGELOG_STORAGE_KEY);
+    return getUnseenChangelogs(lastSeenDate);
+  }, [isDev]);
+
 
   useEffect(() => {
     if (isDev) {
       setOpen(true);
       return;
     }
-    const dismissedVersion = localStorage.getItem(CHANGELOG_STORAGE_KEY);
-    if (dismissedVersion !== CHANGELOG_VERSION) {
+
+    if (unseenChangelogs.length > 0) {
       setOpen(true);
     }
-  }, [isDev]);
+  }, [isDev, unseenChangelogs.length]);
+
+  const currentChangelog = useMemo(
+    () => unseenChangelogs[currentIndex],
+    [unseenChangelogs, currentIndex]
+  );
+
+  const isFirst = currentIndex === 0;
+  const isLast = currentIndex === unseenChangelogs.length - 1;
 
   const handleDismiss = () => {
-    if (doNotShowAgain) {
-      localStorage.setItem(CHANGELOG_STORAGE_KEY, CHANGELOG_VERSION);
-    }
+    localStorage.setItem(CHANGELOG_STORAGE_KEY, getLatestChangelogDate());
     setOpen(false);
   };
 
-  const handleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-    handleDismiss();
+  const handleNext = () => {
+    if (isLast) {
+      handleDismiss();
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+    }
   };
+
+  const handleBack = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  if (!currentChangelog) return <></>;
+
+  const { Content, date } = currentChangelog;
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <TitleWrapper>
           <NewReleases color="primary" />
           {t("nouveautes")}
-        </span>
+          <Chip
+            label={new Date(`${date}T12:00:00`).toLocaleDateString()}
+            size="small"
+            variant="filled"
+            color="primary"
+          />
+        </TitleWrapper>
         <IconButton onClick={handleDismiss}>
           <Close />
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <ChangelogContent>
-          <Typography className="section-title" sx={{ display: "flex", alignItems: "center", gap:1, flexWrap: "wrap" }}>
-            🎓 Nouvelle page de profil
-            {user && (
-              <Button
-                size="small"
-                color="info"
-                variant="outlined"
-                endIcon={<ArrowForward />}
-                onClick={() => {
-                  handleDismiss();
-                  navigate(PROFILE_URL);
-                }}
-              >
-                {t("voirMonProfil")}
-              </Button>
-            )}
-          </Typography>
-          <ul>
-            <li>📅 Planifiez vos cours pour chaque session de votre cheminement</li>
-            <li>🚀 Exportez votre planification vers le générateur d'horaires en un clic</li>
-            <li>✅ Sélectionnez votre horaire actuel pour le retrouver facilement</li>
-          </ul>
-
-          <Typography className="section-title">
-            ⭐ Améliorations
-          </Typography>
-          <ul>
-            <li>💾 Vos préférences d'affichage sont maintenant sauvegardées sur votre compte</li>
-            <li>✨ Améliorations diverses de l'interface et de l'expérience utilisateur</li>
-            <li>🕒 Nouveau filtre de disponibilités pour filtrer les horaires selon vos plages libres</li>
-          </ul>
-
-          {!user && (
-            <Alert severity="info" sx={{ mt: 1 }}>
-              {t("fonctionnalitesNecessitentCompte")}
-            </Alert>
-          )}
-        </ChangelogContent>
+        <ChangelogContentWrapper>
+          <Content onDismiss={handleDismiss} />
+        </ChangelogContentWrapper>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "space-between", px: 3, pb: 2 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={doNotShowAgain}
-              onChange={(e) => setDoNotShowAgain(e.target.checked)}
-            />
-          }
-          label={t("nePlusAfficher")}
-        />
-        <div style={{ display: "flex", gap: "8px" }}>
-          {user ? (
-            <Button variant="contained" onClick={handleDismiss}>
-              {t("compris")}
+      <DialogActions sx={{ flexDirection: "column", gap: 1, px: 3, pb: 2 }}>
+        {unseenChangelogs.length > 1 && (
+          <MobileStepper
+            variant="dots"
+            steps={unseenChangelogs.length}
+            position="static"
+            activeStep={currentIndex}
+            sx={{ width: "100%", bgcolor: "transparent", justifyContent: "center" }}
+            backButton={<></>}
+            nextButton={<></>}
+          />
+        )}
+        <div style={{ display: "flex", gap: "8px", width: "100%", justifyContent: "flex-end" }}>
+          {!isFirst && (
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBack />}
+              onClick={handleBack}
+            >
+              {t("precedent")}
             </Button>
-          ) : (
-            <>
-              <Button variant="outlined" onClick={handleDismiss}>
-                {t("continuerSansCompte")}
-              </Button>
-              <Button variant="contained" startIcon={<Login />} onClick={handleSignIn}>
-                {t("seConnecter")}
-              </Button>
-            </>
           )}
+          <Button
+            variant="contained"
+            endIcon={!isLast ? <ArrowForward /> : undefined}
+            onClick={handleNext}
+          >
+            {isLast ? t("compris") : t("suivant")}
+          </Button>
         </div>
       </DialogActions>
     </Dialog>
@@ -160,4 +161,3 @@ function ChangelogDialog(): JSX.Element {
 }
 
 export default ChangelogDialog;
-

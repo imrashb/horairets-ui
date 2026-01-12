@@ -1,4 +1,4 @@
-import { CalendarToday } from "@mui/icons-material";
+import { EventAvailable } from "@mui/icons-material";
 import { CircularProgress, Typography } from "@mui/material";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -64,7 +64,7 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
 
   return (
     <ButtonDialog
-      icon={<CalendarToday sx={{ fontSize: 16 }} />}
+      icon={<EventAvailable sx={{ fontSize: 16 }} />}
       title={t("horaireActuel") as string}
       viewOnly
       maxWidth="md"
@@ -74,9 +74,14 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
       iconButtonProps={{
         size: "small",
         sx: {
-          bgcolor: "success.main",
-          color: "success.contrastText",
-          "&:hover": { bgcolor: "success.dark" },
+          border: 1,
+          borderColor: "success.main",
+          color: "success.main",
+          bgcolor: "transparent",
+          "&:hover": {
+            bgcolor: "success.main",
+            color: "success.contrastText",
+          },
         },
       }}
     >

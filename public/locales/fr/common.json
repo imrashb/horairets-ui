@@ -193,5 +193,7 @@
   "togglePeriod": "Inverser la période",
   "coursObligatoires": "Cours obligatoires",
   "coursVariables": "Cours flexibles",
-  "aucunCoursObligatoire": "Aucun cours obligatoire"
+  "aucunCoursObligatoire": "Aucun cours obligatoire",
+  "precedent": "Précédent",
+  "suivant": "Suivant"
 }
