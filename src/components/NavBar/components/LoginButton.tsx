@@ -1,5 +1,5 @@
 import { AccountCircle, Login } from "@mui/icons-material";
-import { Button, IconButton, Skeleton, useMediaQuery, useTheme } from "@mui/material";
+import { Badge, Button, IconButton, Skeleton, useMediaQuery, useTheme } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -34,23 +34,40 @@ function LoginButton(): JSX.Element {
   const theme = useTheme();
   const isMediumViewport = useMediaQuery(theme.breakpoints.up("md"));
 
+  const loginButton = isMediumViewport ? (
+    <Button
+      ref={anchor as any}
+      startIcon={user ? <AccountCircle /> : <Login />}
+      variant="contained"
+      onClick={handleLogin}
+    >
+      {user ? user?.displayName : t("seConnecter")}
+    </Button>
+  ) : (
+    <IconButton ref={anchor as any} onClick={handleLogin}>
+      {user ? <AccountCircle /> : <Login />}
+    </IconButton>
+  );
+
   return loading ? (
     <Skeleton variant="rounded" width="12rem" height="2rem" />
   ) : (
     <>
-      {isMediumViewport ? (
-        <Button
-          ref={anchor as any}
-          startIcon={user ? <AccountCircle /> : <Login />}
-          variant="contained"
-          onClick={handleLogin}
+      {user ? (
+        <Badge
+          badgeContent={t("badgeNew")}
+          anchorOrigin={{ vertical: "top", horizontal: "left" }}
+          sx={{
+            "& .MuiBadge-badge": {
+              bgcolor: "badgeNew.main",
+              color: "background.default",
+            },
+          }}
         >
-          {user ? user?.displayName : t("seConnecter")}
-        </Button>
+          {loginButton}
+        </Badge>
       ) : (
-        <IconButton ref={anchor as any} onClick={handleLogin}>
-          {user ? <AccountCircle /> : <Login />}
-        </IconButton>
+        loginButton
       )}
       <AccountMenu
         anchor={anchor}
@@ -62,3 +79,4 @@ function LoginButton(): JSX.Element {
 }
 
 export default LoginButton;
+

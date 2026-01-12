@@ -5,6 +5,7 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import NewBadge from "../../NewBadge/NewBadge";
 import { PROFILE_URL } from "../../../routes/Routes.constants";
 import useFirebaseAuth from "../useFirebaseAuth";
 
@@ -75,6 +76,7 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
           <AccountCircle fontSize="small" />
         </ListItemIcon>
         {t("monProfil")}
+        <NewBadge />
       </MenuItem>
       <MenuItem onClick={logout}>
         <ListItemIcon>
