@@ -173,5 +173,10 @@
   "voirHoraireActuel": "Voir l'horaire actuel",
   "horaireActuel": "Horaire actuel",
   "aucunHoraireSelectionne": "Aucun horaire sélectionné",
-  "erreurChargementHoraire": "Erreur lors du chargement de l'horaire"
+  "erreurChargementHoraire": "Erreur lors du chargement de l'horaire",
+  "nouveautes": "Nouveautés",
+  "compris": "Compris!",
+  "continuerSansCompte": "Continuer sans compte",
+  "fonctionnalitesNecessitentCompte": "Ces fonctionnalités nécessitent un compte pour sauvegarder vos données.",
+  "voirMonProfil": "Voir mon profil"
 }
