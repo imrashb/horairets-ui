@@ -60,6 +60,7 @@ export function PlannedSessionsGrid({
               session={sessionKey}
               config={localSessions[sessionKey]}
               allCours={allCours}
+              programme={programme}
               isCoursLoading={isCoursLoading}
               onUpdateConfig={(config) => onUpdateSessionConfig(sessionKey, config)}
               onDeleteSession={() => onDeleteSession(sessionKey)}

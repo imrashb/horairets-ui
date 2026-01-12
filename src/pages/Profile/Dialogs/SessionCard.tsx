@@ -1,10 +1,14 @@
-import { Delete, Lock, LockOpen, Warning } from '@mui/icons-material';
-import { Chip, Tooltip, Typography } from '@mui/material';
+import { CalendarMonth, Delete, Lock, LockOpen, Warning } from '@mui/icons-material';
+import { Button, Chip, Tooltip, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { activeGenerateurConfigAtom, formGenerateurConfigAtom, programmesAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
 import { Cours } from '../../../features/generateur/generateur.types';
 import { SessionConfig } from '../../../hooks/firebase/types';
+import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
 import { fadeInOutAnimation } from '../../../utils/animations';
 import { calculateCreditsRange } from '../../../utils/credits.utils';
 import { getSessionTranslation } from '../../../utils/Sessions.utils';
@@ -17,6 +21,7 @@ interface SessionCardProps {
   session: string;
   config: SessionConfig;
   allCours: Cours[];
+  programme?: string;
   isCoursLoading?: boolean;
   onUpdateConfig: (config: SessionConfig) => void;
   onDeleteSession: () => void;
@@ -26,16 +31,39 @@ function SessionCard({
   session,
   config,
   allCours,
+  programme,
   isCoursLoading = false,
   onUpdateConfig,
   onDeleteSession,
 }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
+
+  const setSession = useSetAtom(sessionAtom);
+  const setProgrammes = useSetAtom(programmesAtom);
+  const setFormConfig = useSetAtom(formGenerateurConfigAtom);
+  const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
 
   const creditsRange = useMemo(
     () => calculateCreditsRange(allCours, config),
     [allCours, config]
   );
+
+  const handleExportToGenerator = () => {
+    const generatorConfig = {
+      cours: config.cours,
+      coursObligatoires: config.coursObligatoires,
+      conges: config.conges,
+      nombreCours: config.nombreCours,
+      session,
+      programmes: programme ? [programme] : [],
+    };
+    setSession(session);
+    setProgrammes(programme ? [programme] : []);
+    setFormConfig(generatorConfig);
+    setActiveConfig(generatorConfig);
+    navigate(GENERATEUR_HORAIRE_URL);
+  };
 
   const handleAddCourse = (sigle: string) => {
     onUpdateConfig({
@@ -63,6 +91,7 @@ function SessionCard({
   };
 
   const hasWarning = config.nombreCours !== null && config.cours.length < config.nombreCours;
+  const canExport = config.cours.length > 0;
 
   return (
     <CardWrapper>
@@ -85,7 +114,17 @@ function SessionCard({
           </div>
           <SessionStatsChips config={config} creditsRange={creditsRange} />
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<CalendarMonth />}
+            onClick={handleExportToGenerator}
+            disabled={!canExport}
+            sx={{ fontSize: '0.75rem', py: 0.5, px: 1 }}
+          >
+            {t('exporterAuGenerateur')}
+          </Button>
           <EditSessionConfigDialog config={config} onSave={onUpdateConfig} />
           <DeleteButton size="small" onClick={onDeleteSession}>
             <Delete sx={{ fontSize: 18 }} />
@@ -128,3 +167,4 @@ function SessionCard({
 }
 
 export default SessionCard;
+

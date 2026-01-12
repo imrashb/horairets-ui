@@ -87,7 +87,6 @@ function SelectionCours(): JSX.Element {
     Math.min(cours?.length || 0, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   const handleGenerateCombinaisons = () => {
-    // Commit Form State to Active State
     const newConfig = {
       ...activeConfig,
       cours,
@@ -98,22 +97,27 @@ function SelectionCours(): JSX.Element {
       programmes: programme,
     };
     setActiveConfig(newConfig);
+  };
+
+  useEffect(() => {
+    if (!activeConfig?.session || activeConfig.cours.length === 0) return;
 
     getCombinaisonsMutation.mutate(
       {
-        session,
-        cours,
-        conges: controlledConges,
-        nombreCours: nombreCoursGeneration,
-        coursObligatoires: controlledCoursObligatoires,
+        session: activeConfig.session,
+        cours: activeConfig.cours,
+        conges: activeConfig.conges,
+        nombreCours: activeConfig.nombreCours ?? activeConfig.cours.length,
+        coursObligatoires: activeConfig.coursObligatoires,
       },
       {
         onSuccess: (data) => {
-          setRawCombinaisons(data); // data is Combinaison[]
+          setRawCombinaisons(data);
         },
       }
     );
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeConfig]);
 
   useEffect(() => {
     if (selectCoursSessionQuery?.data) {

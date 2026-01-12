@@ -1,4 +1,4 @@
-import { School, Save, Warning } from "@mui/icons-material";
+import { Route, Save, School, Warning } from "@mui/icons-material";
 import { Button, Theme, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
@@ -82,7 +82,8 @@ function PlannedCoursesEditor(): JSX.Element {
   return (
     <>
       <Header>
-        <Typography variant="h6" className="card-title" sx={{ mb: 0 }}>
+        <Typography variant="h6" className="card-title" sx={{ mb: 0, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Route />
           {t("coursPlanifies")}
         </Typography>
         <AnimatePresence>
