@@ -161,5 +161,13 @@
   "tousLesCours": "Tous les cours sélectionnés",
   "importerCheminement": "Importer du cheminement",
   "exporterAuGenerateur": "Générer les horaires",
-  "avertissementNonSauvegarde": "Vous avez des changements non sauvegardés. Voulez-vous vraiment quitter?"
+  "avertissementNonSauvegarde": "Vous avez des changements non sauvegardés. Voulez-vous vraiment quitter?",
+  "horaireSelectionne": "Horaire sélectionné comme horaire actuel!",
+  "horaireDeselectionne": "Horaire retiré de la sélection",
+  "erreurSelectionHoraire": "Erreur lors de la sélection de l'horaire",
+  "selectionnerHoraire": "Sélectionner comme horaire actuel",
+  "deselectionnerHoraire": "Désélectionner l'horaire actuel",
+  "ajouterAuxFavoris": "Ajouter aux favoris",
+  "retirerDesFavoris": "Retirer des favoris",
+  "telechargerHoraire": "Télécharger l'image"
 }

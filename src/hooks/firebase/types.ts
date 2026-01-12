@@ -1,6 +1,7 @@
 import { PartialWithFieldValue } from "firebase/firestore";
 
 export type FavoritesMap = Record<string, string[]>;
+export type SelectedSchedulesMap = Record<string, string>;
 
 export interface DisplayPreferences {
   showNomCoursGroupe: boolean;
@@ -38,6 +39,7 @@ export interface UserProfile {
 
 export interface UserDocument {
   favorites?: FavoritesMap;
+  selectedSchedules?: SelectedSchedulesMap;
   displayPreferences?: DisplayPreferences;
   profile?: UserProfile;
 }

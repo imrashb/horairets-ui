@@ -1,5 +1,5 @@
 import { CalendarMonth, Delete, Lock, LockOpen, Warning } from '@mui/icons-material';
-import { Button, Chip, Tooltip, Typography } from '@mui/material';
+import { Chip, IconButton, Tooltip, Typography } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
@@ -115,16 +115,27 @@ function SessionCard({
           <SessionStatsChips config={config} creditsRange={creditsRange} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Button
-            variant="contained"
-            size="small"
-            startIcon={<CalendarMonth />}
-            onClick={handleExportToGenerator}
-            disabled={!canExport}
-            sx={{ fontSize: '0.75rem', py: 0.5, px: 1 }}
-          >
-            {t('exporterAuGenerateur')}
-          </Button>
+          <Tooltip title={t('exporterAuGenerateur')}>
+            <span>
+              <IconButton
+                size="small"
+                onClick={handleExportToGenerator}
+                disabled={!canExport}
+                sx={{
+                  bgcolor: canExport ? 'primary.main' : undefined,
+                  color: canExport ? 'primary.contrastText' : undefined,
+                  '&:hover': {
+                    bgcolor: canExport ? 'primary.dark' : undefined,
+                  },
+                  '&.Mui-disabled': {
+                    bgcolor: 'action.disabledBackground',
+                  },
+                }}
+              >
+                <CalendarMonth sx={{ fontSize: 18 }} />
+              </IconButton>
+            </span>
+          </Tooltip>
           <EditSessionConfigDialog config={config} onSave={onUpdateConfig} />
           <DeleteButton size="small" onClick={onDeleteSession}>
             <Delete sx={{ fontSize: 18 }} />

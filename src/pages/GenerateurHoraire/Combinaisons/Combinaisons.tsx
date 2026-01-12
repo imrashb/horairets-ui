@@ -5,6 +5,7 @@ import {
   IconButton,
   TablePagination,
   Theme,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -25,6 +26,7 @@ import {
 } from "../../../features/generateur/generateurAtoms";
 import CombinaisonsWrapper from "./Combinaisons.styles";
 import FavoriteButton from "./FavoriteButton";
+import SelectedScheduleButton from "./SelectedScheduleButton";
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -122,23 +124,26 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
             <Grid key={combinaison.uniqueId} item xs={1}>
               <Typography className="numero-horaire" variant="h4">
                 {`${t("horaire")} ${combinaisons.indexOf(combinaison) + 1}`}
-                <IconButton
-                  color="primary"
-                  onClick={async () => {
-                    try {
-                      const url = `${GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
-                      const res = await axios.get(url, {
-                        responseType: "blob",
-                      });
-                      fileDownload(res.data, "horaire.jpeg");
-                    } catch (error) {
-                      toast.error(t("erreurTelechargement"));
-                    }
-                  }}
-                >
-                  <Download />
-                </IconButton>
+                <Tooltip title={t("telechargerHoraire")}>
+                  <IconButton
+                    color="primary"
+                    onClick={async () => {
+                      try {
+                        const url = `${GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
+                        const res = await axios.get(url, {
+                          responseType: "blob",
+                        });
+                        fileDownload(res.data, "horaire.jpeg");
+                      } catch (error) {
+                        toast.error(t("erreurTelechargement"));
+                      }
+                    }}
+                  >
+                    <Download />
+                  </IconButton>
+                </Tooltip>
                 <FavoriteButton combinaison={combinaison} />
+                <SelectedScheduleButton combinaison={combinaison} />
               </Typography>
               <Typography className="credits" variant="h6">
                 {t("credits", {

@@ -1,6 +1,7 @@
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import withAuth from "../../../components/Auth/AuthenticatedComponent";
 import { Combinaison } from "../../../features/generateur/generateur.types";
 import { useFavorites } from "../../../hooks/firebase";
@@ -11,6 +12,7 @@ interface FavoriteButtonProps {
 }
 
 function FavoriteButton({ combinaison }: FavoriteButtonProps): JSX.Element {
+  const { t } = useTranslation("common");
   const { isFavorited, toggleFavorite } = useFavorites();
 
   const combinaisonId = combinaison?.uniqueId;
@@ -23,14 +25,16 @@ function FavoriteButton({ combinaison }: FavoriteButtonProps): JSX.Element {
     await toggleFavorite(session, combinaisonId);
   };
 
+  const tooltipText = favorited ? t("retirerDesFavoris") : t("ajouterAuxFavoris");
+
   return (
-    <IconButton
-      color={favorited ? "primary" : undefined}
-      onClick={handleFavorite}
-    >
-      {favorited ? <Favorite /> : <FavoriteBorder />}
-    </IconButton>
+    <Tooltip title={tooltipText}>
+      <IconButton color={favorited ? "primary" : undefined} onClick={handleFavorite}>
+        {favorited ? <Favorite /> : <FavoriteBorder />}
+      </IconButton>
+    </Tooltip>
   );
 }
 
 export default withAuth(FavoriteButton);
+
