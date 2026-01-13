@@ -4,7 +4,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
-import { useUnsavedChangesWarning } from '../../../hooks/useUnsavedChangesWarning';
 import EditProfileDialog from './EditProfileDialog';
 import { PlannedSessionsGrid } from './PlannedSessionsGrid';
 import { usePlannedCourses } from './usePlannedCourses';
@@ -65,8 +64,6 @@ function PlannedCoursesEditor(): JSX.Element {
     handleSave,
     handleCancel,
   } = usePlannedCourses();
-
-  useUnsavedChangesWarning(t('avertissementNonSauvegarde'), hasChanges);
 
   return (
     <>

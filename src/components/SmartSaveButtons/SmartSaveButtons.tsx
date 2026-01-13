@@ -2,6 +2,7 @@ import { Save, Warning } from '@mui/icons-material';
 import { Button, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useUnsavedChangesWarning } from '../../hooks/useUnsavedChangesWarning';
 import { Fade } from './Fade';
 import {
   DesktopFloatingPill,
@@ -27,7 +28,8 @@ function SmartSaveButtons({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Select the appropriate container and row components
+  useUnsavedChangesWarning(t('avertissementNonSauvegarde'), hasChanges);
+
   const Container = isMobile ? MobileFixedContainer : DesktopFloatingPill;
   const ActionsRow = isMobile ? MobileActionsRow : PillActionsRow;
   const buttonSize = isMobile ? 'medium' : 'small';
