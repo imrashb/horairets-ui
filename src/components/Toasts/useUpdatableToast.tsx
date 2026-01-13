@@ -1,18 +1,15 @@
-import { useRef, useEffect } from "react";
-import { Id, toast, TypeOptions } from "react-toastify";
+import { useRef, useEffect } from 'react';
+import { Id, toast, TypeOptions } from 'react-toastify';
 
-export const TOAST_ERROR = "error";
-export const TOAST_INFO = "info";
-export const TOAST_DEFAULT = "default";
-export const TOAST_WARNING = "warning";
-export const TOAST_SUCCESS = "success";
+export const TOAST_ERROR = 'error';
+export const TOAST_INFO = 'info';
+export const TOAST_DEFAULT = 'default';
+export const TOAST_WARNING = 'warning';
+export const TOAST_SUCCESS = 'success';
 
 type ComponentType = React.ReactNode;
 
-function useUpdatableToast(
-  Component: ComponentType,
-  type: TypeOptions = "default"
-) {
+function useUpdatableToast(Component: ComponentType, type: TypeOptions = 'default') {
   const ref = useRef<Id | null>(null);
 
   const play = () => {
@@ -45,13 +42,14 @@ function useUpdatableToast(
     });
   }
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       if (ref.current) {
         toast.dismiss(ref.current);
       }
-    };
-  }, []);
+    },
+    [],
+  );
 
   return { play, stop, isRunning };
 }

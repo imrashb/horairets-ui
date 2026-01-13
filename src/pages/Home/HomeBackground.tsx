@@ -1,6 +1,6 @@
-import React from "react";
-import ScheduleGrid from "../../components/ScheduleGrid/ScheduleGrid";
-import HomeBackgroundWrapper from "./HomeBackground.styles";
+import React from 'react';
+import ScheduleGrid from '../../components/ScheduleGrid/ScheduleGrid';
+import HomeBackgroundWrapper from './HomeBackground.styles';
 
 function HomeBackground(): JSX.Element {
   return (

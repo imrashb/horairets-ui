@@ -1,4 +1,4 @@
-import { ExpandMore, Settings, Download } from "@mui/icons-material";
+import { ExpandMore, Settings, Download } from '@mui/icons-material';
 import {
   Accordion,
   AccordionActions,
@@ -11,33 +11,33 @@ import {
   FormControlLabel,
   Switch,
   Typography,
-} from "@mui/material";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import React, { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+} from '@mui/material';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   activeGenerateurConfigAtom,
   programmesAtom,
   sessionAtom,
   setRawCombinaisonsAtom,
-} from "../../../features/generateur/generateurAtoms";
+} from '../../../features/generateur/generateurAtoms';
 import {
   useGetCombinaisons,
   useGetCoursSession,
-} from "../../../features/generateur/generateurQueries";
-import { areArraysSame } from "../../../utils/Array.utils";
-import { NOMBRE_MAX_COURS_PAR_HORAIRE } from "../generateurHoraire.constants";
-import useGenerateurHoraire from "../GenerateurHoraireContexts/hooks/useGenerateurHoraire";
-import ParametresDialog from "../ParametresDialog/ParametresDialog";
-import CoursTransferList from "../TransferList/CoursTransferList";
-import SelectionCoursWrapper from "./SelectionCours.styles";
-import GenerationInformationToasts from "./toasts/GenerationInformationToasts";
-import ParametresGenerationToast from "./toasts/ParametresGenerationToast";
-import useUserDocument from "../../../hooks/firebase/useUserDocument";
-import { UserDocument } from "../../../hooks/firebase/types";
+} from '../../../features/generateur/generateurQueries';
+import { areArraysSame } from '../../../utils/Array.utils';
+import { NOMBRE_MAX_COURS_PAR_HORAIRE } from '../generateurHoraire.constants';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
+import ParametresDialog from '../ParametresDialog/ParametresDialog';
+import CoursTransferList from '../TransferList/CoursTransferList';
+import SelectionCoursWrapper from './SelectionCours.styles';
+import GenerationInformationToasts from './toasts/GenerationInformationToasts';
+import ParametresGenerationToast from './toasts/ParametresGenerationToast';
+import useUserDocument from '../../../hooks/firebase/useUserDocument';
+import { UserDocument } from '../../../hooks/firebase/types';
 
 function SelectionCours(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const getCombinaisonsMutation = useGetCombinaisons();
   const setRawCombinaisons = useSetAtom(setRawCombinaisonsAtom);
@@ -82,9 +82,7 @@ function SelectionCours(): JSX.Element {
     }
   };
 
-  const nombreCoursGeneration =
-    controlledNombreCours ||
-    Math.min(cours?.length || 0, NOMBRE_MAX_COURS_PAR_HORAIRE);
+  const nombreCoursGeneration = controlledNombreCours || Math.min(cours?.length || 0, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   const handleGenerateCombinaisons = () => {
     const newConfig = {
@@ -114,7 +112,7 @@ function SelectionCours(): JSX.Element {
         onSuccess: (data) => {
           setRawCombinaisons(data);
         },
-      }
+      },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConfig]);
@@ -130,33 +128,26 @@ function SelectionCours(): JSX.Element {
   const isCongesEqual = areArraysSame(activeConfig?.conges, controlledConges);
   const isObligatoiresEqual = areArraysSame(
     activeConfig?.coursObligatoires,
-    controlledCoursObligatoires
+    controlledCoursObligatoires,
   );
   const isSessionEqual = activeConfig?.session === session;
 
   const readyToGenerate = !(
-    cours.length === 0 ||
-    (controlledNombreCours || 0) > cours.length ||
-    (isCoursEqual &&
-      isNombreCoursEqual &&
-      isCongesEqual &&
-      isObligatoiresEqual &&
-      isSessionEqual)
+    cours.length === 0
+    || (controlledNombreCours || 0) > cours.length
+    || (isCoursEqual && isNombreCoursEqual && isCongesEqual && isObligatoiresEqual && isSessionEqual)
   );
 
   return (
     <SelectionCoursWrapper>
-      <ParametresDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-      />
+      <ParametresDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <Accordion
         expanded={expanded}
         disabled={!selectCoursSessionQuery?.data}
         onChange={() => setExpanded(!expanded)}
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h5">{t("cours")}</Typography>
+          <Typography variant="h5">{t('cours')}</Typography>
           {hasPlannedCourses && (
             <Button
               startIcon={<Download />}
@@ -166,9 +157,9 @@ function SelectionCours(): JSX.Element {
                 e.stopPropagation();
                 handleImportFromPlanner();
               }}
-              sx={{ ml: "auto", mr: 2 }}
+              sx={{ ml: 'auto', mr: 2 }}
             >
-              {t("importerCheminement")}
+              {t('importerCheminement')}
             </Button>
           )}
         </AccordionSummary>
@@ -179,24 +170,20 @@ function SelectionCours(): JSX.Element {
             checked={includeMaitrise}
             onChange={() => setIncludeMaitrise(!includeMaitrise)}
             control={<Switch />}
-            label={t("inclureMaitrise")}
+            label={t('inclureMaitrise')}
           />
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button
-            startIcon={<Settings />}
-            variant="outlined"
-            onClick={() => setDialogOpen(true)}
-          >
-            {t("parametres")}
+          <Button startIcon={<Settings />} variant="outlined" onClick={() => setDialogOpen(true)}>
+            {t('parametres')}
           </Button>
           <Button
             variant="contained"
             disabled={!readyToGenerate}
             onClick={handleGenerateCombinaisons}
           >
-            {t("genererHoraires")}
+            {t('genererHoraires')}
           </Button>
         </AccordionActions>
       </Accordion>
@@ -205,10 +192,7 @@ function SelectionCours(): JSX.Element {
       <GenerationInformationToasts readyToGenerate={readyToGenerate} />
 
       {getCombinaisonsMutation?.isPending && (
-        <Backdrop
-          open={getCombinaisonsMutation?.isPending}
-          sx={{ zIndex: 3000 }}
-        >
+        <Backdrop open={getCombinaisonsMutation?.isPending} sx={{ zIndex: 3000 }}>
           <CircularProgress color="inherit" />
         </Backdrop>
       )}

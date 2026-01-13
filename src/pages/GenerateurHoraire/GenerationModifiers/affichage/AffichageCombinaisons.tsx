@@ -1,4 +1,4 @@
-import { Panorama } from "@mui/icons-material";
+import { Panorama } from '@mui/icons-material';
 import {
   Checkbox,
   Divider,
@@ -6,12 +6,12 @@ import {
   FormControlLabel,
   FormHelperText,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import ButtonDialog from "../../../../components/ButtonDialog/ButtonDialog";
-import { useDisplayPreferences } from "../../../../hooks/firebase";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
+import { useDisplayPreferences } from '../../../../hooks/firebase';
 
 interface CheckboxFieldProps {
   label: string;
@@ -20,13 +20,13 @@ interface CheckboxFieldProps {
   tooltip?: string;
 }
 
-function CheckboxField({ label, checked, onChange, tooltip }: CheckboxFieldProps): JSX.Element {
+function CheckboxField({
+  label, checked, onChange, tooltip,
+}: CheckboxFieldProps): JSX.Element {
   return (
     <FormControl>
       <FormControlLabel
-        control={
-          <Checkbox checked={checked} onChange={() => onChange(!checked)} />
-        }
+        control={<Checkbox checked={checked} onChange={() => onChange(!checked)} />}
         label={label}
       />
       {tooltip && <FormHelperText>{tooltip}</FormHelperText>}
@@ -35,25 +35,19 @@ function CheckboxField({ label, checked, onChange, tooltip }: CheckboxFieldProps
 }
 
 function AffichageCombinaisons(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const { preferences, updatePreferences } = useDisplayPreferences();
 
-  const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(
-    preferences.showNomCoursGroupe
-  );
+  const [showNomCoursGroupe, setShowNomCoursGroupe] = useState(preferences.showNomCoursGroupe);
   const [showLocaux, setShowLocaux] = useState(preferences.showLocaux);
-  const [showNomActivite, setShowNomActivite] = useState(
-    preferences.showNomActivite
-  );
+  const [showNomActivite, setShowNomActivite] = useState(preferences.showNomActivite);
   const [showUniqueCoursColors, setShowUniqueCoursColors] = useState(
-    preferences.showUniqueCoursColors
+    preferences.showUniqueCoursColors,
   );
   const [showModeEnseignement, setShowModeEnseignement] = useState(
-    preferences.showModeEnseignement
+    preferences.showModeEnseignement,
   );
-  const [showEnseignant, setShowEnseignant] = useState(
-    preferences.showEnseignant
-  );
+  const [showEnseignant, setShowEnseignant] = useState(preferences.showEnseignant);
 
   useEffect(() => {
     setShowNomCoursGroupe(preferences.showNomCoursGroupe);
@@ -73,23 +67,39 @@ function AffichageCombinaisons(): JSX.Element {
       showModeEnseignement,
       showEnseignant,
     });
-    toast.success(t("parametresAffichageAppliques"));
+    toast.success(t('parametresAffichageAppliques'));
   };
 
   const checkboxConfigs = [
-        { label: t("afficherNomCoursGroupe"), checked: showNomCoursGroupe, onChange: setShowNomCoursGroupe },
-        { label: t("afficherLocaux"), checked: showLocaux, onChange: setShowLocaux },
-        { label: t("afficherTypeActivite"), checked: showNomActivite, onChange: setShowNomActivite, tooltip: t("typesActivites") as string },
-        { label: t("afficherModeEnseignement"), checked: showModeEnseignement, onChange: setShowModeEnseignement, tooltip: t("modesEnseignements") as string },
-        { label: t("afficherEnseignant"), checked: showEnseignant, onChange: setShowEnseignant },
-        { label: t("afficherCouleursCoursUniques"), checked: showUniqueCoursColors, onChange: setShowUniqueCoursColors },
-      ]
+    {
+      label: t('afficherNomCoursGroupe'),
+      checked: showNomCoursGroupe,
+      onChange: setShowNomCoursGroupe,
+    },
+    { label: t('afficherLocaux'), checked: showLocaux, onChange: setShowLocaux },
+    {
+      label: t('afficherTypeActivite'),
+      checked: showNomActivite,
+      onChange: setShowNomActivite,
+      tooltip: t('typesActivites') as string,
+    },
+    {
+      label: t('afficherModeEnseignement'),
+      checked: showModeEnseignement,
+      onChange: setShowModeEnseignement,
+      tooltip: t('modesEnseignements') as string,
+    },
+    { label: t('afficherEnseignant'), checked: showEnseignant, onChange: setShowEnseignant },
+    {
+      label: t('afficherCouleursCoursUniques'),
+      checked: showUniqueCoursColors,
+      onChange: setShowUniqueCoursColors,
+    },
+  ];
 
   return (
-    <ButtonDialog title={t("affichage")} onClose={onClose} icon={<Panorama />}>
-      <Typography component="div">
-        {t("parametresAffichageCombinaisons")}
-      </Typography>
+    <ButtonDialog title={t('affichage')} onClose={onClose} icon={<Panorama />}>
+      <Typography component="div">{t('parametresAffichageCombinaisons')}</Typography>
       {checkboxConfigs.map((config) => (
         <CheckboxField key={config.label} {...config} />
       ))}

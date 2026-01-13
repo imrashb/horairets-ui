@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
-import { SessionConfig, SessionsMap } from "../../../hooks/firebase/types";
-import { fadeInOutAnimation } from "../../../utils/animations";
-import { isSessionSameOrAfter, isSessionSameOrBefore } from "../../../utils/Sessions.utils";
-import { getNextSession } from "../../../utils/SessionSequence.utils";
-import { AddSessionCard } from "./AddSessionCard";
-import SessionCard from "./SessionCard";
+import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
+import { SessionConfig, SessionsMap } from '../../../hooks/firebase/types';
+import { fadeInOutAnimation } from '../../../utils/animations';
+import { isSessionSameOrAfter, isSessionSameOrBefore } from '../../../utils/Sessions.utils';
+import { getNextSession } from '../../../utils/SessionSequence.utils';
+import { AddSessionCard } from './AddSessionCard';
+import SessionCard from './SessionCard';
 
 interface PlannedSessionsGridProps {
   localSessions: SessionsMap;
@@ -30,8 +30,6 @@ export function PlannedSessionsGrid({
   onDeleteSession,
   onUpdateSessionConfig,
 }: PlannedSessionsGridProps): JSX.Element {
-
-  
   if (!admissionSession) return <></>;
 
   const hasPlannedSessions = sortedSessionKeys.length > 0;
@@ -39,13 +37,13 @@ export function PlannedSessionsGrid({
 
   const renderSessionRangeWithGaps = () => {
     if (!hasPlannedSessions) return [];
-    
+
     const items: JSX.Element[] = [];
     const firstSession = sortedSessionKeys[0];
     const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
-    
+
     let currentSession = firstSession;
-    
+
     while (isSessionSameOrBefore(currentSession, lastSession)) {
       const sessionKey = currentSession;
       const isPlanned = Object.hasOwn(localSessions, sessionKey);
@@ -60,16 +58,13 @@ export function PlannedSessionsGrid({
               onUpdateConfig={(config) => onUpdateSessionConfig(sessionKey, config)}
               onDeleteSession={() => onDeleteSession(sessionKey)}
             />
-          </motion.div>
+          </motion.div>,
         );
       } else {
         items.push(
           <motion.div key={`gap-${sessionKey}`} layout {...fadeInOutAnimation}>
-            <AddSessionCard
-              session={sessionKey}
-              onAdd={() => onAddSession(sessionKey)}
-            />
-          </motion.div>
+            <AddSessionCard session={sessionKey} onAdd={() => onAddSession(sessionKey)} />
+          </motion.div>,
         );
       }
       currentSession = getNextSession(currentSession);
@@ -81,20 +76,14 @@ export function PlannedSessionsGrid({
     <AnimatePresence mode="popLayout">
       {isPreviousSessionValid && (
         <motion.div key={`prev-${previousSession}`} layout {...fadeInOutAnimation}>
-          <AddSessionCard
-            session={previousSession}
-            onAdd={() => onAddSession(previousSession)}
-          />
+          <AddSessionCard session={previousSession} onAdd={() => onAddSession(previousSession)} />
         </motion.div>
       )}
-      
+
       {renderSessionRangeWithGaps()}
-      
+
       <motion.div key={`next-${nextSession}`} layout {...fadeInOutAnimation}>
-        <AddSessionCard
-          session={nextSession}
-          onAdd={() => onAddSession(nextSession)}
-        />
+        <AddSessionCard session={nextSession} onAdd={() => onAddSession(nextSession)} />
       </motion.div>
     </AnimatePresence>
   );

@@ -1,5 +1,5 @@
-import { useTheme } from "@emotion/react";
-import { Download } from "@mui/icons-material";
+import { useTheme } from '@emotion/react';
+import { Download } from '@mui/icons-material';
 import {
   Grid,
   IconButton,
@@ -8,25 +8,22 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import fileDownload from "js-file-download";
-import { useAtomValue } from "jotai";
-import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { GET_COMBINAISONS_ENDPOINT } from "../../../app/api/api.constants";
-import axios from "../../../app/api/axiosInstance";
-import CombinaisonHoraire from "../../../components/CombinaisonHoraire/CombinaisonHoraire";
-import { useDisplayPreferences } from "../../../hooks/firebase";
-import { GENERATEUR_GRID_VIEW } from "../../../features/generateur/generateur.constants";
-import { Combinaison } from "../../../features/generateur/generateur.types";
-import {
-  rawCombinaisonsAtom,
-  viewAtom,
-} from "../../../features/generateur/generateurAtoms";
-import CombinaisonsWrapper from "./Combinaisons.styles";
-import FavoriteButton from "./FavoriteButton";
-import SelectedScheduleButton from "./SelectedScheduleButton";
+} from '@mui/material';
+import fileDownload from 'js-file-download';
+import { useAtomValue } from 'jotai';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { GET_COMBINAISONS_ENDPOINT } from '../../../app/api/api.constants';
+import axios from '../../../app/api/axiosInstance';
+import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
+import { useDisplayPreferences } from '../../../hooks/firebase';
+import { GENERATEUR_GRID_VIEW } from '../../../features/generateur/generateur.constants';
+import { Combinaison } from '../../../features/generateur/generateur.types';
+import { rawCombinaisonsAtom, viewAtom } from '../../../features/generateur/generateurAtoms';
+import CombinaisonsWrapper from './Combinaisons.styles';
+import FavoriteButton from './FavoriteButton';
+import SelectedScheduleButton from './SelectedScheduleButton';
 
 const ROWS_PER_PAGE = [10, 20, 50, 100];
 
@@ -35,7 +32,7 @@ interface CombinaisonsProps {
 }
 
 function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const view = useAtomValue(viewAtom);
   const rawCombinaisons = useAtomValue(rawCombinaisonsAtom);
   const [page, setPage] = useState(0);
@@ -43,11 +40,7 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
 
   const { preferences } = useDisplayPreferences();
   const {
-    showNomCoursGroupe,
-    showNomActivite,
-    showLocaux,
-    showModeEnseignement,
-    showEnseignant,
+    showNomCoursGroupe, showNomActivite, showLocaux, showModeEnseignement, showEnseignant,
   } = preferences;
 
   const isGrid = view === GENERATEUR_GRID_VIEW;
@@ -61,7 +54,7 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
   }, [rawCombinaisons]);
 
   const handleRowsPerPageChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const value = parseInt(event.target.value, 10);
     setRowsPerPage(value);
@@ -69,7 +62,7 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
   };
 
   const theme = useTheme() as Theme;
-  const isSmallViewport = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallViewport = useMediaQuery(theme.breakpoints.down('sm'));
 
   const Pagination = (
     <TablePagination
@@ -80,16 +73,14 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
       rowsPerPage={rowsPerPage}
       onPageChange={(e, p) => setPage(p)}
       onRowsPerPageChange={handleRowsPerPageChange}
-      labelRowsPerPage={!isSmallViewport ? t("horaireParPage") : ""}
+      labelRowsPerPage={!isSmallViewport ? t('horaireParPage') : ''}
       showFirstButton
       showLastButton
-      labelDisplayedRows={(params) =>
-        t("paginationHoraire", {
-          from: params.from,
-          to: params.to === -1 ? params.count : params.to,
-          count: params.count,
-        })
-      }
+      labelDisplayedRows={(params) => t('paginationHoraire', {
+        from: params.from,
+        to: params.to === -1 ? params.count : params.to,
+        count: params.count,
+      })}
     />
   );
 
@@ -98,13 +89,10 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
   useEffect(() => {
     setTimeout(() => {
       if (mainRef.current) {
-        const navbar = document.getElementById("navbar");
+        const navbar = document.getElementById('navbar');
         const yOffset = -(navbar?.clientHeight || 0) || 0;
-        const y =
-          mainRef.current.getBoundingClientRect().top +
-          window.pageYOffset +
-          yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
+        const y = mainRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }, 0);
   }, [page, rawCombinaisons]);
@@ -123,19 +111,20 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
           .map((combinaison) => (
             <Grid key={combinaison.uniqueId} item xs={1}>
               <Typography className="numero-horaire" variant="h4">
-                {`${t("horaire")} ${combinaisons.indexOf(combinaison) + 1}`}
-                <Tooltip title={t("telechargerHoraire")}>
+                {`${t('horaire')} ${combinaisons.indexOf(combinaison) + 1}`}
+                <Tooltip title={t('telechargerHoraire')}>
                   <IconButton
                     color="primary"
                     onClick={async () => {
                       try {
                         const url = `${GET_COMBINAISONS_ENDPOINT}/${combinaison?.uniqueId}`;
                         const res = await axios.get(url, {
-                          responseType: "blob",
+                          responseType: 'blob',
                         });
-                        fileDownload(res.data, "horaire.jpeg");
-                      } catch (error) {
-                        toast.error(t("erreurTelechargement"));
+                        fileDownload(res.data, 'horaire.jpeg');
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      } catch (_) {
+                        toast.error(t('erreurTelechargement'));
                       }
                     }}
                   >
@@ -146,11 +135,8 @@ function Combinaisons({ combinaisons }: CombinaisonsProps): JSX.Element {
                 <SelectedScheduleButton combinaison={combinaison} />
               </Typography>
               <Typography className="credits" variant="h6">
-                {t("credits", {
-                  count: combinaison?.groupes?.reduce(
-                    (prev, curr) => prev + curr.cours.credits,
-                    0
-                  ),
+                {t('credits', {
+                  count: combinaison?.groupes?.reduce((prev, curr) => prev + curr.cours.credits, 0),
                 })}
               </Typography>
               <CombinaisonHoraire

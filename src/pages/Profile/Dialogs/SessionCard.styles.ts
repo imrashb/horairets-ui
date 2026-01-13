@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { IconButton, Typography, Theme } from "@mui/material";
+import styled from 'styled-components';
+import { IconButton, Typography, Theme } from '@mui/material';
 
 export const CardWrapper = styled.div`
   background: ${({ theme }) => (theme as Theme).palette.grey[100]};

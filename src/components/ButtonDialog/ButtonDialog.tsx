@@ -1,4 +1,4 @@
-import { Close } from "@mui/icons-material";
+import { Close } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -10,10 +10,10 @@ import {
   Theme,
   Tooltip,
   useMediaQuery,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled, { useTheme } from "styled-components";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled, { useTheme } from 'styled-components';
 
 type ButtonDialogProps = {
   icon: React.ReactNode;
@@ -21,11 +21,11 @@ type ButtonDialogProps = {
   onClose?: () => void;
   onOpen?: () => void;
   children: React.ReactNode;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   isIconButton?: boolean;
   iconButtonProps?: Partial<IconButtonProps>;
   viewOnly?: boolean;
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   tooltip?: string;
 };
 
@@ -53,11 +53,11 @@ function ButtonDialog({
   maxWidth,
   tooltip,
 }: ButtonDialogProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
 
   const theme = useTheme() as Theme;
-  const isSmallViewport = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallViewport = useMediaQuery(theme.breakpoints.down('sm'));
   const onOpenRef = React.useRef(onOpen);
   onOpenRef.current = onOpen;
 
@@ -96,19 +96,21 @@ function ButtonDialog({
     </Button>
   );
 
-  const Trigger = tooltip ? (
-    <Tooltip title={tooltip}>{triggerButton}</Tooltip>
-  ) : (
-    triggerButton
-  );
+  const Trigger = tooltip ? <Tooltip title={tooltip}>{triggerButton}</Tooltip> : triggerButton;
 
   return (
     <>
       <div className="button-dialog-wrapper">{Trigger}</div>
 
       <Dialog fullWidth open={visible} onClose={handleCancel} maxWidth={maxWidth}>
-        <DialogTitle sx={{ alignItems: "center", display: "flex", justifyContent: viewOnly ? "space-between" : undefined }}>
-          <span style={{ display: "flex", alignItems: "center" }}>
+        <DialogTitle
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: viewOnly ? 'space-between' : undefined,
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center' }}>
             {title}
             {Spacer}
             {icon}
@@ -125,10 +127,10 @@ function ButtonDialog({
         {!viewOnly && (
           <DialogActions>
             <Button variant="contained" color="error" onClick={handleCancel}>
-              {t("annuler")}
+              {t('annuler')}
             </Button>
             <Button variant="contained" onClick={handleClose}>
-              {t("appliquerParametres")}
+              {t('appliquerParametres')}
             </Button>
           </DialogActions>
         )}
@@ -138,4 +140,3 @@ function ButtonDialog({
 }
 
 export default ButtonDialog;
-

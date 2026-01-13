@@ -1,17 +1,14 @@
 /* eslint-disable react/forbid-prop-types */
-import { useTranslation } from "react-i18next";
-import { useDisplayPreferences } from "../../hooks/firebase";
-import Activite from "./Activite/Activite";
-import ActiviteSpacer from "./Activite/ActiviteSpacer";
-import {
-  HEURE_DEBUT_COURS,
-  HEURE_FIN_COURS,
-} from "./CombinasonHoraire.constants";
-import JourWrapper from "./Jour.styles";
+import { useTranslation } from 'react-i18next';
+import { useDisplayPreferences } from '../../hooks/firebase';
+import Activite from './Activite/Activite';
+import ActiviteSpacer from './Activite/ActiviteSpacer';
+import { HEURE_DEBUT_COURS, HEURE_FIN_COURS } from './CombinasonHoraire.constants';
+import JourWrapper from './Jour.styles';
 import {
   getDeterministicRandomBorderCoursColor,
   getDeterministicRandomCoursColor,
-} from "./combinaisonHoraire.utils";
+} from './combinaisonHoraire.utils';
 
 // Types
 interface Horaire {
@@ -83,7 +80,7 @@ function Jour({
   disableEnseignant = true,
   forceLegacyColors = false,
 }: JourProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const { preferences } = useDisplayPreferences();
   const { showUniqueCoursColors } = preferences;
@@ -91,23 +88,20 @@ function Jour({
   const min = HEURE_DEBUT_COURS;
   const max = HEURE_FIN_COURS;
 
-  const activites: MappedActivite[] =
-    combinaison?.groupes?.reduce<MappedActivite[]>((prev, curr) => {
-      const valid = curr?.activites?.filter(
-        (act) => act?.horaire?.jour === jour
-      );
+  const activites: MappedActivite[] = combinaison?.groupes?.reduce<MappedActivite[]>((prev, curr) => {
+    const valid = curr?.activites?.filter((act) => act?.horaire?.jour === jour);
 
-      const mapped = valid?.map((act) => ({
-        ...act,
-        numeroGroupe: curr?.numeroGroupe,
-        sigle: curr?.cours?.sigle,
-      }));
+    const mapped = valid?.map((act) => ({
+      ...act,
+      numeroGroupe: curr?.numeroGroupe,
+      sigle: curr?.cours?.sigle,
+    }));
 
-      return [...prev, ...(mapped || [])];
-    }, []) || [];
+    return [...prev, ...(mapped || [])];
+  }, []) || [];
 
   const sortedActivites = activites.sort(
-    (a, b) => (a?.horaire?.heureDepart || 0) - (b?.horaire?.heureDepart || 0)
+    (a, b) => (a?.horaire?.heureDepart || 0) - (b?.horaire?.heureDepart || 0),
   );
 
   const components: JSX.Element[] = [];
@@ -147,20 +141,14 @@ function Jour({
     );
   };
 
-  const getSpacerComponent = (key: string) => (
-    <ActiviteSpacer key={key} flex={currentFlex} />
-  );
+  const getSpacerComponent = (key: string) => <ActiviteSpacer key={key} flex={currentFlex} />;
 
   for (let i = min; i <= max; i += 0.5) {
     const heure = i * 100;
     const currentActivite = sortedActivites[index];
 
     // Added explicit undefined check for currentActivite
-    if (
-      !isActivite &&
-      currentActivite &&
-      currentActivite?.horaire?.heureDepart === heure
-    ) {
+    if (!isActivite && currentActivite && currentActivite?.horaire?.heureDepart === heure) {
       if (currentFlex !== 0) {
         components.push(getSpacerComponent(`spacer-${i}-start`));
       }
@@ -168,11 +156,7 @@ function Jour({
       currentFlex = 0;
     }
 
-    if (
-      isActivite &&
-      currentActivite &&
-      currentActivite?.horaire?.heureFin === heure
-    ) {
+    if (isActivite && currentActivite && currentActivite?.horaire?.heureFin === heure) {
       components.push(getActiviteComponent(currentActivite));
       currentFlex = -1;
       isActivite = false;

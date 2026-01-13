@@ -1,4 +1,4 @@
-import { useNavigate, To } from "react-router-dom";
+import { useNavigate, To } from 'react-router-dom';
 
 type DelayedNavigate = (path: To, timeout: number) => void;
 

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Theme } from "@mui/material";
+import styled from 'styled-components';
+import { Theme } from '@mui/material';
 
 export const ProfileWrapper = styled.div`
   display: flex;
@@ -90,7 +90,7 @@ export const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  
+
   @media (max-width: 900px) {
     padding-left: 8px;
   }

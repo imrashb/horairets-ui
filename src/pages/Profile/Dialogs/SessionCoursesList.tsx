@@ -7,7 +7,9 @@ import { Cours } from '../../../features/generateur/generateur.types';
 import { SessionConfig } from '../../../hooks/firebase/types';
 import { fadeInOutAnimation } from '../../../utils/animations';
 import AddCourseAutocomplete from './AddCourseAutocomplete';
-import { CourseSection, CoursesContainer, EmptyState, SectionLabel } from './SessionCard.styles';
+import {
+  CourseSection, CoursesContainer, EmptyState, SectionLabel,
+} from './SessionCard.styles';
 
 interface SessionCoursesListProps {
   config: SessionConfig;
@@ -29,7 +31,6 @@ function SessionCoursesList({
   const { t } = useTranslation('common');
 
   const isCourseInvalid = (sigle: string) => {
-    // If we are loading, or if no courses are available yet, we assume valid to prevent flashing errors
     if (isCoursLoading || allCours.length === 0) return false;
     return !allCours.some((c) => c.sigle === sigle);
   };
@@ -61,8 +62,15 @@ function SessionCoursesList({
               );
             })}
             {config.coursObligatoires.length === 0 && (
-              <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <EmptyState style={{ fontSize: '0.75rem' }}>{t('aucunCoursObligatoire')}</EmptyState>
+              <motion.div
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <EmptyState style={{ fontSize: '0.75rem' }}>
+                  {t('aucunCoursObligatoire')}
+                </EmptyState>
               </motion.div>
             )}
           </AnimatePresence>

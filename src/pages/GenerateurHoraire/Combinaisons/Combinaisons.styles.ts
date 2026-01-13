@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const CombinaisonsWrapper = styled.div`
   width: 100%;
@@ -13,11 +13,11 @@ const CombinaisonsWrapper = styled.div`
     width: 100%;
     padding: 0 ${({ theme }) => (theme as Theme).sizes.size_24};
 
-    ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+    ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
       padding: 0;
     }
 
-    ${({ theme }) => (theme as Theme).breakpoints.down("sm")} {
+    ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
       width: 100%;
     }
 
@@ -47,7 +47,7 @@ const CombinaisonsWrapper = styled.div`
         min-height: 30rem;
         max-height: 40rem;
 
-        ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+        ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
           height: 50vh;
         }
       }

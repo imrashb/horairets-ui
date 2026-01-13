@@ -1,8 +1,8 @@
-import { deleteField } from "firebase/firestore";
-import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { SelectedSchedulesMap, UserDocument } from "./types";
-import useUserDocument from "./useUserDocument";
+import { deleteField } from 'firebase/firestore';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { SelectedSchedulesMap, UserDocument } from './types';
+import useUserDocument from './useUserDocument';
 
 export interface UseSelectedScheduleResult {
   selectedSchedules: SelectedSchedulesMap | undefined;
@@ -12,12 +12,17 @@ export interface UseSelectedScheduleResult {
   getSelectedSchedule: (session: string) => string | undefined;
   setSelectedSchedule: (session: string, combinaisonId: string) => Promise<void>;
   clearSelectedSchedule: (session: string) => Promise<void>;
-  toggleSelectedSchedule: (session: string, combinaisonId: string) => Promise<{ isSelected: boolean }>;
+  toggleSelectedSchedule: (
+    session: string,
+    combinaisonId: string,
+  ) => Promise<{ isSelected: boolean }>;
 }
 
 function useSelectedSchedule(): UseSelectedScheduleResult {
-  const { t } = useTranslation("common");
-  const { data, isLoading, error, updateDocument } = useUserDocument<UserDocument>();
+  const { t } = useTranslation('common');
+  const {
+    data, isLoading, error, updateDocument,
+  } = useUserDocument<UserDocument>();
 
   const selectedSchedules = data?.selectedSchedules;
 
@@ -26,7 +31,7 @@ function useSelectedSchedule(): UseSelectedScheduleResult {
       if (!selectedSchedules || !session || !combinaisonId) return false;
       return selectedSchedules[session] === combinaisonId;
     },
-    [selectedSchedules]
+    [selectedSchedules],
   );
 
   const getSelectedSchedule = useCallback(
@@ -34,13 +39,13 @@ function useSelectedSchedule(): UseSelectedScheduleResult {
       if (!selectedSchedules || !session) return undefined;
       return selectedSchedules[session];
     },
-    [selectedSchedules]
+    [selectedSchedules],
   );
 
   const setSelectedSchedule = useCallback(
     async (session: string, combinaisonId: string): Promise<void> => {
       if (!session || !combinaisonId) {
-        throw new Error("Session and combinaisonId are required");
+        throw new Error('Session and combinaisonId are required');
       }
 
       await updateDocument(
@@ -51,18 +56,18 @@ function useSelectedSchedule(): UseSelectedScheduleResult {
         },
         {
           showToast: true,
-          successMessage: t("horaireSelectionne") as string,
-          errorMessage: t("erreurSelectionHoraire") as string,
-        }
+          successMessage: t('horaireSelectionne') as string,
+          errorMessage: t('erreurSelectionHoraire') as string,
+        },
       );
     },
-    [updateDocument, t]
+    [updateDocument, t],
   );
 
   const clearSelectedSchedule = useCallback(
     async (session: string): Promise<void> => {
       if (!session) {
-        throw new Error("Session is required");
+        throw new Error('Session is required');
       }
 
       await updateDocument(
@@ -70,21 +75,21 @@ function useSelectedSchedule(): UseSelectedScheduleResult {
           selectedSchedules: {
             [session]: deleteField(),
           },
-        } as any,
+        },
         {
           showToast: true,
-          successMessage: t("horaireDeselectionne") as string,
-          errorMessage: t("erreurSelectionHoraire") as string,
-        }
+          successMessage: t('horaireDeselectionne') as string,
+          errorMessage: t('erreurSelectionHoraire') as string,
+        },
       );
     },
-    [updateDocument, t]
+    [updateDocument, t],
   );
 
   const toggleSelectedSchedule = useCallback(
     async (session: string, combinaisonId: string): Promise<{ isSelected: boolean }> => {
       if (!session || !combinaisonId) {
-        throw new Error("Session and combinaisonId are required");
+        throw new Error('Session and combinaisonId are required');
       }
 
       const currentlySelected = selectedSchedules?.[session] === combinaisonId;
@@ -92,12 +97,11 @@ function useSelectedSchedule(): UseSelectedScheduleResult {
       if (currentlySelected) {
         await clearSelectedSchedule(session);
         return { isSelected: false };
-      } else {
-        await setSelectedSchedule(session, combinaisonId);
-        return { isSelected: true };
       }
+      await setSelectedSchedule(session, combinaisonId);
+      return { isSelected: true };
     },
-    [selectedSchedules, setSelectedSchedule, clearSelectedSchedule]
+    [selectedSchedules, setSelectedSchedule, clearSelectedSchedule],
   );
 
   return {

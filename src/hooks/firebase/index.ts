@@ -1,8 +1,8 @@
 // Firebase hooks barrel export
-export { default as useDisplayPreferences } from "./useDisplayPreferences";
-export { default as useFavorites } from "./useFavorites";
-export { default as useSelectedSchedule } from "./useSelectedSchedule";
-export { default as useUserDocument } from "./useUserDocument";
+export { default as useDisplayPreferences } from './useDisplayPreferences';
+export { default as useFavorites } from './useFavorites';
+export { default as useSelectedSchedule } from './useSelectedSchedule';
+export { default as useUserDocument } from './useUserDocument';
 
 // Types
 export type {
@@ -13,7 +13,6 @@ export type {
   UseFavoritesResult,
   UserDocument,
   UseUserDocumentResult,
-} from "./types";
+} from './types';
 
-export { DEFAULT_DISPLAY_PREFERENCES } from "./types";
-
+export { DEFAULT_DISPLAY_PREFERENCES } from './types';

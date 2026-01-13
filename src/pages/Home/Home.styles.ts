@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
   @keyframes textSlide {
@@ -24,7 +24,9 @@ const HomeWrapper = styled.div`
 
   .left,
   .right {
-    animation: 0.5s textSlide ease, 1s opacity ease;
+    animation:
+      0.5s textSlide ease,
+      1s opacity ease;
   }
 
   .home-background-wrapper {
@@ -43,7 +45,7 @@ const HomeWrapper = styled.div`
     margin-top: ${({ theme }) => (theme as Theme).sizes.size_64};
     flex: 2;
 
-    ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+    ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
       margin-top: ${({ theme }) => (theme as Theme).sizes.size_32} !important;
     }
 
@@ -61,7 +63,7 @@ const HomeWrapper = styled.div`
       align-items: center;
       text-align: center;
 
-      ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+      ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
         font-size: 16vw;
 
         .description {
@@ -74,16 +76,16 @@ const HomeWrapper = styled.div`
       }
 
       .horairets-animated-text {
-        font-family: "Fugaz One";
+        font-family: 'Fugaz One';
       }
       .ets {
-        font-family: "Fugaz One";
+        font-family: 'Fugaz One';
         color: ${({ theme }) => (theme as Theme).palette.primary.ets};
       }
 
       .text-shadow {
         position: absolute;
-        font-family: "Fugaz One";
+        font-family: 'Fugaz One';
         text-shadow: black 0.5vw 1.5vw 1vw;
         color: transparent;
         z-index: -1;
@@ -107,14 +109,14 @@ const HomeWrapper = styled.div`
       margin-top: ${({ theme }) => (theme as Theme).sizes.size_16};
 
       .horairets-animated-background {
-        font-family: "Fugaz One";
+        font-family: 'Fugaz One';
       }
 
       .btn-rejoins-discord {
         margin-left: ${({ theme }) => (theme as Theme).sizes.size_16};
       }
 
-      ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+      ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
         flex-direction: column !important;
 
         .btn-rejoins-discord {

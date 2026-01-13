@@ -1,24 +1,26 @@
-import { TFunction } from "i18next";
+import { TFunction } from 'i18next';
 
 export const TRIMESTRE_MAP = {
-  A: { translationKey: "trimestreAutomne", sessionTranslationKey: "sessionAutomne", order: 3 },
-  E: { translationKey: "trimestreEte", sessionTranslationKey: "sessionEte", order: 2 },
-  H: { translationKey: "trimestreHiver", sessionTranslationKey: "sessionHiver", order: 1 },
+  A: { translationKey: 'trimestreAutomne', sessionTranslationKey: 'sessionAutomne', order: 3 },
+  E: { translationKey: 'trimestreEte', sessionTranslationKey: 'sessionEte', order: 2 },
+  H: { translationKey: 'trimestreHiver', sessionTranslationKey: 'sessionHiver', order: 1 },
 } as const;
 
 export type TrimestreId = keyof typeof TRIMESTRE_MAP;
 
-export const TRIMESTRE_IDS: TrimestreId[] = ["A", "E", "H"];
+export const TRIMESTRE_IDS: TrimestreId[] = ['A', 'E', 'H'];
 
-export function parseSession(session: string | undefined): { trimestreId: TrimestreId; annee: string } | undefined {
+export function parseSession(
+  session: string | undefined,
+): { trimestreId: TrimestreId; annee: string } | undefined {
   if (!session || session.length < 2) {
-    return undefined
+    return undefined;
   }
   const trimestreId = session[0].toUpperCase() as TrimestreId;
   const annee = session.slice(1);
 
-  if(annee.length !== 4 || !TRIMESTRE_IDS.includes(trimestreId)) {
-    return undefined
+  if (annee.length !== 4 || !TRIMESTRE_IDS.includes(trimestreId)) {
+    return undefined;
   }
 
   return {
@@ -33,7 +35,7 @@ export function formatSession(trimestreId: TrimestreId, annee: string): string {
 
 export const getSessionTranslation = (
   value: string | undefined,
-  t: TFunction
+  t: TFunction,
 ): string | undefined => {
   if (!value) return undefined;
   const sessionParams = parseSession(value);
@@ -44,11 +46,9 @@ export const getSessionTranslation = (
   return t(trimestre.sessionTranslationKey, { annee }) as string;
 };
 
-export const getSessionFromCombinaisonUniqueId = (
-  id: string
-): string | undefined => {
+export const getSessionFromCombinaisonUniqueId = (id: string): string | undefined => {
   try {
-    return window.atob(id)?.split(":")[0];
+    return window.atob(id)?.split(':')[0];
   } catch {
     return undefined;
   }
@@ -91,4 +91,3 @@ export const sortSession = (session?: string[]): void => {
     session.sort(compareSession);
   }
 };
-

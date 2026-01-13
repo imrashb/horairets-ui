@@ -1,14 +1,14 @@
-import { GitHub, LinkedIn, Person } from "@mui/icons-material";
-import { IconButton, Typography } from "@mui/material";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { Section } from "../About.styles";
+import { GitHub, LinkedIn, Person } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { Section } from '../About.styles';
 
 const DEVELOPER = {
-  name: "Emmanuel Coulombe",
-  github: "imrashb",
-  linkedin: "emmanuelcoulombe",
+  name: 'Emmanuel Coulombe',
+  github: 'imrashb',
+  linkedin: 'emmanuelcoulombe',
 };
 
 const DeveloperCard = styled.div`
@@ -42,12 +42,18 @@ const DeveloperCard = styled.div`
 `;
 
 function DeveloperSection(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   return (
     <Section>
-      <Typography variant="h5" fontWeight="bold" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Person /> {t("developpeur")}
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+      >
+        <Person />
+        {' '}
+        {t('developpeur')}
       </Typography>
       <DeveloperCard>
         <img

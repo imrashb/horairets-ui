@@ -4,15 +4,17 @@ import {
   getFirestore,
   PartialWithFieldValue,
   setDoc,
-} from "firebase/firestore";
-import React, { createContext, useContext, useMemo, useCallback, ReactNode } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { toast } from "react-toastify";
-import useFirebaseAuth from "../../components/Auth/useFirebaseAuth";
-import { UseUserDocumentResult, UserDocument } from "./types";
+} from 'firebase/firestore';
+import React, {
+  createContext, useContext, useMemo, useCallback, ReactNode,
+} from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { toast } from 'react-toastify';
+import useFirebaseAuth from '../../components/Auth/useFirebaseAuth';
+import { UseUserDocumentResult, UserDocument } from './types';
 
-const USERS_COLLECTION = "users" as const;
+const USERS_COLLECTION = 'users' as const;
 
 export interface UpdateOptions {
   showToast?: boolean;
@@ -20,7 +22,9 @@ export interface UpdateOptions {
   errorMessage?: string;
 }
 
-const UserDocumentContext = createContext<UseUserDocumentResult<UserDocument> | undefined>(undefined);
+const UserDocumentContext = createContext<UseUserDocumentResult<UserDocument> | undefined>(
+  undefined,
+);
 
 interface UserDocumentProviderProps {
   children: ReactNode;
@@ -40,9 +44,12 @@ export function UserDocumentProvider({ children }: UserDocumentProviderProps): J
   const data = rawData as UserDocument | undefined;
 
   const updateDocument = useCallback(
-    async (updates: PartialWithFieldValue<UserDocument>, options?: UpdateOptions): Promise<void> => {
+    async (
+      updates: PartialWithFieldValue<UserDocument>,
+      options?: UpdateOptions,
+    ): Promise<void> => {
       if (!documentRef) {
-        throw new Error("Cannot update document: User is not authenticated");
+        throw new Error('Cannot update document: User is not authenticated');
       }
 
       const { showToast = false, successMessage, errorMessage } = options || {};
@@ -56,15 +63,15 @@ export function UserDocumentProvider({ children }: UserDocumentProviderProps): J
         if (showToast && errorMessage) {
           toast.error(errorMessage);
         }
-        throw new Error("Failed to update document");
+        throw new Error('Failed to update document');
       }
     },
-    [documentRef]
+    [documentRef],
   );
 
   const value = useMemo<UseUserDocumentResult<UserDocument>>(() => {
     const isDataLoading = loading || (!!user && !data && !error);
-    
+
     return {
       data,
       isLoading: authLoading || isDataLoading,
@@ -73,17 +80,13 @@ export function UserDocumentProvider({ children }: UserDocumentProviderProps): J
     };
   }, [data, loading, authLoading, user, error, updateDocument]);
 
-  return (
-    <UserDocumentContext.Provider value={value}>
-      {children}
-    </UserDocumentContext.Provider>
-  );
+  return <UserDocumentContext.Provider value={value}>{children}</UserDocumentContext.Provider>;
 }
 
 function useUserDocument<T extends UserDocument = UserDocument>(): UseUserDocumentResult<T> {
   const context = useContext(UserDocumentContext);
   if (!context) {
-    throw new Error("useUserDocument must be used within a UserDocumentProvider");
+    throw new Error('useUserDocument must be used within a UserDocumentProvider');
   }
   return context as UseUserDocumentResult<T>;
 }

@@ -1,12 +1,18 @@
-import { deleteField } from "firebase/firestore";
-import isEqual from "lodash/isEqual";
-import sortBy from "lodash/sortBy";
-import { useEffect, useMemo, useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import useUserDocument from "../../../hooks/firebase/useUserDocument";
-import { SessionConfig, SessionsMap, UserDocument } from "../../../hooks/firebase/types";
-import { compareSession } from "../../../utils/Sessions.utils";
-import { getCurrentSession, getNextSession, getPreviousSession } from "../../../utils/SessionSequence.utils";
+import { deleteField } from 'firebase/firestore';
+import isEqual from 'lodash/isEqual';
+import sortBy from 'lodash/sortBy';
+import {
+  useEffect, useMemo, useState, useRef,
+} from 'react';
+import { useTranslation } from 'react-i18next';
+import useUserDocument from '../../../hooks/firebase/useUserDocument';
+import { SessionConfig, SessionsMap, UserDocument } from '../../../hooks/firebase/types';
+import { compareSession } from '../../../utils/Sessions.utils';
+import {
+  getCurrentSession,
+  getNextSession,
+  getPreviousSession,
+} from '../../../utils/SessionSequence.utils';
 
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],
@@ -36,12 +42,12 @@ function areSessionsEqual(a: SessionsMap, b: SessionsMap): boolean {
   return isEqual(normalizeSessionsMap(a), normalizeSessionsMap(b));
 }
 
-function getBaseSession(profile: UserDocument["profile"]): string {
+function getBaseSession(profile: UserDocument['profile']): string {
   return profile?.admissionSession || getCurrentSession();
 }
 
 export function usePlannedCourses() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const { data: userDoc, updateDocument } = useUserDocument<UserDocument>();
 
   const profile = userDoc?.profile;
@@ -52,7 +58,7 @@ export function usePlannedCourses() {
   if (!isEqual(storedSessionsRef.current, profileSessions)) {
     storedSessionsRef.current = profileSessions;
   }
-  
+
   const storedSessions = storedSessionsRef.current;
 
   const [localSessions, setLocalSessions] = useState<SessionsMap>(storedSessions);
@@ -61,13 +67,15 @@ export function usePlannedCourses() {
     setLocalSessions(storedSessions);
   }, [storedSessions]);
 
-  const hasChanges = useMemo(() => {
-    return !areSessionsEqual(localSessions, storedSessions);
-  }, [localSessions, storedSessions]);
+  const hasChanges = useMemo(
+    () => !areSessionsEqual(localSessions, storedSessions),
+    [localSessions, storedSessions],
+  );
 
-  const sortedSessionKeys = useMemo(() => {
-    return Object.keys(localSessions).sort(compareSession);
-  }, [localSessions]);
+  const sortedSessionKeys = useMemo(
+    () => Object.keys(localSessions).sort(compareSession),
+    [localSessions],
+  );
 
   const previousSession = useMemo(() => {
     if (sortedSessionKeys.length === 0) {
@@ -75,6 +83,7 @@ export function usePlannedCourses() {
     }
     const firstSession = sortedSessionKeys[0];
     return getPreviousSession(firstSession);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
   const nextSession = useMemo(() => {
@@ -83,9 +92,10 @@ export function usePlannedCourses() {
     }
     const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
     return getNextSession(lastSession);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
-  const programme = profile?.programme || "Maîtrise";
+  const programme = profile?.programme || 'Maîtrise';
 
   const handleDeleteSession = (sessionKey: string) => {
     setLocalSessions((prev) => {
@@ -120,16 +130,19 @@ export function usePlannedCourses() {
       }
     });
 
-    await updateDocument({
-      profile: {
-        ...profile,
-        sessions: sessionsUpdates,
+    await updateDocument(
+      {
+        profile: {
+          ...profile,
+          sessions: sessionsUpdates,
+        },
       },
-    }, {
-      showToast: true,
-      successMessage: t("coursPlanifiesMisAJour") as string,
-      errorMessage: t("erreurMiseAJourCoursPlanifies") as string,
-    });
+      {
+        showToast: true,
+        successMessage: t('coursPlanifiesMisAJour') as string,
+        errorMessage: t('erreurMiseAJourCoursPlanifies') as string,
+      },
+    );
   };
 
   const handleCancel = () => {

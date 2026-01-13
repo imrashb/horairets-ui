@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const CombinaisonHoraireWrapper = styled.div`
   width: 100%;
@@ -7,7 +7,7 @@ const CombinaisonHoraireWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+  ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
     font-size: 2vw;
   }
 

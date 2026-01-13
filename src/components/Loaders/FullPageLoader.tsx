@@ -1,8 +1,8 @@
-import { CircularProgress } from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
-import styled from "styled-components";
-import HorairetsLogo from "../HorairetsLogo/HorairetsLogo";
+import { CircularProgress } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
+import styled from 'styled-components';
+import HorairetsLogo from '../HorairetsLogo/HorairetsLogo';
 
 const LoaderWrapper = styled(motion.div)`
   position: fixed;
@@ -32,19 +32,16 @@ function FullPageLoader({ isLoading, children }: FullPageLoaderProps): JSX.Eleme
           <LoaderWrapper
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           >
             <HorairetsLogo fontSize="4rem" mobileFontSize="3rem" />
             <CircularProgress size={48} thickness={4} />
           </LoaderWrapper>
         )}
       </AnimatePresence>
-      <div style={{ opacity: isLoading ? 0 : 1, transition: "opacity 0.5s ease" }}>
-        {children}
-      </div>
+      <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>{children}</div>
     </>
   );
 }
 
 export default FullPageLoader;
-
