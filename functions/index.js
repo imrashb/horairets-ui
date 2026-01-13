@@ -1,9 +1,10 @@
-const functions = require("firebase-functions");
+const { beforeUserCreated, beforeUserDeleted } = require("firebase-functions/v2/identity");
 const admin = require("firebase-admin");
 
 admin.initializeApp();
 
-exports.createUser = functions.auth.user().onCreate((user) => {
+exports.createUser = beforeUserCreated((event) => {
+  const user = event.data;
   const firestore = admin.firestore();
   const document = firestore.collection("users").doc(user.uid);
   const data = {
@@ -12,7 +13,8 @@ exports.createUser = functions.auth.user().onCreate((user) => {
   return document.set(data);
 });
 
-exports.deleteUser = functions.auth.user().onDelete((user) => {
+exports.deleteUser = beforeUserDeleted((event) => {
+  const user = event.data;
   const firestore = admin.firestore();
   const document = firestore.collection("users").doc(user.uid);
   return document.delete();
