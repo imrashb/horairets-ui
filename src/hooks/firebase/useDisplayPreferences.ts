@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useAtom } from "jotai";
+import { useCallback, useEffect } from "react";
 import {
   DEFAULT_DISPLAY_PREFERENCES,
   DisplayPreferences,
@@ -6,24 +7,38 @@ import {
   UserDocument,
 } from "./types";
 import useUserDocument from "./useUserDocument";
+import { displayPreferencesAtom } from "../../features/user/displayPreferencesAtom";
 
 function useDisplayPreferences(): UseDisplayPreferencesResult {
   const { data, isLoading, error, updateDocument } =
     useUserDocument<UserDocument>();
 
-  const preferences: DisplayPreferences =
-    data?.displayPreferences ?? DEFAULT_DISPLAY_PREFERENCES;
+  const [localPreferences, setLocalPreferences] = useAtom(displayPreferencesAtom);
+
+  useEffect(() => {
+    if (data?.displayPreferences) {
+      setLocalPreferences(data.displayPreferences);
+    } 
+  }, [data?.displayPreferences, setLocalPreferences]);
+
+  const preferences: DisplayPreferences = data?.displayPreferences ?? localPreferences;
 
   const updatePreferences = useCallback(
     async (updates: Partial<DisplayPreferences>): Promise<void> => {
-      await updateDocument({
-        displayPreferences: {
-          ...preferences,
-          ...updates,
-        },
-      });
+      const newPreferences = {
+        ...localPreferences,
+        ...updates,
+      };
+      
+      setLocalPreferences(newPreferences);
+      
+      if (data) {
+        await updateDocument({
+          displayPreferences: newPreferences,
+        });
+      }
     },
-    [updateDocument, preferences]
+    [updateDocument, localPreferences, data, setLocalPreferences]
   );
 
   const setPreference = useCallback(
@@ -37,10 +52,14 @@ function useDisplayPreferences(): UseDisplayPreferencesResult {
   );
 
   const resetToDefaults = useCallback(async (): Promise<void> => {
-    await updateDocument({
-      displayPreferences: DEFAULT_DISPLAY_PREFERENCES,
-    });
-  }, [updateDocument]);
+    setLocalPreferences(DEFAULT_DISPLAY_PREFERENCES);
+    
+    if (data) {
+      await updateDocument({
+        displayPreferences: DEFAULT_DISPLAY_PREFERENCES,
+      });
+    }
+  }, [updateDocument, data, setLocalPreferences]);
 
   return {
     preferences,
