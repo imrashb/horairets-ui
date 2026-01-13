@@ -1,15 +1,10 @@
-/* eslint-disable import/no-unresolved */
-const {
-  beforeUserCreated,
-  beforeUserDeleted,
-} = require("firebase-functions/v2/identity");
-/* eslint-enable import/no-unresolved */
+// eslint-disable-next-line import/no-unresolved
+const functions = require("firebase-functions/v1");
 const admin = require("firebase-admin");
 
 admin.initializeApp();
 
-exports.createUser = beforeUserCreated((event) => {
-  const user = event.data;
+exports.createUser = functions.auth.user().onCreate((user) => {
   const firestore = admin.firestore();
   const document = firestore.collection("users").doc(user.uid);
   const data = {
@@ -18,8 +13,7 @@ exports.createUser = beforeUserCreated((event) => {
   return document.set(data);
 });
 
-exports.deleteUser = beforeUserDeleted((event) => {
-  const user = event.data;
+exports.deleteUser = functions.auth.user().onDelete((user) => {
   const firestore = admin.firestore();
   const document = firestore.collection("users").doc(user.uid);
   return document.delete();
