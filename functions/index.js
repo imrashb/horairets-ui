@@ -1,4 +1,9 @@
-const { beforeUserCreated, beforeUserDeleted } = require("firebase-functions/v2/identity");
+/* eslint-disable import/no-unresolved */
+const {
+  beforeUserCreated,
+  beforeUserDeleted,
+} = require("firebase-functions/v2/identity");
+/* eslint-enable import/no-unresolved */
 const admin = require("firebase-admin");
 
 admin.initializeApp();
