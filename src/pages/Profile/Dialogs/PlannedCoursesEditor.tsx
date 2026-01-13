@@ -1,13 +1,10 @@
-import {
-  Route, Save, School, Warning,
-} from '@mui/icons-material';
-import { Button, Theme, Typography } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Route, School } from '@mui/icons-material';
+import { Theme, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import SmartSaveButtons from '../../../components/SmartSaveButtons';
 import { useUnsavedChangesWarning } from '../../../hooks/useUnsavedChangesWarning';
-import { fadeInOutAnimation } from '../../../utils/animations';
 import EditProfileDialog from './EditProfileDialog';
 import { PlannedSessionsGrid } from './PlannedSessionsGrid';
 import { usePlannedCourses } from './usePlannedCourses';
@@ -37,19 +34,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-`;
-
-const ActionsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const ChangeIndicator = styled(Typography)`
-  color: ${({ theme }) => (theme as Theme).palette.warning.main};
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
 `;
 
 const EmptyStateContainer = styled.div`
@@ -100,24 +84,6 @@ function PlannedCoursesEditor(): JSX.Element {
           <Route />
           {t('coursPlanifies')}
         </Typography>
-        <AnimatePresence>
-          {hasChanges && (
-            <motion.div key="actions" {...fadeInOutAnimation}>
-              <ActionsContainer>
-                <ChangeIndicator>
-                  <Warning sx={{ fontSize: 16, mr: 0.5 }} />
-                  {t('changementsNonSauvegardes')}
-                </ChangeIndicator>
-                <Button variant="outlined" onClick={handleCancel} size="small">
-                  {t('annuler')}
-                </Button>
-                <Button variant="contained" startIcon={<Save />} onClick={handleSave} size="small">
-                  {t('sauvegarder')}
-                </Button>
-              </ActionsContainer>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </Header>
       <EditorWrapper>
         {!profile?.admissionSession ? (
@@ -147,6 +113,11 @@ function PlannedCoursesEditor(): JSX.Element {
           </SessionsGrid>
         )}
       </EditorWrapper>
+      <SmartSaveButtons
+        hasChanges={hasChanges}
+        onSave={handleSave}
+        onCancel={handleCancel}
+      />
     </>
   );
 }
