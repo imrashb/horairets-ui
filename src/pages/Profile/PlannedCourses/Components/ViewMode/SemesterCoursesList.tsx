@@ -1,7 +1,8 @@
 import { Theme, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import CourseDetailsDialog from '../../../../../components/Dialogs/CourseDetailsDialog';
 
 const CoursesListWrapper = styled.div<{ $seamless?: boolean }>`
   display: grid;
@@ -35,6 +36,7 @@ const CourseItem = styled.div<{ $highlight?: boolean }>`
   box-shadow: ${({ theme }) => (theme as Theme).shadows[2]};
 
   transition: all 0.2s linear;
+  cursor: pointer;
 `;
 
 const EmptyState = styled.div`
@@ -60,6 +62,8 @@ function SemesterCoursesList({
 }: SemesterCoursesListProps): JSX.Element {
   const { t } = useTranslation('common');
 
+  const [selectedSigle, setSelectedSigle] = useState<string | null>(null);
+
   return (
     <CoursesListWrapper $seamless={seamless}>
       {courses.length > 0 ? (
@@ -67,12 +71,23 @@ function SemesterCoursesList({
           const fullString = `${course.sigle}${course.group ? `-${course.group}` : ''}`;
           const isMatch = !!(searchTerm && fullString.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
-            <CourseItem key={course.sigle} $highlight={isMatch}>
-              <Typography variant={seamless ? 'body1' : 'body2'} color={isMatch ? 'inherit' : 'text.primary'}>
-                {course.sigle}
-                {course.group && `-${course.group}`}
-              </Typography>
-            </CourseItem>
+            <CourseDetailsDialog
+              key={course.sigle}
+              open={selectedSigle === course.sigle}
+              sigle={course.sigle}
+              onClose={() => setSelectedSigle(null)}
+              activator={(
+                <CourseItem
+                  $highlight={isMatch}
+                  onClick={() => setSelectedSigle(course.sigle)}
+                >
+                  <Typography variant={seamless ? 'body1' : 'body2'} color={isMatch ? 'inherit' : 'text.primary'}>
+                    {course.sigle}
+                    {course.group && `-${course.group}`}
+                  </Typography>
+                </CourseItem>
+              )}
+            />
           );
         })
       ) : (

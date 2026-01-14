@@ -24,6 +24,7 @@ export const useGetSessions = () => useQuery({
     const { data } = await axios.get<string[]>(`${GET_SESSIONS_ENDPOINT}`);
     return data;
   },
+  staleTime: Infinity,
 });
 
 export const useGetProgrammes = () => useQuery({
@@ -32,6 +33,8 @@ export const useGetProgrammes = () => useQuery({
     const { data } = await axios.get<string[]>(`${GET_PROGRAMMES_ENDPOINT}`);
     return data?.filter((programme) => programme !== MAITRISE);
   },
+
+  staleTime: Infinity,
 });
 
 export const useGetCoursSession = (
@@ -55,6 +58,7 @@ export const useGetCoursSession = (
     return data;
   },
   enabled: !!session && !!programme && enabled,
+  staleTime: Infinity,
 });
 
 export const useGetCombinaisons = () => useMutation({
@@ -112,4 +116,5 @@ export const useGetCours = (programmes?: string[], enabled = true) => useQuery({
     return data.sort((a, b) => a.sigle.localeCompare(b.sigle));
   },
   enabled,
+  staleTime: Infinity,
 });
