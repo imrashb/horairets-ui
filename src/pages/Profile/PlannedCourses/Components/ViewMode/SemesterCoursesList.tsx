@@ -64,7 +64,8 @@ function SemesterCoursesList({
     <CoursesListWrapper $seamless={seamless}>
       {courses.length > 0 ? (
         courses.map((course) => {
-          const isMatch = !!(searchTerm && course.sigle.toLowerCase().includes(searchTerm.toLowerCase()));
+          const fullString = `${course.sigle}${course.group ? `-${course.group}` : ''}`;
+          const isMatch = !!(searchTerm && fullString.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
             <CourseItem key={course.sigle} $highlight={isMatch}>
               <Typography variant={seamless ? 'body1' : 'body2'} color={isMatch ? 'inherit' : 'text.primary'}>

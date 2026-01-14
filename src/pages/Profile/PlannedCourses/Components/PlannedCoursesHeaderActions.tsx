@@ -1,9 +1,9 @@
-import { Search } from '@mui/icons-material';
-import { InputAdornment, TextField } from '@mui/material';
 import React from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { CheminementViewMode } from '../PlannedCourses.constants';
 import ViewModeToggle from './ViewMode/ViewModeToggle';
+import ResponsiveSearchBar from './ResponsiveSearchBar';
 
 interface PlannedCoursesHeaderActionsProps {
   isEditMode: boolean;
@@ -27,19 +27,10 @@ function PlannedCoursesHeaderActions({
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
       {!isEditMode && (
-        <TextField
-          size="small"
-          placeholder={t('rechercherUnCours') as string}
+        <ResponsiveSearchBar
           value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-          sx={{ maxWidth: 250 }}
+          onChange={onSearchChange}
+          placeholder={t('rechercherUnCours') as string}
         />
       )}
       <ViewModeToggle
