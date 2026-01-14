@@ -205,6 +205,6 @@
   "cheminement": "Cheminement",
   "modeEdition": "Édition",
   "modeConsultation": "Consultation",
-  "anneeAcademique": "{{startYear}}-{{endYear}}",
-  "aucunCoursPourSession": "Aucun cours"
+  "aucunCoursPourSession": "Aucun cours",
+  "anneeEnCours": "en cours"
 }

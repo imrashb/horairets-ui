@@ -1,6 +1,7 @@
 import { parseSession, TrimestreId } from './Sessions.utils';
 
 const TRIMESTRE_CHRONOLOGICAL_ORDER: TrimestreId[] = ['H', 'E', 'A'];
+export const ACADEMIC_YEAR_SEMESTERS_INDICES = [0, 1, 2];
 
 export function getNextSession(currentSession: string): string {
   const parsed = parseSession(currentSession);

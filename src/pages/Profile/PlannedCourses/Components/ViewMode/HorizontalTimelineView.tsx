@@ -1,10 +1,11 @@
 import { Theme, Typography } from '@mui/material';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { SessionsMap } from '../../../../../hooks/firebase/types';
-import { getAcademicYearRange, getAcademicYearSessions } from '../../../../../utils/SessionSequence.utils';
+import { ACADEMIC_YEAR_SEMESTERS_INDICES } from '../../../../../utils/SessionSequence.utils';
 import SemesterViewCard from './SemesterViewCard';
+import { useTimelineData } from './useTimelineData';
 
 interface TimelineGridProps {
   $columnCount: number;
@@ -67,45 +68,9 @@ interface HorizontalTimelineViewProps {
 
 function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.Element {
   const { t } = useTranslation('common');
+  const { academicYears, academicYearsData, isEmpty } = useTimelineData(sessions);
 
-  const academicYears = useMemo(() => {
-    const sessionKeys = Object.keys(sessions);
-    const range = getAcademicYearRange(sessionKeys);
-
-    if (!range) return [];
-
-    const years: number[] = [];
-    for (let year = range.minYear; year <= range.maxYear; year++) {
-      years.push(year);
-    }
-    return years;
-  }, [sessions]);
-
-  const gridItems = useMemo(() => {
-    if (academicYears.length === 0) return { headers: [], rows: [] };
-
-    const headers = academicYears.map((year) => ({
-      key: `header-${year}`,
-      label: t('anneeAcademique', { startYear: year, endYear: year + 1 }),
-    }));
-
-    // Build 3 rows: Automne, Hiver, Été
-    const rows: Array<{ key: string; session: string; config: SessionsMap[string] | undefined }[]> = [
-      [], // Automne row
-      [], // Hiver row
-      [], // Été row
-    ];
-
-    academicYears.forEach((year) => {
-      getAcademicYearSessions(year).forEach((session, index) => {
-        rows[index].push({ key: session, session, config: sessions[session] });
-      });
-    });
-
-    return { headers, rows };
-  }, [academicYears, sessions, t]);
-
-  if (academicYears.length === 0) {
+  if (isEmpty) {
     return (
       <EmptyState>
         <Typography variant="body1" color="text.secondary">
@@ -118,21 +83,24 @@ function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.
   return (
     <TimelineWrapper>
       <TimelineGrid $columnCount={academicYears.length}>
-        {/* Year headers row */}
-        {gridItems.headers.map((header) => (
-          <YearHeader key={header.key} variant="caption">
-            {header.label}
+        {academicYearsData.map((yearData) => (
+          <YearHeader key={`header-${yearData.year}`} variant="caption">
+            {yearData.label}
           </YearHeader>
         ))}
 
-        {/* Semester rows */}
-        {gridItems.rows.map((row) => row.map((cell) => (
-          <SemesterViewCard
-            key={cell.key}
-            session={cell.session}
-            config={cell.config}
-          />
-        )))}
+        {ACADEMIC_YEAR_SEMESTERS_INDICES.map((semesterIndex) => (
+          academicYearsData.map((yearData) => {
+            const semester = yearData.semesters[semesterIndex];
+            return (
+              <SemesterViewCard
+                key={semester.key}
+                session={semester.session}
+                config={semester.config}
+              />
+            );
+          })
+        ))}
       </TimelineGrid>
     </TimelineWrapper>
   );

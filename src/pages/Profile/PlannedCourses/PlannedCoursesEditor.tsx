@@ -1,10 +1,11 @@
 import { Route } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ContentCard from '../../../components/Cards/ContentCard';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
 import useUserDocument from '../../../hooks/firebase/useUserDocument';
 import { UserDocument } from '../../../hooks/firebase/types';
+import { createEnumValidator, useQueryParam } from '../../../hooks/useQueryParam';
 import { PlannedCoursesProvider, usePlannedCourses } from './PlannedCoursesContext';
 import { CheminementViewMode } from './PlannedCourses.constants';
 import ViewModeToggle from './Components/ViewMode/ViewModeToggle';
@@ -15,7 +16,10 @@ function PlannedCoursesContent(): JSX.Element {
   const { data: userDoc } = useUserDocument<UserDocument>();
   const profile = userDoc?.profile;
 
-  const [viewMode, setViewMode] = useState<CheminementViewMode>(CheminementViewMode.EDIT);
+  const [viewMode, setViewMode] = useQueryParam<CheminementViewMode>('mode', {
+    defaultValue: CheminementViewMode.EDIT,
+    validate: createEnumValidator(CheminementViewMode),
+  });
 
   const {
     localSessions,
