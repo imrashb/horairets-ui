@@ -4,17 +4,17 @@ import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useSessionCourses } from './useSessionCourses';
+import { useSessionCourses } from '../hooks/useSessionCourses';
 import {
   activeGenerateurConfigAtom,
   formGenerateurConfigAtom,
   programmesAtom,
   sessionAtom,
-} from '../../../features/generateur/generateurAtoms';
-import { SessionConfig } from '../../../hooks/firebase/types';
-import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
-import { calculateCreditsRange } from '../../../utils/credits.utils';
-import { getSessionTranslation } from '../../../utils/Sessions.utils';
+} from '../../../../features/generateur/generateurAtoms';
+import { SessionConfig } from '../../../../hooks/firebase/types';
+import { GENERATEUR_HORAIRE_URL } from '../../../../routes/Routes.constants';
+import { calculateCreditsRange } from '../../../../utils/credits.utils';
+import { getSessionTranslation } from '../../../../utils/Sessions.utils';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
 import SessionCoursesList from './SessionCoursesList';

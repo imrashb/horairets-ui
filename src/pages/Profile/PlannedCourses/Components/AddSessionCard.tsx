@@ -3,7 +3,7 @@ import { Theme, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { getSessionTranslation } from '../../../utils/Sessions.utils';
+import { getSessionTranslation } from '../../../../utils/Sessions.utils';
 
 const AddCardWrapper = styled.div`
   background: transparent;

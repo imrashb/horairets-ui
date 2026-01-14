@@ -4,8 +4,8 @@ import { SessionConfig, SessionsMap } from '../../../hooks/firebase/types';
 import { fadeInOutAnimation } from '../../../utils/animations';
 import { isSessionSameOrAfter, isSessionSameOrBefore } from '../../../utils/Sessions.utils';
 import { getNextSession } from '../../../utils/SessionSequence.utils';
-import { AddSessionCard } from './AddSessionCard';
-import SessionCard from './SessionCard';
+import { AddSessionCard } from './Components/AddSessionCard';
+import SessionCard from './Components/SessionCard';
 
 interface PlannedSessionsGridProps {
   localSessions: SessionsMap;

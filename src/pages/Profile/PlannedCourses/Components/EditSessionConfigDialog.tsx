@@ -1,10 +1,10 @@
 import { Settings } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ButtonDialog from '../../../components/ButtonDialog/ButtonDialog';
-import CongesSelector from '../../../components/Selectors/CongesSelector';
-import NombreCoursSelector from '../../../components/Selectors/NombreCoursSelector';
-import { SessionConfig } from '../../../hooks/firebase/types';
+import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
+import CongesSelector from '../../../../components/Selectors/CongesSelector';
+import NombreCoursSelector from '../../../../components/Selectors/NombreCoursSelector';
+import { SessionConfig } from '../../../../hooks/firebase/types';
 
 interface EditSessionConfigDialogProps {
   config: SessionConfig;

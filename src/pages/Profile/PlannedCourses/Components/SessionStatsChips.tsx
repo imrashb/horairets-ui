@@ -2,8 +2,8 @@ import { EventBusy, School, WorkHistory } from '@mui/icons-material';
 import { Chip, Stack, Tooltip } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SessionConfig } from '../../../hooks/firebase/types';
-import { CreditsRange } from '../../../utils/credits.utils';
+import { SessionConfig } from '../../../../hooks/firebase/types';
+import { CreditsRange } from '../../../../utils/credits.utils';
 
 interface SessionStatsChipsProps {
   config: SessionConfig;

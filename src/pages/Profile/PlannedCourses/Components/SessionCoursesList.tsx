@@ -3,9 +3,9 @@ import { Chip, Tooltip } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cours } from '../../../features/generateur/generateur.types';
-import { SessionConfig } from '../../../hooks/firebase/types';
-import { fadeInOutAnimation } from '../../../utils/animations';
+import { Cours } from '../../../../features/generateur/generateur.types';
+import { SessionConfig } from '../../../../hooks/firebase/types';
+import { fadeInOutAnimation } from '../../../../utils/animations';
 import AddCourseAutocomplete from './AddCourseAutocomplete';
 import {
   CourseSection, CoursesContainer, EmptyState, SectionLabel,

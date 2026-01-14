@@ -2,7 +2,7 @@ import {
   useGetCours,
   useGetCoursSession,
   useGetSessions,
-} from '../../../features/generateur/generateurQueries';
+} from '../../../../features/generateur/generateurQueries';
 
 export function useSessionCourses(session: string, programme?: string) {
   const { data: availableSessions = [], isLoading: isLoadingSessions } = useGetSessions();

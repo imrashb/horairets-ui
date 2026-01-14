@@ -5,14 +5,14 @@ import {
   useEffect, useMemo, useState, useRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import useUserDocument from '../../../hooks/firebase/useUserDocument';
-import { SessionConfig, SessionsMap, UserDocument } from '../../../hooks/firebase/types';
-import { compareSession } from '../../../utils/Sessions.utils';
+import useUserDocument from '../../../../hooks/firebase/useUserDocument';
+import { SessionConfig, SessionsMap, UserDocument } from '../../../../hooks/firebase/types';
+import { compareSession } from '../../../../utils/Sessions.utils';
 import {
   getCurrentSession,
   getNextSession,
   getPreviousSession,
-} from '../../../utils/SessionSequence.utils';
+} from '../../../../utils/SessionSequence.utils';
 
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],

@@ -4,9 +4,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
-import EditProfileDialog from './EditProfileDialog';
+import EditProfileDialog from '../Dialogs/EditProfileDialog';
 import { PlannedSessionsGrid } from './PlannedSessionsGrid';
-import { usePlannedCourses } from './usePlannedCourses';
+import { usePlannedCourses } from './hooks/usePlannedCourses';
 
 const EditorWrapper = styled.div`
   display: flex;

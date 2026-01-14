@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import withAuth from '../../components/Auth/AuthenticatedComponent';
 import useUserDocument from '../../hooks/firebase/useUserDocument';
 import { UserDocument } from '../../hooks/firebase/types';
-import PlannedCoursesEditor from './Dialogs/PlannedCoursesEditor';
+import PlannedCoursesEditor from './PlannedCourses/PlannedCoursesEditor';
 import {
   ContentContainer, GridContainer, ProfileCard, ProfileWrapper,
 } from './Profile.styles';
