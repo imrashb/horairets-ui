@@ -9,7 +9,7 @@ import { useSelectedSchedule } from '../../../../../hooks/firebase';
 import ViewSelectedScheduleButton from '../ViewSelectedScheduleButton';
 
 const SemesterCardDesktop = styled(BaseCard)`
-  height: auto;
+  height: 100%;
 `;
 
 const SemesterCardMobile = styled.div`

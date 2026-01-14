@@ -2,8 +2,10 @@ import { Theme, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { SessionsMap } from '../../../../../hooks/firebase/types';
 import { ACADEMIC_YEAR_SEMESTERS_INDICES } from '../../../../../utils/SessionSequence.utils';
+import { fadeInOutAnimation } from '../../../../../utils/animations';
 import SemesterViewCard from './SemesterViewCard';
 import { useTimelineData } from './useTimelineData';
 
@@ -61,7 +63,7 @@ function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.
     <TimelineWrapper>
       <TimelineGrid $columnCount={academicYears.length}>
         {academicYearsData.map((yearData) => (
-          <YearHeader key={`header-${yearData.year}`} variant="caption">
+          <YearHeader key={`header-${yearData.year}`} variant="h6">
             {yearData.label}
           </YearHeader>
         ))}
@@ -70,11 +72,19 @@ function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.
           academicYearsData.map((yearData) => {
             const semester = yearData.semesters[semesterIndex];
             return (
-              <SemesterViewCard
+              <motion.div
                 key={semester.key}
-                session={semester.session}
-                config={semester.config}
-              />
+                {...fadeInOutAnimation}
+                layout
+                style={{
+                  height: '100%',
+                }}
+              >
+                <SemesterViewCard
+                  session={semester.session}
+                  config={semester.config}
+                />
+              </motion.div>
             );
           })
         ))}
