@@ -14,29 +14,6 @@ interface TimelineGridProps {
 const TimelineWrapper = styled.div`
   overflow-x: auto;
   padding-bottom: 1rem;
-
-  /* Custom scrollbar styling */
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => (theme as Theme).palette.grey[200]};
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => (theme as Theme).palette.primary.main};
-    border-radius: 4px;
-
-    &:hover {
-      background: ${({ theme }) => (theme as Theme).palette.primary.dark};
-    }
-  }
-
-  /* Firefox scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: ${({ theme }) => `${(theme as Theme).palette.primary.main} ${(theme as Theme).palette.grey[200]}`};
 `;
 
 const TimelineGrid = styled.div<TimelineGridProps>`

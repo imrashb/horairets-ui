@@ -1,4 +1,5 @@
 import { ExpandMore } from '@mui/icons-material';
+
 import {
   Accordion,
   AccordionDetails,
@@ -6,13 +7,14 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 import { SessionsMap } from '../../../../../hooks/firebase/types';
 import SemesterViewCard from './SemesterViewCard';
 import { useTimelineData } from './useTimelineData';
-import { APP_LAYOUT_NAVBAR_HEIGHT } from '../../../../../components/Layout/AppLayout';
+import { fadeInOutAnimation } from '../../../../../utils/animations';
 
 const VerticalWrapper = styled.div`
   display: flex;
@@ -83,13 +85,6 @@ function VerticalTimelineView({ sessions }: VerticalTimelineViewProps): JSX.Elem
   const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions);
 
   const [expandedYears, setExpandedYears] = useState<number[]>(currentAcademicYear !== null ? [currentAcademicYear] : []);
-  const currentYearRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (currentYearRef.current) {
-      currentYearRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
 
   const handleAccordionChange = (year: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedYears((prev) => {
@@ -112,52 +107,54 @@ function VerticalTimelineView({ sessions }: VerticalTimelineViewProps): JSX.Elem
 
   return (
     <VerticalWrapper>
-      {academicYearsData.map((yearData) => {
-        const isCurrentYear = yearData.year === currentAcademicYear;
-        const isExpanded = expandedYears.includes(yearData.year);
+      <AnimatePresence mode="popLayout">
+        {academicYearsData.map((yearData) => {
+          const isCurrentYear = yearData.year === currentAcademicYear;
+          const isExpanded = expandedYears.includes(yearData.year);
 
-        return (
-          <div
-            key={yearData.year}
-            ref={isCurrentYear ? currentYearRef : undefined}
-            style={{ scrollMarginTop: '100px' }}
-          >
-            <StyledAccordion
-              expanded={isExpanded}
-              onChange={handleAccordionChange(yearData.year)}
+          return (
+            <motion.div
+              key={yearData.year}
+              {...fadeInOutAnimation}
+              style={{ scrollMarginTop: '100px' }}
             >
-              <StyledAccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="subtitle1" fontWeight={isCurrentYear ? 700 : 600}>
-                  {yearData.label}
-                  {isCurrentYear && (
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{ ml: 1, color: 'primary.main' }}
-                    >
-                      (
-                      {t('anneeEnCours')}
-                      )
-                    </Typography>
-                  )}
-                </Typography>
-              </StyledAccordionSummary>
-              <StyledAccordionDetails>
-                <SemestersContainer>
-                  {yearData.semesters.map((semester) => (
-                    <SemesterViewCard
-                      key={semester.key}
-                      session={semester.session}
-                      config={semester.config}
-                      seamless
-                    />
-                  ))}
-                </SemestersContainer>
-              </StyledAccordionDetails>
-            </StyledAccordion>
-          </div>
-        );
-      })}
+              <StyledAccordion
+                expanded={isExpanded}
+                onChange={handleAccordionChange(yearData.year)}
+              >
+                <StyledAccordionSummary expandIcon={<ExpandMore />}>
+                  <Typography variant="subtitle1" fontWeight={isCurrentYear ? 700 : 600}>
+                    {yearData.label}
+                    {isCurrentYear && (
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ ml: 1, color: 'primary.main' }}
+                      >
+                        (
+                        {t('anneeEnCours')}
+                        )
+                      </Typography>
+                    )}
+                  </Typography>
+                </StyledAccordionSummary>
+                <StyledAccordionDetails>
+                  <SemestersContainer>
+                    {yearData.semesters.map((semester) => (
+                      <SemesterViewCard
+                        key={semester.key}
+                        session={semester.session}
+                        config={semester.config}
+                        seamless
+                      />
+                    ))}
+                  </SemestersContainer>
+                </StyledAccordionDetails>
+              </StyledAccordion>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </VerticalWrapper>
   );
 }

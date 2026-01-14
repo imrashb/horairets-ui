@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { BaseCard } from '../../../../../components/Cards/BaseCard';
 import { SessionConfig } from '../../../../../hooks/firebase/types';
-import { getSessionTranslation } from '../../../../../utils/Sessions.utils';
-
-import { APP_LAYOUT_NAVBAR_HEIGHT } from '../../../../../components/Layout/AppLayout';
+import { getSessionTranslation, parseScheduleId } from '../../../../../utils/Sessions.utils';
+import { useSelectedSchedule } from '../../../../../hooks/firebase';
+import ViewSelectedScheduleButton from '../ViewSelectedScheduleButton';
 
 const SemesterCardDesktop = styled(BaseCard)`
   height: auto;
@@ -23,15 +23,20 @@ const SemesterCardMobile = styled.div`
   }
 `;
 
+const HeaderRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+`;
+
 const StickyHeader = styled.div<{ $seamless?: boolean }>`
   display: flex;
   flex-direction: column;
 
   ${({ $seamless, theme }) => ($seamless ? `
     padding: 0.5rem 1rem;
-    position: sticky;
-    top: ${APP_LAYOUT_NAVBAR_HEIGHT};
-    z-index: 1;
     background: ${(theme as Theme).palette.background.paper};
     border-bottom: 1px solid ${(theme as Theme).palette.divider};
   ` : `
@@ -86,7 +91,14 @@ function SemesterViewCard({
 }: SemesterViewCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const sessionName = getSessionTranslation(session, t) || session;
-  const courses = config?.cours || [];
+  const { getSelectedSchedule } = useSelectedSchedule();
+
+  const selectedScheduleId = getSelectedSchedule(session);
+  const parsedSchedule = selectedScheduleId ? parseScheduleId(selectedScheduleId) : null;
+
+  const coursesToDisplay = parsedSchedule
+    ? parsedSchedule.courses.map((c) => ({ sigle: c.sigle, group: c.group }))
+    : (config?.cours || []).map((c) => ({ sigle: c, group: null as string | null }));
 
   const creditsLabel = totalCredits > 0
     ? t('credits', { count: totalCredits })
@@ -95,9 +107,16 @@ function SemesterViewCard({
   const content = (
     <>
       <StickyHeader $seamless={seamless}>
-        <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
-          {sessionName}
-        </Typography>
+        <HeaderRow>
+          <Typography variant={seamless ? 'subtitle1' : 'subtitle2'} fontWeight="bold" textAlign="center">
+            {sessionName}
+          </Typography>
+          {selectedScheduleId && (
+            <div style={{ position: 'absolute', right: 0, display: 'flex' }}>
+              <ViewSelectedScheduleButton session={session} />
+            </div>
+          )}
+        </HeaderRow>
         {creditsLabel && (
           <Typography variant="caption" color="text.secondary" textAlign="center">
             {creditsLabel}
@@ -105,10 +124,13 @@ function SemesterViewCard({
         )}
       </StickyHeader>
       <CoursesList $seamless={seamless}>
-        {courses.length > 0 ? (
-          courses.map((course) => (
-            <CourseItem key={course}>
-              <Typography variant="body2">{course}</Typography>
+        {coursesToDisplay.length > 0 ? (
+          coursesToDisplay.map((course) => (
+            <CourseItem key={course.sigle}>
+              <Typography variant={seamless ? 'body1' : 'body2'}>
+                {course.sigle}
+                {course.group && `-${course.group}`}
+              </Typography>
             </CourseItem>
           ))
         ) : (
