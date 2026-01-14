@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
 import EditProfileDialog from '../Dialogs/EditProfileDialog';
+import useUserDocument from '../../../hooks/firebase/useUserDocument';
+import { UserDocument } from '../../../hooks/firebase/types';
+import { PlannedCoursesProvider, usePlannedCourses } from './PlannedCoursesContext';
 import { PlannedSessionsGrid } from './PlannedSessionsGrid';
-import { usePlannedCourses } from './hooks/usePlannedCourses';
 
 const EditorWrapper = styled.div`
   display: flex;
@@ -47,22 +49,15 @@ const EmptyStateContainer = styled.div`
   border: 1px solid ${({ theme }) => (theme as Theme).palette.divider};
 `;
 
-function PlannedCoursesEditor(): JSX.Element {
+function PlannedCoursesContent(): JSX.Element {
   const { t } = useTranslation('common');
+  const { data: userDoc } = useUserDocument<UserDocument>();
+  const profile = userDoc?.profile;
 
   const {
-    profile,
-    localSessions,
-    sortedSessionKeys,
-    previousSession,
-    nextSession,
-    programme,
     hasChanges,
-    handleAddSession,
-    handleDeleteSession,
-    handleUpdateSessionConfig,
-    handleSave,
-    handleCancel,
+    onSave,
+    onCancel,
   } = usePlannedCourses();
 
   return (
@@ -96,26 +91,24 @@ function PlannedCoursesEditor(): JSX.Element {
           </EmptyStateContainer>
         ) : (
           <SessionsGrid>
-            <PlannedSessionsGrid
-              localSessions={localSessions}
-              sortedSessionKeys={sortedSessionKeys}
-              admissionSession={profile?.admissionSession}
-              programme={programme}
-              previousSession={previousSession}
-              nextSession={nextSession}
-              onAddSession={handleAddSession}
-              onDeleteSession={handleDeleteSession}
-              onUpdateSessionConfig={handleUpdateSessionConfig}
-            />
+            <PlannedSessionsGrid />
           </SessionsGrid>
         )}
       </EditorWrapper>
       <SmartSaveButtons
         hasChanges={hasChanges}
-        onSave={handleSave}
-        onCancel={handleCancel}
+        onSave={onSave}
+        onCancel={onCancel}
       />
     </>
+  );
+}
+
+function PlannedCoursesEditor(): JSX.Element {
+  return (
+    <PlannedCoursesProvider>
+      <PlannedCoursesContent />
+    </PlannedCoursesProvider>
   );
 }
 

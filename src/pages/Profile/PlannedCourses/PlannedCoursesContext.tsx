@@ -1,18 +1,18 @@
 import { deleteField } from 'firebase/firestore';
 import isEqual from 'lodash/isEqual';
 import sortBy from 'lodash/sortBy';
-import {
-  useEffect, useMemo, useState, useRef,
+import React, {
+  createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import useUserDocument from '../../../../hooks/firebase/useUserDocument';
-import { SessionConfig, SessionsMap, UserDocument } from '../../../../hooks/firebase/types';
-import { compareSession } from '../../../../utils/Sessions.utils';
+import useUserDocument from '../../../hooks/firebase/useUserDocument';
+import { SessionConfig, SessionsMap, UserDocument } from '../../../hooks/firebase/types';
+import { compareSession } from '../../../utils/Sessions.utils';
 import {
   getCurrentSession,
   getNextSession,
   getPreviousSession,
-} from '../../../../utils/SessionSequence.utils';
+} from '../../../utils/SessionSequence.utils';
 
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],
@@ -46,7 +46,32 @@ function getBaseSession(profile: UserDocument['profile']): string {
   return profile?.admissionSession || getCurrentSession();
 }
 
+interface PlannedCoursesContextType {
+
+  localSessions: SessionsMap;
+  sortedSessionKeys: string[];
+  previousSession: string;
+  nextSession: string;
+  programme: string;
+  hasChanges: boolean;
+  onAddSession: (sessionKey: string) => void;
+  onDeleteSession: (sessionKey: string) => void;
+  onUpdateSessionConfig: (sessionKey: string, config: SessionConfig) => void;
+  onSave: () => Promise<void>;
+  onCancel: () => void;
+}
+
+const PlannedCoursesContext = createContext<PlannedCoursesContextType | null>(null);
+
 export function usePlannedCourses() {
+  const context = useContext(PlannedCoursesContext);
+  if (!context) {
+    throw new Error('usePlannedCourses must be used within a PlannedCoursesProvider');
+  }
+  return context;
+}
+
+export function PlannedCoursesProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const { t } = useTranslation('common');
   const { data: userDoc, updateDocument } = useUserDocument<UserDocument>();
 
@@ -83,7 +108,7 @@ export function usePlannedCourses() {
     }
     const firstSession = sortedSessionKeys[0];
     return getPreviousSession(firstSession);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
   const nextSession = useMemo(() => {
@@ -92,33 +117,33 @@ export function usePlannedCourses() {
     }
     const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
     return getNextSession(lastSession);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
   const programme = profile?.programme || 'Maîtrise';
 
-  const handleDeleteSession = (sessionKey: string) => {
+  const handleDeleteSession = useCallback((sessionKey: string) => {
     setLocalSessions((prev) => {
       const { [sessionKey]: _, ...rest } = prev;
       return rest;
     });
-  };
+  }, []);
 
-  const handleAddSession = (sessionKey: string) => {
+  const handleAddSession = useCallback((sessionKey: string) => {
     setLocalSessions((prev) => ({
       ...prev,
       [sessionKey]: { ...DEFAULT_SESSION_CONFIG },
     }));
-  };
+  }, []);
 
-  const handleUpdateSessionConfig = (sessionKey: string, config: SessionConfig) => {
+  const handleUpdateSessionConfig = useCallback((sessionKey: string, config: SessionConfig) => {
     setLocalSessions((prev) => ({
       ...prev,
       [sessionKey]: config,
     }));
-  };
+  }, []);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!profile) return;
 
     const normalizedLocalSessions = normalizeSessionsMap(localSessions);
@@ -143,14 +168,26 @@ export function usePlannedCourses() {
         errorMessage: t('erreurMiseAJourCoursPlanifies') as string,
       },
     );
-  };
+  }, [profile, localSessions, storedSessions, updateDocument, t]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setLocalSessions(storedSessions);
-  };
+  }, [storedSessions]);
 
-  return {
-    profile,
+  const value = useMemo(() => ({
+
+    localSessions,
+    sortedSessionKeys,
+    previousSession,
+    nextSession,
+    programme,
+    hasChanges,
+    onAddSession: handleAddSession,
+    onDeleteSession: handleDeleteSession,
+    onUpdateSessionConfig: handleUpdateSessionConfig,
+    onSave: handleSave,
+    onCancel: handleCancel,
+  }), [
     localSessions,
     sortedSessionKeys,
     previousSession,
@@ -162,5 +199,11 @@ export function usePlannedCourses() {
     handleUpdateSessionConfig,
     handleSave,
     handleCancel,
-  };
+  ]);
+
+  return (
+    <PlannedCoursesContext.Provider value={value}>
+      {children}
+    </PlannedCoursesContext.Provider>
+  );
 }
