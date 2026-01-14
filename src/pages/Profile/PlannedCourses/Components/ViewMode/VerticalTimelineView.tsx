@@ -7,7 +7,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -86,6 +86,12 @@ function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProp
   const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions);
 
   const [expandedYears, setExpandedYears] = useState<number[]>(currentAcademicYear !== null ? [currentAcademicYear] : []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setExpandedYears(academicYearsData.map((data) => data.year));
+    }
+  }, [searchTerm, academicYearsData]);
 
   const handleAccordionChange = (year: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedYears((prev) => {
