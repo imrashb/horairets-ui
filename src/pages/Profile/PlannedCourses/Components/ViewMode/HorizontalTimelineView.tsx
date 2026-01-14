@@ -43,9 +43,10 @@ const EmptyState = styled.div`
 
 interface HorizontalTimelineViewProps {
   sessions: SessionsMap;
+  searchTerm?: string;
 }
 
-function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.Element {
+function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineViewProps): JSX.Element {
   const { t } = useTranslation('common');
   const { academicYears, academicYearsData, isEmpty } = useTimelineData(sessions);
 
@@ -83,6 +84,7 @@ function HorizontalTimelineView({ sessions }: HorizontalTimelineViewProps): JSX.
                 <SemesterViewCard
                   session={semester.session}
                   config={semester.config}
+                  searchTerm={searchTerm}
                 />
               </motion.div>
             );

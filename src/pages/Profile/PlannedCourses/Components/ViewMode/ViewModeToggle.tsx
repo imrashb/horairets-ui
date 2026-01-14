@@ -46,13 +46,13 @@ function ViewModeToggle({ value, onChange, disabled = false }: ViewModeTogglePro
     >
       <ToggleButton value={CheminementViewMode.EDIT}>
         <Tooltip title={t('modeEdition')}>
-          <Edit sx={{ fontSize: 18 }} />
+          <Edit sx={{ fontSize: 24 }} />
         </Tooltip>
         {isDesktop && <ButtonLabel>{t('modeEdition')}</ButtonLabel>}
       </ToggleButton>
       <ToggleButton value={CheminementViewMode.VIEW}>
         <Tooltip title={t('modeConsultation')}>
-          <Visibility sx={{ fontSize: 18 }} />
+          <Visibility sx={{ fontSize: 24 }} />
         </Tooltip>
         {isDesktop && <ButtonLabel>{t('modeConsultation')}</ButtonLabel>}
       </ToggleButton>

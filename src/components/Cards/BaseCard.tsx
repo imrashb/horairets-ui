@@ -10,4 +10,5 @@ export const BaseCard = styled.div`
   flex-direction: column;
   gap: 0.75rem;
   height: 100%;
+  box-shadow: ${({ theme }) => (theme as Theme).shadows[4]};
 `;

@@ -1,5 +1,5 @@
 import { Route } from '@mui/icons-material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ContentCard from '../../../components/Cards/ContentCard';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
@@ -8,8 +8,8 @@ import { UserDocument } from '../../../hooks/firebase/types';
 import { createEnumValidator, useQueryParam } from '../../../hooks/useQueryParam';
 import { PlannedCoursesProvider, usePlannedCourses } from './PlannedCoursesContext';
 import { CheminementViewMode } from './PlannedCourses.constants';
-import ViewModeToggle from './Components/ViewMode/ViewModeToggle';
 import PlannedCoursesContentView from './Components/PlannedCoursesContentView';
+import PlannedCoursesHeaderActions from './Components/PlannedCoursesHeaderActions';
 
 function PlannedCoursesContent(): JSX.Element {
   const { t } = useTranslation('common');
@@ -20,6 +20,8 @@ function PlannedCoursesContent(): JSX.Element {
     defaultValue: CheminementViewMode.EDIT,
     validate: createEnumValidator(CheminementViewMode),
   });
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   const {
     localSessions,
@@ -37,10 +39,13 @@ function PlannedCoursesContent(): JSX.Element {
         title={t('cheminement')}
         titleActions={
           profile?.admissionSession && (
-            <ViewModeToggle
-              value={viewMode}
-              onChange={setViewMode}
-              disabled={hasChanges}
+            <PlannedCoursesHeaderActions
+              isEditMode={isEditMode}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              hasChanges={hasChanges}
             />
           )
         }
@@ -49,6 +54,7 @@ function PlannedCoursesContent(): JSX.Element {
           profile={profile}
           isEditMode={isEditMode}
           localSessions={localSessions}
+          searchTerm={searchTerm}
         />
       </ContentCard>
       {isEditMode && (

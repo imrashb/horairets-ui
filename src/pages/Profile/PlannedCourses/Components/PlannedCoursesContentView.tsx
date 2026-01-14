@@ -27,12 +27,14 @@ interface PlannedCoursesContentViewProps {
   profile: UserProfile | undefined;
   isEditMode: boolean;
   localSessions: SessionsMap;
+  searchTerm?: string;
 }
 
 function PlannedCoursesContentView({
   profile,
   isEditMode,
   localSessions,
+  searchTerm = '',
 }: PlannedCoursesContentViewProps): JSX.Element {
   const { t } = useTranslation('common');
   const theme = useTheme();
@@ -58,10 +60,10 @@ function PlannedCoursesContentView({
   }
 
   if (isDesktop) {
-    return <HorizontalTimelineView sessions={localSessions} />;
+    return <HorizontalTimelineView sessions={localSessions} searchTerm={searchTerm} />;
   }
 
-  return <VerticalTimelineView sessions={localSessions} />;
+  return <VerticalTimelineView sessions={localSessions} searchTerm={searchTerm} />;
 }
 
 export default PlannedCoursesContentView;

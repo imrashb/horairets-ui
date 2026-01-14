@@ -78,9 +78,10 @@ const EmptyState = styled.div`
 
 interface VerticalTimelineViewProps {
   sessions: SessionsMap;
+  searchTerm?: string;
 }
 
-function VerticalTimelineView({ sessions }: VerticalTimelineViewProps): JSX.Element {
+function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProps): JSX.Element {
   const { t } = useTranslation('common');
   const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions);
 
@@ -122,7 +123,7 @@ function VerticalTimelineView({ sessions }: VerticalTimelineViewProps): JSX.Elem
                 expanded={isExpanded}
                 onChange={handleAccordionChange(yearData.year)}
               >
-                <StyledAccordionSummary expandIcon={<ExpandMore />}>
+                <StyledAccordionSummary expandIcon={<ExpandMore sx={{ fontSize: '2rem' }} />}>
                   <Typography variant="subtitle1" fontWeight={isCurrentYear ? 700 : 600}>
                     {yearData.label}
                     {isCurrentYear && (
@@ -146,6 +147,7 @@ function VerticalTimelineView({ sessions }: VerticalTimelineViewProps): JSX.Elem
                         session={semester.session}
                         config={semester.config}
                         seamless
+                        searchTerm={searchTerm}
                       />
                     ))}
                   </SemestersContainer>
