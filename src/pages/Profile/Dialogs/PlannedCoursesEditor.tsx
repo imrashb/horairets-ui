@@ -19,11 +19,11 @@ const SessionsGrid = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 
-  @media (max-width: 1200px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('lg')} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: 768px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
     grid-template-columns: 1fr;
   }
 `;

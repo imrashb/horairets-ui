@@ -25,7 +25,7 @@ export const DesktopFloatingPill = styled.div`
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     display: none;
   }
 `;
@@ -51,7 +51,7 @@ export const MobileFixedContainer = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  @media (min-width: 601px) {
+  ${({ theme }) => (theme as Theme).breakpoints.up('sm')} {
     display: none;
   }
 `;

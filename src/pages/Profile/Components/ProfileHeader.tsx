@@ -35,17 +35,17 @@ function ProfileHeader({ profile }: ProfileHeaderProps): JSX.Element {
             <Avatar
               src={user?.photoURL || undefined}
               alt={user?.displayName || 'User'}
-              sx={{
+              sx={(theme) => ({
                 width: 130,
                 height: 130,
-                border: (theme) => `4px solid ${theme.palette.background.default}`,
+                border: `4px solid ${theme.palette.background.default}`,
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                '@media (max-width: 600px)': {
+                [theme.breakpoints.down('sm')]: {
                   width: 90,
                   height: 90,
                   borderWidth: 3,
                 },
-              }}
+              })}
             />
           </AvatarContainer>
           <div style={{ marginBottom: '8px' }}>

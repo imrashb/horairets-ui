@@ -16,7 +16,7 @@ const LogoWrapper = styled.div<LogoWrapperProps>`
   align-items: center;
   text-align: center;
 
-  @media (max-width: 960px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
     font-size: ${({ mobileFontSize, fontSize }) => mobileFontSize || fontSize || '16vw'};
   }
 
