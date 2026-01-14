@@ -1,5 +1,7 @@
+import { Theme } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
+import styled from 'styled-components';
 import { fadeInOutAnimation } from '../../../utils/animations';
 import { isSessionSameOrAfter, isSessionSameOrBefore } from '../../../utils/Sessions.utils';
 import { getNextSession } from '../../../utils/SessionSequence.utils';
@@ -8,6 +10,20 @@ import SessionCard from './Components/SessionCard';
 import { usePlannedCourses } from './PlannedCoursesContext';
 import useUserDocument from '../../../hooks/firebase/useUserDocument';
 import { UserDocument } from '../../../hooks/firebase/types';
+
+const SessionsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+
+  ${({ theme }) => (theme as Theme).breakpoints.down('lg')} {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
+    grid-template-columns: 1fr;
+  }
+`;
 
 export function PlannedSessionsGrid(): JSX.Element {
   const {
@@ -58,18 +74,20 @@ export function PlannedSessionsGrid(): JSX.Element {
   };
 
   return (
-    <AnimatePresence mode="popLayout">
-      {isPreviousSessionValid && (
-        <motion.div key={`prev-${previousSession}`} layout {...fadeInOutAnimation}>
-          <AddSessionCard session={previousSession} />
+    <SessionsGrid>
+      <AnimatePresence mode="popLayout">
+        {isPreviousSessionValid && (
+          <motion.div key={`prev-${previousSession}`} layout {...fadeInOutAnimation}>
+            <AddSessionCard session={previousSession} />
+          </motion.div>
+        )}
+
+        {renderSessionRangeWithGaps()}
+
+        <motion.div key={`next-${nextSession}`} layout {...fadeInOutAnimation}>
+          <AddSessionCard session={nextSession} />
         </motion.div>
-      )}
-
-      {renderSessionRangeWithGaps()}
-
-      <motion.div key={`next-${nextSession}`} layout {...fadeInOutAnimation}>
-        <AddSessionCard session={nextSession} />
-      </motion.div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </SessionsGrid>
   );
 }

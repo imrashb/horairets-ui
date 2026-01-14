@@ -36,3 +36,39 @@ export function getCurrentSession(): string {
   if (month <= 7) return `E${year}`;
   return `A${year}`;
 }
+
+export function getAcademicYear(session: string): number | null {
+  const parsed = parseSession(session);
+  if (!parsed) return null;
+
+  const { trimestreId, annee } = parsed;
+  const year = parseInt(annee, 10);
+
+  if (trimestreId === 'A') {
+    return year;
+  }
+  return year - 1;
+}
+
+export function getAcademicYearSessions(academicYear: number): [string, string, string] {
+  return [
+    `A${academicYear}`,
+    `H${academicYear + 1}`,
+    `E${academicYear + 1}`,
+  ];
+}
+
+export function getAcademicYearRange(sessions: string[]): { minYear: number; maxYear: number } | null {
+  if (sessions.length === 0) return null;
+
+  const academicYears = sessions
+    .map(getAcademicYear)
+    .filter((year): year is number => year !== null);
+
+  if (academicYears.length === 0) return null;
+
+  return {
+    minYear: Math.min(...academicYears),
+    maxYear: Math.max(...academicYears),
+  };
+}

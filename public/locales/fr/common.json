@@ -201,5 +201,10 @@
   "rejoinsDiscordDescription": "Rejoins notre communauté pour discuter et obtenir de l'aide",
   "codeSourceFrontend": "Code source (Frontend)",
   "codeSourceBackend": "Code source (Backend)",
-  "developpeur": "Développeur"
+  "developpeur": "Développeur",
+  "cheminement": "Cheminement",
+  "modeEdition": "Édition",
+  "modeConsultation": "Consultation",
+  "anneeAcademique": "{{startYear}}-{{endYear}}",
+  "aucunCoursPourSession": "Aucun cours"
 }
