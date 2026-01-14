@@ -1,15 +1,17 @@
-import { AccountCircle, Login } from "@mui/icons-material";
-import { Badge, Button, IconButton, Skeleton, useMediaQuery, useTheme } from "@mui/material";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import AccountMenu from "../../Auth/AccountMenu/AccountMenu";
-import useFirebaseAuth from "../../Auth/useFirebaseAuth";
+import { AccountCircle, Login } from '@mui/icons-material';
+import {
+  Badge, Button, IconButton, Skeleton, useMediaQuery, useTheme,
+} from '@mui/material';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import AccountMenu from '../../Auth/AccountMenu/AccountMenu';
+import useFirebaseAuth from '../../Auth/useFirebaseAuth';
 
 function LoginButton(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const auth = useFirebaseAuth();
   const [user, loading] = useAuthState(auth);
@@ -26,13 +28,13 @@ function LoginButton(): JSX.Element {
       const result = await signInWithPopup(auth, provider);
 
       if (result) {
-        toast.success(t("loginSuccess"));
+        toast.success(t('loginSuccess'));
       }
     }
   };
 
   const theme = useTheme();
-  const isMediumViewport = useMediaQuery(theme.breakpoints.up("md"));
+  const isMediumViewport = useMediaQuery(theme.breakpoints.up('md'));
 
   const loginButton = isMediumViewport ? (
     <Button
@@ -41,7 +43,7 @@ function LoginButton(): JSX.Element {
       variant="contained"
       onClick={handleLogin}
     >
-      {user ? user?.displayName : t("seConnecter")}
+      {user ? user?.displayName : t('seConnecter')}
     </Button>
   ) : (
     <IconButton ref={anchor as any} onClick={handleLogin}>
@@ -55,12 +57,12 @@ function LoginButton(): JSX.Element {
     <>
       {user ? (
         <Badge
-          badgeContent={t("badgeNew")}
-          anchorOrigin={{ vertical: "top", horizontal: "left" }}
+          badgeContent={t('badgeNew')}
+          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
           sx={{
-            "& .MuiBadge-badge": {
-              bgcolor: "badgeNew.main",
-              color: "background.default",
+            '& .MuiBadge-badge': {
+              bgcolor: 'badgeNew.main',
+              color: 'background.default',
             },
           }}
         >
@@ -69,14 +71,9 @@ function LoginButton(): JSX.Element {
       ) : (
         loginButton
       )}
-      <AccountMenu
-        anchor={anchor}
-        open={open}
-        onClose={() => setOpen(false)}
-      />
+      <AccountMenu anchor={anchor} open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
 
 export default LoginButton;
-

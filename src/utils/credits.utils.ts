@@ -1,15 +1,12 @@
-import { Cours } from "../features/generateur/generateur.types";
-import { SessionConfig } from "../hooks/firebase/types";
+import { Cours } from '../features/generateur/generateur.types';
+import { SessionConfig } from '../hooks/firebase/types';
 
 export interface CreditsRange {
   min: number;
   max: number;
 }
 
-export function calculateCreditsRange(
-  allCours: Cours[],
-  config: SessionConfig
-): CreditsRange {
+export function calculateCreditsRange(allCours: Cours[], config: SessionConfig): CreditsRange {
   const selectedCourses = allCours.filter((c) => config.cours.includes(c.sigle));
 
   if (config.nombreCours === null || config.nombreCours >= config.cours.length) {

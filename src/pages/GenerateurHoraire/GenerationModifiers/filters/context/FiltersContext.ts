@@ -1,5 +1,4 @@
-import React from "react";
-import { FILTRES_PLANIFICATION } from "../../../generateurHoraire.constants";
+import React from 'react';
 
 export interface FiltersContextType {
   groupes: string[];
@@ -8,7 +7,7 @@ export interface FiltersContextType {
   setDisponibilites: (val: boolean[][]) => void;
 }
 
-const noOp = () => "";
+const noOp = () => '';
 
 export default React.createContext<FiltersContextType>({
   groupes: [],

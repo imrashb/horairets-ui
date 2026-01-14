@@ -1,11 +1,11 @@
-import { Typography } from "@mui/material";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import HorairetsLogo from "../../../components/HorairetsLogo/HorairetsLogo";
-import { HeroSection } from "../About.styles";
+import { Typography } from '@mui/material';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import HorairetsLogo from '../../../components/HorairetsLogo/HorairetsLogo';
+import { HeroSection } from '../About.styles';
 
 function AboutBanner(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   return (
     <HeroSection>
@@ -14,7 +14,7 @@ function AboutBanner(): JSX.Element {
         <HorairetsLogo fontSize="4rem" mobileFontSize="3rem" />
       </div>
       <Typography variant="body1" color="text.secondary" className="subtitle">
-        {t("descriptionHorairets")}
+        {t('descriptionHorairets')}
       </Typography>
     </HeroSection>
   );

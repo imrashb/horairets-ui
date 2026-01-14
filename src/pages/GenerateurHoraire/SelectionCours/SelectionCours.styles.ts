@@ -1,11 +1,11 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const SelectionCoursWrapper = styled.div`
   flex: 1;
   padding-top: ${({ theme }) => (theme as Theme).sizes.size_16};
 
-  ${({ theme }) => (theme as Theme).breakpoints.down("lg")} {
+  ${({ theme }) => (theme as Theme).breakpoints.down('lg')} {
     margin-top: 0;
   }
 

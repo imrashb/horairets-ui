@@ -1,13 +1,13 @@
-import { AccountCircle, Logout } from "@mui/icons-material";
-import { ListItemIcon, Menu, MenuItem } from "@mui/material";
-import React from "react";
-import { useSignOut } from "react-firebase-hooks/auth";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import NewBadge from "../../NewBadge/NewBadge";
-import { PROFILE_URL } from "../../../routes/Routes.constants";
-import useFirebaseAuth from "../useFirebaseAuth";
+import { AccountCircle, Logout } from '@mui/icons-material';
+import { ListItemIcon, Menu, MenuItem } from '@mui/material';
+import React from 'react';
+import { useSignOut } from 'react-firebase-hooks/auth';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import NewBadge from '../../NewBadge/NewBadge';
+import { PROFILE_URL } from '../../../routes/Routes.constants';
+import useFirebaseAuth from '../useFirebaseAuth';
 
 interface AccountMenuProps {
   open: boolean;
@@ -16,7 +16,7 @@ interface AccountMenuProps {
 }
 
 function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
 
   const auth = useFirebaseAuth();
@@ -31,9 +31,9 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
     if (onClose) onClose();
     const signedOut = await signOut();
     if (signedOut) {
-      toast.success(t("deconnexionSucces"));
+      toast.success(t('deconnexionSucces'));
     } else {
-      toast.error(t("deconnexionErreur"));
+      toast.error(t('deconnexionErreur'));
     }
   };
 
@@ -43,29 +43,29 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
       open={open}
       onClose={onClose}
       onClick={onClose}
-      transformOrigin={{ horizontal: "right", vertical: "top" }}
-      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       PaperProps={{
         elevation: 0,
         sx: {
-          overflow: "visible",
+          overflow: 'visible',
           mt: 1.5,
-          "& .MuiAvatar-root": {
+          '& .MuiAvatar-root': {
             width: 32,
             height: 32,
             ml: -0.5,
             mr: 1,
           },
-          "&:before": {
+          '&:before': {
             content: '""',
-            display: "block",
-            position: "absolute",
+            display: 'block',
+            position: 'absolute',
             top: 0,
             right: 14,
             width: 10,
             height: 10,
-            bgcolor: "background.paper",
-            transform: "translateY(-50%) rotate(45deg)",
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
             zIndex: 0,
           },
         },
@@ -75,18 +75,17 @@ function AccountMenu({ open, onClose, anchor }: AccountMenuProps): JSX.Element {
         <ListItemIcon>
           <AccountCircle fontSize="small" />
         </ListItemIcon>
-        {t("monProfil")}
+        {t('monProfil')}
         <NewBadge />
       </MenuItem>
       <MenuItem onClick={logout}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
-        {t("seDeconnecter")}
+        {t('seDeconnecter')}
       </MenuItem>
     </Menu>
   );
 }
 
 export default AccountMenu;
-

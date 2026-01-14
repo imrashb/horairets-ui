@@ -1,9 +1,8 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 import GenerateurHoraireContext, {
   GenerateurHoraireContextType,
-} from "../GenerateurHoraireContext";
+} from '../GenerateurHoraireContext';
 
-const useGenerateurHoraire = (): GenerateurHoraireContextType =>
-  useContext(GenerateurHoraireContext);
+const useGenerateurHoraire = (): GenerateurHoraireContextType => useContext(GenerateurHoraireContext);
 
 export default useGenerateurHoraire;

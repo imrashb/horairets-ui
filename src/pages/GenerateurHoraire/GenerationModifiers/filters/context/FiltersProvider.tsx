@@ -1,10 +1,10 @@
-import { useAtomValue } from "jotai";
-import React, { useEffect, useMemo, useState } from "react";
+import { useAtomValue } from 'jotai';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   selectFilterDisponibilitesAtom,
   selectFilterGroupesAtom,
-} from "../../../../../features/generateur/generateurAtoms";
-import FiltersContext from "./FiltersContext";
+} from '../../../../../features/generateur/generateurAtoms';
+import FiltersContext from './FiltersContext';
 
 interface FiltersProviderProps {
   children?: React.ReactNode;
@@ -16,7 +16,7 @@ function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
 
   const [groupes, setGroupes] = useState<string[]>(currentGroupes);
   const [disponibilites, setDisponibilites] = useState<boolean[][]>(
-    currentDisponibilites || Array.from({ length: 7 }, () => [true, true, true])
+    currentDisponibilites || Array.from({ length: 7 }, () => [true, true, true]),
   );
 
   const context = useMemo(
@@ -26,7 +26,7 @@ function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
       disponibilites,
       setDisponibilites,
     }),
-    [groupes, disponibilites]
+    [groupes, disponibilites],
   );
 
   useEffect(() => {
@@ -41,11 +41,7 @@ function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
     }
   }, [currentDisponibilites]);
 
-  return (
-    <FiltersContext.Provider value={context}>
-      {children}
-    </FiltersContext.Provider>
-  );
+  return <FiltersContext.Provider value={context}>{children}</FiltersContext.Provider>;
 }
 
 export default FiltersProvider;

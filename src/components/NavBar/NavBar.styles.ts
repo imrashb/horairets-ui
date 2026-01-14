@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const NavBarWrapper = styled.div`
   position: sticky;
@@ -17,7 +17,7 @@ const NavBarWrapper = styled.div`
         flex: 2;
         gap: 16px;
 
-        ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+        ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
           flex: 1;
         }
       }
@@ -26,7 +26,7 @@ const NavBarWrapper = styled.div`
         flex: 2;
         flex-direction: row-reverse;
 
-        ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+        ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
           flex: 1;
         }
       }
@@ -35,7 +35,7 @@ const NavBarWrapper = styled.div`
         flex: 5;
         justify-content: center;
 
-        ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+        ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
           flex: 7;
         }
 
@@ -85,7 +85,7 @@ const NavBarWrapper = styled.div`
         height: ${({ theme }) => (theme as Theme).sizes?.size_32};
         margin-right: ${({ theme }) => (theme as Theme).sizes?.size_16};
 
-        ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+        ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
           margin-right: 0;
         }
 

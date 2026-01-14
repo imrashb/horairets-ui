@@ -1,4 +1,6 @@
-import { ArrowBack, ArrowForward, Close, NewReleases } from "@mui/icons-material";
+import {
+  ArrowBack, ArrowForward, Close, NewReleases,
+} from '@mui/icons-material';
 import {
   Button,
   Chip,
@@ -8,16 +10,16 @@ import {
   DialogTitle,
   IconButton,
   MobileStepper,
-} from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+} from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import {
   CHANGELOG_STORAGE_KEY,
   CHANGELOGS,
   getLatestChangelogDate,
   getUnseenChangelogs,
-} from "./changelog.config";
+} from './changelog.config';
 
 const ChangelogContentWrapper = styled.div`
   display: flex;
@@ -27,7 +29,7 @@ const ChangelogContentWrapper = styled.div`
   ul {
     margin: 0;
     padding-left: 20px;
-    
+
     li {
       margin-bottom: 8px;
     }
@@ -47,21 +49,20 @@ const TitleWrapper = styled.div`
 `;
 
 function ChangelogDialog(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const isDev = import.meta.env.DEV;
 
   const unseenChangelogs = useMemo(() => {
-      if(isDev) {
-        return CHANGELOGS;
-      }
+    if (isDev) {
+      return CHANGELOGS;
+    }
 
     const lastSeenDate = localStorage.getItem(CHANGELOG_STORAGE_KEY);
     return getUnseenChangelogs(lastSeenDate);
   }, [isDev]);
-
 
   useEffect(() => {
     if (isDev) {
@@ -76,7 +77,7 @@ function ChangelogDialog(): JSX.Element {
 
   const currentChangelog = useMemo(
     () => unseenChangelogs[currentIndex],
-    [unseenChangelogs, currentIndex]
+    [unseenChangelogs, currentIndex],
   );
 
   const isFirst = currentIndex === 0;
@@ -105,10 +106,10 @@ function ChangelogDialog(): JSX.Element {
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
-      <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <TitleWrapper>
           <NewReleases color="primary" />
-          {t("nouveautes")}
+          {t('nouveautes')}
           <Chip
             label={new Date(`${date}T12:00:00`).toLocaleDateString()}
             size="small"
@@ -125,26 +126,36 @@ function ChangelogDialog(): JSX.Element {
           <Content onDismiss={handleDismiss} />
         </ChangelogContentWrapper>
       </DialogContent>
-      <DialogActions sx={{ flexDirection: "column", gap: 1, px: 3, pb: 2 }}>
+      <DialogActions
+        sx={{
+          flexDirection: 'column',
+          gap: 1,
+          px: 3,
+          pb: 2,
+        }}
+      >
         {unseenChangelogs.length > 1 && (
           <MobileStepper
             variant="dots"
             steps={unseenChangelogs.length}
             position="static"
             activeStep={currentIndex}
-            sx={{ width: "100%", bgcolor: "transparent", justifyContent: "center" }}
+            sx={{ width: '100%', bgcolor: 'transparent', justifyContent: 'center' }}
             backButton={<></>}
             nextButton={<></>}
           />
         )}
-        <div style={{ display: "flex", gap: "8px", width: "100%", justifyContent: "flex-end" }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '8px',
+            width: '100%',
+            justifyContent: 'flex-end',
+          }}
+        >
           {!isFirst && (
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBack />}
-              onClick={handleBack}
-            >
-              {t("precedent")}
+            <Button variant="outlined" startIcon={<ArrowBack />} onClick={handleBack}>
+              {t('precedent')}
             </Button>
           )}
           <Button
@@ -152,7 +163,7 @@ function ChangelogDialog(): JSX.Element {
             endIcon={!isLast ? <ArrowForward /> : undefined}
             onClick={handleNext}
           >
-            {isLast ? t("compris") : t("suivant")}
+            {isLast ? t('compris') : t('suivant')}
           </Button>
         </div>
       </DialogActions>

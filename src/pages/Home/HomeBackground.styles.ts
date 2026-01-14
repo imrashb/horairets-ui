@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const HomeBackgroundWrapper = styled.div`
   width: 100%;

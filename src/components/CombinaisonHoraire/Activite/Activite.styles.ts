@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 interface ActiviteWrapperProps {
   flex: number;
@@ -30,7 +30,7 @@ const ActiviteWrapper = styled.div<ActiviteWrapperProps>`
     border-bottom: ${({ theme }) => (theme as Theme).sizes.size_8} solid
       ${(props) => `${props.borderColor}`};
 
-    ${({ theme }) => (theme as Theme).breakpoints.down("sm")} {
+    ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
       border-radius: ${({ theme }) => (theme as Theme).sizes.size_8};
       border: ${({ theme }) => (theme as Theme).sizes.size_1} solid
         ${(props) => `${props.borderColor}`};

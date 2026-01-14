@@ -1,4 +1,4 @@
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -6,25 +6,22 @@ import {
   CircularProgress,
   Divider,
   Typography,
-} from "@mui/material";
-import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  programmesAtom,
-  sessionAtom,
-} from "../../../features/generateur/generateurAtoms";
-import { useGetCoursSession } from "../../../features/generateur/generateurQueries";
-import { areArraysSame } from "../../../utils/Array.utils";
-import useGenerateurHoraire from "../GenerateurHoraireContexts/hooks/useGenerateurHoraire";
-import SelectionProgramme from "./SelectionProgramme";
-import SelectionSession from "./SelectionSession";
-import SelectionSessionProgrammeWrapper from "./SelectionSessionProgramme.styles";
-import useUserDocument from "../../../hooks/firebase/useUserDocument";
-import { UserDocument } from "../../../hooks/firebase/types";
+} from '@mui/material';
+import { useAtom } from 'jotai';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { programmesAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
+import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
+import { areArraysSame } from '../../../utils/Array.utils';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
+import SelectionProgramme from './SelectionProgramme';
+import SelectionSession from './SelectionSession';
+import SelectionSessionProgrammeWrapper from './SelectionSessionProgramme.styles';
+import useUserDocument from '../../../hooks/firebase/useUserDocument';
+import { UserDocument } from '../../../hooks/firebase/types';
 
 function SelectionSessionProgramme(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const [currentSession, setCurrentSession] = useAtom(sessionAtom);
   const [currentProgramme, setCurrentProgramme] = useAtom(programmesAtom);
@@ -65,10 +62,8 @@ function SelectionSessionProgramme(): JSX.Element {
         className="choix-session"
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h5">{t("sessionProgramme")}</Typography>
-          {coursSessionQuery?.isFetching && (
-            <CircularProgress size="2rem" thickness={8} />
-          )}
+          <Typography variant="h5">{t('sessionProgramme')}</Typography>
+          {coursSessionQuery?.isFetching && <CircularProgress size="2rem" thickness={8} />}
         </AccordionSummary>
         <Divider />
         <AccordionDetails className="selection-wrapper">

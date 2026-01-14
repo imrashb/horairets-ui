@@ -1,9 +1,11 @@
-import { Add, Close } from "@mui/icons-material";
-import { Autocomplete, ClickAwayListener, IconButton, TextField } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Cours } from "../../../features/generateur/generateur.types";
-import { AddButton, InlineAutocomplete } from "./SessionCard.styles";
+import { Add, Close } from '@mui/icons-material';
+import {
+  Autocomplete, ClickAwayListener, IconButton, TextField,
+} from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Cours } from '../../../features/generateur/generateur.types';
+import { AddButton, InlineAutocomplete } from './SessionCard.styles';
 
 interface AddCourseAutocompleteProps {
   allCours: Cours[];
@@ -18,29 +20,27 @@ function AddCourseAutocomplete({
   existingCourses,
   onAddCourse,
 }: AddCourseAutocompleteProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const [isAdding, setIsAdding] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const availableCourses = allCours.filter(
-    (c) => !existingCourses.includes(c.sigle)
-  );
+  const availableCourses = allCours.filter((c) => !existingCourses.includes(c.sigle));
 
   const handleStartAdding = () => {
     setIsAdding(true);
-    setInputValue("");
+    setInputValue('');
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
   const handleStopAdding = () => {
     setIsAdding(false);
-    setInputValue("");
+    setInputValue('');
   };
 
   const handleAdd = (sigle: string) => {
     onAddCourse(sigle);
-    setInputValue("");
+    setInputValue('');
     // Keep focus to allow adding multiple courses quickly
     setTimeout(() => inputRef.current?.focus(), 50);
   };
@@ -57,17 +57,17 @@ function AddCourseAutocomplete({
             inputValue={inputValue}
             value={null}
             onInputChange={(_, value, reason) => {
-              if (reason !== "reset") setInputValue(value);
+              if (reason !== 'reset') setInputValue(value);
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 inputRef={inputRef}
-                placeholder={t("sigle") as string}
+                placeholder={t('sigle') as string}
                 variant="outlined"
                 size="small"
                 onKeyDown={(e) => {
-                  if (e.key === "Escape") handleStopAdding();
+                  if (e.key === 'Escape') handleStopAdding();
                 }}
               />
             )}

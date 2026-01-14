@@ -1,21 +1,18 @@
-import { CircularProgress } from "@mui/material";
-import React, { useState } from "react";
-import styled from "styled-components";
-import withAuth from "../../components/Auth/AuthenticatedComponent";
-import useUserDocument from "../../hooks/firebase/useUserDocument";
-import { UserDocument } from "../../hooks/firebase/types";
-import PlannedCoursesEditor from "./Dialogs/PlannedCoursesEditor";
+import { CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import withAuth from '../../components/Auth/AuthenticatedComponent';
+import useUserDocument from '../../hooks/firebase/useUserDocument';
+import { UserDocument } from '../../hooks/firebase/types';
+import PlannedCoursesEditor from './Dialogs/PlannedCoursesEditor';
 import {
-  ContentContainer,
-  GridContainer,
-  ProfileCard,
-  ProfileWrapper,
-} from "./Profile.styles";
-import ProfileHeader from "./Components/ProfileHeader";
+  ContentContainer, GridContainer, ProfileCard, ProfileWrapper,
+} from './Profile.styles';
+import ProfileHeader from './Components/ProfileHeader';
 
-import ProfileTabs from "./Components/ProfileTabs";
+import ProfileTabs from './Components/ProfileTabs';
 
-import { ProfileTab } from "./Profile.constants";
+import { ProfileTab } from './Profile.constants';
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -27,7 +24,6 @@ const LoadingContainer = styled.div`
 function Profile(): JSX.Element {
   const { data: userDoc, isLoading } = useUserDocument<UserDocument>();
   const [selectedTab, setSelectedTab] = useState(ProfileTab.CHEMINEMENT);
-
 
   const profile = userDoc?.profile;
 
@@ -44,9 +40,15 @@ function Profile(): JSX.Element {
       <ProfileHeader profile={profile} />
 
       <ContentContainer>
-
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%', minWidth: 0 }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            width: '100%',
+            minWidth: 0,
+          }}
+        >
           <ProfileTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
           <GridContainer>
             <ProfileCard>
@@ -59,4 +61,4 @@ function Profile(): JSX.Element {
   );
 }
 
-export default withAuth(Profile, "/");
+export default withAuth(Profile, '/');

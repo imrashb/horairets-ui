@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const GenerateurHoraireWrapper = styled.div`
   display: flex;
@@ -11,29 +11,27 @@ const GenerateurHoraireWrapper = styled.div`
   padding: ${({ theme }) => (theme as Theme).sizes.size_8}
     ${({ theme }) => (theme as Theme).sizes.size_24};
 
-  ${({ theme }) => (theme as Theme).breakpoints.down("sm")} {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     padding: ${({ theme }) => (theme as Theme).sizes.size_8}
       ${({ theme }) => (theme as Theme).sizes.size_8};
   }
-
-
 
   .main-content-wrapper {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    ${({ theme }) => (theme as Theme).breakpoints.up("lg")} {
+    ${({ theme }) => (theme as Theme).breakpoints.up('lg')} {
       height: 100%;
     }
     position: relative;
 
-    ${({ theme }) => (theme as Theme).breakpoints.down("lg")} {
+    ${({ theme }) => (theme as Theme).breakpoints.down('lg')} {
       flex-direction: column;
     }
 
     .left {
-      ${({ theme }) => (theme as Theme).breakpoints.up("lg")} {
+      ${({ theme }) => (theme as Theme).breakpoints.up('lg')} {
         flex: 1;
         position: sticky;
         top: 4rem;
@@ -46,7 +44,7 @@ const GenerateurHoraireWrapper = styled.div`
       align-items: center;
       justify-content: flex-start;
 
-      ${({ theme }) => (theme as Theme).breakpoints.between("md", "lg")} {
+      ${({ theme }) => (theme as Theme).breakpoints.between('md', 'lg')} {
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
@@ -66,7 +64,7 @@ const GenerateurHoraireWrapper = styled.div`
         }
       }
 
-      ${({ theme }) => (theme as Theme).breakpoints.down("md")} {
+      ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
         max-width: 100%;
         width: 100%;
       }
@@ -79,7 +77,7 @@ const GenerateurHoraireWrapper = styled.div`
         border-radius: 0;
       }
 
-      ${({ theme }) => (theme as Theme).breakpoints.up("lg")} {
+      ${({ theme }) => (theme as Theme).breakpoints.up('lg')} {
         @keyframes slide {
           0% {
             margin-left: 0;
@@ -120,7 +118,7 @@ const GenerateurHoraireWrapper = styled.div`
     }
 
     .right {
-      ${({ theme }) => (theme as Theme).breakpoints.up("lg")} {
+      ${({ theme }) => (theme as Theme).breakpoints.up('lg')} {
         flex: 2;
       }
       height: 100%;

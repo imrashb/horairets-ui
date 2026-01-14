@@ -1,4 +1,4 @@
-import { Close, Menu } from "@mui/icons-material";
+import { Close, Menu } from '@mui/icons-material';
 import {
   Drawer,
   IconButton,
@@ -6,15 +6,15 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import HorairetsLogo from "../../HorairetsLogo/HorairetsLogo";
-import LoginButton from "./LoginButton";
-import NavLogo from "./NavLogo";
-import useNavBarTabs from "../useNavBarTabs";
+} from '@mui/material';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import HorairetsLogo from '../../HorairetsLogo/HorairetsLogo';
+import LoginButton from './LoginButton';
+import NavLogo from './NavLogo';
+import useNavBarTabs from '../useNavBarTabs';
 
 const MobileNavWrapper = styled.div`
   position: fixed;
@@ -45,7 +45,7 @@ const DrawerContent = styled.div`
 `;
 
 function MobileNavDrawer(): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,7 +69,7 @@ function MobileNavDrawer(): JSX.Element {
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <DrawerContent>
           <DrawerHeader>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <img src="./logo.png" alt="Logo" style={{ width: 28, height: 28 }} />
               <HorairetsLogo fontSize="1.2rem" />
             </div>

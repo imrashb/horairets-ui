@@ -12,12 +12,8 @@ export const combinaison = {
             heureFin: 1700,
             jour: 'LUNDI',
           },
-          charges: [
-            'B.L. Agba',
-          ],
-          locaux: [
-            'B-1720',
-          ],
+          charges: ['B.L. Agba'],
+          locaux: ['B-1720'],
         },
         {
           nom: 'TP',
@@ -28,9 +24,7 @@ export const combinaison = {
             jour: 'VENDREDI',
           },
           charges: [],
-          locaux: [
-            'B-3428',
-          ],
+          locaux: ['B-3428'],
         },
       ],
       cours: {
@@ -74,12 +68,8 @@ export const combinaison = {
             heureFin: 1700,
             jour: 'MERCREDI',
           },
-          charges: [
-            'S. Drouin',
-          ],
-          locaux: [
-            'D-3019',
-          ],
+          charges: ['S. Drouin'],
+          locaux: ['D-3019'],
         },
         {
           nom: 'Labo A',
@@ -89,12 +79,8 @@ export const combinaison = {
             heureFin: 1550,
             jour: 'JEUDI',
           },
-          charges: [
-            'J. Pelletier-Guénette',
-          ],
-          locaux: [
-            'A-3346',
-          ],
+          charges: ['J. Pelletier-Guénette'],
+          locaux: ['A-3346'],
         },
         {
           nom: 'Labo B',
@@ -104,12 +90,8 @@ export const combinaison = {
             heureFin: 1750,
             jour: 'JEUDI',
           },
-          charges: [
-            'J. Pelletier-Guénette',
-          ],
-          locaux: [
-            'A-3346',
-          ],
+          charges: ['J. Pelletier-Guénette'],
+          locaux: ['A-3346'],
         },
       ],
       cours: {
@@ -137,12 +119,8 @@ export const combinaison = {
             heureFin: 1700,
             jour: 'MARDI',
           },
-          charges: [
-            'O. Landon-Cardinal',
-          ],
-          locaux: [
-            'B-0904',
-          ],
+          charges: ['O. Landon-Cardinal'],
+          locaux: ['B-0904'],
         },
         {
           nom: 'Labo',
@@ -153,9 +131,7 @@ export const combinaison = {
             jour: 'JEUDI',
           },
           charges: [],
-          locaux: [
-            'A-3346',
-          ],
+          locaux: ['A-3346'],
         },
       ],
       cours: {
@@ -183,9 +159,7 @@ export const combinaison = {
             heureFin: 2150,
             jour: 'MARDI',
           },
-          charges: [
-            'A. Gherbi',
-          ],
+          charges: ['A. Gherbi'],
           locaux: [],
         },
         {
@@ -197,9 +171,7 @@ export const combinaison = {
             jour: 'LUNDI',
           },
           charges: [],
-          locaux: [
-            'A-3220',
-          ],
+          locaux: ['A-3220'],
         },
         {
           nom: 'Labo B',
@@ -210,9 +182,7 @@ export const combinaison = {
             jour: 'LUNDI',
           },
           charges: [],
-          locaux: [
-            'A-3230',
-          ],
+          locaux: ['A-3230'],
         },
       ],
       cours: {
@@ -230,9 +200,6 @@ export const combinaison = {
       },
     },
   ],
-  conges: [
-    'DIMANCHE',
-    'SAMEDI',
-  ],
+  conges: ['DIMANCHE', 'SAMEDI'],
   uniqueId: 'SDIwMjM6R0lBNDAwLTAyL0dUSTMyMC0wMS9HVEk3ODAtMDEvTE9HNzEwLTAx',
 };

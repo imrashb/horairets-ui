@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const AboutWrapper = styled.div`
   min-height: calc(100vh - 64px);

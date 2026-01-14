@@ -1,18 +1,14 @@
-import { atom } from "jotai";
-import { reduceCombinaisonsInfoToGroupesOnly } from "../../utils/Groupes.utils";
+import { atom } from 'jotai';
+import { reduceCombinaisonsInfoToGroupesOnly } from '../../utils/Groupes.utils';
 import {
   FILTRES_PLANIFICATION,
   JOURS,
-} from "../../pages/GenerateurHoraire/generateurHoraire.constants";
-import { COMBINAISONS_SORTS } from "../../pages/GenerateurHoraire/generateurHoraire.sorting";
-import { GENERATEUR_LIST_VIEW } from "./generateur.constants";
-import {
-  Combinaison,
-  Filters,
-  GenerateurConfig,
-} from "./generateur.types";
+} from '../../pages/GenerateurHoraire/generateurHoraire.constants';
+import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
+import { GENERATEUR_LIST_VIEW } from './generateur.constants';
+import { Combinaison, Filters, GenerateurConfig } from './generateur.types';
 
-export const sessionAtom = atom<string>("");
+export const sessionAtom = atom<string>('');
 export const programmesAtom = atom<string[]>([]);
 
 export const INITIAL_CONFIG: GenerateurConfig = {
@@ -37,21 +33,21 @@ export const selectedCoursAtom = atom(
   (get) => get(activeGenerateurConfigAtom).cours,
   (get, set, value: string[]) => {
     set(activeGenerateurConfigAtom, (prev) => ({ ...prev, cours: value }));
-  }
+  },
 );
 
 export const nombreCoursAtom = atom(
   (get) => get(activeGenerateurConfigAtom).nombreCours,
   (get, set, value: number | null) => {
     set(activeGenerateurConfigAtom, (prev) => ({ ...prev, nombreCours: value }));
-  }
+  },
 );
 
 export const congesAtom = atom(
   (get) => get(activeGenerateurConfigAtom).conges,
   (get, set, value: string[]) => {
     set(activeGenerateurConfigAtom, (prev) => ({ ...prev, conges: value }));
-  }
+  },
 );
 
 export const coursObligatoiresAtom = atom(
@@ -61,7 +57,7 @@ export const coursObligatoiresAtom = atom(
       ...prev,
       coursObligatoires: value,
     }));
-  }
+  },
 );
 
 export const viewAtom = atom(GENERATEUR_LIST_VIEW);
@@ -74,9 +70,7 @@ export const filtersAtom = atom<Filters>({
 });
 
 export const selectFilterGroupesAtom = atom((get) => get(filtersAtom).groupes);
-export const selectFilterDisponibilitesAtom = atom(
-  (get) => get(filtersAtom).disponibilites
-);
+export const selectFilterDisponibilitesAtom = atom((get) => get(filtersAtom).disponibilites);
 
 export const rawCombinaisonsAtom = atom<Combinaison[] | null>(null);
 
@@ -88,69 +82,58 @@ interface CombinaisonInfoItem {
 
 export const combinaisonsInfoAtom = atom<CombinaisonInfoItem[]>([]);
 
-const getCombinaisonsInfo = (
-  combinaisons: Combinaison[]
-): CombinaisonInfoItem[] => {
-  const combinaisonsInfo = combinaisons?.reduce<CombinaisonInfoItem[]>(
-    (prev, comb) => {
-      comb?.groupes?.forEach((groupe) => {
-        const sigle = groupe?.cours?.sigle;
-        const numeroGroupe = groupe?.numeroGroupe;
+const getCombinaisonsInfo = (combinaisons: Combinaison[]): CombinaisonInfoItem[] => {
+  const combinaisonsInfo = combinaisons?.reduce<CombinaisonInfoItem[]>((prev, comb) => {
+    comb?.groupes?.forEach((groupe) => {
+      const sigle = groupe?.cours?.sigle;
+      const numeroGroupe = groupe?.numeroGroupe;
 
-        const coursIndex = prev.findIndex((v) => v?.sigle === sigle);
+      const coursIndex = prev.findIndex((v) => v?.sigle === sigle);
 
-        if (coursIndex !== -1) {
-          const cours = prev[coursIndex];
-          if (!cours.groupes.includes(numeroGroupe)) {
-            prev[coursIndex] = {
-              sigle: cours.sigle,
-              groupes: [...cours.groupes, numeroGroupe],
-            };
-          }
-        } else {
-          prev.push({ sigle, groupes: [numeroGroupe] });
+      if (coursIndex !== -1) {
+        const cours = prev[coursIndex];
+        if (!cours.groupes.includes(numeroGroupe)) {
+          prev[coursIndex] = {
+            sigle: cours.sigle,
+            groupes: [...cours.groupes, numeroGroupe],
+          };
         }
-      });
-      return prev;
-    },
-    []
-  );
+      } else {
+        prev.push({ sigle, groupes: [numeroGroupe] });
+      }
+    });
+    return prev;
+  }, []);
   return combinaisonsInfo;
 };
 
 // Actions
-export const setRawCombinaisonsAtom = atom(
-  null,
-  (get, set, combinations: Combinaison[]) => {
-    set(rawCombinaisonsAtom, combinations);
+export const setRawCombinaisonsAtom = atom(null, (get, set, combinations: Combinaison[]) => {
+  set(rawCombinaisonsAtom, combinations);
 
-    const combinaisonInfo = getCombinaisonsInfo(combinations || []);
-    set(combinaisonsInfoAtom, combinaisonInfo);
-    // Clear filters when new combinations are generated
-    set(filtersAtom, {
-      ...get(filtersAtom),
-      groupes: reduceCombinaisonsInfoToGroupesOnly(get(combinaisonsInfoAtom)), // Ensure reduceCombinaisonsInfoToGroupesOnly matches expected types
+  const combinaisonInfo = getCombinaisonsInfo(combinations || []);
+  set(combinaisonsInfoAtom, combinaisonInfo);
+  // Clear filters when new combinations are generated
+  set(filtersAtom, {
+    ...get(filtersAtom),
+    groupes: reduceCombinaisonsInfoToGroupesOnly(get(combinaisonsInfoAtom)), // Ensure reduceCombinaisonsInfoToGroupesOnly matches expected types
+  });
+});
+
+export const updateCombinaisonsInfoAtom = atom(null, (get, set, combinations: Combinaison[]) => {
+  const info = combinations?.reduce<CombinaisonInfoItem[]>((prev, curr) => {
+    curr?.groupes?.forEach((g) => {
+      const index = prev.findIndex((i) => i.sigle === g.cours.sigle);
+      if (index === -1) {
+        prev.push({ sigle: g.cours.sigle, groupes: [g.numeroGroupe] });
+      } else if (!prev[index].groupes.includes(g.numeroGroupe)) {
+        prev[index].groupes.push(g.numeroGroupe);
+      }
     });
-  }
-);
-
-export const updateCombinaisonsInfoAtom = atom(
-  null,
-  (get, set, combinations: Combinaison[]) => {
-    const info = combinations?.reduce<CombinaisonInfoItem[]>((prev, curr) => {
-      curr?.groupes?.forEach((g) => {
-        const index = prev.findIndex((i) => i.sigle === g.cours.sigle);
-        if (index === -1) {
-          prev.push({ sigle: g.cours.sigle, groupes: [g.numeroGroupe] });
-        } else if (!prev[index].groupes.includes(g.numeroGroupe)) {
-          prev[index].groupes.push(g.numeroGroupe);
-        }
-      });
-      return prev;
-    }, []);
-    set(combinaisonsInfoAtom, info);
-  }
-);
+    return prev;
+  }, []);
+  set(combinaisonsInfoAtom, info);
+});
 
 export const setSortingAtom = atom(null, (get, set, sorting: string) => {
   set(sortingAtom, sorting);

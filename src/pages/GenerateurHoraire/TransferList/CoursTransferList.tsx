@@ -1,41 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ChevronLeft,
-  ChevronRight,
-  Lock,
-  LockOpen,
-  SwapHoriz,
-} from "@mui/icons-material";
+  ChevronLeft, ChevronRight, Lock, LockOpen, SwapHoriz,
+} from '@mui/icons-material';
 import {
-  IconButton,
-  ListItemButton,
-  ListItemIcon,
-  TextField,
-  Typography,
-} from "@mui/material";
-import List from "@mui/material/List";
-import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
-import { useAtomValue } from "jotai";
-import React, { ReactNode, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  programmesAtom,
-  selectedCoursAtom,
-  sessionAtom,
-} from "../../../features/generateur/generateurAtoms";
-import { Cours } from "../../../features/generateur/generateur.types";
-import { useGetCoursSession } from "../../../features/generateur/generateurQueries";
+  IconButton, ListItemButton, ListItemIcon, TextField, Typography,
+} from '@mui/material';
+import List from '@mui/material/List';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Cours } from '../../../features/generateur/generateur.types';
+import { useGetCoursSession } from '../../../features/generateur/generateurQueries';
 import {
   MAITRISE,
   NOMBRE_MAX_COURS,
   NOMBRE_MAX_COURS_PAR_HORAIRE,
-} from "../generateurHoraire.constants";
-import useGenerateurHoraire from "../GenerateurHoraireContexts/hooks/useGenerateurHoraire";
-import CoursTransferListWrapper from "./CoursTransferList.styles";
+} from '../generateurHoraire.constants';
+import useGenerateurHoraire from '../GenerateurHoraireContexts/hooks/useGenerateurHoraire';
+import CoursTransferListWrapper from './CoursTransferList.styles';
 
-const RIGHT = "right";
-const LEFT = "left";
+const RIGHT = 'right';
+const LEFT = 'left';
 
 interface ListProperties {
   id: string;
@@ -50,7 +36,7 @@ const createListProperties = (
   listName: string,
   icon: ReactNode,
   filter: string,
-  setFilter: (val: string) => void
+  setFilter: (val: string) => void,
 ): ListProperties => ({
   id,
   listName,
@@ -66,7 +52,7 @@ interface CoursTransferListProps {
 export default function CoursTransferList({
   includeMaitrise,
 }: CoursTransferListProps): JSX.Element {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const {
     session,
@@ -82,8 +68,8 @@ export default function CoursTransferList({
 
   const [left, setLeft] = useState<Cours[]>([]);
   const [right, setRight] = useState<Cours[]>([]);
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [unselectedFilter, setUnselectedFilter] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [unselectedFilter, setUnselectedFilter] = useState('');
   const [locked, setLocked] = useState<Cours[]>([]);
 
   useEffect(() => {
@@ -94,20 +80,19 @@ export default function CoursTransferList({
   }, [nbCours]);
 
   // eslint-disable-next-line no-param-reassign
-  const nombreCours =
-    nbCours || Math.min(right.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
+  const nombreCours = nbCours || Math.min(right.length, NOMBRE_MAX_COURS_PAR_HORAIRE);
 
   useEffect(() => {
     if (coursSessionQuery?.data) {
       const allCours = coursSessionQuery.data;
-      
+
       const selected = allCours.filter((c) => selectedCours.includes(c.sigle));
       const unselected = allCours.filter((c) => !selectedCours.includes(c.sigle));
-      
+
       setRight(selected);
       setLeft(unselected);
 
-      const lockedCourses = allCours.filter(c => coursObligatoires.includes(c.sigle));
+      const lockedCourses = allCours.filter((c) => coursObligatoires.includes(c.sigle));
       setLocked(lockedCourses);
     }
   }, [coursSessionQuery?.data, selectedCours, coursObligatoires]);
@@ -149,7 +134,7 @@ export default function CoursTransferList({
 
   const handleFilterChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    setState: (val: string) => void
+    setState: (val: string) => void,
   ) => {
     setState(event?.target?.value);
   };
@@ -157,31 +142,31 @@ export default function CoursTransferList({
   const lists: Record<string, ListProperties> = {
     [LEFT]: createListProperties(
       LEFT,
-      t("coursDisponibles"),
+      t('coursDisponibles'),
       <ChevronRight />,
       unselectedFilter,
-      setUnselectedFilter
+      setUnselectedFilter,
     ),
     [RIGHT]: createListProperties(
       RIGHT,
-      t("coursSelectionnes"),
+      t('coursSelectionnes'),
       <ChevronLeft />,
       selectedFilter,
-      setSelectedFilter
+      setSelectedFilter,
     ),
   };
 
   const customList = (items: Cours[], properties: ListProperties) => {
-    const { id, listName, icon, filter, setFilter } = properties;
-    const filterFunction = (i: Cours) =>
-      i?.sigle.toLowerCase().includes(filter.toLowerCase());
+    const {
+      id, listName, icon, filter, setFilter,
+    } = properties;
+    const filterFunction = (i: Cours) => i?.sigle.toLowerCase().includes(filter.toLowerCase());
 
     let filteredItems = filter ? items.filter(filterFunction) : items;
 
-    filteredItems =
-      includeMaitrise || id === RIGHT
-        ? filteredItems
-        : filteredItems.filter((i) => !i?.programmes?.includes(MAITRISE));
+    filteredItems = includeMaitrise || id === RIGHT
+      ? filteredItems
+      : filteredItems.filter((i) => !i?.programmes?.includes(MAITRISE));
 
     const sortFunction = (a: Cours, b: Cours) => {
       if (a.sigle < b.sigle) {
@@ -192,17 +177,16 @@ export default function CoursTransferList({
       }
       return 0;
     };
-    const title =
-      id === RIGHT
-        ? `${listName} (${right.length}/${NOMBRE_MAX_COURS})`
-        : `${listName} (${filteredItems.length})`;
+    const title = id === RIGHT
+      ? `${listName} (${right.length}/${NOMBRE_MAX_COURS})`
+      : `${listName} (${filteredItems.length})`;
 
     return (
       <Paper className="selection-list">
         <Typography>{title}</Typography>
         <TextField
           value={filter}
-          label={t("filtrerSigle")}
+          label={t('filtrerSigle')}
           variant="standard"
           onChange={(event) => handleFilterChange(event, setFilter)}
           type="search"
@@ -224,9 +208,7 @@ export default function CoursTransferList({
                     e.stopPropagation();
                     handleLocked(value);
                   }}
-                  disabled={
-                    !locked?.includes(value) && locked.length >= nombreCours
-                  }
+                  disabled={!locked?.includes(value) && locked.length >= nombreCours}
                 >
                   {locked?.includes(value) ? <Lock /> : <LockOpen />}
                 </IconButton>
@@ -235,7 +217,7 @@ export default function CoursTransferList({
           ))}
           {id === RIGHT && right.length === 0 && (
             <ListItemButton disableGutters disabled>
-              <ListItemText primary={t("aucunCoursSelectionne")} />
+              <ListItemText primary={t('aucunCoursSelectionne')} />
             </ListItemButton>
           )}
         </List>

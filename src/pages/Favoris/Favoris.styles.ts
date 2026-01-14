@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import styled from "styled-components";
+import { Theme } from '@mui/material/styles';
+import styled from 'styled-components';
 
 const FavorisWrapper = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const FavorisWrapper = styled.div`
   padding: ${({ theme }) => (theme as Theme).sizes.size_8}
     ${({ theme }) => (theme as Theme).sizes.size_24};
 
-  ${({ theme }) => (theme as Theme).breakpoints.down("sm")} {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     padding: ${({ theme }) => (theme as Theme).sizes.size_8}
       ${({ theme }) => (theme as Theme).sizes.size_8};
   }

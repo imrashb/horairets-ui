@@ -1,19 +1,19 @@
-import { EventAvailable } from "@mui/icons-material";
-import { CircularProgress, Typography } from "@mui/material";
-import React, { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import ButtonDialog from "../../../components/ButtonDialog/ButtonDialog";
-import CombinaisonHoraire from "../../../components/CombinaisonHoraire/CombinaisonHoraire";
-import { useGetCombinaisonsFromId } from "../../../features/generateur/generateurQueries";
-import { useDisplayPreferences, useSelectedSchedule } from "../../../hooks/firebase";
+import { EventAvailable } from '@mui/icons-material';
+import { CircularProgress, Typography } from '@mui/material';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import ButtonDialog from '../../../components/ButtonDialog/ButtonDialog';
+import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
+import { useGetCombinaisonsFromId } from '../../../features/generateur/generateurQueries';
+import { useDisplayPreferences, useSelectedSchedule } from '../../../hooks/firebase';
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  
+
   & > div {
     height: 60vh;
     min-height: 25rem;
@@ -33,8 +33,10 @@ interface ViewSelectedScheduleButtonProps {
   session: string;
 }
 
-function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps): JSX.Element | null {
-  const { t } = useTranslation("common");
+function ViewSelectedScheduleButton({
+  session,
+}: ViewSelectedScheduleButtonProps): JSX.Element | null {
+  const { t } = useTranslation('common');
 
   const { getSelectedSchedule } = useSelectedSchedule();
   const { preferences } = useDisplayPreferences();
@@ -55,32 +57,28 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
   const hasError = getCombinaisonMutation.isError;
 
   const {
-    showNomCoursGroupe,
-    showNomActivite,
-    showLocaux,
-    showModeEnseignement,
-    showEnseignant,
+    showNomCoursGroupe, showNomActivite, showLocaux, showModeEnseignement, showEnseignant,
   } = preferences;
 
   return (
     <ButtonDialog
       icon={<EventAvailable sx={{ fontSize: 16 }} />}
-      title={t("horaireActuel") as string}
+      title={t('horaireActuel') as string}
       viewOnly
       maxWidth="md"
       isIconButton
-      tooltip={t("voirHoraireActuel") as string}
+      tooltip={t('voirHoraireActuel') as string}
       onOpen={handleOpen}
       iconButtonProps={{
-        size: "small",
+        size: 'small',
         sx: {
           border: 1,
-          borderColor: "success.main",
-          color: "success.main",
-          bgcolor: "transparent",
-          "&:hover": {
-            bgcolor: "success.main",
-            color: "success.contrastText",
+          borderColor: 'success.main',
+          color: 'success.main',
+          bgcolor: 'transparent',
+          '&:hover': {
+            bgcolor: 'success.main',
+            color: 'success.contrastText',
           },
         },
       }}
@@ -92,9 +90,7 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
           </LoadingWrapper>
         )}
 
-        {hasError && (
-          <Typography color="error">{t("erreurChargementHoraire")}</Typography>
-        )}
+        {hasError && <Typography color="error">{t('erreurChargementHoraire')}</Typography>}
 
         {!isLoading && !hasError && combinaison && (
           <CombinaisonHoraire
@@ -108,7 +104,7 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
         )}
 
         {!isLoading && !hasError && !combinaison && (
-          <Typography color="text.secondary">{t("aucunHoraireSelectionne")}</Typography>
+          <Typography color="text.secondary">{t('aucunHoraireSelectionne')}</Typography>
         )}
       </ContentWrapper>
     </ButtonDialog>
@@ -116,4 +112,3 @@ function ViewSelectedScheduleButton({ session }: ViewSelectedScheduleButtonProps
 }
 
 export default ViewSelectedScheduleButton;
-

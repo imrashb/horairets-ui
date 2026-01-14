@@ -1,4 +1,4 @@
-import { PartialWithFieldValue } from "firebase/firestore";
+import { PartialWithFieldValue } from 'firebase/firestore';
 
 export type FavoritesMap = Record<string, string[]>;
 export type SelectedSchedulesMap = Record<string, string>;
@@ -61,10 +61,7 @@ export interface UseFavoritesResult {
 
   removeFavorite: (session: string, combinaisonId: string) => Promise<void>;
 
-  toggleFavorite: (
-    session: string,
-    combinaisonId: string
-  ) => Promise<{ isFavorited: boolean }>;
+  toggleFavorite: (session: string, combinaisonId: string) => Promise<{ isFavorited: boolean }>;
 }
 
 export interface UseDisplayPreferencesResult {
@@ -78,7 +75,7 @@ export interface UseDisplayPreferencesResult {
 
   setPreference: <K extends keyof DisplayPreferences>(
     key: K,
-    value: DisplayPreferences[K]
+    value: DisplayPreferences[K],
   ) => Promise<void>;
 
   resetToDefaults: () => Promise<void>;
@@ -99,5 +96,3 @@ export interface UseUserDocumentResult<T> {
 
   updateDocument: (updates: PartialWithFieldValue<T>, options?: UpdateOptions) => Promise<void>;
 }
-
-

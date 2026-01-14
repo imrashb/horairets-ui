@@ -5,7 +5,12 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useSessionCourses } from './useSessionCourses';
-import { activeGenerateurConfigAtom, formGenerateurConfigAtom, programmesAtom, sessionAtom } from '../../../features/generateur/generateurAtoms';
+import {
+  activeGenerateurConfigAtom,
+  formGenerateurConfigAtom,
+  programmesAtom,
+  sessionAtom,
+} from '../../../features/generateur/generateurAtoms';
 import { SessionConfig } from '../../../hooks/firebase/types';
 import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
 import { calculateCreditsRange } from '../../../utils/credits.utils';
@@ -34,9 +39,11 @@ function SessionCard({
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
-  const { allCours, isCoursLoading, isSessionAvailable, isLoadingSessions } = useSessionCourses(
+  const {
+    allCours, isCoursLoading, isSessionAvailable, isLoadingSessions,
+  } = useSessionCourses(
     session,
-    programme
+    programme,
   );
 
   const setSession = useSetAtom(sessionAtom);
@@ -44,10 +51,7 @@ function SessionCard({
   const setFormConfig = useSetAtom(formGenerateurConfigAtom);
   const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
 
-  const creditsRange = useMemo(
-    () => calculateCreditsRange(allCours, config),
-    [allCours, config]
-  );
+  const creditsRange = useMemo(() => calculateCreditsRange(allCours, config), [allCours, config]);
 
   const handleExportToGenerator = () => {
     const generatorConfig = {
@@ -102,8 +106,8 @@ function SessionCard({
               {getSessionTranslation(session, t) || session}
             </Typography>
             <ViewSelectedScheduleButton session={session} />
-            {(!isSessionAvailable && !isLoadingSessions) && (
-              <Tooltip title={t("sessionInvalideWarning")}>
+            {!isSessionAvailable && !isLoadingSessions && (
+              <Tooltip title={t('sessionInvalideWarning')}>
                 <Warning color="warning" sx={{ fontSize: 20 }} />
               </Tooltip>
             )}
@@ -162,4 +166,3 @@ function SessionCard({
 }
 
 export default SessionCard;
-

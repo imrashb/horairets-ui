@@ -1,13 +1,14 @@
-import { arrayRemove, arrayUnion } from "firebase/firestore";
-import { useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { FavoritesMap, UseFavoritesResult, UserDocument } from "./types";
-import useUserDocument from "./useUserDocument";
+import { arrayRemove, arrayUnion } from 'firebase/firestore';
+import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FavoritesMap, UseFavoritesResult, UserDocument } from './types';
+import useUserDocument from './useUserDocument';
 
 function useFavorites(): UseFavoritesResult {
-  const { t } = useTranslation("common");
-  const { data, isLoading, error, updateDocument } =
-    useUserDocument<UserDocument>();
+  const { t } = useTranslation('common');
+  const {
+    data, isLoading, error, updateDocument,
+  } = useUserDocument<UserDocument>();
 
   const favorites: FavoritesMap | undefined = data?.favorites;
 
@@ -19,11 +20,9 @@ function useFavorites(): UseFavoritesResult {
   const isFavorited = useCallback(
     (combinaisonId: string): boolean => {
       if (!favorites || !combinaisonId) return false;
-      return Object.values(favorites).some((sessionFavorites) =>
-        sessionFavorites.includes(combinaisonId)
-      );
+      return Object.values(favorites).some((sessionFavorites) => sessionFavorites.includes(combinaisonId));
     },
-    [favorites]
+    [favorites],
   );
 
   const getFavoritesBySession = useCallback(
@@ -31,54 +30,57 @@ function useFavorites(): UseFavoritesResult {
       if (!favorites || !session) return [];
       return favorites[session] ?? [];
     },
-    [favorites]
+    [favorites],
   );
 
   const addFavorite = useCallback(
     async (session: string, combinaisonId: string): Promise<void> => {
       if (!session || !combinaisonId) {
-        throw new Error("Session and combinaisonId are required");
+        throw new Error('Session and combinaisonId are required');
       }
 
-      await updateDocument({
-        favorites: {
-          [session]: arrayUnion(combinaisonId),
+      await updateDocument(
+        {
+          favorites: {
+            [session]: arrayUnion(combinaisonId),
+          },
         },
-      }, {
-        showToast: true,
-        successMessage: t("ajoutFavoris") as string,
-        errorMessage: t("erreurFavoris") as string,
-      });
+        {
+          showToast: true,
+          successMessage: t('ajoutFavoris') as string,
+          errorMessage: t('erreurFavoris') as string,
+        },
+      );
     },
-    [updateDocument, t]
+    [updateDocument, t],
   );
 
   const removeFavorite = useCallback(
     async (session: string, combinaisonId: string): Promise<void> => {
       if (!session || !combinaisonId) {
-        throw new Error("Session and combinaisonId are required");
+        throw new Error('Session and combinaisonId are required');
       }
 
-      await updateDocument({
-        favorites: {
-          [session]: arrayRemove(combinaisonId),
+      await updateDocument(
+        {
+          favorites: {
+            [session]: arrayRemove(combinaisonId),
+          },
         },
-      }, {
-        showToast: true,
-        successMessage: t("retraitFavoris") as string,
-        errorMessage: t("erreurFavoris") as string,
-      });
+        {
+          showToast: true,
+          successMessage: t('retraitFavoris') as string,
+          errorMessage: t('erreurFavoris') as string,
+        },
+      );
     },
-    [updateDocument, t]
+    [updateDocument, t],
   );
 
   const toggleFavorite = useCallback(
-    async (
-      session: string,
-      combinaisonId: string
-    ): Promise<{ isFavorited: boolean }> => {
+    async (session: string, combinaisonId: string): Promise<{ isFavorited: boolean }> => {
       if (!session || !combinaisonId) {
-        throw new Error("Session and combinaisonId are required");
+        throw new Error('Session and combinaisonId are required');
       }
 
       const currentlyFavorited = favorites?.[session]?.includes(combinaisonId) ?? false;
@@ -86,12 +88,11 @@ function useFavorites(): UseFavoritesResult {
       if (currentlyFavorited) {
         await removeFavorite(session, combinaisonId);
         return { isFavorited: false };
-      } else {
-        await addFavorite(session, combinaisonId);
-        return { isFavorited: true };
       }
+      await addFavorite(session, combinaisonId);
+      return { isFavorited: true };
     },
-    [favorites, addFavorite, removeFavorite]
+    [favorites, addFavorite, removeFavorite],
   );
 
   return {

@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
-import React, { ReactNode } from "react";
-import { LinkCard } from "../About.styles";
+import { Typography } from '@mui/material';
+import React, { ReactNode } from 'react';
+import { LinkCard } from '../About.styles';
 
 interface AboutLinkCardProps {
   href: string;
@@ -20,15 +20,8 @@ function AboutLinkCard({
   subtitle,
 }: AboutLinkCardProps): JSX.Element {
   return (
-    <LinkCard
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <div
-        className="icon-wrapper"
-        style={{ background: iconBackground, color: iconColor }}
-      >
+    <LinkCard href={href} target="_blank" rel="noopener noreferrer">
+      <div className="icon-wrapper" style={{ background: iconBackground, color: iconColor }}>
         {icon}
       </div>
       <div className="content">

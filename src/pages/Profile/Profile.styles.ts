@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Theme } from "@mui/material";
+import styled from 'styled-components';
+import { Theme } from '@mui/material';
 
 export const ProfileWrapper = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const ProfileBannerContainer = styled.div`
   height: 125px;
   overflow: hidden;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     height: 100px;
   }
 `;
@@ -37,7 +37,7 @@ export const ProfileHeaderContainer = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     padding: 0 16px 12px;
   }
 `;
@@ -47,7 +47,7 @@ export const AvatarContainer = styled.div`
   z-index: 10;
   position: relative;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     margin-top: -50px;
   }
 `;
@@ -60,7 +60,7 @@ export const StyledAvatar = styled.img`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   object-fit: cover;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     width: 90px;
     height: 90px;
     border-width: 3px;
@@ -70,7 +70,7 @@ export const StyledAvatar = styled.img`
 export const ProfileActions = styled.div`
   padding-bottom: 8px;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     margin-top: 8px;
   }
 `;
@@ -81,7 +81,7 @@ export const ContentContainer = styled.div`
   gap: 24px;
   padding: 0 24px 48px;
 
-  @media (max-width: 600px) {
+  ${({ theme }) => (theme as Theme).breakpoints.down('sm')} {
     padding: 0 16px 32px;
   }
 `;
@@ -90,8 +90,8 @@ export const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  
-  @media (max-width: 900px) {
+
+  ${({ theme }) => (theme as Theme).breakpoints.down('md')} {
     padding-left: 8px;
   }
 `;

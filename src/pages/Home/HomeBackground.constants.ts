@@ -13,12 +13,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -28,13 +24,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -82,13 +73,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -98,12 +84,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -127,12 +109,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -143,10 +121,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -174,12 +149,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -189,12 +160,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -204,12 +171,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -223,11 +186,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMS9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -243,12 +202,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -258,13 +213,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -312,13 +262,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -328,12 +273,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -357,12 +298,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -372,12 +309,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -405,12 +338,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -420,12 +349,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -435,12 +360,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -454,11 +375,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMS9MT0cxMjEtMDIvTE9HMjQwLTAy',
   },
   {
@@ -474,12 +391,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -489,13 +402,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -543,13 +451,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -559,12 +462,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -588,12 +487,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MERCREDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3418',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3418'],
           },
           {
             nom: 'Labo',
@@ -603,12 +498,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1150,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -636,12 +527,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -651,12 +538,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -666,12 +549,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -685,10 +564,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMS9MT0cxMjEtMDMvTE9HMjQwLTAy',
   },
   {
@@ -704,12 +580,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MERCREDI',
             },
-            charges: [
-              'R. Saudrais',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['R. Saudrais'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -719,12 +591,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'LUNDI',
             },
-            charges: [
-              'R. Saudrais',
-            ],
-            locaux: [
-              'B-3404',
-            ],
+            charges: ['R. Saudrais'],
+            locaux: ['B-3404'],
           },
         ],
         cours: {
@@ -772,13 +640,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -788,12 +651,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -817,12 +676,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -833,9 +688,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -863,12 +716,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -878,12 +727,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -893,12 +738,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -912,10 +753,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAyL0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -932,9 +770,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'VENDREDI',
             },
             charges: [],
-            locaux: [
-              'E-2021',
-            ],
+            locaux: ['E-2021'],
           },
           {
             nom: 'TP A+B',
@@ -945,9 +781,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MARDI',
             },
             charges: [],
-            locaux: [
-              'B-3404',
-            ],
+            locaux: ['B-3404'],
           },
         ],
         cours: {
@@ -995,13 +829,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -1011,12 +840,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1040,12 +865,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -1056,9 +877,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -1086,12 +905,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -1101,12 +916,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -1116,12 +927,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1135,11 +942,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'LUNDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'LUNDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAzL0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -1155,12 +958,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -1170,13 +969,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -1224,13 +1018,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -1240,12 +1029,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1269,12 +1054,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -1285,9 +1066,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -1315,12 +1094,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -1330,12 +1105,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -1345,12 +1116,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1364,10 +1131,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -1383,12 +1147,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'MERCREDI',
             },
-            charges: [
-              'J.M. Laberge',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J.M. Laberge'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -1399,9 +1159,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'JEUDI',
             },
             charges: [],
-            locaux: [
-              'B-3408',
-            ],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -1449,13 +1207,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -1465,12 +1218,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1494,12 +1243,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -1510,10 +1255,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -1541,12 +1283,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -1556,12 +1294,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -1571,12 +1305,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -1590,10 +1320,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAxL0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAx',
   },
   {
@@ -1609,12 +1336,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -1624,13 +1347,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -1678,13 +1396,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -1694,12 +1407,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1723,12 +1432,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -1739,10 +1444,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -1770,12 +1472,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -1785,12 +1483,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -1800,12 +1494,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -1819,10 +1509,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAx',
   },
   {
@@ -1838,12 +1525,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -1853,13 +1536,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -1907,13 +1585,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -1923,12 +1596,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -1952,12 +1621,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -1968,10 +1633,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -1999,12 +1661,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -2014,12 +1672,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -2029,12 +1683,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2048,11 +1698,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'VENDREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'VENDREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -2068,12 +1714,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'MERCREDI',
             },
-            charges: [
-              'J.M. Laberge',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J.M. Laberge'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -2084,9 +1726,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'JEUDI',
             },
             charges: [],
-            locaux: [
-              'B-3408',
-            ],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -2134,13 +1774,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -2150,12 +1785,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2179,12 +1810,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -2194,12 +1821,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -2227,12 +1850,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -2242,12 +1861,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -2257,12 +1872,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -2276,10 +1887,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAxL0xPRzEwMC0wMy9MT0cxMjEtMDIvTE9HMjQwLTAx',
   },
   {
@@ -2295,12 +1903,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -2310,13 +1914,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -2364,13 +1963,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -2380,12 +1974,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2409,12 +1999,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -2424,12 +2010,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -2457,12 +2039,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -2472,12 +2050,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -2487,12 +2061,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -2506,10 +2076,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDIvTE9HMjQwLTAx',
   },
   {
@@ -2525,12 +2092,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -2540,13 +2103,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -2594,13 +2152,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -2610,12 +2163,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2639,12 +2188,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -2654,12 +2199,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -2687,12 +2228,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -2702,12 +2239,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -2717,12 +2250,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2736,11 +2265,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'VENDREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'VENDREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDIvTE9HMjQwLTAy',
   },
   {
@@ -2756,12 +2281,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'MERCREDI',
             },
-            charges: [
-              'J.M. Laberge',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J.M. Laberge'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -2772,9 +2293,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'JEUDI',
             },
             charges: [],
-            locaux: [
-              'B-3408',
-            ],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -2822,13 +2341,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -2838,12 +2352,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -2867,12 +2377,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -2883,9 +2389,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -2913,12 +2417,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -2928,12 +2428,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -2943,12 +2439,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -2962,10 +2454,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAxL0xPRzEwMC0wMy9MT0cxMjEtMDQvTE9HMjQwLTAx',
   },
   {
@@ -2982,9 +2471,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'VENDREDI',
             },
             charges: [],
-            locaux: [
-              'E-2021',
-            ],
+            locaux: ['E-2021'],
           },
           {
             nom: 'TP A+B',
@@ -2995,9 +2482,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MARDI',
             },
             charges: [],
-            locaux: [
-              'B-3404',
-            ],
+            locaux: ['B-3404'],
           },
         ],
         cours: {
@@ -3045,13 +2530,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -3061,12 +2541,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3090,12 +2566,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -3106,9 +2578,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -3136,12 +2606,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -3151,12 +2617,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -3166,12 +2628,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -3185,11 +2643,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'JEUDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'JEUDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAzL0xPRzEwMC0wMy9MT0cxMjEtMDQvTE9HMjQwLTAx',
   },
   {
@@ -3205,12 +2659,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -3220,13 +2670,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -3274,13 +2719,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -3290,12 +2730,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3319,12 +2755,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -3335,9 +2767,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -3365,12 +2795,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -3380,12 +2806,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -3395,12 +2817,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -3414,10 +2832,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDQvTE9HMjQwLTAx',
   },
   {
@@ -3434,9 +2849,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'VENDREDI',
             },
             charges: [],
-            locaux: [
-              'E-2021',
-            ],
+            locaux: ['E-2021'],
           },
           {
             nom: 'TP A+B',
@@ -3447,9 +2860,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MARDI',
             },
             charges: [],
-            locaux: [
-              'B-3404',
-            ],
+            locaux: ['B-3404'],
           },
         ],
         cours: {
@@ -3497,13 +2908,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -3513,12 +2919,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3542,12 +2944,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -3558,9 +2956,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -3588,12 +2984,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -3603,12 +2995,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -3618,12 +3006,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3637,10 +3021,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTAzL0xPRzEwMC0wMy9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -3656,12 +3037,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'LUNDI',
             },
-            charges: [
-              'J. Milette',
-            ],
-            locaux: [
-              'E-2023',
-            ],
+            charges: ['J. Milette'],
+            locaux: ['E-2023'],
           },
           {
             nom: 'TP A+B',
@@ -3671,13 +3048,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2200,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Milette',
-              'P. Millet',
-            ],
-            locaux: [
-              'B-3408',
-            ],
+            charges: ['J. Milette', 'P. Millet'],
+            locaux: ['B-3408'],
           },
         ],
         cours: {
@@ -3725,13 +3097,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -3741,12 +3108,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3770,12 +3133,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -3786,9 +3145,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -3816,12 +3173,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -3831,12 +3184,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -3846,12 +3195,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -3865,11 +3210,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'VENDREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'VENDREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q09NMTEwLTA0L0xPRzEwMC0wMy9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -3885,12 +3226,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'LUNDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
           {
             nom: 'TP',
@@ -3900,12 +3237,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'VENDREDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
         ],
         cours: {
@@ -3957,13 +3290,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -3973,12 +3301,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4002,12 +3326,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -4018,10 +3338,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -4049,12 +3366,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -4064,12 +3377,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -4079,12 +3388,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4098,11 +3403,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTAxL0xPRzEwMC0wMS9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -4118,12 +3419,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'VENDREDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
           {
             nom: 'TP',
@@ -4133,12 +3430,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
         ],
         cours: {
@@ -4190,13 +3483,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -4206,12 +3494,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4235,12 +3519,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -4251,10 +3531,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -4282,12 +3559,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -4297,12 +3570,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -4312,12 +3581,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4331,11 +3596,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA2L0xPRzEwMC0wMS9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -4351,9 +3612,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'JEUDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
           {
@@ -4364,9 +3623,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2100,
               jour: 'MARDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
         ],
@@ -4419,13 +3676,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -4435,12 +3687,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4464,12 +3712,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -4480,10 +3724,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -4511,12 +3752,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -4526,12 +3763,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -4541,12 +3774,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4560,11 +3789,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA4L0xPRzEwMC0wMS9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -4580,12 +3805,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'LUNDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
           {
             nom: 'TP',
@@ -4595,12 +3816,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'VENDREDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
         ],
         cours: {
@@ -4652,13 +3869,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -4668,12 +3880,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4697,12 +3905,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -4712,12 +3916,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -4745,12 +3945,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -4760,12 +3956,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -4775,12 +3967,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4794,11 +3982,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTAxL0xPRzEwMC0wMS9MT0cxMjEtMDIvTE9HMjQwLTAy',
   },
   {
@@ -4814,12 +3998,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'VENDREDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
           {
             nom: 'TP',
@@ -4829,12 +4009,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
         ],
         cours: {
@@ -4886,13 +4062,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -4902,12 +4073,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -4931,12 +4098,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -4946,12 +4109,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -4979,12 +4138,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -4994,12 +4149,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -5009,12 +4160,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5028,11 +4175,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA2L0xPRzEwMC0wMS9MT0cxMjEtMDIvTE9HMjQwLTAy',
   },
   {
@@ -5048,9 +4191,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'JEUDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
           {
@@ -5061,9 +4202,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2100,
               jour: 'MARDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
         ],
@@ -5116,13 +4255,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -5132,12 +4266,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5161,12 +4291,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3414',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3414'],
           },
           {
             nom: 'Labo',
@@ -5176,12 +4302,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'LUNDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -5209,12 +4331,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -5224,12 +4342,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -5239,12 +4353,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5258,11 +4368,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'MERCREDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'MERCREDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA4L0xPRzEwMC0wMS9MT0cxMjEtMDIvTE9HMjQwLTAy',
   },
   {
@@ -5278,9 +4384,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'JEUDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
           {
@@ -5291,9 +4395,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2100,
               jour: 'MARDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
         ],
@@ -5346,13 +4448,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -5362,12 +4459,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5391,12 +4484,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MERCREDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'B-3418',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['B-3418'],
           },
           {
             nom: 'Labo',
@@ -5406,12 +4495,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1150,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3344',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -5439,12 +4524,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -5454,12 +4535,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -5469,12 +4546,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5488,11 +4561,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'LUNDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'LUNDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA4L0xPRzEwMC0wMS9MT0cxMjEtMDMvTE9HMjQwLTAy',
   },
   {
@@ -5508,12 +4577,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'LUNDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
           {
             nom: 'TP',
@@ -5523,12 +4588,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'VENDREDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-3406',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-3406'],
           },
         ],
         cours: {
@@ -5580,13 +4641,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -5596,12 +4652,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5625,12 +4677,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -5641,9 +4689,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -5671,12 +4717,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -5686,12 +4728,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -5701,12 +4739,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5720,10 +4754,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTAxL0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -5739,12 +4770,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MERCREDI',
             },
-            charges: [
-              'M. Bergeron-Brlek',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['M. Bergeron-Brlek'],
+            locaux: ['B-3402'],
           },
           {
             nom: 'TP',
@@ -5754,12 +4781,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'M. Bergeron-Brlek',
-            ],
-            locaux: [
-              'B-3416',
-            ],
+            charges: ['M. Bergeron-Brlek'],
+            locaux: ['B-3416'],
           },
         ],
         cours: {
@@ -5811,13 +4834,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -5827,12 +4845,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5856,12 +4870,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -5872,9 +4882,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -5902,12 +4910,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -5917,12 +4921,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -5932,12 +4932,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -5951,11 +4947,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'LUNDI',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'LUNDI', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA1L0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -5971,12 +4963,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1250,
               jour: 'VENDREDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
           {
             nom: 'TP',
@@ -5986,12 +4974,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Benmassaoud',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['A. Benmassaoud'],
+            locaux: ['B-3402'],
           },
         ],
         cours: {
@@ -6043,13 +5027,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-4023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-4023'],
           },
           {
             nom: 'Labo',
@@ -6059,12 +5038,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'F. Mah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['F. Mah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6088,12 +5063,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Galarneau',
-            ],
-            locaux: [
-              'D-4012',
-            ],
+            charges: ['B. Galarneau'],
+            locaux: ['D-4012'],
           },
           {
             nom: 'Labo',
@@ -6104,9 +5075,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'MERCREDI',
             },
             charges: [],
-            locaux: [
-              'A-3344',
-            ],
+            locaux: ['A-3344'],
           },
         ],
         cours: {
@@ -6134,12 +5103,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -6149,12 +5114,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -6164,12 +5125,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6183,10 +5140,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA2L0xPRzEwMC0wMS9MT0cxMjEtMDQvTE9HMjQwLTAy',
   },
   {
@@ -6202,9 +5156,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2150,
               jour: 'JEUDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
           {
@@ -6215,9 +5167,7 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 2100,
               jour: 'MARDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
+            charges: ['T. Rivard'],
             locaux: [],
           },
         ],
@@ -6270,13 +5220,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -6286,12 +5231,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6315,12 +5256,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -6331,10 +5268,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -6362,12 +5296,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'MARDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-3008',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-3008'],
           },
           {
             nom: 'Labo A',
@@ -6377,12 +5307,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
           {
             nom: 'Labo B',
@@ -6392,12 +5318,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'VENDREDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3220',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3220'],
           },
         ],
         cours: {
@@ -6411,10 +5333,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA4L0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAx',
   },
   {
@@ -6430,12 +5349,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'VENDREDI',
             },
-            charges: [
-              'T. Rivard',
-            ],
-            locaux: [
-              'B-1506',
-            ],
+            charges: ['T. Rivard'],
+            locaux: ['B-1506'],
           },
           {
             nom: 'TP',
@@ -6445,12 +5360,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'JEUDI',
             },
-            charges: [
-              'J. Bissou Billong',
-            ],
-            locaux: [
-              'B-1404',
-            ],
+            charges: ['J. Bissou Billong'],
+            locaux: ['B-1404'],
           },
         ],
         cours: {
@@ -6502,13 +5413,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -6518,12 +5424,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6547,12 +5449,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -6563,10 +5461,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -6594,12 +5489,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -6609,12 +5500,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -6624,12 +5511,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6643,10 +5526,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTAyL0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
   {
@@ -6662,12 +5542,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1700,
               jour: 'JEUDI',
             },
-            charges: [
-              'M. Clisson',
-            ],
-            locaux: [
-              'B-3402',
-            ],
+            charges: ['M. Clisson'],
+            locaux: ['B-3402'],
           },
           {
             nom: 'TP',
@@ -6677,12 +5553,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'VENDREDI',
             },
-            charges: [
-              'M. Clisson',
-            ],
-            locaux: [
-              'B-3416',
-            ],
+            charges: ['M. Clisson'],
+            locaux: ['B-3416'],
           },
         ],
         cours: {
@@ -6734,13 +5606,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'LUNDI',
             },
-            charges: [
-              'A. Leivadeas',
-              'N. Moha',
-            ],
-            locaux: [
-              'D-5023',
-            ],
+            charges: ['A. Leivadeas', 'N. Moha'],
+            locaux: ['D-5023'],
           },
           {
             nom: 'Labo',
@@ -6750,12 +5617,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1650,
               jour: 'MERCREDI',
             },
-            charges: [
-              'Y. Njah',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['Y. Njah'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6779,12 +5642,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'MARDI',
             },
-            charges: [
-              'S. Hadjres',
-            ],
-            locaux: [
-              'D-3012',
-            ],
+            charges: ['S. Hadjres'],
+            locaux: ['D-3012'],
           },
           {
             nom: 'Labo',
@@ -6795,10 +5654,7 @@ const HOME_BACKGROUND_HORAIRES = [
               jour: 'LUNDI',
             },
             charges: [],
-            locaux: [
-              'A-3220',
-              'A-3450',
-            ],
+            locaux: ['A-3220', 'A-3450'],
           },
         ],
         cours: {
@@ -6826,12 +5682,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1200,
               jour: 'JEUDI',
             },
-            charges: [
-              'F. Cardinal',
-            ],
-            locaux: [
-              'D-4019',
-            ],
+            charges: ['F. Cardinal'],
+            locaux: ['D-4019'],
           },
           {
             nom: 'Labo A',
@@ -6841,12 +5693,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1550,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
           {
             nom: 'Labo B',
@@ -6856,12 +5704,8 @@ const HOME_BACKGROUND_HORAIRES = [
               heureFin: 1750,
               jour: 'MARDI',
             },
-            charges: [
-              'B. Alchalabi',
-            ],
-            locaux: [
-              'A-3450',
-            ],
+            charges: ['B. Alchalabi'],
+            locaux: ['A-3450'],
           },
         ],
         cours: {
@@ -6875,10 +5719,7 @@ const HOME_BACKGROUND_HORAIRES = [
         },
       },
     ],
-    conges: [
-      'DIMANCHE',
-      'SAMEDI',
-    ],
+    conges: ['DIMANCHE', 'SAMEDI'],
     uniqueId: 'SDIwMjM6Q0hNMTMxLTA3L0xPRzEwMC0wMy9MT0cxMjEtMDEvTE9HMjQwLTAy',
   },
 ];

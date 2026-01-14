@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface GenerateurHoraireContextType {
   session: string | null;
@@ -15,10 +15,10 @@ export interface GenerateurHoraireContextType {
   setConges: (val: string[]) => void;
 }
 
-const noOp = () => ""; // Original was () => ''?
+const noOp = () => ''; // Original was () => ''?
 
 export default React.createContext<GenerateurHoraireContextType>({
-  session: "",
+  session: '',
   setSession: noOp,
   programmes: [],
   setProgrammes: noOp,

@@ -1,7 +1,7 @@
-import { Theme } from "@mui/material/styles";
-import React from "react";
-import styled from "styled-components";
-import ScheduleGrid from "../../components/ScheduleGrid/ScheduleGrid";
+import { Theme } from '@mui/material/styles';
+import React from 'react';
+import styled from 'styled-components';
+import ScheduleGrid from '../../components/ScheduleGrid/ScheduleGrid';
 
 const ProfileBannerWrapper = styled.div`
   position: absolute;
