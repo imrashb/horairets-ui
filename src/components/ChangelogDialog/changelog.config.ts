@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { ChangelogEntry } from './changelog.types';
 import Changelog_2026_01_11 from './changelogs/Changelog_2026_01_11';
+import Changelog_2026_01_15 from './changelogs/Changelog_2026_01_15';
 
 export const CHANGELOG_STORAGE_KEY = 'horairets_changelog_last_seen';
 
@@ -8,6 +9,10 @@ export const CHANGELOGS: ChangelogEntry[] = [
   {
     date: '2026-01-11',
     Content: Changelog_2026_01_11,
+  },
+  {
+    date: '2026-01-15',
+    Content: Changelog_2026_01_15,
   },
 ];
 
