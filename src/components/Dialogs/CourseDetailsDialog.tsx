@@ -1,10 +1,11 @@
 import {
   CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Typography,
 } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, OpenInNew } from '@mui/icons-material';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetCours } from '../../features/generateur/generateurQueries';
+import { getEtsCourseUrl } from '../../utils/ets.utils';
 
 interface CourseDetailsDialogProps {
   open: boolean;
@@ -29,8 +30,19 @@ function CourseDetailsDialog({
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogTitle sx={{ m: 0, p: 2, pr: 6 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <Typography variant="h6">
+            <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {course ? course.sigle : t('detailsCours')}
+              {course && (
+                <IconButton
+                  size="small"
+                  href={getEtsCourseUrl(course.sigle)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{ color: 'primary.main' }}
+                >
+                  <OpenInNew fontSize="small" />
+                </IconButton>
+              )}
             </Typography>
             <Typography variant="body2">
               {course?.titre}

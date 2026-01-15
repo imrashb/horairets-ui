@@ -12,9 +12,12 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SessionsMap } from '../../../../../hooks/firebase/types';
+import { useGetCours } from '../../../../../features/generateur/generateurQueries';
+import { useCreditsLabel } from '../../../../../hooks/useCreditsLabel';
 import SemesterViewCard from './SemesterViewCard';
-import { useTimelineData } from './useTimelineData';
+import { AcademicYearData, useTimelineData } from './useTimelineData';
 import { fadeInOutAnimation } from '../../../../../utils/animations';
+import { usePlannedCourses } from '../../PlannedCoursesContext';
 
 const VerticalWrapper = styled.div`
   display: flex;
@@ -76,6 +79,77 @@ const EmptyState = styled.div`
   color: ${({ theme }) => (theme as Theme).palette.text.secondary};
 `;
 
+interface YearAccordionItemProps {
+  yearData: AcademicYearData;
+  isCurrentYear: boolean;
+  isExpanded: boolean;
+  onAccordionChange: (year: number) => (event: React.SyntheticEvent, isExpanded: boolean) => void;
+  searchTerm?: string;
+}
+
+function YearAccordionItem({
+  yearData,
+  isCurrentYear,
+  isExpanded,
+  onAccordionChange,
+  searchTerm,
+}: YearAccordionItemProps): JSX.Element {
+  const { t } = useTranslation('common');
+  const cumulativeLabel = useCreditsLabel(yearData.cumulativeCreditsRange);
+
+  return (
+    <motion.div
+      {...fadeInOutAnimation}
+      style={{ scrollMarginTop: '100px' }}
+    >
+      <StyledAccordion
+        expanded={isExpanded}
+        onChange={onAccordionChange(yearData.year)}
+      >
+        <StyledAccordionSummary expandIcon={<ExpandMore sx={{ fontSize: '2rem' }} />}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Typography variant="subtitle1" fontWeight={isCurrentYear ? 700 : 600}>
+              {yearData.label}
+              {isCurrentYear && (
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ ml: 1, color: 'primary.main' }}
+                >
+                  (
+                  {t('anneeEnCours')}
+                  )
+                </Typography>
+              )}
+            </Typography>
+            {cumulativeLabel && (
+              <Typography variant="caption" color="text.secondary">
+                {cumulativeLabel}
+                {' '}
+                {t('total')}
+              </Typography>
+            )}
+          </div>
+        </StyledAccordionSummary>
+        <StyledAccordionDetails>
+          <SemestersContainer>
+            {yearData.semesters.map((semester) => (
+              <SemesterViewCard
+                key={semester.key}
+                session={semester.session}
+                config={semester.config}
+                creditsRange={semester.creditsRange}
+                seamless
+                searchTerm={searchTerm}
+              />
+            ))}
+          </SemestersContainer>
+        </StyledAccordionDetails>
+      </StyledAccordion>
+    </motion.div>
+  );
+}
+
 interface VerticalTimelineViewProps {
   sessions: SessionsMap;
   searchTerm?: string;
@@ -83,7 +157,9 @@ interface VerticalTimelineViewProps {
 
 function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProps): JSX.Element {
   const { t } = useTranslation('common');
-  const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions);
+  const { programme } = usePlannedCourses();
+  const { data: allCours = [] } = useGetCours(programme ? [programme] : undefined);
+  const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions, allCours);
 
   const [expandedYears, setExpandedYears] = useState<number[]>(currentAcademicYear !== null ? [currentAcademicYear] : []);
 
@@ -115,53 +191,16 @@ function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProp
   return (
     <VerticalWrapper>
       <AnimatePresence mode="popLayout">
-        {academicYearsData.map((yearData) => {
-          const isCurrentYear = yearData.year === currentAcademicYear;
-          const isExpanded = expandedYears.includes(yearData.year);
-
-          return (
-            <motion.div
-              key={yearData.year}
-              {...fadeInOutAnimation}
-              style={{ scrollMarginTop: '100px' }}
-            >
-              <StyledAccordion
-                expanded={isExpanded}
-                onChange={handleAccordionChange(yearData.year)}
-              >
-                <StyledAccordionSummary expandIcon={<ExpandMore sx={{ fontSize: '2rem' }} />}>
-                  <Typography variant="subtitle1" fontWeight={isCurrentYear ? 700 : 600}>
-                    {yearData.label}
-                    {isCurrentYear && (
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        sx={{ ml: 1, color: 'primary.main' }}
-                      >
-                        (
-                        {t('anneeEnCours')}
-                        )
-                      </Typography>
-                    )}
-                  </Typography>
-                </StyledAccordionSummary>
-                <StyledAccordionDetails>
-                  <SemestersContainer>
-                    {yearData.semesters.map((semester) => (
-                      <SemesterViewCard
-                        key={semester.key}
-                        session={semester.session}
-                        config={semester.config}
-                        seamless
-                        searchTerm={searchTerm}
-                      />
-                    ))}
-                  </SemestersContainer>
-                </StyledAccordionDetails>
-              </StyledAccordion>
-            </motion.div>
-          );
-        })}
+        {academicYearsData.map((yearData) => (
+          <YearAccordionItem
+            key={yearData.year}
+            yearData={yearData}
+            isCurrentYear={yearData.year === currentAcademicYear}
+            isExpanded={expandedYears.includes(yearData.year)}
+            onAccordionChange={handleAccordionChange}
+            searchTerm={searchTerm}
+          />
+        ))}
       </AnimatePresence>
     </VerticalWrapper>
   );

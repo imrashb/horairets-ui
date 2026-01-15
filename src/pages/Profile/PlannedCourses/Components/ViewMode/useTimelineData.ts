@@ -1,16 +1,22 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { SessionConfig, SessionsMap } from '../../../../../hooks/firebase/types';
 import { getAcademicYearRange, getAcademicYearSessions } from '../../../../../utils/SessionSequence.utils';
+import { Cours } from '../../../../../features/generateur/generateur.types';
+import { calculateCreditsRange, CreditsRange, sumCreditsRanges } from '../../../../../utils/credits.utils';
+
+export interface SemesterData {
+  key: string;
+  session: string;
+  config: SessionConfig | undefined;
+  creditsRange: CreditsRange;
+}
 
 export interface AcademicYearData {
   year: number;
   label: string;
-  semesters: Array<{
-    key: string;
-    session: string;
-    config: SessionConfig | undefined;
-  }>;
+  semesters: SemesterData[];
+  creditsRange: CreditsRange;
+  cumulativeCreditsRange: CreditsRange;
 }
 
 export interface TimelineData {
@@ -33,7 +39,7 @@ function getCurrentAcademicYear(): number {
   return year;
 }
 
-export function useTimelineData(sessions: SessionsMap): TimelineData {
+export function useTimelineData(sessions: SessionsMap, allCours: Cours[] = []): TimelineData {
   const academicYears = useMemo(() => {
     const sessionKeys = Object.keys(sessions);
     const range = getAcademicYearRange(sessionKeys);
@@ -49,25 +55,46 @@ export function useTimelineData(sessions: SessionsMap): TimelineData {
 
   const currentAcademicYear = useMemo(() => {
     const current = getCurrentAcademicYear();
-    // Only return current year if it's within our range
     if (academicYears.includes(current)) {
       return current;
     }
     return null;
   }, [academicYears]);
 
-  const academicYearsData = useMemo((): AcademicYearData[] => academicYears.map((year) => {
-    const sessionKeys = getAcademicYearSessions(year);
-    return {
-      year,
-      label: `${year}-${year + 1}`,
-      semesters: sessionKeys.map((session) => ({
-        key: session,
-        session,
-        config: sessions[session],
-      })),
-    };
-  }), [academicYears, sessions]);
+  const academicYearsData = useMemo((): AcademicYearData[] => {
+    let cumulativeMin = 0;
+    let cumulativeMax = 0;
+
+    return academicYears.map((year) => {
+      const sessionKeys = getAcademicYearSessions(year);
+      const semesters: SemesterData[] = sessionKeys.map((session) => {
+        const config = sessions[session];
+        const creditsRange = config
+          ? calculateCreditsRange(allCours, config)
+          : { min: 0, max: 0 };
+
+        return {
+          key: session,
+          session,
+          config,
+          creditsRange,
+        };
+      });
+
+      const yearCreditsRange = sumCreditsRanges(semesters.map((s) => s.creditsRange));
+
+      cumulativeMin += yearCreditsRange.min;
+      cumulativeMax += yearCreditsRange.max;
+
+      return {
+        year,
+        label: `${year}-${year + 1}`,
+        semesters,
+        creditsRange: yearCreditsRange,
+        cumulativeCreditsRange: { min: cumulativeMin, max: cumulativeMax },
+      };
+    });
+  }, [academicYears, sessions, allCours]);
 
   return {
     academicYears,

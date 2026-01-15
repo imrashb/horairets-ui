@@ -6,8 +6,11 @@ import { motion } from 'framer-motion';
 import { SessionsMap } from '../../../../../hooks/firebase/types';
 import { ACADEMIC_YEAR_SEMESTERS_INDICES } from '../../../../../utils/SessionSequence.utils';
 import { fadeInOutAnimation } from '../../../../../utils/animations';
+import { useGetCours } from '../../../../../features/generateur/generateurQueries';
+import { useCreditsLabel } from '../../../../../hooks/useCreditsLabel';
 import SemesterViewCard from './SemesterViewCard';
 import { useTimelineData } from './useTimelineData';
+import { usePlannedCourses } from '../../PlannedCoursesContext';
 
 interface TimelineGridProps {
   $columnCount: number;
@@ -26,11 +29,17 @@ const TimelineGrid = styled.div<TimelineGridProps>`
   column-gap: 2rem;
 `;
 
+const YearHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25rem;
+`;
+
 const YearHeader = styled(Typography)`
   font-weight: 600;
   color: ${({ theme }) => (theme as Theme).palette.text.secondary};
   text-align: center;
-  padding: 0.25rem;
 `;
 
 const EmptyState = styled.div`
@@ -46,9 +55,39 @@ interface HorizontalTimelineViewProps {
   searchTerm?: string;
 }
 
+interface YearHeaderWithCreditsProps {
+  label: string;
+  cumulativeCreditsRange: { min: number; max: number };
+}
+
+function YearHeaderWithCredits({
+  label,
+  cumulativeCreditsRange,
+}: YearHeaderWithCreditsProps): JSX.Element {
+  const { t } = useTranslation('common');
+  const cumulativeLabel = useCreditsLabel(cumulativeCreditsRange);
+
+  return (
+    <YearHeaderContainer>
+      <YearHeader variant="h6">
+        {label}
+      </YearHeader>
+      {cumulativeLabel && (
+        <Typography variant="caption" color="text.secondary">
+          {cumulativeLabel}
+          {' '}
+          {t('total')}
+        </Typography>
+      )}
+    </YearHeaderContainer>
+  );
+}
+
 function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineViewProps): JSX.Element {
   const { t } = useTranslation('common');
-  const { academicYears, academicYearsData, isEmpty } = useTimelineData(sessions);
+  const { programme } = usePlannedCourses();
+  const { data: allCours = [] } = useGetCours(programme ? [programme] : undefined);
+  const { academicYears, academicYearsData, isEmpty } = useTimelineData(sessions, allCours);
 
   if (isEmpty) {
     return (
@@ -64,9 +103,11 @@ function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineView
     <TimelineWrapper>
       <TimelineGrid $columnCount={academicYears.length}>
         {academicYearsData.map((yearData) => (
-          <YearHeader key={`header-${yearData.year}`} variant="h6">
-            {yearData.label}
-          </YearHeader>
+          <YearHeaderWithCredits
+            key={`header-${yearData.year}`}
+            label={yearData.label}
+            cumulativeCreditsRange={yearData.cumulativeCreditsRange}
+          />
         ))}
 
         {ACADEMIC_YEAR_SEMESTERS_INDICES.map((semesterIndex) => (
@@ -84,6 +125,7 @@ function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineView
                 <SemesterViewCard
                   session={semester.session}
                   config={semester.config}
+                  creditsRange={semester.creditsRange}
                   searchTerm={searchTerm}
                 />
               </motion.div>

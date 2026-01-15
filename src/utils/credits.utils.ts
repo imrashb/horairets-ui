@@ -38,3 +38,13 @@ export function calculateCreditsRange(allCours: Cours[], config: SessionConfig):
     max: lockedCredits + maxOptionalCredits,
   };
 }
+
+export function sumCreditsRanges(ranges: CreditsRange[]): CreditsRange {
+  return ranges.reduce(
+    (acc, range) => ({
+      min: acc.min + range.min,
+      max: acc.max + range.max,
+    }),
+    { min: 0, max: 0 },
+  );
+}

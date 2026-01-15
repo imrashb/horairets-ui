@@ -6,6 +6,8 @@ import { BaseCard } from '../../../../../components/Cards/BaseCard';
 import { SessionConfig } from '../../../../../hooks/firebase/types';
 import { getSessionTranslation, parseScheduleId } from '../../../../../utils/Sessions.utils';
 import { useSelectedSchedule } from '../../../../../hooks/firebase';
+import { useCreditsLabel } from '../../../../../hooks/useCreditsLabel';
+import { CreditsRange } from '../../../../../utils/credits.utils';
 import ViewSelectedScheduleButton from '../ViewSelectedScheduleButton';
 import SemesterCoursesList from './SemesterCoursesList';
 
@@ -48,7 +50,7 @@ const StickyHeader = styled.div<{ $seamless?: boolean }>`
 interface SemesterViewCardProps {
   session: string;
   config: SessionConfig | undefined;
-  totalCredits?: number;
+  creditsRange?: CreditsRange;
   seamless?: boolean;
   searchTerm?: string;
 }
@@ -56,7 +58,7 @@ interface SemesterViewCardProps {
 function SemesterViewCard({
   session,
   config,
-  totalCredits = 0,
+  creditsRange,
   seamless = false,
   searchTerm,
 }: SemesterViewCardProps): JSX.Element {
@@ -71,9 +73,7 @@ function SemesterViewCard({
     ? parsedSchedule.courses.map((c) => ({ sigle: c.sigle, group: c.group }))
     : (config?.cours || []).map((c) => ({ sigle: c, group: null as string | null }));
 
-  const creditsLabel = totalCredits > 0
-    ? t('credits', { count: totalCredits })
-    : '';
+  const creditsLabel = useCreditsLabel(creditsRange || { min: 0, max: 0 });
 
   const content = (
     <>
