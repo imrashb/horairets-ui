@@ -25,11 +25,7 @@ const SessionsGrid = styled.div`
   }
 `;
 
-interface PlannedSessionsGridProps {
-  searchTerm?: string;
-}
-
-export function PlannedSessionsGrid({ searchTerm }: PlannedSessionsGridProps): JSX.Element {
+export function PlannedSessionsGrid(): JSX.Element {
   const {
     localSessions,
     sortedSessionKeys,
@@ -62,7 +58,7 @@ export function PlannedSessionsGrid({ searchTerm }: PlannedSessionsGridProps): J
       if (isPlanned) {
         items.push(
           <motion.div key={sessionKey} layout {...fadeInOutAnimation}>
-            <SessionCard session={sessionKey} searchTerm={searchTerm} />
+            <SessionCard session={sessionKey} />
           </motion.div>,
         );
       } else {

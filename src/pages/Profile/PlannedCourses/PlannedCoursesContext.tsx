@@ -1,4 +1,4 @@
-import { deleteField } from 'firebase/firestore';
+import { deleteField, FieldValue } from 'firebase/firestore';
 import isEqual from 'lodash/isEqual';
 import sortBy from 'lodash/sortBy';
 import React, {
@@ -54,6 +54,8 @@ interface PlannedCoursesContextType {
   nextSession: string;
   programme: string;
   hasChanges: boolean;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
   onAddSession: (sessionKey: string) => void;
   onDeleteSession: (sessionKey: string) => void;
   onUpdateSessionConfig: (sessionKey: string, config: SessionConfig) => void;
@@ -147,7 +149,7 @@ export function PlannedCoursesProvider({ children }: { children: React.ReactNode
     if (!profile) return;
 
     const normalizedLocalSessions = normalizeSessionsMap(localSessions);
-    const sessionsUpdates: Record<string, any> = { ...normalizedLocalSessions };
+    const sessionsUpdates: Record<string, SessionConfig | FieldValue> = { ...normalizedLocalSessions };
 
     Object.keys(storedSessions).forEach((key) => {
       if (!Object.hasOwn(localSessions, key)) {
@@ -174,14 +176,17 @@ export function PlannedCoursesProvider({ children }: { children: React.ReactNode
     setLocalSessions(storedSessions);
   }, [storedSessions]);
 
-  const value = useMemo(() => ({
+  const [searchTerm, setSearchTerm] = useState('');
 
+  const value = useMemo(() => ({
     localSessions,
     sortedSessionKeys,
     previousSession,
     nextSession,
     programme,
     hasChanges,
+    searchTerm,
+    setSearchTerm,
     onAddSession: handleAddSession,
     onDeleteSession: handleDeleteSession,
     onUpdateSessionConfig: handleUpdateSessionConfig,
@@ -194,6 +199,7 @@ export function PlannedCoursesProvider({ children }: { children: React.ReactNode
     nextSession,
     programme,
     hasChanges,
+    searchTerm,
     handleAddSession,
     handleDeleteSession,
     handleUpdateSessionConfig,

@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import CourseDetailsDialog from '../../../../../components/Dialogs/CourseDetailsDialog';
 
+import { usePlannedCourses } from '../../PlannedCoursesContext';
+
 const CoursesListWrapper = styled.div<{ $seamless?: boolean }>`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -52,17 +54,16 @@ const EmptyState = styled.div`
 interface SemesterCoursesListProps {
   courses: { sigle: string; group: string | null }[];
   session: string;
-  searchTerm?: string;
   seamless?: boolean;
 }
 
 function SemesterCoursesList({
   courses,
   session,
-  searchTerm,
   seamless = false,
 }: SemesterCoursesListProps): JSX.Element {
   const { t } = useTranslation('common');
+  const { searchTerm } = usePlannedCourses();
 
   const [selectedSigle, setSelectedSigle] = useState<string | null>(null);
 

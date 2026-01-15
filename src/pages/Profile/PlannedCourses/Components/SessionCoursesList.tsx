@@ -11,6 +11,8 @@ import {
   CourseSection, CoursesContainer, EmptyState, SectionLabel,
 } from './SessionCard.styles';
 
+import { usePlannedCourses } from '../PlannedCoursesContext';
+
 interface SessionCoursesListProps {
   config: SessionConfig;
   allCours: Cours[];
@@ -18,7 +20,6 @@ interface SessionCoursesListProps {
   onAddCourse: (sigle: string) => void;
   onRemoveCourse: (sigle: string) => void;
   onToggleLock: (sigle: string) => void;
-  searchTerm?: string;
 }
 
 function SessionCoursesList({
@@ -28,9 +29,9 @@ function SessionCoursesList({
   onAddCourse,
   onRemoveCourse,
   onToggleLock,
-  searchTerm,
 }: SessionCoursesListProps): JSX.Element {
   const { t } = useTranslation('common');
+  const { searchTerm } = usePlannedCourses();
 
   const isCourseInvalid = (sigle: string) => {
     if (isCoursLoading || allCours.length === 0) return false;

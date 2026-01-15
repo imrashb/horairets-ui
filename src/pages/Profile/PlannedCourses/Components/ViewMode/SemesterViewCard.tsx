@@ -43,6 +43,14 @@ const HeaderActions = styled.div`
   gap: 0.25rem;
 `;
 
+const HeaderStartActions = styled.div`
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`;
+
 const StickyHeader = styled.div<{ $seamless?: boolean }>`
   display: flex;
   flex-direction: column;
@@ -61,7 +69,6 @@ interface SemesterViewCardProps {
   config: SessionConfig | undefined;
   creditsRange?: CreditsRange;
   seamless?: boolean;
-  searchTerm?: string;
 }
 
 function SemesterViewCard({
@@ -69,7 +76,6 @@ function SemesterViewCard({
   config,
   creditsRange,
   seamless = false,
-  searchTerm,
 }: SemesterViewCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const sessionName = getSessionTranslation(session, t) || session;
@@ -88,11 +94,13 @@ function SemesterViewCard({
     <>
       <StickyHeader $seamless={seamless}>
         <HeaderRow>
+          <HeaderStartActions>
+            {selectedScheduleId && <ViewSelectedScheduleButton session={session} />}
+          </HeaderStartActions>
           <Typography variant={seamless ? 'subtitle1' : 'subtitle2'} fontWeight="bold" textAlign="center">
             {sessionName}
           </Typography>
           <HeaderActions>
-            {selectedScheduleId && <ViewSelectedScheduleButton session={session} />}
             <EditSessionDialog session={session} />
           </HeaderActions>
         </HeaderRow>
@@ -105,7 +113,6 @@ function SemesterViewCard({
       <SemesterCoursesList
         courses={coursesToDisplay}
         session={session}
-        searchTerm={searchTerm}
         seamless={seamless}
       />
     </>

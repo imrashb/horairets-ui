@@ -25,10 +25,9 @@ import { usePlannedCourses } from '../PlannedCoursesContext';
 
 interface SessionCardProps {
   session: string;
-  searchTerm?: string;
 }
 
-function SessionCard({ session, searchTerm }: SessionCardProps): JSX.Element {
+function SessionCard({ session }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
@@ -170,7 +169,6 @@ function SessionCard({ session, searchTerm }: SessionCardProps): JSX.Element {
         onAddCourse={handleAddCourse}
         onRemoveCourse={handleRemoveCourse}
         onToggleLock={handleToggleLock}
-        searchTerm={searchTerm}
       />
     </BaseCard>
   );

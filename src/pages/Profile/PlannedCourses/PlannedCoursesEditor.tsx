@@ -1,5 +1,5 @@
 import { Route } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ContentCard from '../../../components/Cards/ContentCard';
 import SmartSaveButtons from '../../../components/SmartSaveButtons';
@@ -21,10 +21,7 @@ function PlannedCoursesContent(): JSX.Element {
     validate: createEnumValidator(CheminementViewMode),
   });
 
-  const [searchTerm, setSearchTerm] = useState('');
-
   const {
-    localSessions,
     hasChanges,
     onSave,
     onCancel,
@@ -40,8 +37,6 @@ function PlannedCoursesContent(): JSX.Element {
         titleActions={
           profile?.admissionSession && (
             <PlannedCoursesHeaderActions
-              searchTerm={searchTerm}
-              onSearchChange={setSearchTerm}
               viewMode={viewMode}
               onViewModeChange={setViewMode}
               hasChanges={hasChanges}
@@ -52,8 +47,6 @@ function PlannedCoursesContent(): JSX.Element {
         <PlannedCoursesContentView
           profile={profile}
           isSessionsMode={isSessionsMode}
-          localSessions={localSessions}
-          searchTerm={searchTerm}
         />
       </ContentCard>
       {isSessionsMode && (

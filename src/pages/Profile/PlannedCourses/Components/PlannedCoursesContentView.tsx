@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { SessionsMap, UserProfile } from '../../../../hooks/firebase/types';
+import { UserProfile } from '../../../../hooks/firebase/types';
 import EditProfileDialog from '../../Dialogs/EditProfileDialog';
 import { PlannedSessionsGrid } from '../PlannedSessionsGrid';
 import HorizontalTimelineView from './ViewMode/HorizontalTimelineView';
@@ -26,15 +26,11 @@ const EmptyStateContainer = styled.div`
 interface PlannedCoursesContentViewProps {
   profile: UserProfile | undefined;
   isSessionsMode: boolean;
-  localSessions: SessionsMap;
-  searchTerm?: string;
 }
 
 function PlannedCoursesContentView({
   profile,
   isSessionsMode,
-  localSessions,
-  searchTerm = '',
 }: PlannedCoursesContentViewProps): JSX.Element {
   const { t } = useTranslation('common');
   const theme = useTheme();
@@ -56,14 +52,14 @@ function PlannedCoursesContentView({
   }
 
   if (isSessionsMode) {
-    return <PlannedSessionsGrid searchTerm={searchTerm} />;
+    return <PlannedSessionsGrid />;
   }
 
   if (isDesktop) {
-    return <HorizontalTimelineView sessions={localSessions} searchTerm={searchTerm} />;
+    return <HorizontalTimelineView />;
   }
 
-  return <VerticalTimelineView sessions={localSessions} searchTerm={searchTerm} />;
+  return <VerticalTimelineView />;
 }
 
 export default PlannedCoursesContentView;

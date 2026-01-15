@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { SessionsMap } from '../../../../../hooks/firebase/types';
 import { ACADEMIC_YEAR_SEMESTERS_INDICES } from '../../../../../utils/SessionSequence.utils';
 import { fadeInOutAnimation } from '../../../../../utils/animations';
 import { useGetCours } from '../../../../../features/generateur/generateurQueries';
@@ -50,11 +49,6 @@ const EmptyState = styled.div`
   color: ${({ theme }) => (theme as Theme).palette.text.secondary};
 `;
 
-interface HorizontalTimelineViewProps {
-  sessions: SessionsMap;
-  searchTerm?: string;
-}
-
 interface YearHeaderWithCreditsProps {
   label: string;
   cumulativeCreditsRange: { min: number; max: number };
@@ -83,9 +77,9 @@ function YearHeaderWithCredits({
   );
 }
 
-function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineViewProps): JSX.Element {
+function HorizontalTimelineView(): JSX.Element {
   const { t } = useTranslation('common');
-  const { programme } = usePlannedCourses();
+  const { programme, localSessions: sessions } = usePlannedCourses();
   const { data: allCours = [] } = useGetCours(programme ? [programme] : undefined);
   const { academicYears, academicYearsData, isEmpty } = useTimelineData(sessions, allCours);
 
@@ -126,7 +120,6 @@ function HorizontalTimelineView({ sessions, searchTerm }: HorizontalTimelineView
                   session={semester.session}
                   config={semester.config}
                   creditsRange={semester.creditsRange}
-                  searchTerm={searchTerm}
                 />
               </motion.div>
             );

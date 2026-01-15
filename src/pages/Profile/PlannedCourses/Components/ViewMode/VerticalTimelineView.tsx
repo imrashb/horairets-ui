@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SessionsMap } from '../../../../../hooks/firebase/types';
 import { useGetCours } from '../../../../../features/generateur/generateurQueries';
 import { useCreditsLabel } from '../../../../../hooks/useCreditsLabel';
 import SemesterViewCard from './SemesterViewCard';
@@ -84,7 +83,6 @@ interface YearAccordionItemProps {
   isCurrentYear: boolean;
   isExpanded: boolean;
   onAccordionChange: (year: number) => (event: React.SyntheticEvent, isExpanded: boolean) => void;
-  searchTerm?: string;
 }
 
 function YearAccordionItem({
@@ -92,7 +90,6 @@ function YearAccordionItem({
   isCurrentYear,
   isExpanded,
   onAccordionChange,
-  searchTerm,
 }: YearAccordionItemProps): JSX.Element {
   const { t } = useTranslation('common');
   const cumulativeLabel = useCreditsLabel(yearData.cumulativeCreditsRange);
@@ -140,7 +137,6 @@ function YearAccordionItem({
                 config={semester.config}
                 creditsRange={semester.creditsRange}
                 seamless
-                searchTerm={searchTerm}
               />
             ))}
           </SemestersContainer>
@@ -150,14 +146,9 @@ function YearAccordionItem({
   );
 }
 
-interface VerticalTimelineViewProps {
-  sessions: SessionsMap;
-  searchTerm?: string;
-}
-
-function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProps): JSX.Element {
+function VerticalTimelineView(): JSX.Element {
   const { t } = useTranslation('common');
-  const { programme } = usePlannedCourses();
+  const { programme, localSessions: sessions, searchTerm } = usePlannedCourses();
   const { data: allCours = [] } = useGetCours(programme ? [programme] : undefined);
   const { academicYearsData, currentAcademicYear, isEmpty } = useTimelineData(sessions, allCours);
 
@@ -198,7 +189,6 @@ function VerticalTimelineView({ sessions, searchTerm }: VerticalTimelineViewProp
             isCurrentYear={yearData.year === currentAcademicYear}
             isExpanded={expandedYears.includes(yearData.year)}
             onAccordionChange={handleAccordionChange}
-            searchTerm={searchTerm}
           />
         ))}
       </AnimatePresence>
