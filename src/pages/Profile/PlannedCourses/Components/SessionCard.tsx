@@ -13,7 +13,7 @@ import {
 } from '../../../../features/generateur/generateurAtoms';
 import { SessionConfig } from '../../../../hooks/firebase/types';
 import { GENERATEUR_HORAIRE_URL } from '../../../../routes/Routes.constants';
-import { calculateCreditsRange } from '../../../../utils/credits.utils';
+import { calculateCreditsRange, EMPTY_CREDITS_RANGE } from '../../../../utils/credits.utils';
 import { getSessionTranslation } from '../../../../utils/Sessions.utils';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
@@ -52,7 +52,7 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
   const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
 
   const creditsRange = useMemo(() => {
-    if (!config) return { min: 0, max: 0 };
+    if (!config) return EMPTY_CREDITS_RANGE;
     return calculateCreditsRange(allCours, config);
   }, [allCours, config]);
 

@@ -210,5 +210,10 @@
   "rechercherUnCours": "Rechercher un cours...",
   "credits": "Crédits",
   "programmes": "Programmes",
-  "total": "total"
+  "total": "total",
+  "prealables": "Préalables",
+  "descriptionCours": "Description du cours",
+  "planDeCours": "Plan de cours",
+  "detailsCours": "Détails du cours",
+  "coursNonTrouve": "Cours non trouvé"
 }

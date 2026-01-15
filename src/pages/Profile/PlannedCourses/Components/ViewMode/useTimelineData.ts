@@ -2,7 +2,9 @@ import { useMemo } from 'react';
 import { SessionConfig, SessionsMap } from '../../../../../hooks/firebase/types';
 import { getAcademicYearRange, getAcademicYearSessions } from '../../../../../utils/SessionSequence.utils';
 import { Cours } from '../../../../../features/generateur/generateur.types';
-import { calculateCreditsRange, CreditsRange, sumCreditsRanges } from '../../../../../utils/credits.utils';
+import {
+  calculateCreditsRange, CreditsRange, EMPTY_CREDITS_RANGE, sumCreditsRanges,
+} from '../../../../../utils/credits.utils';
 
 export interface SemesterData {
   key: string;
@@ -71,7 +73,7 @@ export function useTimelineData(sessions: SessionsMap, allCours: Cours[] = []): 
         const config = sessions[session];
         const creditsRange = config
           ? calculateCreditsRange(allCours, config)
-          : { min: 0, max: 0 };
+          : EMPTY_CREDITS_RANGE;
 
         return {
           key: session,

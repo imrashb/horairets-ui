@@ -1,21 +1,23 @@
 import {
-  CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Typography,
+  Button, CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Stack, Typography,
 } from '@mui/material';
-import { Close, OpenInNew } from '@mui/icons-material';
+import { Close, MenuBook, OpenInNew } from '@mui/icons-material';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetCours } from '../../features/generateur/generateurQueries';
-import { getEtsCourseUrl } from '../../utils/ets.utils';
+import { getEtsCourseUrl, getPlanDeCoursUrl } from '../../utils/ets.utils';
 
 interface CourseDetailsDialogProps {
   open: boolean;
   activator: React.ReactNode;
   onClose: () => void;
   sigle: string | null;
+  session?: string;
+  groupe?: string;
 }
 
 function CourseDetailsDialog({
-  open, onClose, sigle, activator,
+  open, onClose, sigle, activator, session, groupe,
 }: CourseDetailsDialogProps): JSX.Element {
   const { t } = useTranslation('common');
   const { data: courses, isLoading } = useGetCours();
@@ -30,19 +32,8 @@ function CourseDetailsDialog({
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogTitle sx={{ m: 0, p: 2, pr: 6 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Typography variant="h6">
               {course ? course.sigle : t('detailsCours')}
-              {course && (
-                <IconButton
-                  size="small"
-                  href={getEtsCourseUrl(course.sigle)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ color: 'primary.main' }}
-                >
-                  <OpenInNew fontSize="small" />
-                </IconButton>
-              )}
             </Typography>
             <Typography variant="body2">
               {course?.titre}
@@ -87,6 +78,41 @@ function CourseDetailsDialog({
                   {course.programmes.join(', ')}
                 </Typography>
               )}
+              <Typography variant="body1">
+                <strong>
+                  {t('prealables')}
+                  :
+                </strong>
+                {' '}
+                {course.prealables && course.prealables.length > 0
+                  ? course.prealables.join(', ')
+                  : t('aucun')}
+              </Typography>
+
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 1 }}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<OpenInNew />}
+                  href={getEtsCourseUrl(course.sigle)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('descriptionCours')}
+                </Button>
+                {session && (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<MenuBook />}
+                    href={getPlanDeCoursUrl(session, course.sigle, groupe || '00')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('planDeCours')}
+                  </Button>
+                )}
+              </Stack>
             </div>
           )}
           {!isLoading && !course && (

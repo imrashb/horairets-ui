@@ -17,6 +17,7 @@ export interface Cours {
   credits: number;
   titre: string;
   programmes?: string[];
+  prealables?: string[];
 }
 
 export interface Groupe {

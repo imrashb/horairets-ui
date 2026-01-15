@@ -51,12 +51,14 @@ const EmptyState = styled.div`
 
 interface SemesterCoursesListProps {
   courses: { sigle: string; group: string | null }[];
+  session: string;
   searchTerm?: string;
   seamless?: boolean;
 }
 
 function SemesterCoursesList({
   courses,
+  session,
   searchTerm,
   seamless = false,
 }: SemesterCoursesListProps): JSX.Element {
@@ -75,6 +77,8 @@ function SemesterCoursesList({
               key={course.sigle}
               open={selectedSigle === course.sigle}
               sigle={course.sigle}
+              session={session}
+              groupe={course.group || undefined}
               onClose={() => setSelectedSigle(null)}
               activator={(
                 <CourseItem
