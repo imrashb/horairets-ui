@@ -25,14 +25,14 @@ const EmptyStateContainer = styled.div`
 
 interface PlannedCoursesContentViewProps {
   profile: UserProfile | undefined;
-  isEditMode: boolean;
+  isSessionsMode: boolean;
   localSessions: SessionsMap;
   searchTerm?: string;
 }
 
 function PlannedCoursesContentView({
   profile,
-  isEditMode,
+  isSessionsMode,
   localSessions,
   searchTerm = '',
 }: PlannedCoursesContentViewProps): JSX.Element {
@@ -55,7 +55,7 @@ function PlannedCoursesContentView({
     );
   }
 
-  if (isEditMode) {
+  if (isSessionsMode) {
     return <PlannedSessionsGrid />;
   }
 

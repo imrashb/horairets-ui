@@ -17,7 +17,7 @@ function PlannedCoursesContent(): JSX.Element {
   const profile = userDoc?.profile;
 
   const [viewMode, setViewMode] = useQueryParam<CheminementViewMode>('mode', {
-    defaultValue: CheminementViewMode.EDIT,
+    defaultValue: CheminementViewMode.SESSIONS,
     validate: createEnumValidator(CheminementViewMode),
   });
 
@@ -30,7 +30,7 @@ function PlannedCoursesContent(): JSX.Element {
     onCancel,
   } = usePlannedCourses();
 
-  const isEditMode = viewMode === CheminementViewMode.EDIT;
+  const isSessionsMode = viewMode === CheminementViewMode.SESSIONS;
 
   return (
     <>
@@ -40,7 +40,7 @@ function PlannedCoursesContent(): JSX.Element {
         titleActions={
           profile?.admissionSession && (
             <PlannedCoursesHeaderActions
-              isEditMode={isEditMode}
+              isSessionsMode={isSessionsMode}
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
               viewMode={viewMode}
@@ -52,12 +52,12 @@ function PlannedCoursesContent(): JSX.Element {
       >
         <PlannedCoursesContentView
           profile={profile}
-          isEditMode={isEditMode}
+          isSessionsMode={isSessionsMode}
           localSessions={localSessions}
           searchTerm={searchTerm}
         />
       </ContentCard>
-      {isEditMode && (
+      {isSessionsMode && (
         <SmartSaveButtons
           hasChanges={hasChanges}
           onSave={onSave}

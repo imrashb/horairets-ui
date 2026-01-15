@@ -1,4 +1,4 @@
 export enum CheminementViewMode {
-  EDIT = 'edit',
-  VIEW = 'view',
+  SESSIONS = 'sessions',
+  TIMELINE = 'timeline',
 }

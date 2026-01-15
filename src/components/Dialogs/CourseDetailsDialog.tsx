@@ -89,7 +89,7 @@ function CourseDetailsDialog({
                   : t('aucun')}
               </Typography>
 
-              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 1 }}>
+              <Stack direction="column" spacing={1} sx={{ mt: 1 }}>
                 <Button
                   variant="outlined"
                   size="small"

@@ -1,4 +1,4 @@
-import { Edit, Visibility } from '@mui/icons-material';
+import { Timeline, ViewModule } from '@mui/icons-material';
 import {
   Theme,
   ToggleButton,
@@ -44,17 +44,17 @@ function ViewModeToggle({ value, onChange, disabled = false }: ViewModeTogglePro
       size="small"
       disabled={disabled}
     >
-      <ToggleButton value={CheminementViewMode.EDIT}>
-        <Tooltip title={t('modeEdition')}>
-          <Edit sx={{ fontSize: 24 }} />
+      <ToggleButton value={CheminementViewMode.SESSIONS}>
+        <Tooltip title={t('modeParSession')}>
+          <ViewModule sx={{ fontSize: 24 }} />
         </Tooltip>
-        {isDesktop && <ButtonLabel>{t('modeEdition')}</ButtonLabel>}
+        {isDesktop && <ButtonLabel>{t('modeParSession')}</ButtonLabel>}
       </ToggleButton>
-      <ToggleButton value={CheminementViewMode.VIEW}>
-        <Tooltip title={t('modeConsultation')}>
-          <Visibility sx={{ fontSize: 24 }} />
+      <ToggleButton value={CheminementViewMode.TIMELINE}>
+        <Tooltip title={t('modeChronologique')}>
+          <Timeline sx={{ fontSize: 24 }} />
         </Tooltip>
-        {isDesktop && <ButtonLabel>{t('modeConsultation')}</ButtonLabel>}
+        {isDesktop && <ButtonLabel>{t('modeChronologique')}</ButtonLabel>}
       </ToggleButton>
     </ToggleButtonGroup>
   );

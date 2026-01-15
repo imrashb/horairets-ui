@@ -215,5 +215,9 @@
   "descriptionCours": "Description du cours",
   "planDeCours": "Plan de cours",
   "detailsCours": "Détails du cours",
-  "coursNonTrouve": "Cours non trouvé"
+  "coursNonTrouve": "Cours non trouvé",
+  "modifier": "Modifier",
+  "modifierSession": "Modifier la session",
+  "modeParSession": "Par session",
+  "modeChronologique": "Chronologique"
 }

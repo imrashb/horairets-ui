@@ -10,6 +10,7 @@ import { useCreditsLabel } from '../../../../../hooks/useCreditsLabel';
 import { CreditsRange, EMPTY_CREDITS_RANGE } from '../../../../../utils/credits.utils';
 import ViewSelectedScheduleButton from '../ViewSelectedScheduleButton';
 import SemesterCoursesList from './SemesterCoursesList';
+import EditSessionDialog from './EditSessionDialog';
 
 const SemesterCardDesktop = styled(BaseCard)`
   height: 100%;
@@ -32,6 +33,14 @@ const HeaderRow = styled.div`
   justify-content: center;
   position: relative;
   width: 100%;
+`;
+
+const HeaderActions = styled.div`
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 `;
 
 const StickyHeader = styled.div<{ $seamless?: boolean }>`
@@ -82,11 +91,10 @@ function SemesterViewCard({
           <Typography variant={seamless ? 'subtitle1' : 'subtitle2'} fontWeight="bold" textAlign="center">
             {sessionName}
           </Typography>
-          {selectedScheduleId && (
-            <div style={{ position: 'absolute', right: 0, display: 'flex' }}>
-              <ViewSelectedScheduleButton session={session} />
-            </div>
-          )}
+          <HeaderActions>
+            {selectedScheduleId && <ViewSelectedScheduleButton session={session} />}
+            <EditSessionDialog session={session} />
+          </HeaderActions>
         </HeaderRow>
         {creditsLabel && (
           <Typography variant="caption" color="text.secondary" textAlign="center">
