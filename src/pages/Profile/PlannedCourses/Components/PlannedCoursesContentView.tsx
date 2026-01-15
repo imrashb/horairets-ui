@@ -56,7 +56,7 @@ function PlannedCoursesContentView({
   }
 
   if (isSessionsMode) {
-    return <PlannedSessionsGrid />;
+    return <PlannedSessionsGrid searchTerm={searchTerm} />;
   }
 
   if (isDesktop) {

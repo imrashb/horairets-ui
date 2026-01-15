@@ -40,7 +40,6 @@ function PlannedCoursesContent(): JSX.Element {
         titleActions={
           profile?.admissionSession && (
             <PlannedCoursesHeaderActions
-              isSessionsMode={isSessionsMode}
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
               viewMode={viewMode}

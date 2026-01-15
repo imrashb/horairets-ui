@@ -6,7 +6,6 @@ import ViewModeToggle from './ViewMode/ViewModeToggle';
 import ResponsiveSearchBar from './ResponsiveSearchBar';
 
 interface PlannedCoursesHeaderActionsProps {
-  isSessionsMode: boolean;
   searchTerm: string;
   onSearchChange: (value: string) => void;
   viewMode: CheminementViewMode;
@@ -15,7 +14,6 @@ interface PlannedCoursesHeaderActionsProps {
 }
 
 function PlannedCoursesHeaderActions({
-  isSessionsMode,
   searchTerm,
   onSearchChange,
   viewMode,
@@ -26,13 +24,11 @@ function PlannedCoursesHeaderActions({
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-      {!isSessionsMode && (
-        <ResponsiveSearchBar
-          value={searchTerm}
-          onChange={onSearchChange}
-          placeholder={t('rechercherUnCours') as string}
-        />
-      )}
+      <ResponsiveSearchBar
+        value={searchTerm}
+        onChange={onSearchChange}
+        placeholder={t('rechercherUnCours') as string}
+      />
       <ViewModeToggle
         value={viewMode}
         onChange={onViewModeChange}
