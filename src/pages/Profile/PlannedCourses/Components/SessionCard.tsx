@@ -5,8 +5,10 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useSessionCourses } from '../hooks/useSessionCourses';
+import { getDefaultDisponibilites } from '../../../../utils/Disponibilites.utils';
 import {
   activeGenerateurConfigAtom,
+  filtersAtom,
   formGenerateurConfigAtom,
   programmesAtom,
   sessionAtom,
@@ -51,6 +53,7 @@ function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Eleme
   const setProgrammes = useSetAtom(programmesAtom);
   const setFormConfig = useSetAtom(formGenerateurConfigAtom);
   const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
+  const setFilters = useSetAtom(filtersAtom);
 
   const creditsRange = useMemo(() => {
     if (!config) return EMPTY_CREDITS_RANGE;
@@ -63,7 +66,7 @@ function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Eleme
     const generatorConfig = {
       cours: config.cours,
       coursObligatoires: config.coursObligatoires,
-      conges: config.conges,
+      conges: [],
       nombreCours: config.nombreCours,
       session,
       programmes: programme ? [programme] : [],
@@ -72,6 +75,10 @@ function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Eleme
     setProgrammes(programme ? [programme] : []);
     setFormConfig(generatorConfig);
     setActiveConfig(generatorConfig);
+    setFilters({
+      groupes: [],
+      disponibilites: config.disponibilites || getDefaultDisponibilites(),
+    });
     navigate(GENERATEUR_HORAIRE_URL);
   };
 

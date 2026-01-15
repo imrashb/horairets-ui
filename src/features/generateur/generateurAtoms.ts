@@ -1,9 +1,6 @@
 import { atom } from 'jotai';
 import { reduceCombinaisonsInfoToGroupesOnly } from '../../utils/Groupes.utils';
-import {
-  FILTRES_PLANIFICATION,
-  JOURS,
-} from '../../pages/GenerateurHoraire/generateurHoraire.constants';
+import { getDefaultDisponibilites } from '../../utils/Disponibilites.utils';
 import { COMBINAISONS_SORTS } from '../../pages/GenerateurHoraire/generateurHoraire.sorting';
 import { GENERATEUR_LIST_VIEW } from './generateur.constants';
 import { Combinaison, Filters, GenerateurConfig } from './generateur.types';
@@ -14,7 +11,6 @@ export const programmesAtom = atom<string[]>([]);
 export const INITIAL_CONFIG: GenerateurConfig = {
   cours: [],
   nombreCours: null,
-  conges: [],
   coursObligatoires: [],
   session: null,
   programmes: [],
@@ -43,13 +39,6 @@ export const nombreCoursAtom = atom(
   },
 );
 
-export const congesAtom = atom(
-  (get) => get(activeGenerateurConfigAtom).conges,
-  (get, set, value: string[]) => {
-    set(activeGenerateurConfigAtom, (prev) => ({ ...prev, conges: value }));
-  },
-);
-
 export const coursObligatoiresAtom = atom(
   (get) => get(activeGenerateurConfigAtom).coursObligatoires,
   (get, set, value: string[]) => {
@@ -66,7 +55,7 @@ export const sortingAtom = atom(Object.keys(COMBINAISONS_SORTS)[0]);
 // TODO: Define proper type for Groupes filters, likely { sigle: string, groupes: (string|number)[] }[]
 export const filtersAtom = atom<Filters>({
   groupes: [],
-  disponibilites: Array.from({ length: 7 }, () => [true, true, true]),
+  disponibilites: getDefaultDisponibilites(),
 });
 
 export const selectFilterGroupesAtom = atom((get) => get(filtersAtom).groupes);

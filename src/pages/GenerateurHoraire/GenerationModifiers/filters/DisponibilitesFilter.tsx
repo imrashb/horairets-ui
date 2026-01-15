@@ -5,7 +5,9 @@ import { Check, Close } from '@mui/icons-material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FILTRES_PLANIFICATION, JOURS } from '../../generateurHoraire.constants';
+import {
+  DisponibiliteMap, FILTRES_PLANIFICATION, Jour, JOURS, Periode,
+} from '../../generateurHoraire.constants';
 import useFilters from './context/useFilters';
 
 const FilterWrapper = styled.div`
@@ -45,35 +47,73 @@ const ToggleButton = styled(Button)<{ $active: boolean; $isMobile: boolean }>`
   }
 `;
 
-function DisponibilitesFilter(): JSX.Element {
+interface DisponibilitesFilterProps {
+  value?: DisponibiliteMap;
+  onChange?: (value: DisponibiliteMap) => void;
+}
+
+function DisponibilitesFilter({ value, onChange }: DisponibilitesFilterProps): JSX.Element {
   const { t } = useTranslation('common');
-  const { disponibilites, setDisponibilites } = useFilters();
+  const { disponibilites: contextDisponibilites, setDisponibilites: setContextDisponibilites } = useFilters();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const toggleCell = (dayIndex: number, periodIndex: number) => {
-    const newDisp = disponibilites.map((d) => [...d]);
-    newDisp[dayIndex][periodIndex] = !newDisp[dayIndex][periodIndex];
-    setDisponibilites(newDisp);
-  };
+  // Use props if provided, otherwise fallback to context
+  const disponibilites = value ?? contextDisponibilites;
+  const setDisponibilites = onChange ?? setContextDisponibilites;
 
-  const toggleDay = (dayIndex: number) => {
-    const newDisp = disponibilites.map((d) => [...d]);
-    const day = newDisp[dayIndex];
-    const allActive = day.every((v) => v);
-    newDisp[dayIndex] = day.map(() => !allActive);
-    setDisponibilites(newDisp);
-  };
+  // Toggle a specific cell (Day + Period)
+  const toggleCell = (day: Jour, periode: Periode) => {
+    const currentPeriodes = disponibilites[day] || [];
+    const isActive = currentPeriodes.includes(periode);
 
-  const togglePeriod = (periodIndex: number) => {
-    const newDisp = disponibilites.map((d) => [...d]);
-    const periodValues = newDisp.map((d) => d[periodIndex]);
-    const allActive = periodValues.every((v) => v);
+    const newPeriodes = isActive
+      ? currentPeriodes.filter((p) => p !== periode)
+      : [...currentPeriodes, periode];
 
-    newDisp.forEach((d) => {
-      d[periodIndex] = !allActive;
+    setDisponibilites({
+      ...disponibilites,
+      [day]: newPeriodes,
     });
-    setDisponibilites(newDisp);
+  };
+
+  // Toggle an entire Day (all periods)
+  const toggleDay = (day: Jour) => {
+    const currentPeriodes = disponibilites[day] || [];
+    // If all periods are active, clear all. Otherwise, set all.
+    const allActive = FILTRES_PLANIFICATION.every((p) => currentPeriodes.includes(p as Periode));
+
+    setDisponibilites({
+      ...disponibilites,
+      [day]: allActive ? [] : [...(FILTRES_PLANIFICATION as Periode[])],
+    });
+  };
+
+  // Toggle a Period across all Days
+  const togglePeriod = (periode: Periode) => {
+    // Check if this period is active for ALL days
+    const allDaysHavePeriod = JOURS.every((day) => {
+      const dayPeriodes = disponibilites[day as Jour] || [];
+      return dayPeriodes.includes(periode);
+    });
+
+    const newDisponibilites = { ...disponibilites };
+
+    JOURS.forEach((dayKey) => {
+      const day = dayKey as Jour;
+      const currentPeriodes = newDisponibilites[day] || [];
+      const hasPeriod = currentPeriodes.includes(periode);
+
+      if (allDaysHavePeriod) {
+        // Remove from all
+        newDisponibilites[day] = currentPeriodes.filter((p) => p !== periode);
+      } else if (!hasPeriod) {
+        // Add to those missing it
+        newDisponibilites[day] = [...currentPeriodes, periode];
+      }
+    });
+
+    setDisponibilites(newDisponibilites);
   };
 
   const getShortDay = (dayKey: string) => {
@@ -91,12 +131,12 @@ function DisponibilitesFilter(): JSX.Element {
       <GridContainer $isMobile={isMobile}>
         <div />
 
-        {JOURS.map((day, index) => (
+        {JOURS.map((day) => (
           <HeaderCell key={day}>
             <Tooltip title={t('toggleDay')} placement="top">
               <Button
                 size="small"
-                onClick={() => toggleDay(index)}
+                onClick={() => toggleDay(day as Jour)}
                 sx={{
                   minWidth: 'unset',
                   fontWeight: 'bold',
@@ -110,48 +150,54 @@ function DisponibilitesFilter(): JSX.Element {
           </HeaderCell>
         ))}
 
-        {FILTRES_PLANIFICATION.map((period, periodIndex) => (
-          <React.Fragment key={period}>
-            <HeaderCell>
-              <Tooltip title={t('togglePeriod')} placement="left">
-                <Button
-                  size="small"
-                  onClick={() => togglePeriod(periodIndex)}
-                  sx={{
-                    minWidth: 'unset',
-                    fontSize: isMobile ? '0.55rem' : '0.75rem',
-                    fontWeight: 'bold',
-                    padding: isMobile ? '2px' : '4px 8px',
-                  }}
-                >
-                  {t(period)}
-                </Button>
-              </Tooltip>
-            </HeaderCell>
+        {FILTRES_PLANIFICATION.map((p) => {
+          const periode = p as Periode;
+          return (
+            <React.Fragment key={periode}>
+              <HeaderCell>
+                <Tooltip title={t('togglePeriod')} placement="left">
+                  <Button
+                    size="small"
+                    onClick={() => togglePeriod(periode)}
+                    sx={{
+                      minWidth: 'unset',
+                      fontSize: isMobile ? '0.55rem' : '0.75rem',
+                      fontWeight: 'bold',
+                      padding: isMobile ? '2px' : '4px 8px',
+                    }}
+                  >
+                    {t(periode)}
+                  </Button>
+                </Tooltip>
+              </HeaderCell>
 
-            {disponibilites.map((dayDisp, dayIndex) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={`${dayIndex}-${periodIndex}`}
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                <ToggleButton
-                  $active={dayDisp[periodIndex]}
-                  $isMobile={isMobile}
-                  variant="contained"
-                  disableElevation
-                  onClick={() => toggleCell(dayIndex, periodIndex)}
-                >
-                  {dayDisp[periodIndex] ? (
-                    <Check sx={{ fontSize: isMobile ? 14 : 18 }} />
-                  ) : (
-                    <Close sx={{ fontSize: isMobile ? 14 : 18 }} />
-                  )}
-                </ToggleButton>
-              </div>
-            ))}
-          </React.Fragment>
-        ))}
+              {JOURS.map((d) => {
+                const day = d as Jour;
+                const isActive = disponibilites[day]?.includes(periode);
+                return (
+                  <div
+                    key={`${day}-${periode}`}
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                  >
+                    <ToggleButton
+                      $active={!!isActive}
+                      $isMobile={isMobile}
+                      variant="contained"
+                      disableElevation
+                      onClick={() => toggleCell(day, periode)}
+                    >
+                      {isActive ? (
+                        <Check sx={{ fontSize: isMobile ? 14 : 18 }} />
+                      ) : (
+                        <Close sx={{ fontSize: isMobile ? 14 : 18 }} />
+                      )}
+                    </ToggleButton>
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          );
+        })}
       </GridContainer>
     </FilterWrapper>
   );

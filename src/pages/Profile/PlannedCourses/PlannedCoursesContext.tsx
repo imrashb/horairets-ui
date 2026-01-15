@@ -2,7 +2,7 @@ import { deleteField, FieldValue } from 'firebase/firestore';
 import isEqual from 'lodash/isEqual';
 import sortBy from 'lodash/sortBy';
 import React, {
-  createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
+  createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import useUserDocument from '../../../hooks/firebase/useUserDocument';
@@ -13,21 +13,27 @@ import {
   getNextSession,
   getPreviousSession,
 } from '../../../utils/SessionSequence.utils';
+import {
+  getDefaultDisponibilites,
+} from '../../../utils/Disponibilites.utils';
 
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],
   coursObligatoires: [],
   nombreCours: null,
-  conges: [],
+  disponibilites: getDefaultDisponibilites(),
 };
 
 function normalizeSessionConfig(config: SessionConfig): SessionConfig {
-  return {
-    ...config,
+  const normalized: SessionConfig = {
     cours: sortBy(config.cours),
     coursObligatoires: sortBy(config.coursObligatoires),
-    conges: sortBy(config.conges),
+    nombreCours: config.nombreCours ?? null,
+    disponibilites: config.disponibilites || getDefaultDisponibilites(),
+    selectedCombinaisonId: config.selectedCombinaisonId ?? null,
   };
+
+  return normalized;
 }
 
 function normalizeSessionsMap(sessions: SessionsMap): SessionsMap {
@@ -79,17 +85,22 @@ export function PlannedCoursesProvider({ children }: { children: React.ReactNode
 
   const profile = userDoc?.profile;
 
-  const profileSessions = profile?.sessions || {};
-  const storedSessionsRef = useRef(profileSessions);
-
-  if (!isEqual(storedSessionsRef.current, profileSessions)) {
-    storedSessionsRef.current = profileSessions;
-  }
-
-  const storedSessions = storedSessionsRef.current;
+  const storedSessions = useMemo(() => {
+    const map: SessionsMap = {};
+    if (profile?.sessions) {
+      Object.entries(profile.sessions).forEach(([key, config]) => {
+        map[key] = {
+          ...config,
+          disponibilites: config.disponibilites || getDefaultDisponibilites(),
+        };
+      });
+    }
+    return map;
+  }, [profile?.sessions]);
 
   const [localSessions, setLocalSessions] = useState<SessionsMap>(storedSessions);
 
+  // Effect to sync
   useEffect(() => {
     setLocalSessions(storedSessions);
   }, [storedSessions]);
@@ -149,8 +160,14 @@ export function PlannedCoursesProvider({ children }: { children: React.ReactNode
     if (!profile) return;
 
     const normalizedLocalSessions = normalizeSessionsMap(localSessions);
-    const sessionsUpdates: Record<string, SessionConfig | FieldValue> = { ...normalizedLocalSessions };
+    // Convert to Firestore format
+    const sessionsUpdates: Record<string, SessionConfig | FieldValue> = {};
 
+    Object.entries(normalizedLocalSessions).forEach(([key, config]) => {
+      sessionsUpdates[key] = config;
+    });
+
+    // Handle deletions
     Object.keys(storedSessions).forEach((key) => {
       if (!Object.hasOwn(localSessions, key)) {
         sessionsUpdates[key] = deleteField();

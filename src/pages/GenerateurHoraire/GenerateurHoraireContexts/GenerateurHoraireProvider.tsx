@@ -26,7 +26,7 @@ function GenerateurHoraireProvider({ children }: GenerateurHoraireProviderProps)
   }, []);
 
   const {
-    session, programmes, cours, nombreCours, coursObligatoires, conges,
+    session, programmes, cours, nombreCours, coursObligatoires,
   } = formConfig;
 
   const context = useMemo(() => {
@@ -54,7 +54,6 @@ function GenerateurHoraireProvider({ children }: GenerateurHoraireProviderProps)
       ...prev,
       coursObligatoires: val,
     }));
-    const setConges = (val: string[]) => setFormConfig((prev) => ({ ...prev, conges: val }));
 
     return {
       session,
@@ -67,10 +66,8 @@ function GenerateurHoraireProvider({ children }: GenerateurHoraireProviderProps)
       setNombreCours,
       coursObligatoires,
       setCoursObligatoires,
-      conges,
-      setConges,
     };
-  }, [session, programmes, cours, nombreCours, coursObligatoires, conges, setFormConfig]);
+  }, [session, programmes, cours, nombreCours, coursObligatoires, setFormConfig]);
 
   return (
     <GenerateurHoraireContext.Provider value={context}>

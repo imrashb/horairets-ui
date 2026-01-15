@@ -1,10 +1,12 @@
 import React from 'react';
+import { getDefaultDisponibilites } from '../../../../../utils/Disponibilites.utils';
+import { DisponibiliteMap } from '../../../generateurHoraire.constants';
 
 export interface FiltersContextType {
   groupes: string[];
   setGroupes: (val: string[]) => void;
-  disponibilites: boolean[][];
-  setDisponibilites: (val: boolean[][]) => void;
+  disponibilites: DisponibiliteMap;
+  setDisponibilites: (val: DisponibiliteMap) => void;
 }
 
 const noOp = () => '';
@@ -12,6 +14,6 @@ const noOp = () => '';
 export default React.createContext<FiltersContextType>({
   groupes: [],
   setGroupes: noOp,
-  disponibilites: Array.from({ length: 7 }, () => [true, true, true]),
+  disponibilites: getDefaultDisponibilites(),
   setDisponibilites: noOp,
 });

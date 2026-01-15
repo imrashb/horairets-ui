@@ -1,22 +1,21 @@
 import { Combinaison } from '../../features/generateur/generateur.types';
 import { getGroupeId } from '../../utils/Groupes.utils';
 import {
-  APRES_MIDI,
-  JOURS,
-  MATIN,
-  SOIR,
+  DisponibiliteMap,
+  Jour,
+  Periode,
 } from './generateurHoraire.constants';
 
-const HEURES_COURS: Record<string, { min: number; max: number }> = {
-  [MATIN]: {
+const HEURES_COURS: Record<Periode, { min: number; max: number }> = {
+  [Periode.MATIN]: {
     min: 800,
     max: 1250,
   },
-  [APRES_MIDI]: {
+  [Periode.APRES_MIDI]: {
     min: 1300,
     max: 1750,
   },
-  [SOIR]: {
+  [Periode.SOIR]: {
     min: 1800,
     max: 2400,
   },
@@ -24,30 +23,34 @@ const HEURES_COURS: Record<string, { min: number; max: number }> = {
 
 const noOperationFilter = (combinaisons: Combinaison[]) => combinaisons;
 
-export const filterDisponibilites = (disponibilites: boolean[][]) => {
-  // Check if all are true (no filtering needed)
-  if (!disponibilites || disponibilites.every((day) => day.every((period) => period))) {
+export const filterDisponibilites = (disponibilites: DisponibiliteMap) => {
+  // Check if all are true (no filtering needed) - Logic: Check if every day has all 3 periods
+  const allFull = Object.values(disponibilites).every((periodes) => periodes.length === 3);
+
+  if (!disponibilites || allFull) {
     return noOperationFilter;
   }
 
-  const PERIOD_KEYS = [MATIN, APRES_MIDI, SOIR];
+  const PERIOD_KEYS = Object.values(Periode);
 
   return (combinaisons: Combinaison[]) => combinaisons.filter((comb) => comb.groupes.every((groupe) => groupe.activites.every((activite) => {
-    // Normalize day string
+    // Normalize day string to match Enum
+    // Assuming API returns uppercase days like 'LUNDI', 'MARDI' which matches our Enum keys
     const jourStr = activite.horaire.jour.toUpperCase();
-    const jourIndex = JOURS.indexOf(jourStr);
+    const jour = jourStr as Jour;
 
-    if (jourIndex === -1) return true;
+    if (!Object.values(Jour).includes(jour)) return true; // Ignore unknown days
 
-    for (let i = 0; i < 3; i++) {
-      const periodKey = PERIOD_KEYS[i];
+    // Check each period overlap
+    for (const periodKey of PERIOD_KEYS) {
       const range = HEURES_COURS[periodKey];
-
       const isOverlapping = Math.max(activite.horaire.heureDepart, range.min)
-              <= Math.min(activite.horaire.heureFin, range.max);
+                <= Math.min(activite.horaire.heureFin, range.max);
 
       if (isOverlapping) {
-        if (!disponibilites[jourIndex][i]) {
+        // If overlapping, check if this period is allowed in disponibilites
+        const allowedPeriodes = disponibilites[jour] || [];
+        if (!allowedPeriodes.includes(periodKey)) {
           return false; // Intersection with disallowed slot
         }
       }
