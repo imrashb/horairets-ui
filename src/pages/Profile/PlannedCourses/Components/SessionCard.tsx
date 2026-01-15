@@ -25,9 +25,10 @@ import { usePlannedCourses } from '../PlannedCoursesContext';
 
 interface SessionCardProps {
   session: string;
+  hideDeleteButton?: boolean
 }
 
-function SessionCard({ session }: SessionCardProps): JSX.Element {
+function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
@@ -139,7 +140,7 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
               <IconButton
                 size="small"
                 onClick={handleExportToGenerator}
-                disabled={!canExport}
+                disabled={!canExport || !isSessionAvailable}
                 sx={{
                   bgcolor: canExport ? 'primary.main' : undefined,
                   color: canExport ? 'primary.contrastText' : undefined,
@@ -156,9 +157,13 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
             </span>
           </Tooltip>
           <EditSessionConfigDialog config={config} onSave={handleUpdateConfig} />
-          <DeleteButton size="small" onClick={() => onDeleteSession(session)}>
-            <Delete sx={{ fontSize: 18 }} />
-          </DeleteButton>
+          {
+              !hideDeleteButton && (
+              <DeleteButton size="small" onClick={() => onDeleteSession(session)}>
+                <Delete sx={{ fontSize: 18 }} />
+              </DeleteButton>
+              )
+          }
         </div>
       </CardHeader>
 
