@@ -91,7 +91,7 @@ function CourseDetailsDialog({
 
               <Stack direction="column" spacing={1} sx={{ mt: 1 }}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   size="small"
                   startIcon={<OpenInNew />}
                   href={getEtsCourseUrl(course.sigle)}
@@ -102,7 +102,7 @@ function CourseDetailsDialog({
                 </Button>
                 {session && (
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     size="small"
                     startIcon={<MenuBook />}
                     href={getPlanDeCoursUrl(session, course.sigle, groupe || '00')}
