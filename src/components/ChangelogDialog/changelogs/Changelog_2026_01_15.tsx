@@ -14,11 +14,11 @@ function Changelog_2026_01_15(): JSX.Element {
       <ul>
         <li>
           📅
-          Visualisez votre cheminement année par année avec la nouvelle vue chronologique.
+          Visualisez votre cheminement année par année avec la nouvelle vue chronologique
         </li>
         <li>
           ℹ️
-          Cliquez sur un cours dans la vue chronologique pour accéder aux informations, au plan de cours et à la description du cours sur le site de l'ÉTS.
+          Cliquez sur un cours dans la vue chronologique pour accéder aux informations, au plan de cours et à la description du cours sur le site de l'ÉTS
         </li>
       </ul>
 
@@ -26,11 +26,11 @@ function Changelog_2026_01_15(): JSX.Element {
       <ul>
         <li>
           🔍
-          Nouvelle barre de recherche disponible dans les vues "Par session" et "Chronologique" pour retrouver facilement vos cours.
+          Nouvelle barre de recherche disponible dans les vues "Par session" et "Chronologique" pour retrouver facilement vos cours
         </li>
         <li>
           ⚙️
-          Transition de "Congés" vers "Disponibilités" pour avoir de meilleurs filtres.
+          Transition de "Congés" vers "Disponibilités" pour avoir de meilleurs filtres
         </li>
       </ul>
     </>
