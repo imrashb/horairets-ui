@@ -6,6 +6,8 @@ export interface CreditsRange {
   max: number;
 }
 
+export const EMPTY_CREDITS_RANGE: CreditsRange = { min: 0, max: 0 };
+
 export function calculateCreditsRange(allCours: Cours[], config: SessionConfig): CreditsRange {
   const selectedCourses = allCours.filter((c) => config.cours.includes(c.sigle));
 
@@ -37,4 +39,14 @@ export function calculateCreditsRange(allCours: Cours[], config: SessionConfig):
     min: lockedCredits + minOptionalCredits,
     max: lockedCredits + maxOptionalCredits,
   };
+}
+
+export function sumCreditsRanges(ranges: CreditsRange[]): CreditsRange {
+  return ranges.reduce(
+    (acc, range) => ({
+      min: acc.min + range.min,
+      max: acc.max + range.max,
+    }),
+    EMPTY_CREDITS_RANGE,
+  );
 }

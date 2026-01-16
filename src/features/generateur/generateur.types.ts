@@ -1,3 +1,5 @@
+import { DisponibiliteMap } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
+
 export interface Horaire {
   jour: string;
   heureDepart: number;
@@ -17,6 +19,7 @@ export interface Cours {
   credits: number;
   titre: string;
   programmes?: string[];
+  prealables?: string[];
 }
 
 export interface Groupe {
@@ -34,7 +37,6 @@ export interface Combinaison {
 export interface GenerateurConfig {
   cours: string[]; // Sigles?
   nombreCours: number | null;
-  conges: string[];
   coursObligatoires: string[];
   session: string | null;
   programmes: string[];
@@ -42,5 +44,5 @@ export interface GenerateurConfig {
 
 export interface Filters {
   groupes: string[];
-  disponibilites: boolean[][];
+  disponibilites: DisponibiliteMap;
 }

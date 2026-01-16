@@ -2,10 +2,26 @@
 export const MAITRISE = 'MAITRISE';
 export const NOMBRE_MAX_COURS = 15;
 export const NOMBRE_MAX_COURS_PAR_HORAIRE = 6;
-export const JOURS = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
+
+export enum Jour {
+  DIMANCHE = 'DIMANCHE',
+  LUNDI = 'LUNDI',
+  MARDI = 'MARDI',
+  MERCREDI = 'MERCREDI',
+  JEUDI = 'JEUDI',
+  VENDREDI = 'VENDREDI',
+  SAMEDI = 'SAMEDI',
+}
+
+export const JOURS = Object.values(Jour);
 
 // Filtres
-export const MATIN = 'matin';
-export const APRES_MIDI = 'apresmidi';
-export const SOIR = 'soir';
-export const FILTRES_PLANIFICATION = [MATIN, APRES_MIDI, SOIR];
+export enum Periode {
+  MATIN = 'matin',
+  APRES_MIDI = 'apresmidi',
+  SOIR = 'soir',
+}
+
+export const FILTRES_PLANIFICATION = Object.values(Periode);
+
+export type DisponibiliteMap = Record<Jour, Periode[]>;

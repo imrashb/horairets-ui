@@ -4,7 +4,9 @@ import {
   selectFilterDisponibilitesAtom,
   selectFilterGroupesAtom,
 } from '../../../../../features/generateur/generateurAtoms';
+import { getDefaultDisponibilites } from '../../../../../utils/Disponibilites.utils';
 import FiltersContext from './FiltersContext';
+import { DisponibiliteMap } from '../../../generateurHoraire.constants';
 
 interface FiltersProviderProps {
   children?: React.ReactNode;
@@ -15,8 +17,8 @@ function FiltersProvider({ children }: FiltersProviderProps): JSX.Element {
   const currentDisponibilites = useAtomValue(selectFilterDisponibilitesAtom);
 
   const [groupes, setGroupes] = useState<string[]>(currentGroupes);
-  const [disponibilites, setDisponibilites] = useState<boolean[][]>(
-    currentDisponibilites || Array.from({ length: 7 }, () => [true, true, true]),
+  const [disponibilites, setDisponibilites] = useState<DisponibiliteMap>(
+    currentDisponibilites || getDefaultDisponibilites(),
   );
 
   const context = useMemo(

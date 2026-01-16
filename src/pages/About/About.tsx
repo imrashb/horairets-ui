@@ -10,6 +10,7 @@ import {
 import AboutBanner from './Components/AboutBanner';
 import AboutLinkCard from './Components/AboutLinkCard';
 import DeveloperSection from './Components/DeveloperSection';
+import LegalDisclaimer from './Components/LegalDisclaimer';
 
 const GITHUB_REPOS = {
   frontend: 'imrashb/horairets-ui',
@@ -63,6 +64,7 @@ function About(): JSX.Element {
         </Section>
 
         <DeveloperSection />
+        <LegalDisclaimer />
       </AboutContainer>
     </AboutWrapper>
   );

@@ -2,9 +2,11 @@ import { Settings } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
-import CongesSelector from '../../../../components/Selectors/CongesSelector';
+import DisponibilitesFilter from '../../../GenerateurHoraire/GenerationModifiers/filters/DisponibilitesFilter';
 import NombreCoursSelector from '../../../../components/Selectors/NombreCoursSelector';
 import { SessionConfig } from '../../../../hooks/firebase/types';
+import { getDefaultDisponibilites } from '../../../../utils/Disponibilites.utils';
+import { DisponibiliteMap } from '../../../GenerateurHoraire/generateurHoraire.constants';
 
 interface EditSessionConfigDialogProps {
   config: SessionConfig;
@@ -17,15 +19,21 @@ export default function EditSessionConfigDialog({
 }: EditSessionConfigDialogProps): JSX.Element {
   const { t } = useTranslation('common');
   const [nombreCours, setNombreCours] = useState<number | null>(config.nombreCours);
-  const [conges, setConges] = useState<string[]>(config.conges);
+  const [disponibilites, setDisponibilites] = useState<DisponibiliteMap>(
+    config.disponibilites || getDefaultDisponibilites(),
+  );
 
   useEffect(() => {
     setNombreCours(config.nombreCours);
-    setConges(config.conges);
+    setDisponibilites(config.disponibilites || getDefaultDisponibilites());
   }, [config]);
 
   const handleSave = () => {
-    onSave({ ...config, nombreCours, conges });
+    onSave({
+      ...config,
+      nombreCours,
+      disponibilites,
+    });
   };
 
   return (
@@ -37,7 +45,7 @@ export default function EditSessionConfigDialog({
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <NombreCoursSelector value={nombreCours} onChange={setNombreCours} />
-        <CongesSelector value={conges} onChange={setConges} />
+        <DisponibilitesFilter value={disponibilites} onChange={setDisponibilites} />
       </div>
     </ButtonDialog>
   );

@@ -11,8 +11,6 @@ export interface GenerateurHoraireContextType {
   setNombreCours: (val: number | null) => void;
   coursObligatoires: string[];
   setCoursObligatoires: (val: string[]) => void;
-  conges: string[];
-  setConges: (val: string[]) => void;
 }
 
 const noOp = () => ''; // Original was () => ''?
@@ -28,6 +26,4 @@ export default React.createContext<GenerateurHoraireContextType>({
   setNombreCours: noOp,
   coursObligatoires: [],
   setCoursObligatoires: noOp,
-  conges: [],
-  setConges: noOp,
 });

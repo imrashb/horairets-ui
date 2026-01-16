@@ -5,15 +5,17 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useSessionCourses } from '../hooks/useSessionCourses';
+import { getDefaultDisponibilites } from '../../../../utils/Disponibilites.utils';
 import {
   activeGenerateurConfigAtom,
+  filtersAtom,
   formGenerateurConfigAtom,
   programmesAtom,
   sessionAtom,
 } from '../../../../features/generateur/generateurAtoms';
 import { SessionConfig } from '../../../../hooks/firebase/types';
 import { GENERATEUR_HORAIRE_URL } from '../../../../routes/Routes.constants';
-import { calculateCreditsRange } from '../../../../utils/credits.utils';
+import { calculateCreditsRange, EMPTY_CREDITS_RANGE } from '../../../../utils/credits.utils';
 import { getSessionTranslation } from '../../../../utils/Sessions.utils';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
@@ -25,9 +27,10 @@ import { usePlannedCourses } from '../PlannedCoursesContext';
 
 interface SessionCardProps {
   session: string;
+  hideDeleteButton?: boolean
 }
 
-function SessionCard({ session }: SessionCardProps): JSX.Element {
+function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
@@ -50,9 +53,10 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
   const setProgrammes = useSetAtom(programmesAtom);
   const setFormConfig = useSetAtom(formGenerateurConfigAtom);
   const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
+  const setFilters = useSetAtom(filtersAtom);
 
   const creditsRange = useMemo(() => {
-    if (!config) return { min: 0, max: 0 };
+    if (!config) return EMPTY_CREDITS_RANGE;
     return calculateCreditsRange(allCours, config);
   }, [allCours, config]);
 
@@ -62,7 +66,7 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
     const generatorConfig = {
       cours: config.cours,
       coursObligatoires: config.coursObligatoires,
-      conges: config.conges,
+      conges: [],
       nombreCours: config.nombreCours,
       session,
       programmes: programme ? [programme] : [],
@@ -71,6 +75,10 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
     setProgrammes(programme ? [programme] : []);
     setFormConfig(generatorConfig);
     setActiveConfig(generatorConfig);
+    setFilters({
+      groupes: [],
+      disponibilites: config.disponibilites || getDefaultDisponibilites(),
+    });
     navigate(GENERATEUR_HORAIRE_URL);
   };
 
@@ -139,7 +147,7 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
               <IconButton
                 size="small"
                 onClick={handleExportToGenerator}
-                disabled={!canExport}
+                disabled={!canExport || !isSessionAvailable}
                 sx={{
                   bgcolor: canExport ? 'primary.main' : undefined,
                   color: canExport ? 'primary.contrastText' : undefined,
@@ -156,9 +164,13 @@ function SessionCard({ session }: SessionCardProps): JSX.Element {
             </span>
           </Tooltip>
           <EditSessionConfigDialog config={config} onSave={handleUpdateConfig} />
-          <DeleteButton size="small" onClick={() => onDeleteSession(session)}>
-            <Delete sx={{ fontSize: 18 }} />
-          </DeleteButton>
+          {
+              !hideDeleteButton && (
+              <DeleteButton size="small" onClick={() => onDeleteSession(session)}>
+                <Delete sx={{ fontSize: 18 }} />
+              </DeleteButton>
+              )
+          }
         </div>
       </CardHeader>
 

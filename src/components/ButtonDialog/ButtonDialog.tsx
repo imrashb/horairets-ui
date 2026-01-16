@@ -19,6 +19,7 @@ type ButtonDialogProps = {
   icon: React.ReactNode;
   title: string;
   onClose?: () => void;
+  onCancel?: () => void;
   onOpen?: () => void;
   children: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
@@ -45,6 +46,7 @@ function ButtonDialog({
   icon,
   title,
   onClose,
+  onCancel,
   onOpen,
   children,
   isIconButton,
@@ -80,6 +82,7 @@ function ButtonDialog({
 
   const handleCancel = () => {
     setVisible(false);
+    onCancel?.();
   };
 
   const Spacer = <div style={{ width: 4 }} />;
