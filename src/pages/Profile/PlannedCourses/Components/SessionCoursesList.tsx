@@ -3,13 +3,15 @@ import { Chip, Tooltip } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cours } from '../../../features/generateur/generateur.types';
-import { SessionConfig } from '../../../hooks/firebase/types';
-import { fadeInOutAnimation } from '../../../utils/animations';
+import { Cours } from '../../../../features/generateur/generateur.types';
+import { SessionConfig } from '../../../../hooks/firebase/types';
+import { fadeInOutAnimation } from '../../../../utils/animations';
 import AddCourseAutocomplete from './AddCourseAutocomplete';
 import {
   CourseSection, CoursesContainer, EmptyState, SectionLabel,
 } from './SessionCard.styles';
+
+import { usePlannedCourses } from '../PlannedCoursesContext';
 
 interface SessionCoursesListProps {
   config: SessionConfig;
@@ -29,10 +31,19 @@ function SessionCoursesList({
   onToggleLock,
 }: SessionCoursesListProps): JSX.Element {
   const { t } = useTranslation('common');
+  const { searchTerm } = usePlannedCourses();
 
   const isCourseInvalid = (sigle: string) => {
     if (isCoursLoading || allCours.length === 0) return false;
     return !allCours.some((c) => c.sigle === sigle);
+  };
+
+  const isMatch = (sigle: string) => !!(searchTerm && sigle.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const getChipColor = (isInvalid: boolean, highlighted: boolean, defaultColor: 'primary' | 'secondary') => {
+    if (isInvalid) return 'error';
+    if (highlighted) return 'primary';
+    return defaultColor;
   };
 
   return (
@@ -46,6 +57,7 @@ function SessionCoursesList({
           <AnimatePresence>
             {config.coursObligatoires.map((sigle) => {
               const isInvalid = isCourseInvalid(sigle);
+              const highlighted = isMatch(sigle);
               return (
                 <motion.div key={`locked-${sigle}`} layout {...fadeInOutAnimation}>
                   <Tooltip title={isInvalid ? t('coursInvalide') : ''}>
@@ -54,8 +66,9 @@ function SessionCoursesList({
                       icon={isInvalid ? <Warning /> : <Lock />}
                       onClick={() => onToggleLock(sigle)}
                       onDelete={() => onRemoveCourse(sigle)}
-                      color={isInvalid ? 'error' : 'secondary'}
+                      color={getChipColor(isInvalid, highlighted, 'secondary')}
                       size="small"
+                      variant="filled"
                     />
                   </Tooltip>
                 </motion.div>
@@ -88,6 +101,7 @@ function SessionCoursesList({
               .filter((c) => !config.coursObligatoires.includes(c))
               .map((sigle) => {
                 const isInvalid = isCourseInvalid(sigle);
+                const highlighted = isMatch(sigle);
                 return (
                   <motion.div key={`unlocked-${sigle}`} layout {...fadeInOutAnimation}>
                     <Tooltip title={isInvalid ? t('coursInvalide') : ''}>
@@ -96,7 +110,7 @@ function SessionCoursesList({
                         icon={isInvalid ? <Warning /> : <LockOpen />}
                         onClick={() => onToggleLock(sigle)}
                         onDelete={() => onRemoveCourse(sigle)}
-                        variant={isInvalid ? 'filled' : 'outlined'}
+                        variant={isInvalid || highlighted ? 'filled' : 'outlined'}
                         color={isInvalid ? 'error' : 'primary'}
                         size="small"
                       />

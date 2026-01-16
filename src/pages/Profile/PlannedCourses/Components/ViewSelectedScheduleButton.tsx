@@ -3,10 +3,10 @@ import { CircularProgress, Typography } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import ButtonDialog from '../../../components/ButtonDialog/ButtonDialog';
-import CombinaisonHoraire from '../../../components/CombinaisonHoraire/CombinaisonHoraire';
-import { useGetCombinaisonsFromId } from '../../../features/generateur/generateurQueries';
-import { useDisplayPreferences, useSelectedSchedule } from '../../../hooks/firebase';
+import ButtonDialog from '../../../../components/ButtonDialog/ButtonDialog';
+import CombinaisonHoraire from '../../../../components/CombinaisonHoraire/CombinaisonHoraire';
+import { useGetCombinaisonsFromId } from '../../../../features/generateur/generateurQueries';
+import { useDisplayPreferences, useSelectedSchedule } from '../../../../hooks/firebase';
 
 const ContentWrapper = styled.div`
   display: flex;

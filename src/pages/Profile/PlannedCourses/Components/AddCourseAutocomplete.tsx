@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cours } from '../../../features/generateur/generateur.types';
+import { Cours } from '../../../../features/generateur/generateur.types';
 import { AddButton, InlineAutocomplete } from './SessionCard.styles';
 
 interface AddCourseAutocompleteProps {

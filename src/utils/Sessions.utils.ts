@@ -54,6 +54,30 @@ export const getSessionFromCombinaisonUniqueId = (id: string): string | undefine
   }
 };
 
+export interface ParsedSchedule {
+  session: string;
+  courses: Array<{ sigle: string; group: string }>;
+}
+
+export const parseScheduleId = (id: string): ParsedSchedule | null => {
+  try {
+    const decoded = window.atob(id);
+    const [session, coursesString] = decoded.split(':');
+    if (!session) return null;
+
+    const courses = coursesString ? coursesString.split('/').map((item) => {
+      const parts = item.split('-');
+      const sigle = parts[0];
+      const group = parts[1];
+      return { sigle, group };
+    }) : [];
+
+    return { session, courses };
+  } catch {
+    return null;
+  }
+};
+
 export function compareSession(a: string, b: string): number {
   const parsedA = parseSession(a);
   const parsedB = parseSession(b);

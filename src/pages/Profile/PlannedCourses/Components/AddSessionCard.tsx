@@ -3,7 +3,8 @@ import { Theme, Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { getSessionTranslation } from '../../../utils/Sessions.utils';
+import { getSessionTranslation } from '../../../../utils/Sessions.utils';
+import { usePlannedCourses } from '../PlannedCoursesContext';
 
 const AddCardWrapper = styled.div`
   background: transparent;
@@ -44,14 +45,14 @@ const AddText = styled(Typography)`
 
 interface AddSessionCardProps {
   session: string;
-  onAdd: () => void;
 }
 
-export function AddSessionCard({ session, onAdd }: AddSessionCardProps): JSX.Element {
+export function AddSessionCard({ session }: AddSessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
+  const { onAddSession } = usePlannedCourses();
 
   return (
-    <AddCardWrapper onClick={onAdd}>
+    <AddCardWrapper onClick={() => onAddSession(session)}>
       <AddIcon>
         <Add />
       </AddIcon>

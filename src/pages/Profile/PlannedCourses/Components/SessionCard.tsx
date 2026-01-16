@@ -4,41 +4,44 @@ import { useSetAtom } from 'jotai';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useSessionCourses } from './useSessionCourses';
+import { useSessionCourses } from '../hooks/useSessionCourses';
+import { getDefaultDisponibilites } from '../../../../utils/Disponibilites.utils';
 import {
   activeGenerateurConfigAtom,
+  filtersAtom,
   formGenerateurConfigAtom,
   programmesAtom,
   sessionAtom,
-} from '../../../features/generateur/generateurAtoms';
-import { SessionConfig } from '../../../hooks/firebase/types';
-import { GENERATEUR_HORAIRE_URL } from '../../../routes/Routes.constants';
-import { calculateCreditsRange } from '../../../utils/credits.utils';
-import { getSessionTranslation } from '../../../utils/Sessions.utils';
+} from '../../../../features/generateur/generateurAtoms';
+import { SessionConfig } from '../../../../hooks/firebase/types';
+import { GENERATEUR_HORAIRE_URL } from '../../../../routes/Routes.constants';
+import { calculateCreditsRange, EMPTY_CREDITS_RANGE } from '../../../../utils/credits.utils';
+import { getSessionTranslation } from '../../../../utils/Sessions.utils';
 import EditSessionConfigDialog from './EditSessionConfigDialog';
 import SessionStatsChips from './SessionStatsChips';
 import SessionCoursesList from './SessionCoursesList';
 import ViewSelectedScheduleButton from './ViewSelectedScheduleButton';
-import { CardHeader, CardWrapper, DeleteButton } from './SessionCard.styles';
+import { BaseCard } from '../../../../components/Cards/BaseCard';
+import { CardHeader, DeleteButton } from './SessionCard.styles';
+import { usePlannedCourses } from '../PlannedCoursesContext';
 
 interface SessionCardProps {
   session: string;
-  config: SessionConfig;
-  programme?: string;
-  onUpdateConfig: (config: SessionConfig) => void;
-  onDeleteSession: () => void;
+  hideDeleteButton?: boolean
 }
 
-function SessionCard({
-  session,
-  config,
-  programme,
-  onUpdateConfig,
-  onDeleteSession,
-}: SessionCardProps): JSX.Element {
+function SessionCard({ session, hideDeleteButton }: SessionCardProps): JSX.Element {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
 
+  const {
+    programme,
+    localSessions,
+    onUpdateSessionConfig,
+    onDeleteSession,
+  } = usePlannedCourses();
+
+  const config = localSessions[session];
   const {
     allCours, isCoursLoading, isSessionAvailable, isLoadingSessions,
   } = useSessionCourses(
@@ -50,14 +53,20 @@ function SessionCard({
   const setProgrammes = useSetAtom(programmesAtom);
   const setFormConfig = useSetAtom(formGenerateurConfigAtom);
   const setActiveConfig = useSetAtom(activeGenerateurConfigAtom);
+  const setFilters = useSetAtom(filtersAtom);
 
-  const creditsRange = useMemo(() => calculateCreditsRange(allCours, config), [allCours, config]);
+  const creditsRange = useMemo(() => {
+    if (!config) return EMPTY_CREDITS_RANGE;
+    return calculateCreditsRange(allCours, config);
+  }, [allCours, config]);
+
+  if (!config) return <></>;
 
   const handleExportToGenerator = () => {
     const generatorConfig = {
       cours: config.cours,
       coursObligatoires: config.coursObligatoires,
-      conges: config.conges,
+      conges: [],
       nombreCours: config.nombreCours,
       session,
       programmes: programme ? [programme] : [],
@@ -66,18 +75,26 @@ function SessionCard({
     setProgrammes(programme ? [programme] : []);
     setFormConfig(generatorConfig);
     setActiveConfig(generatorConfig);
+    setFilters({
+      groupes: [],
+      disponibilites: config.disponibilites || getDefaultDisponibilites(),
+    });
     navigate(GENERATEUR_HORAIRE_URL);
   };
 
+  const handleUpdateConfig = (newConfig: SessionConfig) => {
+    onUpdateSessionConfig(session, newConfig);
+  };
+
   const handleAddCourse = (sigle: string) => {
-    onUpdateConfig({
+    handleUpdateConfig({
       ...config,
       cours: [...config.cours, sigle],
     });
   };
 
   const handleRemoveCourse = (sigle: string) => {
-    onUpdateConfig({
+    handleUpdateConfig({
       ...config,
       cours: config.cours.filter((c) => c !== sigle),
       coursObligatoires: config.coursObligatoires.filter((c) => c !== sigle),
@@ -86,7 +103,7 @@ function SessionCard({
 
   const handleToggleLock = (sigle: string) => {
     const isLocked = config.coursObligatoires.includes(sigle);
-    onUpdateConfig({
+    handleUpdateConfig({
       ...config,
       coursObligatoires: isLocked
         ? config.coursObligatoires.filter((c) => c !== sigle)
@@ -98,7 +115,7 @@ function SessionCard({
   const canExport = config.cours.length > 0;
 
   return (
-    <CardWrapper>
+    <BaseCard>
       <CardHeader>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -130,7 +147,7 @@ function SessionCard({
               <IconButton
                 size="small"
                 onClick={handleExportToGenerator}
-                disabled={!canExport}
+                disabled={!canExport || !isSessionAvailable}
                 sx={{
                   bgcolor: canExport ? 'primary.main' : undefined,
                   color: canExport ? 'primary.contrastText' : undefined,
@@ -146,10 +163,14 @@ function SessionCard({
               </IconButton>
             </span>
           </Tooltip>
-          <EditSessionConfigDialog config={config} onSave={onUpdateConfig} />
-          <DeleteButton size="small" onClick={onDeleteSession}>
-            <Delete sx={{ fontSize: 18 }} />
-          </DeleteButton>
+          <EditSessionConfigDialog config={config} onSave={handleUpdateConfig} />
+          {
+              !hideDeleteButton && (
+              <DeleteButton size="small" onClick={() => onDeleteSession(session)}>
+                <Delete sx={{ fontSize: 18 }} />
+              </DeleteButton>
+              )
+          }
         </div>
       </CardHeader>
 
@@ -161,7 +182,7 @@ function SessionCard({
         onRemoveCourse={handleRemoveCourse}
         onToggleLock={handleToggleLock}
       />
-    </CardWrapper>
+    </BaseCard>
   );
 }
 

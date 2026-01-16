@@ -1,4 +1,5 @@
 import { PartialWithFieldValue } from 'firebase/firestore';
+import { DisponibiliteMap } from '../../pages/GenerateurHoraire/generateurHoraire.constants';
 
 export type FavoritesMap = Record<string, string[]>;
 export type SelectedSchedulesMap = Record<string, string>;
@@ -25,8 +26,8 @@ export interface SessionConfig {
   cours: string[];
   coursObligatoires: string[];
   nombreCours: number | null;
-  conges: string[];
-  selectedCombinaisonId?: string;
+  disponibilites: DisponibiliteMap;
+  selectedCombinaisonId?: string | null;
 }
 
 export type SessionsMap = Record<string, SessionConfig>;

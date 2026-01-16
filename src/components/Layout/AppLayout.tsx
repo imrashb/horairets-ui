@@ -11,6 +11,8 @@ import NavBar from '../NavBar/NavBar';
 import StyledToastContainer from '../Toasts/StyledToastContainer';
 import GlobalStyle from '../../themes/GlobalStyle';
 
+export const APP_LAYOUT_NAVBAR_HEIGHT = '56px';
+
 function AppLayout(): JSX.Element {
   const auth = getAuth();
   const [, loading] = useAuthState(auth);
@@ -42,7 +44,7 @@ function AppLayout(): JSX.Element {
           id="main-container"
           maxWidth={false}
           disableGutters
-          sx={{ pt: isMobile ? '56px' : 0 }}
+          sx={{ pt: isMobile ? APP_LAYOUT_NAVBAR_HEIGHT : 0 }}
         >
           <Outlet />
         </Container>

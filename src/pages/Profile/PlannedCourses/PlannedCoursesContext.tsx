@@ -1,8 +1,8 @@
-import { deleteField } from 'firebase/firestore';
+import { deleteField, FieldValue } from 'firebase/firestore';
 import isEqual from 'lodash/isEqual';
 import sortBy from 'lodash/sortBy';
-import {
-  useEffect, useMemo, useState, useRef,
+import React, {
+  createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import useUserDocument from '../../../hooks/firebase/useUserDocument';
@@ -13,21 +13,27 @@ import {
   getNextSession,
   getPreviousSession,
 } from '../../../utils/SessionSequence.utils';
+import {
+  getDefaultDisponibilites,
+} from '../../../utils/Disponibilites.utils';
 
 const DEFAULT_SESSION_CONFIG: SessionConfig = {
   cours: [],
   coursObligatoires: [],
   nombreCours: null,
-  conges: [],
+  disponibilites: getDefaultDisponibilites(),
 };
 
 function normalizeSessionConfig(config: SessionConfig): SessionConfig {
-  return {
-    ...config,
+  const normalized: SessionConfig = {
     cours: sortBy(config.cours),
     coursObligatoires: sortBy(config.coursObligatoires),
-    conges: sortBy(config.conges),
+    nombreCours: config.nombreCours ?? null,
+    disponibilites: config.disponibilites || getDefaultDisponibilites(),
+    selectedCombinaisonId: config.selectedCombinaisonId ?? null,
   };
+
+  return normalized;
 }
 
 function normalizeSessionsMap(sessions: SessionsMap): SessionsMap {
@@ -46,23 +52,55 @@ function getBaseSession(profile: UserDocument['profile']): string {
   return profile?.admissionSession || getCurrentSession();
 }
 
+interface PlannedCoursesContextType {
+
+  localSessions: SessionsMap;
+  sortedSessionKeys: string[];
+  previousSession: string;
+  nextSession: string;
+  programme: string;
+  hasChanges: boolean;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  onAddSession: (sessionKey: string) => void;
+  onDeleteSession: (sessionKey: string) => void;
+  onUpdateSessionConfig: (sessionKey: string, config: SessionConfig) => void;
+  onSave: () => Promise<void>;
+  onCancel: () => void;
+}
+
+const PlannedCoursesContext = createContext<PlannedCoursesContextType | null>(null);
+
 export function usePlannedCourses() {
+  const context = useContext(PlannedCoursesContext);
+  if (!context) {
+    throw new Error('usePlannedCourses must be used within a PlannedCoursesProvider');
+  }
+  return context;
+}
+
+export function PlannedCoursesProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const { t } = useTranslation('common');
   const { data: userDoc, updateDocument } = useUserDocument<UserDocument>();
 
   const profile = userDoc?.profile;
 
-  const profileSessions = profile?.sessions || {};
-  const storedSessionsRef = useRef(profileSessions);
-
-  if (!isEqual(storedSessionsRef.current, profileSessions)) {
-    storedSessionsRef.current = profileSessions;
-  }
-
-  const storedSessions = storedSessionsRef.current;
+  const storedSessions = useMemo(() => {
+    const map: SessionsMap = {};
+    if (profile?.sessions) {
+      Object.entries(profile.sessions).forEach(([key, config]) => {
+        map[key] = {
+          ...config,
+          disponibilites: config.disponibilites || getDefaultDisponibilites(),
+        };
+      });
+    }
+    return map;
+  }, [profile?.sessions]);
 
   const [localSessions, setLocalSessions] = useState<SessionsMap>(storedSessions);
 
+  // Effect to sync
   useEffect(() => {
     setLocalSessions(storedSessions);
   }, [storedSessions]);
@@ -83,7 +121,7 @@ export function usePlannedCourses() {
     }
     const firstSession = sortedSessionKeys[0];
     return getPreviousSession(firstSession);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
   const nextSession = useMemo(() => {
@@ -92,38 +130,44 @@ export function usePlannedCourses() {
     }
     const lastSession = sortedSessionKeys[sortedSessionKeys.length - 1];
     return getNextSession(lastSession);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedSessionKeys, profile?.admissionSession]);
 
   const programme = profile?.programme || 'Maîtrise';
 
-  const handleDeleteSession = (sessionKey: string) => {
+  const handleDeleteSession = useCallback((sessionKey: string) => {
     setLocalSessions((prev) => {
       const { [sessionKey]: _, ...rest } = prev;
       return rest;
     });
-  };
+  }, []);
 
-  const handleAddSession = (sessionKey: string) => {
+  const handleAddSession = useCallback((sessionKey: string) => {
     setLocalSessions((prev) => ({
       ...prev,
       [sessionKey]: { ...DEFAULT_SESSION_CONFIG },
     }));
-  };
+  }, []);
 
-  const handleUpdateSessionConfig = (sessionKey: string, config: SessionConfig) => {
+  const handleUpdateSessionConfig = useCallback((sessionKey: string, config: SessionConfig) => {
     setLocalSessions((prev) => ({
       ...prev,
       [sessionKey]: config,
     }));
-  };
+  }, []);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!profile) return;
 
     const normalizedLocalSessions = normalizeSessionsMap(localSessions);
-    const sessionsUpdates: Record<string, any> = { ...normalizedLocalSessions };
+    // Convert to Firestore format
+    const sessionsUpdates: Record<string, SessionConfig | FieldValue> = {};
 
+    Object.entries(normalizedLocalSessions).forEach(([key, config]) => {
+      sessionsUpdates[key] = config;
+    });
+
+    // Handle deletions
     Object.keys(storedSessions).forEach((key) => {
       if (!Object.hasOwn(localSessions, key)) {
         sessionsUpdates[key] = deleteField();
@@ -143,24 +187,46 @@ export function usePlannedCourses() {
         errorMessage: t('erreurMiseAJourCoursPlanifies') as string,
       },
     );
-  };
+  }, [profile, localSessions, storedSessions, updateDocument, t]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setLocalSessions(storedSessions);
-  };
+  }, [storedSessions]);
 
-  return {
-    profile,
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const value = useMemo(() => ({
     localSessions,
     sortedSessionKeys,
     previousSession,
     nextSession,
     programme,
     hasChanges,
+    searchTerm,
+    setSearchTerm,
+    onAddSession: handleAddSession,
+    onDeleteSession: handleDeleteSession,
+    onUpdateSessionConfig: handleUpdateSessionConfig,
+    onSave: handleSave,
+    onCancel: handleCancel,
+  }), [
+    localSessions,
+    sortedSessionKeys,
+    previousSession,
+    nextSession,
+    programme,
+    hasChanges,
+    searchTerm,
     handleAddSession,
     handleDeleteSession,
     handleUpdateSessionConfig,
     handleSave,
     handleCancel,
-  };
+  ]);
+
+  return (
+    <PlannedCoursesContext.Provider value={value}>
+      {children}
+    </PlannedCoursesContext.Provider>
+  );
 }
